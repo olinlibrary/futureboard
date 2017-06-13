@@ -7,8 +7,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Forward Board</title>
 
+  <!-- load JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <!-- load Masonry -->
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+
   <!-- load CSS -->
-  <link rel="stylesheet" type="text/css" href="board.css">
+  <link rel="stylesheet" type="text/css" href="/static/board.css">
 
   <!-- load custom font -->
   <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css" />
@@ -20,33 +25,45 @@
   <!-- load Javascript -->
   <script src='/static/socket.io.js' charset="UTF-8" type="text/javascript"></script>
   <script src='/static/board.js' charset="UTF-8" type="text/javascript"></script>
+
+
+
 </head>
 
 
 <body>
 
-  <div class="mui-appbar">
+  <div id="navbar" class="mui-appbar">
     <table width="100%">
       <tr style="vertical-align:middle;">
+        <td class="mui--appbar-heighr mui--text-display3" align="left">
+          FORWARDboard
+        </td>
         <td class="mui--appbar-height" align="right">
-          <a href="/controller"><button class="mui-btn mui-btn--fab">New</button></a>
+          <a href="/controller" target="_blank">
+            <button class="mui-btn mui-btn--fab">New</button>
+          </a>
         </td>
       </tr>
     </table>
   </div>
-
   <div id="content" class="mui-container">
     <div class="mui-row">
-      <div class="mui-col-sm-10 mui-col-sm-offset-1">
-        <div class="mui--text-dark-secondary mui--text-body2">What's UP</div>
+      <div class="mui-col-sm-12">
+        <div class="mui--text-dark-secondary mui--text-display2">What's UP</div>
+
         <div class="mui-divider"></div>
-        <br>
-        <ul id='board_elements'>
-        </ul>
         <br>
       </div>
     </div>
+    <bobbles id="bobbles" class="grid">
+      <!-- this is the container of bobs -->
+      <div class="grid-sizer"></div>
+    </bobbles>
+    <br>
+
   </div>
+
 </body>
 
 </html>

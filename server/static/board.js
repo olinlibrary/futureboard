@@ -1,44 +1,57 @@
+$('.grid').masonry({
+  // set itemSelector so .grid-sizer is not used in layout
+  itemSelector: '.grid-item',
+  // use element for option
+  columnWidth: '.grid-sizer',
+  percentPosition: true
+})
 
-var board_elements = {};
+var bobbles = {};
 
-function popluateBoard(board_elements) {
-  console.log("populating board with", board_elements);
-
-  var board_elements_list = document.getElementById('board_elements');
-
-  for (var i = 0; i < board_elements.elements.length; i++) {
-    var li = document.createElement("li");
-    li.class = board_elements.elements[i].type;
-    li.appendChild(createBoardElement(board_elements.elements[i]));
-
-    board_elements_list.appendChild(li);
+function popluateBoard(bobbles) {
+  console.log("populating board with", bobbles);
+  var bobbles_list = $("#bobbles");
+  for (var i = 0; i < bobbles.elements.length; i++) {
+    var bob = $("<bob></bob>").addClass("grid-item")
+    bob.append(createBoardElement(bobbles.elements[i]));
+    bob.attr('id', bobbles.elements[i].value)
+    bobbles_list.append(bob);
   }
 }
 
-function createBoardElement(board_element) {
+// function changeBobSize(bob) {
+//     var sizes = ["grid-item--width2", "grid-item--width3", "grid-item--height2",
+//     "grid-item--height3", "grid-item--height4"];
+//     var randindex = Math.floor(Math.random(sizes.lenght))
+//     console.log(randindex)
+//     $('bob').addClass(sizes[randindex]);
+//     return console.log("size changes to : " + sizes[randindex])
+// }
 
-  switch (board_element.type) {
+function createBoardElement(bob) {
+
+  switch (bob.type) {
     case 'text':
       html_element = document.createElement('p');
-      html_element.innerHTML = board_element.value;
+      html_element.innerHTML = bob.value;
       break;
 
     default:
-      console.log("Unknown element type", board_element.type);
+      console.log("Unknown element type", bob.type);
       html_element = null;
   }
 
   return html_element;
 }
 
-function addBoardElement(new_element) {
-  var board_elements_list = document.getElementById('board_elements');
+function addBoardElement(new_bob) {
 
-  var li = document.createElement("li");
-  li.class = new_element.type;
-  li.appendChild(createBoardElement(new_element));
-
-  board_elements_list.appendChild(li);
+  var bobbles_list = $("#bobbles")
+  var bob = $("<bob></bob>").addClass("grid-item")
+  bob.append(createBoardElement(new_bob));
+  bob.attr('id', new_bob.value);
+  bobbles_list.append(bob);
+  console.log(new_bob.value + "added")
 }
 
 var socket = io();
