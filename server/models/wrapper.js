@@ -72,17 +72,71 @@ module.exports = dbWrapper;
 
 var mongoose = require('mongoose');
 
-function connectToMongo() {
-  return 1;
-}
-
 mongoose.connect('mongodb://localhost/test');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongoose connection error:'));
 db.once('open', function(){
   console.log("connected to mongodb");
+  for(var x=0; x<3999999999; x++){ };
+  console.log("Done with for loop");
+  getAllKittens(function (kittens) {
+    console.log("In wrapper:", kittens);
+  });
 });
 
+var kittySchema = mongoose.Schema({
+  name: String
+});
 
-module.exports.connectToMongo = connectToMongo;
+var Kitten = mongoose.model('Kitten', kittySchema);
+
+
+function getAllKittens(callback) {
+  Kitten.find(function (err, kittens){
+    if (err) return console.error(err);
+    console.log("In getAllKittens", kittens);
+    callback(kittens);
+  });
+}
+
+module.exports.getAllKittens = getAllKittens;
+
+// module.exports.connectToMongo = connectToMongo;
+
+
+
+// var kittySchema = mongoose.Schema({
+//   name: String
+// });
+//
+// kittySchema.methods.speak = function () {
+//   var greeting = this.name  ? "Meow name is " + this.name  : "I don't have a name";
+//
+//   console.log(greeting);
+// };
+//
+//
+// var Kitten = mongoose.model('Kitten', kittySchema);
+//
+//
+// var silence = new Kitten({ name: 'Frank' });
+// // console.log(silence.name);
+//
+// // silence.speak();
+//
+// silence.save(function (err, fluffy) {
+//   if (err) return console.error(err);
+//   fluffy.speak();
+// });
+//
+// Kitten.find(function (err, kittens){
+//   if (err) return console.error(err);
+//   console.log(kittens);
+//   console.log();
+// });
+//
+// Kitten.find({ name: /^Sil/ }, function (err, kittens) {
+//   console.log(kittens);
+//   console.log();
+// })
