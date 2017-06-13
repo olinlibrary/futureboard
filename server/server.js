@@ -10,7 +10,6 @@ http.listen(8080);
 
 const io = require('socket.io')(http);
 
-var board_elements = {'elements': []};
 
 /******* CONFIG *******/
 // Use body parser for requests

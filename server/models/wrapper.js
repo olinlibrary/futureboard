@@ -67,3 +67,22 @@ dbWrapper.getFlavors = function() {
 }
 
 module.exports = dbWrapper;
+
+//DB Code: Implement into portion above
+
+var mongoose = require('mongoose');
+
+function connectToMongo() {
+  return 1;
+}
+
+mongoose.connect('mongodb://localhost/test');
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'mongoose connection error:'));
+db.once('open', function(){
+  console.log("connected to mongodb");
+});
+
+
+module.exports.connectToMongo = connectToMongo;
