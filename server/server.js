@@ -1,8 +1,9 @@
 // A little bit of magic requires
 const express = require('express');
 const path = require('path');
-
 const app = express();
+
+var $ = require('jQuery');
 
 // Start http server
 const http = require('http').Server(app);

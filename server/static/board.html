@@ -1,20 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <script src='/static/socket.io.js' charset="UTF-8" type="text/javascript"></script>
-    <script src='/static/board.js' charset="UTF-8" type="text/javascript"></script>
-    <style> body {padding: 10; margin: 10;} </style>
-  </head>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forward Board</title>
+
+  <!-- load CSS -->
+  <link rel="stylesheet" type="text/css" href="board.css">
+
+  <!-- load custom font -->
+  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css" />
+
+  <!-- load MUI -->
+  <link href="//cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
+  <script src="//cdn.muicss.com/mui-0.9.16/js/mui.min.js"></script>
+
+  <!-- load Javascript -->
+  <script src='/static/socket.io.js' charset="UTF-8" type="text/javascript"></script>
+  <script src='/static/board.js' charset="UTF-8" type="text/javascript"></script>
+</head>
 
 
-  <body>
-    <h1>Hello World! This is FORWARDboard</h1>
+<body>
 
-    <div>
-      <h2>The board:</h2>
-      <ul id='board_elements'>
-      </ul>
+  <div class="mui-appbar">
+    <table width="100%">
+      <tr style="vertical-align:middle;">
+        <td class="mui--appbar-height" align="right">
+          <a href="/controller"><button class="mui-btn mui-btn--fab">New</button></a>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div id="content" class="mui-container">
+    <div class="mui-row">
+      <div class="mui-col-sm-10 mui-col-sm-offset-1">
+        <div class="mui--text-dark-secondary mui--text-body2">What's UP</div>
+        <div class="mui-divider"></div>
+        <br>
+        <ul id='board_elements'>
+        </ul>
+        <br>
+      </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>

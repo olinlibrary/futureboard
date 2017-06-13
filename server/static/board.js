@@ -1,3 +1,4 @@
+
 var board_elements = {};
 
 function popluateBoard(board_elements) {
@@ -5,7 +6,7 @@ function popluateBoard(board_elements) {
 
   var board_elements_list = document.getElementById('board_elements');
 
-  for(var i=0; i<board_elements.elements.length; i++){
+  for (var i = 0; i < board_elements.elements.length; i++) {
     var li = document.createElement("li");
     li.class = board_elements.elements[i].type;
     li.appendChild(createBoardElement(board_elements.elements[i]));
@@ -25,12 +26,12 @@ function createBoardElement(board_element) {
     default:
       console.log("Unknown element type", board_element.type);
       html_element = null;
-    }
+  }
 
-    return html_element;
+  return html_element;
 }
 
-function addBoardElement(new_element){
+function addBoardElement(new_element) {
   var board_elements_list = document.getElementById('board_elements');
 
   var li = document.createElement("li");
