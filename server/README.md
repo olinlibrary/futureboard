@@ -6,6 +6,11 @@ Modules:
 `npm install socket.io express`
 
 
-run with:
+Run with:
 ---
 `nodejs server.js`
+
+
+Starting mongodb server:
+`sudo service mongod start`
+(To restart, `sudo service mongod restart`)
