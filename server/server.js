@@ -20,7 +20,6 @@ app.use(bodyParser.urlencoded({
 app.use('/static', express.static(path.join(__dirname, '/static')));
 
 const mongo = require('./models/wrapper.js');
-console.log("Done importing mongo");
 
 
 var bobList = [];
@@ -46,18 +45,18 @@ app.get('/flavors', controller.GETflavors);
 app.get('/tags', controller.GETtags);
 
 // Start socket
-io.on('connection', function(socket, msg){
-  console.log("user connected", msg);
+io.on('connection', function(socket){
+  console.log("user connected");
 
   // if (msg === 'board') {
-  console.log("sending all bobs to board");
+  console.log("sending all active bobs to board");
   mongo.getAllActiveBobs().then(function (bobList) {
     socket.emit('all_elements', bobList);
   });
   // }
 
   socket.on('add_element', function (msg) {
-    io.emit('add_element', msg);
+    socket.broadcast.emit('add_element', msg);
 
     mongo.saveBob(msg.data, msg.timeStart, msg.timeEnd, msg.flavor, msg.tags);
   });
@@ -65,3 +64,4 @@ io.on('connection', function(socket, msg){
 
 console.log("FORWARDboard running on port 8080");
 console.log("http://localhost:8080, http://localhost:8080/controller");
+console.log();
