@@ -10,6 +10,4 @@ function submit_text(text_value) {
 
 var socket = io();
 socket.emit('connection', 'controller');
-
-
 console.log("controller.js running");

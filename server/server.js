@@ -13,11 +13,6 @@ const io = require('socket.io')(http);
 var bobbles = {'elements': []};
 
 
-
-
-
-
-
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/static/board.html');
 });

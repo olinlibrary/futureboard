@@ -8,18 +8,6 @@ body {
 }
 
 
-bobbles{
-
-}
-
-bob{
-
-  width:300px;
-}
-bob p{
-
-}
-
 * { box-sizing: border-box; }
 
 body { font-family: sans-serif; }
@@ -27,8 +15,6 @@ body { font-family: sans-serif; }
 /* ---- grid ---- */
 
 .grid {
-  background: #EEE;
-  max-width: 1200px;
 }
 
 /* clearfix */
@@ -39,11 +25,15 @@ body { font-family: sans-serif; }
 }
 
 /* ---- grid-item ---- */
-
+/*element sizing https://masonry.desandro.com/options.html#gutter*/
 .grid-sizer,
 .grid-item {
   width: 20%;
 }
+.gutter-sizer {
+  width: 1%;
+}
+
 
 .grid-item {
   height: 120px;
@@ -54,6 +44,13 @@ body { font-family: sans-serif; }
   border-radius: 5px;
 }
 
+.grid-item p{
+  text-align:center;
+  font-family: "Roboto";
+  font-size:250%;
+}
+
+/*responsive grid sizes*/
 .grid-item--width2 { width:  40%; }
 .grid-item--width3 { width:  60%; }
 

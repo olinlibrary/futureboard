@@ -9,20 +9,21 @@
 
   <!-- load JQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
   <!-- load Masonry -->
-  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.js"></script>
 
   <!-- load CSS -->
   <link rel="stylesheet" type="text/css" href="/static/board.css">
 
-  <!-- load custom font -->
+  <!-- load font -->
   <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css" />
 
   <!-- load MUI -->
   <link href="//cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
   <script src="//cdn.muicss.com/mui-0.9.16/js/mui.min.js"></script>
 
-  <!-- load Javascript -->
+  <!-- load js -->
   <script src='/static/socket.io.js' charset="UTF-8" type="text/javascript"></script>
   <script src='/static/board.js' charset="UTF-8" type="text/javascript"></script>
 
@@ -56,10 +57,14 @@
         <br>
       </div>
     </div>
+    <!-- this is the container of bobs -->
     <bobbles id="bobbles" class="grid">
-      <!-- this is the container of bobs -->
+      <!-- .grid-sizer, gutter-sizer empty element, only used for element sizing -->
       <div class="grid-sizer"></div>
-    </bobbles>
+      <div class="gutter-sizer"></div>
+      <!-- bobs are created here -->
+
+    </div>
     <br>
 
   </div>

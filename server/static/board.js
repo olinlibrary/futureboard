@@ -1,10 +1,10 @@
+// masonry grid controller
 $('.grid').masonry({
-  // set itemSelector so .grid-sizer is not used in layout
   itemSelector: '.grid-item',
-  // use element for option
   columnWidth: '.grid-sizer',
+  gutter: '.gutter-sizer',
   percentPosition: true
-})
+});
 
 var bobbles = {};
 
@@ -15,18 +15,26 @@ function popluateBoard(bobbles) {
     var bob = $("<bob></bob>").addClass("grid-item")
     bob.append(createBoardElement(bobbles.elements[i]));
     bob.attr('id', bobbles.elements[i].value)
+    var id = bobbles.elements[i].value;
+    // randomizeBobSize(id)
     bobbles_list.append(bob);
   }
 }
 
-// function changeBobSize(bob) {
-//     var sizes = ["grid-item--width2", "grid-item--width3", "grid-item--height2",
-//     "grid-item--height3", "grid-item--height4"];
-//     var randindex = Math.floor(Math.random(sizes.lenght))
-//     console.log(randindex)
-//     $('bob').addClass(sizes[randindex]);
-//     return console.log("size changes to : " + sizes[randindex])
-// }
+function randomizeBobSize(bob_id) {
+  // randomly changes the size of the bob with bob_id
+  var sizes = ["grid-item--width2", "grid-item--width3", "grid-item--height2",
+    "grid-item--height3", "grid-item--height4"
+  ];
+
+  // this random feature is temporary
+  var randindex = Math.floor(Math.random() * sizes.length)
+
+  var query = "#" + bob_id;
+
+  $(query).addClass(sizes[randindex]);
+  return console.log("size changes to : " + sizes[randindex])
+}
 
 function createBoardElement(bob) {
 
@@ -49,9 +57,12 @@ function addBoardElement(new_bob) {
   var bobbles_list = $("#bobbles")
   var bob = $("<bob></bob>").addClass("grid-item")
   bob.append(createBoardElement(new_bob));
-  bob.attr('id', new_bob.value);
+
+  //this id value needs to be relevant to the MongoDB id of new_bob
+  var id = new_bob.value;
+  bob.attr('id', id);
   bobbles_list.append(bob);
-  console.log(new_bob.value + "added")
+  console.log(new_bob.value + " Added to Board")
 }
 
 var socket = io();
