@@ -6,10 +6,7 @@ $('.grid').masonry({
   percentPosition: true
 });
 
-// var bobbles = {};
-
 function popluateBoard(bobbles) {
-  console.log("populating board with", bobbles);
   var bobbles_list = $("#bobbles");
   for (var i = 0; i < bobbles.elements.length; i++) {
     var bob = $("<bob></bob>").addClass("grid-item")
@@ -33,7 +30,6 @@ function randomizeBobSize(bob_id) {
   var query = "#" + bob_id;
 
   $(query).addClass(sizes[randindex]);
-  return console.log("size changes to : " + sizes[randindex])
 }
 
 function createBoardElement(bob) {
