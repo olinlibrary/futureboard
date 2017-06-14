@@ -10,19 +10,22 @@ controller.GETindex = function(req, res, next) {
 }
 
 controller.POSTbob = function(req, res, next) {
-	var data = {
+	var bob = {
 		data: req.body.data,
 		flavor: req.body.flavor,
 		startDate: req.body.startDate,
 		endDate: req.body.endDate,
 		tags: req.body.tags
 	}
-	// Will add to database later
-	res.send(data);
+
+	console.log("Saving bob", bob);
+	db.Bob.saveBob(bob);
+	// // Will add to database later
+	// res.send(data);
 }
 
 controller.GETflavors = function(req, res) {
-  db.getFlavors().then(function success(data) {
+  db.Flavors.getFlavors().then(function success(data) {
     res.send(data);
   }, function error(err) {
     res.status(500).send(err);
@@ -30,7 +33,7 @@ controller.GETflavors = function(req, res) {
 }
 
 controller.GETtags = function(req, res) {
-  db.getTags().then(function success(data) {
+  db.Tag.getTags().then(function success(data) {
     res.send(data);
   }, function error(err) {
     res.status(500).send(err);

@@ -11,6 +11,8 @@ http.listen(8080);
 const io = require('socket.io')(http);
 
 
+const db = require('./models/wrapper.js');
+
 /******* CONFIG *******/
 // Use body parser for requests
 app.use(bodyParser.urlencoded({
@@ -19,7 +21,6 @@ app.use(bodyParser.urlencoded({
 // Serve all files from static
 app.use('/static', express.static(path.join(__dirname, '/static')));
 
-const mongo = require('./models/wrapper.js');
 
 
 var bobList = [];
@@ -50,15 +51,16 @@ io.on('connection', function(socket){
 
   // if (msg === 'board') {
   console.log("sending all active bobs to board");
-  mongo.getAllActiveBobs().then(function (bobList) {
+  db.Bob.getAllActiveBobs().then(function (bobList) {
     socket.emit('all_elements', bobList);
+    console.log(bobList);
   });
   // }
 
   socket.on('add_element', function (msg) {
     socket.broadcast.emit('add_element', msg);
 
-    mongo.saveBob(msg.data, msg.timeStart, msg.timeEnd, msg.flavor, msg.tags);
+    db.Bob.saveBob(msg.data, msg.startDate, msg.endDate, msg.flavor, msg.tags);
   });
 });
 

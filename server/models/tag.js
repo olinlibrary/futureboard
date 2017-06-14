@@ -1,4 +1,18 @@
+const mongoose = require('mongoose');
 
-var tag = {};
+getTags = function() {
+	// In the future this will make a DB call instead
+	return new Promise(function(fulfill, reject) {
+		try {
+			fulfill(['BAJA', 'Formula', 'Library', 'PGP', 'FWOP', 'Cats']);
+		} catch (exception) {
+			reject(exception)
+		}
+	});
+};
 
-module.exports = tag;
+var Tag = {};
+
+Tag.getTags = getTags;
+
+module.exports = Tag;

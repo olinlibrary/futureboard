@@ -8,11 +8,11 @@ $('.grid').masonry({
 
 function popluateBoard(bobbles) {
   var bobbles_list = $("#bobbles");
-  for (var i = 0; i < bobbles.elements.length; i++) {
+  for (var i = 0; i < bobbles.length; i++) {
     var bob = $("<bob></bob>").addClass("grid-item")
-    bob.append(createBoardElement(bobbles.elements[i]));
-    bob.attr('id', bobbles.elements[i].value)
-    var id = bobbles.elements[i].value;
+    bob.append(createBoardElement(bobbles[i]));
+    bob.attr('id', bobbles[i].value)
+    var id = bobbles[i].value;
     // randomizeBobSize(id)
     bobbles_list.append(bob);
   }

@@ -44,7 +44,7 @@ $(function() {
 		event.preventDefault();
 
 		let $form = $(this)
-		
+
 		let tags = [];
 		$form.find('[name="tags"]:checked').each(function() {
 			tags.push($(this).val());
@@ -55,7 +55,7 @@ $(function() {
 			let $input = $(this);
 			bobData[$input.attr('name')] = $input.val();
 		});
-		
+
 		let data = {
 			data: bobData,
 			flavor: $form.find('#flavor').val(),
@@ -68,6 +68,6 @@ $(function() {
 			alert('Bob saved!');
 		});
 	});
-})
+});
 
 console.log("controller.js running");
