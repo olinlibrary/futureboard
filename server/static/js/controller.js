@@ -1,9 +1,3 @@
-function submitText(text_value) {
-  var text_object = {'type': 'text', 'value': text_value};
-
-  socket.emit('add_element', text_object);
-  console.log("submitted", text_object);
-}
 
 const socket = io();
 socket.emit('connection', 'controller');
@@ -61,7 +55,6 @@ $(function() {
 			let $input = $(this);
 			bobData[$input.attr('name')] = $input.val();
 		});
-		console.log(bobData);
 		
 		let data = {
 			data: bobData,
@@ -72,7 +65,6 @@ $(function() {
 		}
 
 		$.post('/controller', data, function(res) {
-			console.log(res);
 			alert('Bob saved!');
 		});
 	});
