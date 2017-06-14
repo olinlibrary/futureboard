@@ -72,35 +72,71 @@ module.exports = dbWrapper;
 
 var mongoose = require('mongoose');
 
+// Use JS native promises
+mongoose.Promise = global.Promise;
+
 mongoose.connect('mongodb://localhost/test');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongoose connection error:'));
+
 db.once('open', function(){
   console.log("connected to mongodb");
-  for(var x=0; x<3999999999; x++){ };
-  console.log("Done with for loop");
-  getAllKittens(function (kittens) {
-    console.log("In wrapper:", kittens);
+});
+
+
+const bobSchema = mongoose.Schema({
+  data: String,
+  start: { type: Date, default: Date.now },
+  end: Date,
+  flavor: String,
+  tags: []
+});
+
+let Bob = mongoose.model('Bob', bobSchema);
+
+
+function saveBob(data, timeStart, timeEnd, flavor, tags) {
+  let curBob = new Bob({
+    data:       data,
+    timeStart:  timeStart,
+    timeEnd:    timeEnd,
+    flavor:     flavor,
+    tags:       tags
   });
-});
 
-var kittySchema = mongoose.Schema({
-  name: String
-});
-
-var Kitten = mongoose.model('Kitten', kittySchema);
-
-
-function getAllKittens(callback) {
-  Kitten.find(function (err, kittens){
-    if (err) return console.error(err);
-    console.log("In getAllKittens", kittens);
-    callback(kittens);
+  curBob.save(function (err) {
+    if (err) console.log("Bob save error:", err);
+    else console.log("bob saved");
   });
 }
 
-module.exports.getAllKittens = getAllKittens;
+function getAllBobs(filter) {
+  return Bob.find(filter);
+}
+
+function findOneBob(filter) {
+  return Bob.findOne(filter);
+}
+
+function findAllActiveBobs() {
+  // Add optional filter
+  return Bob.find({timeStart: { $lte: Date.now }, timeEnd: { $gte: Date.now }});
+}
+module.exports.saveBob = saveBob;
+module.exports.getAllBobs = getAllBobs;
+module.exports.findOneBob = findOneBob;
+module.exports.findAllActiveBobs = findAllActiveBobs;
+
+// function getAllKittens(callback) {
+//   Kitten.find(function (err, kittens){
+//     if (err) return console.error(err);
+//     console.log("In getAllKittens", kittens);
+//     callback(kittens);
+//   });
+// }
+//
+// module.exports.getAllKittens = getAllKittens;
 
 // module.exports.connectToMongo = connectToMongo;
 

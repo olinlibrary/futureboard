@@ -18,6 +18,35 @@ app.use(bodyParser.urlencoded({
 }));
 // Serve all files from static
 app.use('/static', express.static(path.join(__dirname, '/static')));
+const mongo = require('./models/wrapper.js');
+console.log("Done importing mongo");
+
+
+var bobList = [];
+
+
+function nowPlusXMinutes(numMinutes) {
+  let newDate = new Date(Date.now + numMinutes*60000);
+  // newDate.setMinutes(newDate.getMinutes() + numMinutes);
+  // console.log(newDate);
+  return newDate;
+}
+
+
+// mongo.saveBob("A famous word", Date.now, nowPlusXMinutes(10), "Text", ["profound"]);
+
+// mongo.getAllBobs().then(function (doc) {
+//   console.log("All bobs:", doc);
+// });
+// // mongo.getAllBobs().then(console.log(doc));
+// mongo.findOneBob({flavor: "Text"}).then(function (doc) {
+//   console.log("One bob:", doc);
+//   console.log(doc.data);
+// });
+
+
+// const index = require('./routes/index');
+// app.get('/', index.home)
 
 
 // Main board
@@ -34,16 +63,21 @@ app.get('/tags', controller.GETtags);
 
 // Start socket
 io.on('connection', function(socket, msg){
-  console.log("user connected");
+  console.log("user connected", msg);
 
-  socket.emit('all_elements', board_elements);
-
+  // if (msg === 'board') {
+  console.log("sending all bobs to board");
+  mongo.getAllBobs().then(function (bobList) {
+    socket.emit('all_elements', bobList);
+  });
+  // }
 
   socket.on('add_element', function (msg) {
-    bobbles.elements.push(msg);
     io.emit('add_element', msg);
 
-    console.log('add_text', msg, '\n All elements:', bobbles.elements);
+    mongo.saveBob(msg.data, msg.startTime, msg.endTime, msg.flavor, msg.tags);
+
+    console.log('add_text', msg);
     // socket.emit('volumes', JSON.stringify(volumes));
     // io.emit('vizPositions', [position]);
     // console.log("sent volumes", volumes);
