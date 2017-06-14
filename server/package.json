@@ -4,6 +4,7 @@
   "description": "FORWARDboard server ===",
   "main": "server.js",
   "dependencies": {
+    "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "package.json": "^2.0.1",
     "promise": "^7.1.1",
