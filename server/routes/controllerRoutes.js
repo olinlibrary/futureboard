@@ -17,7 +17,6 @@ controller.POSTbob = function(req, res, next) {
 		endDate: req.body.endDate,
 		tags: req.body.tags
 	}
-
 	// Will add to database later
 	res.send(data);
 }

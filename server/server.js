@@ -9,6 +9,7 @@ const http = require('http').Server(app);
 http.listen(8080);
 
 const io = require('socket.io')(http);
+
 var board_elements = {'elements': []};
 
 /******* CONFIG *******/
@@ -40,10 +41,10 @@ io.on('connection', function(socket, msg){
 
 
   socket.on('add_element', function (msg) {
-    board_elements.elements.push(msg);
+    bobbles.elements.push(msg);
     io.emit('add_element', msg);
 
-    console.log('add_text', msg, '\n All elements:', board_elements.elements);
+    console.log('add_text', msg, '\n All elements:', bobbles.elements);
     // socket.emit('volumes', JSON.stringify(volumes));
     // io.emit('vizPositions', [position]);
     // console.log("sent volumes", volumes);
