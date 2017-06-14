@@ -6,7 +6,7 @@ $('.grid').masonry({
   percentPosition: true
 });
 
-var bobbles = {};
+// var bobbles = {};
 
 function popluateBoard(bobbles) {
   console.log("populating board with", bobbles);
