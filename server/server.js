@@ -67,7 +67,7 @@ io.on('connection', function(socket, msg){
 
   // if (msg === 'board') {
   console.log("sending all bobs to board");
-  mongo.getAllBobs().then(function (bobList) {
+  mongo.getAllActiveBobs().then(function (bobList) {
     socket.emit('all_elements', bobList);
   });
   // }
@@ -75,7 +75,7 @@ io.on('connection', function(socket, msg){
   socket.on('add_element', function (msg) {
     io.emit('add_element', msg);
 
-    mongo.saveBob(msg.data, msg.startTime, msg.endTime, msg.flavor, msg.tags);
+    mongo.saveBob(msg.data, msg.timeStart, msg.timeEnd, msg.flavor, msg.tags);
 
     console.log('add_text', msg);
     // socket.emit('volumes', JSON.stringify(volumes));
@@ -84,5 +84,8 @@ io.on('connection', function(socket, msg){
   });
 });
 
+mongo.getAllActiveBobsFilter({data: "sart"}).then(function (bobList) {
+  console.log("Filtered bobs", bobList);
+});
 
 console.log("FORWARDboard running on port 8080");

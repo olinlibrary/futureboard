@@ -77,7 +77,7 @@ mongoose.Promise = global.Promise;
 
 mongoose.connect('mongodb://localhost/test');
 
-var db = mongoose.connection;
+let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongoose connection error:'));
 
 db.once('open', function(){
@@ -85,10 +85,11 @@ db.once('open', function(){
 });
 
 
+
 const bobSchema = mongoose.Schema({
   data: String,
-  start: { type: Date, default: Date.now },
-  end: Date,
+  timeStart: { type: Date, default: Date.now() },
+  timeEnd: Date,
   flavor: String,
   tags: []
 });
@@ -105,6 +106,8 @@ function saveBob(data, timeStart, timeEnd, flavor, tags) {
     tags:       tags
   });
 
+  // console.log(timeEnd, curBob);
+
   curBob.save(function (err) {
     if (err) console.log("Bob save error:", err);
     else console.log("bob saved");
@@ -115,18 +118,21 @@ function getAllBobs(filter) {
   return Bob.find(filter);
 }
 
-function findOneBob(filter) {
+function getOneBob(filter) {
   return Bob.findOne(filter);
 }
 
-function findAllActiveBobs() {
-  // Add optional filter
-  return Bob.find({timeStart: { $lte: Date.now }, timeEnd: { $gte: Date.now }});
+function getAllActiveBobs(filter) {
+  let query = Bob.find(filter);
+  query.and({timeStart: { $lte: Date.now() }, timeEnd: { $gte: Date.now() }});
+  return query;
 }
+
+
 module.exports.saveBob = saveBob;
 module.exports.getAllBobs = getAllBobs;
-module.exports.findOneBob = findOneBob;
-module.exports.findAllActiveBobs = findAllActiveBobs;
+module.exports.getOneBob = getOneBob;
+module.exports.getAllActiveBobs = getAllActiveBobs;
 
 // function getAllKittens(callback) {
 //   Kitten.find(function (err, kittens){
