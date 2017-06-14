@@ -18,6 +18,7 @@ app.use(bodyParser.urlencoded({
 }));
 // Serve all files from static
 app.use('/static', express.static(path.join(__dirname, '/static')));
+
 const mongo = require('./models/wrapper.js');
 console.log("Done importing mongo");
 
@@ -26,30 +27,13 @@ var bobList = [];
 
 
 function nowPlusXMinutes(numMinutes) {
-  let newDate = new Date(Date.now + numMinutes*60000);
-  // newDate.setMinutes(newDate.getMinutes() + numMinutes);
-  // console.log(newDate);
-  return newDate;
+  return new Date(Date.now + numMinutes*60000);
 }
 
 
-// mongo.saveBob("A famous word", Date.now, nowPlusXMinutes(10), "Text", ["profound"]);
-
-// mongo.getAllBobs().then(function (doc) {
-//   console.log("All bobs:", doc);
-// });
-// // mongo.getAllBobs().then(console.log(doc));
-// mongo.findOneBob({flavor: "Text"}).then(function (doc) {
-//   console.log("One bob:", doc);
-//   console.log(doc.data);
-// });
-
-
-// const index = require('./routes/index');
-// app.get('/', index.home)
-
-
 // Main board
+
+// Define routes
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/templates/board.html');
 });
@@ -76,16 +60,8 @@ io.on('connection', function(socket, msg){
     io.emit('add_element', msg);
 
     mongo.saveBob(msg.data, msg.timeStart, msg.timeEnd, msg.flavor, msg.tags);
-
-    console.log('add_text', msg);
-    // socket.emit('volumes', JSON.stringify(volumes));
-    // io.emit('vizPositions', [position]);
-    // console.log("sent volumes", volumes);
   });
 });
 
-mongo.getAllActiveBobsFilter({data: "sart"}).then(function (bobList) {
-  console.log("Filtered bobs", bobList);
-});
-
 console.log("FORWARDboard running on port 8080");
+console.log("http://localhost:8080, http://localhost:8080/controller");

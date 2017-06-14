@@ -75,17 +75,19 @@ var mongoose = require('mongoose');
 // Use JS native promises
 mongoose.Promise = global.Promise;
 
+
+// Connect to db
 mongoose.connect('mongodb://localhost/test');
 
 let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'mongoose connection error:'));
 
 db.once('open', function(){
-  console.log("connected to mongodb");
+  console.log("Connected to mongodb");
 });
 
 
-
+// Define and compile Bob Schema
 const bobSchema = mongoose.Schema({
   data: String,
   timeStart: { type: Date, default: Date.now() },
@@ -97,6 +99,7 @@ const bobSchema = mongoose.Schema({
 let Bob = mongoose.model('Bob', bobSchema);
 
 
+// Bob functions
 function saveBob(data, timeStart, timeEnd, flavor, tags) {
   let curBob = new Bob({
     data:       data,
@@ -106,11 +109,8 @@ function saveBob(data, timeStart, timeEnd, flavor, tags) {
     tags:       tags
   });
 
-  // console.log(timeEnd, curBob);
-
   curBob.save(function (err) {
     if (err) console.log("Bob save error:", err);
-    else console.log("bob saved");
   });
 }
 
@@ -133,52 +133,3 @@ module.exports.saveBob = saveBob;
 module.exports.getAllBobs = getAllBobs;
 module.exports.getOneBob = getOneBob;
 module.exports.getAllActiveBobs = getAllActiveBobs;
-
-// function getAllKittens(callback) {
-//   Kitten.find(function (err, kittens){
-//     if (err) return console.error(err);
-//     console.log("In getAllKittens", kittens);
-//     callback(kittens);
-//   });
-// }
-//
-// module.exports.getAllKittens = getAllKittens;
-
-// module.exports.connectToMongo = connectToMongo;
-
-
-
-// var kittySchema = mongoose.Schema({
-//   name: String
-// });
-//
-// kittySchema.methods.speak = function () {
-//   var greeting = this.name  ? "Meow name is " + this.name  : "I don't have a name";
-//
-//   console.log(greeting);
-// };
-//
-//
-// var Kitten = mongoose.model('Kitten', kittySchema);
-//
-//
-// var silence = new Kitten({ name: 'Frank' });
-// // console.log(silence.name);
-//
-// // silence.speak();
-//
-// silence.save(function (err, fluffy) {
-//   if (err) return console.error(err);
-//   fluffy.speak();
-// });
-//
-// Kitten.find(function (err, kittens){
-//   if (err) return console.error(err);
-//   console.log(kittens);
-//   console.log();
-// });
-//
-// Kitten.find({ name: /^Sil/ }, function (err, kittens) {
-//   console.log(kittens);
-//   console.log();
-// })
