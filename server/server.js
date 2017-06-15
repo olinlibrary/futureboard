@@ -21,10 +21,6 @@ app.use(bodyParser.urlencoded({
 app.use('/static', express.static(path.join(__dirname, '/static')));
 
 
-function nowPlusXMinutes(numMinutes) {
-  return new Date(Date.now + numMinutes*60000);
-}
-
 // Main board
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/templates/board.html');
