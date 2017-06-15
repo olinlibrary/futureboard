@@ -39,21 +39,22 @@ app.get('/', function (req, res) {
 });
 
 // Send data to board
-const controller = require('./routes/controllerRoutes');
+const controller = require('./routes/controllerRoutes')(io, db);
 app.get('/controller', controller.GETindex);
 app.post('/controller', controller.POSTbob);
 app.get('/flavors', controller.GETflavors);
 app.get('/tags', controller.GETtags);
 
+
+
 // Start socket
 io.on('connection', function(socket){
-  console.log("user connected");
+  console.log("board connected");
 
   // if (msg === 'board') {
   console.log("sending all active bobs to board");
   db.Bob.getAllActiveBobs().then(function (bobList) {
     socket.emit('all_elements', bobList);
-    console.log(bobList);
   });
   // }
 

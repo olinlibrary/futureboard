@@ -62,7 +62,7 @@ function addBoardElement(new_bob) {
 }
 
 var socket = io();
-socket.emit('connection', 'board');
+socket.emit('connection');
 
 socket.on('all_elements', popluateBoard);
 socket.on('add_element', addBoardElement);

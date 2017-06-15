@@ -8,7 +8,7 @@ $(function() {
 	$.get('/tags', function(tagArray) {
 		$.each(tagArray, function(index, tag) {
 			$('#tag-holder').append('<label>\
-				<input type="checkbox" name="tags" value="' + tag + '"></input>' + tag + '\
+				<input type="checkbox" name="tags" value="' + tag.name + '"></input>' + tag.name + '\
 			</label><br>');
 		});
 	});

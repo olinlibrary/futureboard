@@ -10,12 +10,12 @@ const bobSchema = mongoose.Schema({
   tags: []
 });
 
-let BobModel = mongoose.model('Bob', bobSchema);
+const BobModel = mongoose.model('Bob', bobSchema);
 
 
 // Bob functions
 function saveBob(bobData) {
-  let newBob = new BobModel({
+  const newBob = new BobModel({
     data:       bobData.data,
     startDate:  bobData.startDate,
     endDate:    bobData.endDate,
