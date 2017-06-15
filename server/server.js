@@ -9,9 +9,8 @@ const http = require('http').Server(app);
 http.listen(8080);
 
 const io = require('socket.io')(http);
-
-
 const db = require('./models/wrapper.js');
+
 
 /******* CONFIG *******/
 // Use body parser for requests
@@ -21,10 +20,6 @@ app.use(bodyParser.urlencoded({
 // Serve all files from static
 app.use('/static', express.static(path.join(__dirname, '/static')));
 
-
-function nowPlusXMinutes(numMinutes) {
-  return new Date(Date.now + numMinutes*60000);
-}
 
 // Main board
 app.get('/', function (req, res) {

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const tagSchema = mongoose.Schema({
-	name: String
+	title: String
 });
 
 const TagModel = mongoose.model('Tag', tagSchema);
