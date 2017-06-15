@@ -1,7 +1,3 @@
-
-const socket = io();
-socket.emit('connection', 'controller');
-
 $(function() {
 
 	$('#start-date').datepicker();
