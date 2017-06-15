@@ -9,9 +9,8 @@ const http = require('http').Server(app);
 http.listen(8080);
 
 const io = require('socket.io')(http);
-
-
 const db = require('./models/wrapper.js');
+
 
 /******* CONFIG *******/
 // Use body parser for requests
