@@ -6,6 +6,9 @@ body {
 .form-field {
   margin-bottom: 25px;
 }
+#navbar > table > tr{
+  vertical-align:middle;
+}
 
 #tag-holder label {
   display: inline-block;
