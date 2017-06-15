@@ -39,7 +39,9 @@ app.get('/flavors', controller.GETflavors);
 app.get('/tags', controller.GETtags);
 
 // Start socket
-io.on('connection', require('./routes/sockets')(socket, db));
+io.on('connection', function(socket) {
+  require('./routes/sockets')(socket, db);
+});
 
 
 console.log("FORWARDboard running on port 8080");

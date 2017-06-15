@@ -12,7 +12,7 @@ function popluateBoard(bobbles) {
     let $bob = $("<bob></bob>").addClass("grid-item")
       .attr('id', bobbles[i].value)
       .append(createBoardElement(bobbles[i]));
-    $bobbleList.append(bob);
+    $bobbleList.append($bob);
     // TODO: Bring randomization back in later
   }
 }
@@ -29,32 +29,33 @@ function randomizeBobSize(bobID) {
 }
 
 function createBoardElement(bob) {
-
-  switch (bob.type) {
-    case 'text':
-      html_element = document.createElement('p');
-      html_element.innerHTML = bob.value;
+  switch (bob.flavor) {
+    case 'Quote':
+      $html = $('<p></p>')
+        .append(bob.data.Text).append('<br>')
+        .append(bob.data.Author);
       break;
 
     default:
-      console.log("Unknown element type", bob.type);
-      html_element = null;
+      console.log("Unknown element type", bob.flavor);
+      $html = null;
   }
 
-  return html_element;
+  return $html;
 }
 
-function addBoardElement(new_bob) {
+function addBoardElement(newBob) {
 
-  var bobbles_list = $("#bobbles")
-  var bob = $("<bob></bob>").addClass("grid-item")
-  bob.append(createBoardElement(new_bob));
+  var $bobbleList = $("#bobbles")
 
-  //this id value needs to be relevant to the MongoDB id of new_bob
-  var id = new_bob.value;
-  bob.attr('id', id);
-  bobbles_list.append(bob);
-  console.log(new_bob.value + " Added to Board")
+  var id = newBob.value;
+  var $bob = $("<bob></bob>").attr('id', id)
+    .addClass("grid-item")
+    .append(createBoardElement(newBob));
+
+  //this id value needs to be relevant to the MongoDB id of newBob
+  $bobbleList.append($bob);
+  console.log(newBob.value + " Added to Board")
 }
 
 var socket = io();
