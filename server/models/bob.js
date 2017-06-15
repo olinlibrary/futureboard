@@ -45,10 +45,10 @@ function getAllActiveBobs(filter) {
 
 let Bob = {};
 
+Bob.model = BobModel;
 Bob.saveBob = saveBob;
 Bob.getAllBobs = getAllBobs;
 Bob.getOneBob = getOneBob;
 Bob.getAllActiveBobs = getAllActiveBobs;
-
 
 module.exports = Bob;

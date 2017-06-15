@@ -22,18 +22,11 @@ app.use(bodyParser.urlencoded({
 app.use('/static', express.static(path.join(__dirname, '/static')));
 
 
-
-var bobList = [];
-
-
 function nowPlusXMinutes(numMinutes) {
   return new Date(Date.now + numMinutes*60000);
 }
 
-
 // Main board
-
-// Define routes
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/templates/board.html');
 });
@@ -45,27 +38,8 @@ app.post('/controller', controller.POSTbob);
 app.get('/flavors', controller.GETflavors);
 app.get('/tags', controller.GETtags);
 
-
-
 // Start socket
-io.on('connection', function(socket){
-  console.log("board connected");
-
-  // if (msg === 'board') {
-  console.log("sending all active bobs to board");
-  db.Bob.getAllActiveBobs().then(function (bobList) {
-    socket.emit('all_elements', bobList);
-  });
-  // }
-
-  socket.on('add_element', function (msg) {
-    socket.broadcast.emit('add_element', msg);
-
-    db.Bob.saveBob(msg.data, msg.startDate, msg.endDate, msg.flavor, msg.tags);
-  });
-});
+io.on('connection', require('./routes/sockets')(socket, db));
 
 
 console.log("FORWARDboard running on port 8080");
-console.log("http://localhost:8080, http://localhost:8080/controller");
-console.log();

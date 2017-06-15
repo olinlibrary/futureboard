@@ -14,6 +14,7 @@ getFlavors = function(filter) {
 
 let Flavors = {};
 
+Flavors.model = FlavorModel;
 Flavors.getFlavors = getFlavors;
 
 module.exports = Flavors;
