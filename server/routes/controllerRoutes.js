@@ -1,7 +1,5 @@
 // External dependencies
 const path = require('path');
-// Relative imports
-// const db = require(path.join(__dirname, '..', '/models/wrapper'));
 
 
 
@@ -25,7 +23,6 @@ module.exports = function(io, db) {
 		io.emit('add_element', bob);
 
 		// Save in db
-		console.log("Saving bob", bob);
 		db.Bob.saveBob(bob);
 
 		res.send("success")

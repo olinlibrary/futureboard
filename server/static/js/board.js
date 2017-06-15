@@ -7,29 +7,25 @@ $('.grid').masonry({
 });
 
 function popluateBoard(bobbles) {
-  var bobbles_list = $("#bobbles");
+  var $bobbleList = $("#bobbles");
   for (var i = 0; i < bobbles.length; i++) {
-    var bob = $("<bob></bob>").addClass("grid-item")
-    bob.append(createBoardElement(bobbles[i]));
-    bob.attr('id', bobbles[i].value)
-    var id = bobbles[i].value;
-    // randomizeBobSize(id)
-    bobbles_list.append(bob);
+    let $bob = $("<bob></bob>").addClass("grid-item")
+      .attr('id', bobbles[i].value)
+      .append(createBoardElement(bobbles[i]));
+    $bobbleList.append(bob);
+    // TODO: Bring randomization back in later
   }
 }
 
-function randomizeBobSize(bob_id) {
+function randomizeBobSize(bobID) {
   // randomly changes the size of the bob with bob_id
   var sizes = ["grid-item--width2", "grid-item--width3", "grid-item--height2",
     "grid-item--height3", "grid-item--height4"
   ];
 
   // this random feature is temporary
-  var randindex = Math.floor(Math.random() * sizes.length)
-
-  var query = "#" + bob_id;
-
-  $(query).addClass(sizes[randindex]);
+  var randIndex = Math.floor(Math.random() * sizes.length)
+  $("#" + bobID).addClass(sizes[randIndex]);
 }
 
 function createBoardElement(bob) {

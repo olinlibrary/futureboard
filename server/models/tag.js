@@ -14,6 +14,7 @@ getTags = function(filter) {
 
 var Tag = {};
 
+Tag.model = TagModel;
 Tag.getTags = getTags;
 
 module.exports = Tag;
