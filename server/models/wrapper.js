@@ -14,56 +14,43 @@
 */
 
 // For mocking up DB interactions
-const Promise = require('promise');
+// const Promise = require('promise');
+
+const mongoose = require('mongoose');
+
+// Use JS native promises
+mongoose.Promise = global.Promise;
+
+// Connect to db
+connectToDB('mongodb://localhost/test');
+
 
 // Schemas we define:
 const Bob = require('./bob');
 const Tag = require('./tag');
+const Flavors = require('./flavor');
+
+
 
 
 var dbWrapper = {};
 
-dbWrapper.getTags = function() {
-	// In the future this will make a DB call instead
-	return new Promise(function(fulfill, reject) {
-		try {
-			fulfill(['BAJA', 'Formula', 'Library', 'PGP', 'FWOP', 'Cats']);
-		} catch (exception) {
-			reject(exception)
-		}
-	});
-}
-
-dbWrapper.getFlavors = function() {
-	// In the future this will make a DB call instead
-	return new Promise(function(fulfill, reject) {
-		try {
-			fulfill([{
-				name: 'Quote',
-				fields: [{
-					input: "text",
-					name: "Text"
-				},{
-					input: "text",
-					name: "Author"
-				}]
-			},{
-				name: 'Text',
-				fields: [{
-					input: "text",
-					name: "Text"
-				}]
-			},{
-				name: 'Video',
-				fields: [{
-					input: "text",
-					name: "Link"
-				}]
-			}]);
-		} catch (exception) {
-			reject(exception)
-		}
-	});
-}
+dbWrapper.Bob = Bob;
+dbWrapper.Tag = Tag;
+dbWrapper.Flavors = Flavors;
 
 module.exports = dbWrapper;
+
+
+
+
+function connectToDB(url) {
+  mongoose.connect(url);
+  let db = mongoose.connection;
+
+  db.on('error', console.error.bind(console, 'mongoose connection error:'));
+
+  db.once('open', function(){
+    console.log("Connected to mongodb");
+  });
+}

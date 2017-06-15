@@ -9,8 +9,8 @@ const http = require('http').Server(app);
 http.listen(8080);
 
 const io = require('socket.io')(http);
+const db = require('./models/wrapper.js');
 
-var board_elements = {'elements': []};
 
 /******* CONFIG *******/
 // Use body parser for requests
@@ -27,28 +27,15 @@ app.get('/', function (req, res) {
 });
 
 // Send data to board
-const controller = require('./routes/controllerRoutes');
+const controller = require('./routes/controllerRoutes')(io, db);
 app.get('/controller', controller.GETindex);
 app.post('/controller', controller.POSTbob);
 app.get('/flavors', controller.GETflavors);
 app.get('/tags', controller.GETtags);
 
 // Start socket
-io.on('connection', function(socket, msg){
-  console.log("user connected");
-
-  socket.emit('all_elements', board_elements);
-
-
-  socket.on('add_element', function (msg) {
-    bobbles.elements.push(msg);
-    io.emit('add_element', msg);
-
-    console.log('add_text', msg, '\n All elements:', bobbles.elements);
-    // socket.emit('volumes', JSON.stringify(volumes));
-    // io.emit('vizPositions', [position]);
-    // console.log("sent volumes", volumes);
-  });
+io.on('connection', function(socket) {
+  require('./routes/sockets')(socket, db);
 });
 
 

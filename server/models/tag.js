@@ -1,4 +1,20 @@
+const mongoose = require('mongoose');
 
-var tag = {};
+const tagSchema = mongoose.Schema({
+	title: String
+});
 
-module.exports = tag;
+const TagModel = mongoose.model('Tag', tagSchema);
+
+
+getTags = function(filter) {
+	return TagModel.find(filter);
+};
+
+
+var Tag = {};
+
+Tag.model = TagModel;
+Tag.getTags = getTags;
+
+module.exports = Tag;

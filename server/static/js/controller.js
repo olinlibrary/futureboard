@@ -1,7 +1,3 @@
-
-const socket = io();
-socket.emit('connection', 'controller');
-
 $(function() {
 
 	$('#start-date').datepicker();
@@ -12,7 +8,7 @@ $(function() {
 	$.get('/tags', function(tagArray) {
 		$.each(tagArray, function(index, tag) {
 			$('#tag-holder').append('<label>\
-				<input type="checkbox" name="tags" value="' + tag + '"></input>' + tag + '\
+				<input type="checkbox" name="tags" value="' + tag.title + '"></input>' + tag.title + '\
 			</label><br>');
 		});
 	});
@@ -44,7 +40,7 @@ $(function() {
 		event.preventDefault();
 
 		let $form = $(this)
-		
+
 		let tags = [];
 		$form.find('[name="tags"]:checked').each(function() {
 			tags.push($(this).val());
@@ -55,7 +51,7 @@ $(function() {
 			let $input = $(this);
 			bobData[$input.attr('name')] = $input.val();
 		});
-		
+
 		let data = {
 			data: bobData,
 			flavor: $form.find('#flavor').val(),
@@ -68,6 +64,6 @@ $(function() {
 			alert('Bob saved!');
 		});
 	});
-})
+});
 
 console.log("controller.js running");

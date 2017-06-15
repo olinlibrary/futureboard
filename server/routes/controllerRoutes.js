@@ -1,40 +1,48 @@
 // External dependencies
 const path = require('path');
-// Relative imports
-const db = require(path.join(__dirname, '..', '/models/wrapper'));
 
-var controller = {};
 
-controller.GETindex = function(req, res, next) {
-	res.sendFile(path.join(__dirname, '..', '/templates/controller.html'));
-}
 
-controller.POSTbob = function(req, res, next) {
-	var data = {
-		data: req.body.data,
-		flavor: req.body.flavor,
-		startDate: req.body.startDate,
-		endDate: req.body.endDate,
-		tags: req.body.tags
-	}
-	// Will add to database later
-	res.send(data);
-}
+module.exports = function(io, db) {
+	var controller = {};
 
-controller.GETflavors = function(req, res) {
-  db.getFlavors().then(function success(data) {
-    res.send(data);
-  }, function error(err) {
-    res.status(500).send(err);
-  })
-}
+	controller.GETindex = function(req, res, next) {
+		res.sendFile(path.join(__dirname, '..', '/templates/controller.html'));
+	};
 
-controller.GETtags = function(req, res) {
-  db.getTags().then(function success(data) {
-    res.send(data);
-  }, function error(err) {
-    res.status(500).send(err);
-  })
-}
+	controller.POSTbob = function(req, res, next) {
+		var bob = {
+			data: req.body.data,
+			flavor: req.body.flavor,
+			startDate: req.body.startDate,
+			endDate: req.body.endDate,
+			tags: req.body.tags
+		}
 
-module.exports = controller;
+		// Send to all boards
+		io.emit('add_element', bob);
+
+		// Save in db
+		db.Bob.saveBob(bob);
+
+		res.send("success")
+	};
+
+	controller.GETflavors = function(req, res) {
+	  db.Flavors.getFlavors().then(function success(data) {
+	    res.send(data);
+	  }, function error(err) {
+	    res.status(500).send(err);
+	  });
+	};
+
+	controller.GETtags = function(req, res) {
+	  db.Tag.getTags().then(function success(data) {
+	    res.send(data);
+	  }, function error(err) {
+	    res.status(500).send(err);
+	  });
+	};
+
+	return controller;
+};
