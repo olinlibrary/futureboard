@@ -10,7 +10,7 @@ function popluateBoard(bobbles) {
   var $bobbleList = $("#bobbles");
   for (var i = 0; i < bobbles.length; i++) {
     let $bob = $("<bob></bob>").addClass("grid-item")
-      .attr('id', bobbles[i].value)
+      .attr('id', bobbles[i].id)
       .append(createBoardElement(bobbles[i]));
     $bobbleList.append($bob);
     // TODO: Bring randomization back in later
@@ -24,7 +24,7 @@ function randomizeBobSize(bobID) {
   ];
 
   // this random feature is temporary
-  var randIndex = Math.floor(Math.random() * sizes.length)
+  var randIndex = Math.floor(Math.random() * sizes.length);
   $("#" + bobID).addClass(sizes[randIndex]);
 }
 
@@ -45,17 +45,15 @@ function createBoardElement(bob) {
 }
 
 function addBoardElement(newBob) {
+  var $bobbleList = $("#bobbles");
 
-  var $bobbleList = $("#bobbles")
-
-  var id = newBob.value;
+  var id = newBob.id;
   var $bob = $("<bob></bob>").attr('id', id)
     .addClass("grid-item")
     .append(createBoardElement(newBob));
 
   //this id value needs to be relevant to the MongoDB id of newBob
   $bobbleList.append($bob);
-  console.log(newBob.value + " Added to Board")
 }
 
 var socket = io();
