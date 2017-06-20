@@ -7,7 +7,7 @@ const flavorSchema = mongoose.Schema({
 
 const FlavorModel = mongoose.model('Flavor', flavorSchema);
 
-saveFlavor = function(flavorData) {
+function saveFlavor(flavorData) {
   const newFlavor = new FlavorModel({
 		name: flavorData.name,
 		fields: flavorData.fields
@@ -16,12 +16,12 @@ saveFlavor = function(flavorData) {
   newFlavor.save(function (err) {
     if (err) console.log("flavor save error:", err);
   });
-};
+}
 
 
-getFlavors = function(filter) {
+function getFlavors(filter) {
 	return FlavorModel.find(filter);
-};
+}
 
 
 

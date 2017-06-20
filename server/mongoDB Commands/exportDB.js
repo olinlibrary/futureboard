@@ -5,6 +5,7 @@ const Bob = require('../models/bob');
 const Flavor = require('../models/flavor');
 const Tag = require('../models/tag');
 
+// Tell mongoose to use native promises (mongoose promises are depricated)
 mongoose.Promise = global.Promise;
 let db = mongoose.connect('mongodb://localhost/test').connection;
 
@@ -25,7 +26,7 @@ db.on('open', function () {
     console.log("done saving");
     process.exit();
   }).catch( function (err) {
-    console.log('cought err' + err);
+    console.log('caught err' + err);
     process.exit();
   });
 });
@@ -33,7 +34,7 @@ db.on('open', function () {
 
 function saveObjects(filename, objects) {
   return new Promise(function(resolve, reject) {
-    fs.writeFile(filename, JSON.stringify(objects), (err) => {
+    fs.writeFile(filename, JSON.stringify(objects), function(err) {
       if (err) reject(err);
       else resolve("objects saved");
     });
