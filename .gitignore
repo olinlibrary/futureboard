@@ -2,6 +2,10 @@
 
 package-lock.json
 
+bobs.json
+flavors.json
+tags.json
+
 # Logs
 logs
 *.log

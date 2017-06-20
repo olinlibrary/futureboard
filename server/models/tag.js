@@ -6,15 +6,26 @@ const tagSchema = mongoose.Schema({
 
 const TagModel = mongoose.model('Tag', tagSchema);
 
+function saveTag(tagData) {
+  const newTag = new TagModel({
+		title: tagData.title
+  });
 
-getTags = function(filter) {
+  newTag.save(function (err) {
+    if (err) console.log("tag save error:", err);
+  });
+}
+
+
+function getTags(filter) {
 	return TagModel.find(filter);
-};
+}
 
 
 var Tag = {};
 
 Tag.model = TagModel;
+Tag.saveTag = saveTag;
 Tag.getTags = getTags;
 
 module.exports = Tag;
