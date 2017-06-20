@@ -1,66 +1,85 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <script src="/static/vendor/jquery.min.js" charset="UTF-8" type="text/javascript"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="/static/js/controller.js" charset="UTF-8" type="text/javascript"></script>
-    <style>
-      body {
-        padding: 10;
-        margin: 10;
-      }
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-      .form-field {
-        margin-bottom: 25px;
-      }
-      .data-field {
-        display: block;
-        margin-bottom: 15px;
-      }
+  <title>Fb - Add Bob</title>
 
-      #tag-holder label {
-        display: inline-block;
-        margin-bottom: 10px;
-      }
-    </style>
-  </head>
+  <!-- load font -->
+  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css" />
 
-  <body>
-    <p>Buttons and things.</p>
+  <!-- load MUI -->
+  <link href="//cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
+  <script src="//cdn.muicss.com/mui-0.9.16/js/mui.min.js"></script>
+
+  <!-- load CSS, overrides MUI -->
+  <link rel="stylesheet" type="text/css" href="/static/css/controller.css">
+
+  <!-- load js -->
+  <script src="/static/vendor/socket.io.js" charset="UTF-8" type="text/javascript"></script>
+  <script src="/static/vendor/jquery.min.js" charset="UTF-8" type="text/javascript"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <script src="/static/js/controller.js" charset="UTF-8" type="text/javascript"></script>
+</head>
+
+<body>
+
+  <div class="mui-container">
+    <div id="navbar" class="mui-appbar">
+      <table width="100%">
+        <tr>
+          <td class="mui--appbar-height" align="middle">
+            <legend class="mui--text-display2">Create a New Bob!</legend>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="mui-divider"></div><br />
+
     <form id="add-bob-form" novalidate>
 
-      <div class="form-field">
-        <label for="flavor">Flavor</label><br>
-        <select id="flavor" name="flavor">
+      <label for="flavor" class="mui--text-title">Flavor</label><br>
+      <div class="form-field mui-form">
+        <div class="mui-select">
+          <select id="flavor" name="flavor">
           <option>--- Select One ---</option>
           <!-- Filled in with options pulled down from DB -->
-        </select>
+      </select>
+        </div>
       </div>
 
-      <div id="data" class="form-field">
 
+
+      <label for="data" class="mui--text-title">Data</label><br>
+      <div class="form-field mui-textfield ">
+        <input id="data" name="data" type="text"></input>
       </div>
 
       <div class="form-field">
-        <fieldset id="tag-holder">
+        <fieldset id="tag-holder" class="mui-checkbox mui--text-subhead">
           <legend>Tags</legend>
           <!-- Filled in with options pulled down from DB -->
         </fieldset>
       </div>
 
-      <div class="form-field">
-        <label for="start-date">Start showing on</label><br>
-        <input type="text" id="start-date" name="start-date">
+      <div class="form-field" class="mui-textfield">
+        <label class="mui--text-title" for="start-date">Start showing on</label><br>
+        <input type="text" id="start-date"  name="start-date">
       </div>
 
-      <div class="form-field">
-        <label for="end-date">Stop showing on</label><br>
-        <input type="text" id="end-date" name="end-date">
+      <div class="form-field" class="mui-textfield">
+        <label class="mui--text-title" for="end-date">Stop showing on</label><br>
+        <input type="text" id="end-date"  name="end-date">
       </div>
 
-      <input type="submit"></input>
+
+      <button type="submit" class="mui-btn mui-btn--accent mui-btn--large">Add Bob</button>
+
     </form>
-  </body>
+  </div>
+</body>
+
 </html>
