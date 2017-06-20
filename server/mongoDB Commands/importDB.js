@@ -15,25 +15,24 @@ db.on('open', function () {
     objects = JSON.parse(data);
     console.log('importing', objects.length, collectionName, 'from', collectionName + '.json');
 
-    var i = 0;
 
     switch (collectionName) {
       case 'flavors':
-        for(i=0; i<objects.length; i++){
-          Flavor.saveFlavor(objects[i]);
-        }
+        objects.forEach(function (object) {
+          Flavor.saveFlavor(object);
+        });
         break;
 
       case 'tags':
-        for(i=0; i<objects.length; i++){
-          Tag.saveTag(objects[i]);
-        }
+        objects.forEach(function (object) {
+          Tag.saveTag(object);
+        });
         break;
 
       case 'bobs':
-        for(i=0; i<objects.length; i++){
-          Bob.saveBob(objects[i]);
-        }
+        objects.forEach(function (object) {
+          Bob.saveBob(object);
+        });
         break;
 
       default:
