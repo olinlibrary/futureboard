@@ -28,7 +28,7 @@ function saveBob(bobData) {
   });
 }
 
-function getAllBobs(filter) {
+function getBobs(filter) {
   return BobModel.find(filter);
 }
 
@@ -36,7 +36,7 @@ function getOneBob(filter) {
   return BobModel.findOne(filter);
 }
 
-function getAllActiveBobs(filter) {
+function getActiveBobs(filter) {
   let query = BobModel.find(filter);
   query.and({startDate: { $lte: Date.now() }, endDate: { $gte: Date.now() }});
   return query;
@@ -47,8 +47,8 @@ let Bob = {};
 
 Bob.model = BobModel;
 Bob.saveBob = saveBob;
-Bob.getAllBobs = getAllBobs;
+Bob.getBobs = getBobs;
 Bob.getOneBob = getOneBob;
-Bob.getAllActiveBobs = getAllActiveBobs;
+Bob.getActiveBobs = getActiveBobs;
 
 module.exports = Bob;
