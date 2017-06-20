@@ -12,14 +12,14 @@ db.on('open', function () {
   console.log('db connected');
 
   Flavor.getFlavors().then( function (flavors) {
-    return saveObjects('flavors.json', JSON.stringify(flavors));
+    return saveObjects('flavors.json', flavors);
   }).then( function () {
     return Tag.getTags().then( function (tags) {
-      return saveObjects('tags.json', JSON.stringify(tags));
+      return saveObjects('tags.json', tags);
     });
   }).then( function () {
     return Bob.getBobs().then( function (bobs) {
-      return saveObjects('bobs.json', JSON.stringify(bobs));
+      return saveObjects('bobs.json', bobs);
     });
   }).then( function () {
     console.log("done saving");
@@ -33,7 +33,7 @@ db.on('open', function () {
 
 function saveObjects(filename, objects) {
   return new Promise(function(resolve, reject) {
-    fs.writeFile(filename, objects, (err) => {
+    fs.writeFile(filename, JSON.stringify(objects), (err) => {
       if (err) reject(err);
       else resolve("objects saved");
     });
