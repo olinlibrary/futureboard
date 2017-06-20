@@ -1,31 +1,64 @@
-// masonry grid controller
-$('.grid').masonry({
-  itemSelector: '.grid-item',
-  columnWidth: '.grid-sizer',
-  gutter: '.gutter-sizer',
-  percentPosition: true
-});
+function addBoardElement(newBob) {
+  let $bob = $("<bob></bob>")
+    .attr('id', newBob._id)
+    .attr('flavor', newBob.flavor)
+    .addClass("grid-item")
+    .append(createBoardElement(newBob));
+
+  //this id value needs to be relevant to the MongoDB id of newBob
+  $bobbleList.append($bob);
+  adjustBobSize();
+}
 
 function popluateBoard(bobbles) {
   var $bobbleList = $("#bobbles");
-  for (var i = 0; i < bobbles.length; i++) {
+  for (let i = 0; i < bobbles.length; i++) {
     let $bob = $("<bob></bob>").addClass("grid-item")
-      .attr('id', bobbles[i].id)
+      .attr('id', bobbles[i]._id)
+      .attr('flavor', bobbles[i].flavor)
       .append(createBoardElement(bobbles[i]));
     $bobbleList.append($bob);
     // TODO: Bring randomization back in later
   }
+  adjustBobSize();
 }
 
-function randomizeBobSize(bobID) {
-  // randomly changes the size of the bob with bob_id
-  var sizes = ["grid-item--width2", "grid-item--width3", "grid-item--height2",
-    "grid-item--height3", "grid-item--height4"
-  ];
+function adjustBobSize() {
+  // changes sizes of all bobs on the board based on their flavors
 
-  // this random feature is temporary
-  var randIndex = Math.floor(Math.random() * sizes.length);
-  $("#" + bobID).addClass(sizes[randIndex]);
+  let $bobs = $("bob");
+  console.log($bobs)
+  $.each($bobs, function(index, bob) {
+    let bobFlavor = $(bob).attr("flavor");
+    switch (bobFlavor) {
+      case 'Quote':
+        $(bob).addClass("grid-item--width1")
+          .addClass("grid-item--height2");
+        break;
+      case 'Text':
+        $(bob).addClass("grid-item--width1")
+          .addClass("grid-item--height1");
+        break;
+        break;
+      case 'Poem':
+        $(bob).addClass("grid-item--width3")
+          .addClass("grid-item--height4");
+        break;
+      case 'Image':
+        $(bob).addClass("grid-item--childwidth")
+          .addClass("grid-item--childheight");
+        break;
+      case 'Meme':
+        $(bob).addClass("grid-item--childwidth")
+          .addClass("grid-item--childheight");
+        break;
+      case 'Video':
+        $(bob).addClass("grid-item--childwidth")
+          .addClass("grid-item--childheight");
+        break;
+    }
+  });
+  console.log("bob size adjusted");
 }
 
 function createBoardElement(bob) {
@@ -35,6 +68,34 @@ function createBoardElement(bob) {
         .append(bob.data.Text).append('<br>')
         .append(bob.data.Author);
       break;
+    case 'Text':
+      $html = $('<p></p>')
+        .append(bob.data.Text).append('<br>')
+        .append(bob.data.Author);
+      break;
+
+    case 'Image':
+      $html = $('<img></img>')
+        .attr('src', bob.data.Link)
+      break;
+
+    case 'Video':
+      console.log(bob.flavor)
+      $html = $('<embed></embed>')
+        .attr('src', bob.data.Link);
+      break;
+
+    case 'Poem':
+      $html = $('<p></p>')
+        .append(bob.data.Title).append('<br>')
+        .append(bob.data.Author).append('<br>')
+        .append(bob.data.Text);
+      break;
+
+    case 'Meme':
+      $html = $('<img></img>')
+        .attr('src', bob.data.Link)
+      break;
 
     default:
       console.log("Unknown element type", bob.flavor);
@@ -43,18 +104,13 @@ function createBoardElement(bob) {
 
   return $html;
 }
-
-function addBoardElement(newBob) {
-  var $bobbleList = $("#bobbles");
-
-  var id = newBob.id;
-  var $bob = $("<bob></bob>").attr('id', id)
-    .addClass("grid-item")
-    .append(createBoardElement(newBob));
-
-  //this id value needs to be relevant to the MongoDB id of newBob
-  $bobbleList.append($bob);
-}
+// masonry grid controller
+$('.grid').masonry({
+  itemSelector: '.grid-item',
+  columnWidth: '.grid-sizer',
+  gutter: 10,
+  percentPosition: true
+});
 
 var socket = io();
 socket.emit('connection');

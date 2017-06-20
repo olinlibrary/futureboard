@@ -7,53 +7,124 @@ body {
   background-color: #E57373;
 }
 
+* {
+  box-sizing: border-box;
+}
 
-* { box-sizing: border-box; }
+body {
+  font-family: sans-serif;
+}
 
-body { font-family: sans-serif; }
 
 /* ---- grid ---- */
 
-.grid {
-}
+.grid {}
+
 
 /* clearfix */
+
 .grid:after {
   content: '';
   display: block;
   clear: both;
 }
 
+
 /* ---- grid-item ---- */
+
+
 /*element sizing https://masonry.desandro.com/options.html#gutter*/
-.grid-sizer,
-.grid-item {
+
+.grid-sizer, .grid-item {
   width: 20%;
 }
+
 .gutter-sizer {
   width: 1%;
 }
 
-
 .grid-item {
   height: 120px;
   float: left;
-  background: hsl(345, 71%, 86%);
-  border: 2px solid #333;
+  background: hsv(212, 7%, 89%);
+  border: 1px solid #333;
+  padding: 1px;
   border-color: hsla(0, 0%, 0%, 0.5);
   border-radius: 5px;
+  margin-left: 10px;
+  margin-bottom: 10px;
 }
 
-.grid-item p{
-  text-align:center;
+.grid-item p {
+  text-align: center;
   font-family: "Roboto";
-  font-size:250%;
+  font-size: 100%;
 }
+
+.grid-item--childwidth {
+  float: left;
+  height: auto;
+  width:auto;
+  display: block;
+}
+
+.grid-item--childwidth img, .grid-item--childwidth embed {
+  overflow: auto;
+}
+
+.grid-item--childheight {}
+
 
 /*responsive grid sizes*/
-.grid-item--width2 { width:  40%; }
-.grid-item--width3 { width:  60%; }
 
-.grid-item--height2 { height: 200px; }
-.grid-item--height3 { height: 260px; }
-.grid-item--height4 { height: 360px; }
+.grid-item--width2 {
+  width: 20%;
+}
+
+.grid-item--width3 {
+  width: 30%;
+}
+
+.grid-item--width4 {
+  width: 40%;
+}
+
+.grid-item--width5 {
+  width: 50%;
+}
+
+.grid-item--width6 {
+  width: 60%;
+}
+
+.grid-item--width7 {
+  width: 70%;
+}
+
+.grid-item--width8 {
+  width: 80%;
+}
+
+.grid-item--width9 {
+  width: 90%;
+}
+
+.grid-item--height2 {
+  height: 200px;
+}
+
+.grid-item--height3 {
+  height: 260px;
+}
+
+.grid-item--height4 {
+  height: 360px;
+}
+
+.grid-item--height5 {
+  height: 460px;
+}
+
+.grid-item--height6 {
+  height: 560px;
+}
