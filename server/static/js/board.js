@@ -1,39 +1,30 @@
 function addBoardElement(newBob) {
   let $bob = $("<bob></bob>")
-    .attr('id', newBob._id)
-    .attr('flavor', newBob.flavor)
-    .addClass("grid-item")
+    .attr('id', newBob._id).attr('flavor', newBob.flavor).addClass("grid-item")
     .append(createBoardElement(newBob));
-
-  //this id value needs to be relevant to the MongoDB id of newBob
-  $bobbleList.append($bob);
+  $("bobbles").append($bob);
   adjustBobSize();
 }
 
 function popluateBoard(bobbles) {
-  var $bobbleList = $("#bobbles");
   for (let i = 0; i < bobbles.length; i++) {
     let $bob = $("<bob></bob>").addClass("grid-item")
       .attr('id', bobbles[i]._id)
       .attr('flavor', bobbles[i].flavor)
       .append(createBoardElement(bobbles[i]));
-    $bobbleList.append($bob);
-    // TODO: Bring randomization back in later
+    $("bobbles").append($bob);
   }
   adjustBobSize();
 }
 
 function adjustBobSize() {
   // changes sizes of all bobs on the board based on their flavors
-
   let $bobs = $("bob");
-  console.log($bobs)
   $.each($bobs, function(index, bob) {
     let bobFlavor = $(bob).attr("flavor");
     switch (bobFlavor) {
       case 'Quote':
-        $(bob).addClass("grid-item--width1")
-          .addClass("grid-item--height2");
+        $(bob).addClass("grid-item--childwidth")
         break;
       case 'Text':
         $(bob).addClass("grid-item--width1")
@@ -64,9 +55,10 @@ function adjustBobSize() {
 function createBoardElement(bob) {
   switch (bob.flavor) {
     case 'Quote':
-      $html = $('<p></p>')
-        .append(bob.data.Text).append('<br>')
-        .append(bob.data.Author);
+      $html = $('<div></div>').addClass("card white")
+        .append($('<div></div>').addClass("card-content black-text")
+          .append($('<span></span>').addClass("card-title").append(bob.data.Text))
+          .append($('<span></span>').addClass("right").append("by ", bob.data.Author)));
       break;
     case 'Text':
       $html = $('<p></p>')
@@ -80,7 +72,6 @@ function createBoardElement(bob) {
       break;
 
     case 'Video':
-      console.log(bob.flavor)
       $html = $('<embed></embed>')
         .attr('src', bob.data.Link);
       break;
@@ -101,22 +92,14 @@ function createBoardElement(bob) {
       console.log("Unknown element type", bob.flavor);
       $html = null;
   }
-
   return $html;
 }
-// masonry grid controller
-$('.grid').masonry({
-  itemSelector: '.grid-item',
-  columnWidth: '.grid-sizer',
-  gutter: 10,
-  percentPosition: true
-});
+
 
 var socket = io();
 socket.emit('connection');
 
 socket.on('all_elements', popluateBoard);
 socket.on('add_element', addBoardElement);
-
 
 console.log('board.js is running');

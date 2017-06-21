@@ -7,9 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Forward Board</title>
 
-  <!-- load CSS -->
-  <link rel="stylesheet" type="text/css" href="/static/css/board.css">
-
   <!-- load font -->
   <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css" />
 
@@ -27,6 +24,9 @@
   <!-- load Materialize js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
 
+  <!-- load CSS -->
+  <link rel="stylesheet" type="text/css" href="/static/css/board.css">
+
   <!-- load board js -->
   <script src='/static/js/board.js' charset="UTF-8" type="text/javascript"></script>
 
@@ -34,30 +34,27 @@
 
 
 <body>
-
-  <div id="navbar" class="mui-appbar">
-    <table width="100%">
-      <tr style="vertical-align:middle;">
-        <td class="mui--appbar-heighr mui--text-display3" align="left">
-          FORWARDboard
-        </td>
-        <td class="mui--appbar-height" align="right">
+  <nav>
+    <div class="nav-wrapper">
+      <a href="#" class="brand-logo">FORWARDboard</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li>
           <a href="/controller" target="_blank">
-            <button class="mui-btn mui-btn--fab">New</button>
+            <button class="btn-large btn-floating red accent-4 pulse"><i class="material-icons">+</i></button>
           </a>
-        </td>
-      </tr>
-    </table>
-  </div>
-  <div id="content" class="mui-container">
-    <div class="mui-row">
-      <div class="mui-col-sm-12">
-        <div class="mui--text-dark-secondary mui--text-display2">What's UP</div>
+        </li>
+      </ul>
+    </div>
+  </nav>
 
-        <div class="mui-divider"></div>
-        <br>
+  <div id="content" class="container big">
+    <div class="row">
+      <div class="col s12">
+        <div class="mui--text-dark-secondary mui--text-display2">What's UP</div>
+        <div class="mui-divider"></div><br>
       </div>
     </div>
+
     <!-- this is the container of bobs -->
     <bobbles id="bobbles" class="grid">
       <!-- .grid-sizer, gutter-sizer empty element, only used for element sizing -->

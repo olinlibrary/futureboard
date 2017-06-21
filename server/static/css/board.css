@@ -1,39 +1,25 @@
+* {
+  box-sizing: border-box;
+}
 body {
   height: 100%;
-  font-family: "Roboto", "Helvetica Neue", Helvetica, Arial;
+  font-family: "Roboto";
 }
 
 #navbar {
   background-color: #E57373;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-body {
-  font-family: sans-serif;
-}
-
-
 /* ---- grid ---- */
 
 .grid {}
 
-
 /* clearfix */
-
 .grid:after {
   content: '';
   display: block;
   clear: both;
 }
-
-
-/* ---- grid-item ---- */
-
-
-/*element sizing https://masonry.desandro.com/options.html#gutter*/
 
 .grid-sizer, .grid-item {
   width: 20%;
@@ -64,19 +50,16 @@ body {
 .grid-item--childwidth {
   float: left;
   height: auto;
-  width:auto;
+  width: auto;
   display: block;
 }
 
 .grid-item--childwidth img, .grid-item--childwidth embed {
   overflow: auto;
 }
-
-.grid-item--childheight {}
-
-
-/*responsive grid sizes*/
-
+.grid-item .card{
+  margin: 0;
+}
 .grid-item--width2 {
   width: 20%;
 }
