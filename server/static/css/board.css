@@ -1,33 +1,25 @@
-* {
-  box-sizing: border-box;
-}
-body {
-  height: 100%;
-  font-family: "Roboto";
-}
-
 #navbar {
   background-color: #E57373;
 }
 
+body {
+  font-family: "Roboto";
+}
+
+
+/*text sizes*/
+
+.text--small {
+  font-size: 0.85rem;
+}
+.text--medium {
+  font-size: 1.0rem;
+}
+.text--big {
+  font-size: 1.2rem;
+}
+
 /* ---- grid ---- */
-
-.grid {}
-
-/* clearfix */
-.grid:after {
-  content: '';
-  display: block;
-  clear: both;
-}
-
-.grid-sizer, .grid-item {
-  width: 20%;
-}
-
-.gutter-sizer {
-  width: 1%;
-}
 
 .grid-item {
   height: 120px;
@@ -36,78 +28,54 @@ body {
   border: 1px solid #333;
   padding: 1px;
   border-color: hsla(0, 0%, 0%, 0.5);
-  border-radius: 5px;
-  margin-left: 10px;
-  margin-bottom: 10px;
-}
+  border-radius: 3px;
 
-.grid-item p {
-  text-align: center;
-  font-family: "Roboto";
-  font-size: 100%;
+  /*gutter*/
+  --gutter: 5px;
+  margin-left: var(--gutter);
+  margin-bottom: var(--gutter);
 }
 
 .grid-item--childwidth {
+  /*dynamically changes depending on the childwidth*/
   float: left;
   height: auto;
   width: auto;
   display: block;
 }
-
-.grid-item--childwidth img, .grid-item--childwidth embed {
-  overflow: auto;
-}
-.grid-item .card{
+.grid-item .card {
   margin: 0;
 }
-.grid-item--width2 {
-  width: 20%;
+.card .card-action a.--nomargin:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating){
+  margin-right: 0px;
+}
+.card .card-action--thin{
+  padding: 4px 4px;
+}
+.card-action i.tiny {
+  font-size: 1.4rem;
+}
+.card .video-container {
+  width: 20rem;
 }
 
-.grid-item--width3 {
-  width: 30%;
+/*max-width for each flavor*/
+.grid-item--text {
+  max-width: 20%;
 }
 
-.grid-item--width4 {
-  width: 40%;
+.grid-item--poem {
+  max-width: 30%;
 }
 
-.grid-item--width5 {
-  width: 50%;
+.grid-item--image {
+  max-width: 30%;
 }
 
-.grid-item--width6 {
-  width: 60%;
+.grid-item--meme {
+  max-width: 35%;
 }
 
-.grid-item--width7 {
-  width: 70%;
-}
-
-.grid-item--width8 {
-  width: 80%;
-}
-
-.grid-item--width9 {
-  width: 90%;
-}
-
-.grid-item--height2 {
-  height: 200px;
-}
-
-.grid-item--height3 {
-  height: 260px;
-}
-
-.grid-item--height4 {
-  height: 360px;
-}
-
-.grid-item--height5 {
-  height: 460px;
-}
-
-.grid-item--height6 {
-  height: 560px;
+.grid-item--video {
+  max-width: 55%;
 }

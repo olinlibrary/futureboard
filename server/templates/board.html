@@ -23,10 +23,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
   <!-- load Materialize js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+  <!-- load Materialize icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- load CSS -->
   <link rel="stylesheet" type="text/css" href="/static/css/board.css">
-
   <!-- load board js -->
   <script src='/static/js/board.js' charset="UTF-8" type="text/javascript"></script>
 
@@ -40,7 +41,9 @@
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li>
           <a href="/controller" target="_blank">
-            <button class="btn-large btn-floating red accent-4 pulse"><i class="material-icons">+</i></button>
+            <button class="btn-large btn-floating red accent-4 pulse">
+              <i class="material-icons">add</i>
+            </button>
           </a>
         </li>
       </ul>
@@ -57,9 +60,6 @@
 
     <!-- this is the container of bobs -->
     <bobbles id="bobbles" class="grid">
-      <!-- .grid-sizer, gutter-sizer empty element, only used for element sizing -->
-      <div class="grid-sizer"></div>
-      <div class="gutter-sizer"></div>
       <!-- bobs are created here -->
   </div>
   <br>
