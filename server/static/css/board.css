@@ -6,8 +6,7 @@ body {
   font-family: "Roboto";
 }
 
-
-/*text sizes*/
+/*predefined text sizes*/
 
 .text--small {
   font-size: 0.85rem;
@@ -17,6 +16,11 @@ body {
 }
 .text--big {
   font-size: 1.2rem;
+}
+/*container*/
+.container{
+  width:90%;
+  max-width:1600px;
 }
 
 /* ---- grid ---- */
@@ -56,7 +60,11 @@ body {
   font-size: 1.4rem;
 }
 .card .video-container {
-  width: 20rem;
+  /*width: 20rem;*/
+}
+.card .chip{
+  font-size: 11px;
+  padding: 0 9px;
 }
 
 /*max-width for each flavor*/

@@ -51,10 +51,19 @@ function createBoardElement(bob) {
       .append($('<i></i>').addClass("material-icons tiny").append(iconName));
     return newButton;
   }
-
-  let $bobNav = $('<div></div>').addClass("card-action card-action--thin right-align")
+  function tagChips(bob){
+    $chips = $("<div></div>").addClass("hide-on-small-only right-align");
+    for (let i = 0; i < bob.tags.length; i++){
+      $chip = $("<div></div>").addClass("chip").append("#", bob.tags[i]);
+      $chips.append($chip);
+    }
+    return $chips;
+  }
+  let $bobNav =
+  tagChips(bob)
+  .append($('<div></div>').addClass("card-action card-action--thin right-align")
     .append(buttonIcon("thumb_up"))
-    .append(buttonIcon("zoom_in"));
+    .append(buttonIcon("zoom_in")));
 
   function truncate(text, length){
     let shortText = text.substring(0, length);
