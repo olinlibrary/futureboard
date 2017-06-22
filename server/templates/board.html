@@ -10,14 +10,10 @@
   <!-- load font -->
   <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css" />
 
-  <!-- load MUI -->
-  <link href="//cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
-  <script src="//cdn.muicss.com/mui-0.9.16/js/mui.min.js"></script>
-
   <!-- load vendor js -->
   <script src='/static/vendor/socket.io.js' charset="UTF-8" type="text/javascript"></script>
   <script src='/static/vendor/jquery.min.js' charset="UTF-8" type="text/javascript"></script>
-  <script src="/static/vendor/masonry.pkgd.min.js" charset="UTF-8" type="text/javascript"></script>
+
 
   <!-- load Materialize CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
@@ -25,6 +21,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
   <!-- load Materialize icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!-- load animatedModal CSS -->
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
 
   <!-- load CSS -->
   <link rel="stylesheet" type="text/css" href="/static/css/board.css">
@@ -49,23 +47,18 @@
       </ul>
     </div>
   </nav>
-
+  <br />
   <div id="content" class="container big">
-    <div class="row">
-      <div class="col s12">
-        <div class="mui--text-dark-secondary mui--text-display2">What's UP</div>
-        <div class="mui-divider"></div><br>
-      </div>
-    </div>
-
     <!-- this is the container of bobs -->
     <bobbles id="bobbles" class="grid">
       <!-- bobs are created here -->
+
+    </bobbles>
   </div>
   <br>
 
   </div>
-
+  <script src="/static/vendor/animatedModal.min.js"></script>
 </body>
 
 </html>
