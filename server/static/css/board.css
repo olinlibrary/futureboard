@@ -4,54 +4,60 @@
 
 body {
   font-family: "Roboto";
+  background-color: rgb(252, 255, 245);
 }
 
-/*predefined text sizes*/
+/*custom font sizes*/
+.text--small {font-size: 0.85rem;}
+.text--medium {font-size: 1.0rem;}
+.text--big {font-size: 1.2rem;}
 
-.text--small {
-  font-size: 0.85rem;
-}
-.text--medium {
-  font-size: 1.0rem;
-}
-.text--big {
-  font-size: 1.2rem;
-}
-/*container*/
+/* ---- container, items ---- */
 .container{
+  /*shapeshift defaults*/
   width:90%;
-  max-width:1600px;
+  position:relative;
+  /*custom*/
+  background-color:white;
 }
 
-/* ---- grid ---- */
-
-.grid-item {
+.grid-item  {
+  /*shapeshift defaults*/
   height: 120px;
-  float: left;
+  width: 120px;
+  position:absolute;
+
+  /*custom*/
   background: hsv(212, 7%, 89%);
-  border: 1px solid #333;
   padding: 1px;
-  border-color: hsla(0, 0%, 0%, 0.5);
-  border-radius: 3px;
 
-  /*gutter*/
-  --gutter: 5px;
-  margin-left: var(--gutter);
-  margin-bottom: var(--gutter);
+}
+.grid-item > * {
+  position:absolute;
+  width: 100%;
+  height: 100%;
 }
 
-.grid-item--childwidth {
-  /*dynamically changes depending on the childwidth*/
-  float: left;
-  height: auto;
-  width: auto;
-  display: block;
-}
+/*box inside grid item*/
 .grid-item .card {
   margin: 0;
 }
-.card .card-action a.--nomargin:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating){
-  margin-right: 0px;
+.card .card-content {
+  height: 50%;
+}
+.card .card-action{
+  position:absolute;
+  width:100%;
+  height: 30px;
+  bottom: 0;
+  right: 0;
+}
+
+.tags-bar {
+  position:absolute;
+  width:100%;
+  bottom: 30px;
+  right: 0;
 }
 .card .card-action--thin{
   padding: 4px 4px;
@@ -59,31 +65,40 @@ body {
 .card-action i.tiny {
   font-size: 1.4rem;
 }
-.card .video-container {
-  /*width: 20rem;*/
-}
 .card .chip{
   font-size: 11px;
   padding: 0 9px;
 }
 
-/*max-width for each flavor*/
-.grid-item--text {
-  max-width: 20%;
+/*definetely not the best way to go about this, temporary magic css*/
+.--nomargin{
+  /*removes margin from <a> tags*/
+  margin-right:0px !important;
 }
 
-.grid-item--poem {
-  max-width: 30%;
+/*meme specific css*/
+.card .card-image{
+  height: 75%;
+
+}
+.card .card-image img {
+  height: 100%;
+  width: auto;
+
+  /*centers the image*/
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.card-image + .card-content{
+  height:auto;
 }
 
-.grid-item--image {
-  max-width: 30%;
-}
 
-.grid-item--meme {
-  max-width: 35%;
-}
+.container .grid-item[data-ss-colspan="2"] { width: 240px; }
+.container .grid-item[data-ss-colspan="3"] { width: 360px; }
+.container .grid-item[data-ss-colspan="4"] { width: 480px; }
 
-.grid-item--video {
-  max-width: 55%;
-}
+.container .grid-item[data-ss-rowspan="2"] { height: 240px; }
+.container .grid-item[data-ss-rowspan="3"] { height: 360px; }
+.container .grid-item[data-ss-rowspan="4"] { height: 480px; }

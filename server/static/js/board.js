@@ -5,6 +5,7 @@ function addBoardElement(newBob) {
   $("bobbles").append($bob);
   adjustBobSize();
   initModals();
+  initShapeShift();
 }
 
 function popluateBoard(bobbles) {
@@ -17,8 +18,24 @@ function popluateBoard(bobbles) {
   }
   adjustBobSize();
   initModals();
-}
+  initShapeShift();
 
+}
+function initShapeShift(){
+  $('.container').shapeshift({
+    align:'left',
+    columns:null,
+    minColumns:15,
+    gutterX: 7, // Compensate for border width
+    gutterY: 7, // Compensate for border width
+    paddingX: 0,
+    paddingY: 0,
+    autoHeight: true,
+    minHeight:600,
+    maxHeight:null
+  });
+  console.log("shapeshift initialized");
+}
 function adjustBobSize() {
   // changes sizes of all bobs on the board based on their flavors
   let $bobs = $("bob");
@@ -27,19 +44,19 @@ function adjustBobSize() {
     switch (bobFlavor) {
       case 'Text':
       case 'Quote':
-        $(bob).addClass("grid-item--childwidth grid-item--text")
+        $(bob).attr("data-ss-colspan", "2").attr("data-ss-rowspan", "2")
         break;
       case 'Poem':
-        $(bob).addClass("grid-item--childwidth grid-item--poem")
+        $(bob).attr("data-ss-colspan", "3").attr("data-ss-rowspan", "3")
         break;
       case 'Image':
-        $(bob).addClass("grid-item--childwidth grid-item--image")
+        $(bob).attr("data-ss-colspan", "4").attr("data-ss-rowspan", "4")
         break;
       case 'Meme':
-        $(bob).addClass("grid-item--childwidth grid-item--meme")
+        $(bob).attr("data-ss-colspan", "4").attr("data-ss-rowspan", "4")
         break;
       case 'Video':
-        $(bob).addClass("grid-item--childwidth grid-item--video")
+        $(bob).attr("data-ss-colspan", "4").attr("data-ss-rowspan", "4")
         break;
     }
   });
@@ -55,12 +72,18 @@ function initModals(){
       color:"#fbf3f2",
       modalTarget: "modal" + bob.id,
       beforeOpen: function() {
+        console.log("before Open")
       },
       afterOpen: function() {
+        console.log("after Open")
       },
       beforeClose: function() {
+        console.log("before Close")
+        $('body').removeAttr('style');
       },
       afterClose: function() {
+        console.log("after close")
+
       }
     })
   });
@@ -76,11 +99,12 @@ function createBoardElement(bob) {
   }
   function tagChips(bob){
     $chips = $("<div></div>").addClass("hide-on-small-only right-align");
+    $tagsBar = $("<div></div>").addClass("tags-bar");
     for (let i = 0; i < bob.tags.length; i++){
       $chip = $("<div></div>").addClass("chip").append("#", bob.tags[i]);
-      $chips.append($chip);
+      $tagsBar.append($chip);
     }
-    return $chips;
+    return $chips.append($tagsBar);
   }
   function truncate(text, length){
     let shortText = text.substring(0, length);
@@ -114,28 +138,28 @@ function createBoardElement(bob) {
     let $modalContent = function modalContent(){
       switch (bob.flavor) {
         case 'Quote':
-          $content = $('<div></div>').addClass("card white hoverable")
+          $content = $('<div></div>').addClass("card big white hoverable")
             .append($('<div></div>').addClass("card-content black-text")
-              .append($('<p></p>').addClass("text--medium").append(truncate(bob.data.Text, 70)))
-              .append($('<span></span>').addClass("text--small right").append("by ", bob.data.Author)))
+              .append($('<p></p>').addClass("text--big").append(bob.data.Text))
+              .append($('<span></span>').addClass("text--medium right").append("by ", bob.data.Author)))
           break;
         case 'Text':
           $content = $('<div></div>').addClass("card white hoverable")
             .append($('<div></div>').addClass("card-content black-text")
-              .append(($('<p></p>')).addClass("flow-text-medium").append(truncate(bob.data.Text, 70))))
+              .append(($('<p></p>')).addClass("flow-text-medium").append(bob.data.Text)))
           break;
         case 'Poem':
           $content = $('<div></div>').addClass("card white hoverable")
             .append($('<div></div>').addClass("card-content black-text")
               .append($('<span></span>').addClass("card-title").append(bob.data.Title))
               .append($('<span></span>').addClass("right").append("by ", bob.data.Author)).append("<br>")
-              .append($('<p></p>').addClass("text--small").append(truncate(bob.data.Text, 200))))
+              .append($('<p></p>').addClass("text--small").append(bob.data.Text)))
 
           break;
         case 'Image':
           $content = $('<div></div>').addClass("card white hoverable")
             .append($('<div></div>').addClass("card-image")
-              .append($('<img></img>').addClass("responsive-img").attr('src', bob.data.Link)))
+              .append($('<img></img>').addClass("responsive-img ").attr('src', bob.data.Link)))
 
           break;
         case 'Meme':
@@ -144,7 +168,7 @@ function createBoardElement(bob) {
             .append($('<div></div>').addClass("card-image")
               .append($('<img></img>').addClass("responsive-img").attr('src', bob.data.Link)))
             .append($('<div></div>').addClass("card-content black-text")
-              .append(($('<p></p>')).addClass("flow-text-medium").append(truncate(bob.data.Description, 70))))
+              .append(($('<p></p>')).addClass("flow-text-medium").append(bob.data.Description)))
 
           break;
         case 'Video':
@@ -154,7 +178,7 @@ function createBoardElement(bob) {
               .append($('<iframe></iframe>')
                 .attr("allowfullscreen","true").attr("frameborder", 0).attr('width', 853).attr('height',480).attr('src', bob.data.Link)))
             .append($('<div></div>').addClass("card-content black-text")
-              .append(($('<p></p>')).addClass("flow-text-medium").append(truncate(bob.data.Description, 70))))
+              .append(($('<p></p>')).addClass("flow-text-medium").append(bob.data.Description)))
           break;
 
         default:
