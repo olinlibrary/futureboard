@@ -6,8 +6,6 @@ const bodyParser = require('body-parser');
 
 // Start http server
 const http = require('http').Server(app);
-http.listen(8080);
-
 const io = require('socket.io')(http);
 const db = require('./models/wrapper.js');
 
@@ -38,5 +36,7 @@ io.on('connection', function(socket) {
   require('./routes/sockets')(socket, db);
 });
 
-
-console.log("FORWARDboard running on port 8080");
+var port = process.env.PORT || 8080;
+http.listen(port, function() {
+	console.log("FORWARDboard running on port 8080");
+});
