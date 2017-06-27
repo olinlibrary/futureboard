@@ -1,16 +1,17 @@
 #navbar {
-  background-color: #E57373;
+  background-color: ;
 }
 
 body {
   font-family: "Roboto";
-  background-color: rgb(252, 255, 245);
+  background-color: #e0e0e0;
+
 }
 
 /*custom font sizes*/
-.text--small {font-size: 0.85rem;}
-.text--medium {font-size: 1.0rem;}
-.text--big {font-size: 1.2rem;}
+.text--small {font-size: 1rem;}
+.text--medium {font-size: 1.3rem;}
+.text--big {font-size: 2.2rem;}
 
 /* ---- container, items ---- */
 .container{

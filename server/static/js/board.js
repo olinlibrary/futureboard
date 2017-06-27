@@ -1,7 +1,7 @@
 function addBoardElement(newBob) {
   let $bob = $("<bob></bob>")
     .attr('id', newBob._id).attr('flavor', newBob.flavor).addClass("grid-item")
-    .append(createBoardElement(newBob));
+    .append(createBoardElement(newBob, "add"));
   $("bobbles").append($bob);
   adjustBobSize();
   initModals();
@@ -22,19 +22,89 @@ function popluateBoard(bobbles) {
 
 }
 function initShapeShift(){
-  $('.container').shapeshift({
-    align:'left',
-    columns:null,
-    minColumns:15,
-    gutterX: 7, // Compensate for border width
-    gutterY: 7, // Compensate for border width
-    paddingX: 0,
-    paddingY: 0,
-    autoHeight: true,
-    minHeight:600,
-    maxHeight:null
-  });
-  console.log("shapeshift initialized");
+  // different size containers for differente sized screens
+  console.log(screen.width)
+  //my dell computer
+  if(screen.width >= 2400){
+    $('.container').shapeshift({
+      align:'left',
+      enableResize: true,
+      columns:null,
+      minColumns:15,
+      gutterX: 7, // Compensate for border width
+      gutterY: 7, // Compensate for border width
+      paddingX: 90,
+      paddingY: 30,
+      autoHeight: true,
+      minHeight:600,
+      maxHeight:null
+    });
+    console.log("shapeshift initialized(large screen)");
+  }
+  else if(screen.width >= 1900){
+    $('.container').shapeshift({
+      align:'left',
+      enableResize: true,
+      columns:null,
+      minColumns:15,
+      gutterX: 7, // Compensate for border width
+      gutterY: 7, // Compensate for border width
+      paddingX: 90,
+      paddingY: 30,
+      autoHeight: true,
+      minHeight:600,
+      maxHeight:null
+    });
+    console.log("shapeshift initialized(computer screen)");
+  }
+  else if(screen.width >= 1024){
+    $('.container').shapeshift({
+      align:'left',
+      enableResize: true,
+      columns:null,
+      minColumns:8,
+      gutterX: 7, // Compensate for border width
+      gutterY: 7, // Compensate for border width
+      paddingX: 20,
+      paddingY: 30,
+      autoHeight: true,
+      minHeight:600,
+      maxHeight:null
+    });
+    console.log("shapeshift initialized(tablet-horizontal)");
+  }
+  else if(screen.width >= 768){
+    $('.container').shapeshift({
+      align:'left',
+      enableResize: true,
+      columns:null,
+      minColumns:7,
+      gutterX: 7, // Compensate for border width
+      gutterY: 7, // Compensate for border width
+      paddingX: 20,
+      paddingY: 30,
+      autoHeight: true,
+      minHeight:600,
+      maxHeight:null
+    });
+    console.log("shapeshift initialized(tablet-vertical)");
+  }
+  else {
+    $('.container').shapeshift({
+      align:'left',
+      enableResize: true,
+      columns:null,
+      minColumns:7,
+      gutterX: 7, // Compensate for border width
+      gutterY: 7, // Compensate for border width
+      paddingX: 20,
+      paddingY: 30,
+      autoHeight: true,
+      minHeight:600,
+      maxHeight:null
+    });
+    console.log("shapeshift initialized(phone-horizontal)");
+  }
 }
 function adjustBobSize() {
   // changes sizes of all bobs on the board based on their flavors
@@ -90,7 +160,7 @@ function initModals(){
 }
 
 
-function createBoardElement(bob) {
+function createBoardElement(bob, status) {
 
   function buttonIcon(iconName){
     let newButton = $('<a></a>').attr('href', "#").addClass("--nomargin")
@@ -100,9 +170,11 @@ function createBoardElement(bob) {
   function tagChips(bob){
     $chips = $("<div></div>").addClass("hide-on-small-only right-align");
     $tagsBar = $("<div></div>").addClass("tags-bar");
-    for (let i = 0; i < bob.tags.length; i++){
-      $chip = $("<div></div>").addClass("chip").append("#", bob.tags[i]);
-      $tagsBar.append($chip);
+    if(bob.tags != undefined){
+      for (let i = 0; i < bob.tags.length; i++){
+        $chip = $("<div></div>").addClass("chip").append("#", bob.tags[i]);
+        $tagsBar.append($chip);
+      }
     }
     return $chips.append($tagsBar);
   }
@@ -145,8 +217,8 @@ function createBoardElement(bob) {
           break;
         case 'Text':
           $content = $('<div></div>').addClass("card white hoverable")
-            .append($('<div></div>').addClass("card-content black-text")
-              .append(($('<p></p>')).addClass("flow-text-medium").append(bob.data.Text)))
+            .append($('<div></div>').addClass("card-content black-text text--medium")
+              .append(($('<p></p>')).addClass("text--medium").append(bob.data.Text)))
           break;
         case 'Poem':
           $content = $('<div></div>').addClass("card white hoverable")
@@ -200,8 +272,9 @@ function createBoardElement(bob) {
   tagChips(bob)
   .append($('<div></div>').addClass("card-action card-action--thin right-align")
     .append(buttonIcon("thumb_up")));
-
-  addFullScreenModal($bobNav.find(".card-action"), bob)
+  if(status != "add"){
+  addFullScreenModal($bobNav.find(".card-action"), bob);
+  }
 
   switch (bob.flavor) {
     case 'Quote':
@@ -213,8 +286,8 @@ function createBoardElement(bob) {
       break;
     case 'Text':
       $html = $('<div></div>').addClass("card white hoverable")
-        .append($('<div></div>').addClass("card-content black-text")
-          .append(($('<p></p>')).addClass("flow-text-medium").append(truncate(bob.data.Text, 70))))
+        .append($('<div></div>').addClass("card-content black-text text--medium")
+          .append(($('<p></p>')).addClass("text--medium").append(truncate(bob.data.Text, 70))))
         .append($bobNav);
       break;
     case 'Poem':
@@ -237,7 +310,7 @@ function createBoardElement(bob) {
         .append($('<div></div>').addClass("card-image")
           .append($('<img></img>').addClass("responsive-img").attr('src', bob.data.Link)))
         .append($('<div></div>').addClass("card-content black-text")
-          .append(($('<p></p>')).addClass("flow-text-medium").append(truncate(bob.data.Description, 70))))
+          .append(($('<p></p>')).addClass("text--medium").append(truncate(bob.data.Description, 70))))
         .append($bobNav);
       break;
     case 'Video':
@@ -257,6 +330,14 @@ function createBoardElement(bob) {
   }
   return $html;
 }
+
+
+window.addEventListener("resize", function() {
+    // changes shape when screen resized
+    initShapeShift();
+}, false);
+
+
 
 var socket = io();
 socket.emit('connection');
