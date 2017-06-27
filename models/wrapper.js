@@ -22,7 +22,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 
 // Connect to db
-connectToDB('mongodb://localhost/test');
+connectToDB(process.env.MONGODB_URI || 'mongodb://localhost/test');
 
 
 // Schemas we define:
