@@ -179,11 +179,13 @@ function createBoardElement(bob, status) {
     return $chips.append($tagsBar);
   }
   function truncate(text, length){
+
     let shortText = text.substring(0, length);
     if (text.length > length){
       let readMore = '... <a href="#" class="text--small">More</a>'
       shortText += readMore;
     }
+
     return shortText;
   }
 

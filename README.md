@@ -1,11 +1,6 @@
 FORWARDboard server
 ===
 
-Modules:
----
-`npm install socket.io express`
-
-
 Run with:
 ---
 `nodejs server.js`
