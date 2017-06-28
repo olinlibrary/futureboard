@@ -1,6 +1,6 @@
 // External dependencies
 const path = require('path');
-
+const re = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
 
 module.exports = function(io, db) {
 	
@@ -10,13 +10,21 @@ module.exports = function(io, db) {
 		var startDate = new Date();
 		var endDate = new Date().setDate(startDate.getDate() + 7);
 
-		console.log(req.body['MediaUrl0']);
-		var link = (Number(req.body.numMedia) > 0)? req.body['MediaUrl0'] : req.body.Body;
-		console.log(link);
+		var data, flavor;
+		if (Number(req.body.NumMedia) > 0) {
+			data = {"Link": req.body['MediaUrl0']};
+			flavor = "Image";
+		} else if (req.body['Body'].match(re)) {
+			data = {"Link": req.body['Body']};
+			flavor = "Image";
+		} else {
+			data = {"Text": req.body['Body']};
+			flavor = "Text"
+		}
 
 		var bob = {
-			data: {Link: link},
-			flavor: "Image",
+			data: data,
+			flavor: flavor,
 			startDate: startDate,
 			endDate: endDate,
 			tags: ["potluck"]

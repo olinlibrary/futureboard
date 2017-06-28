@@ -8,6 +8,16 @@ function popluateBoard(bobbles) {
 
 function addBoardElement(bob) {
   $('#slideshow .carousel-item.active').after(createBoardElement(bob));
+  
+  var $before = $('#slideshow .carousel-item.active').prevAll();
+  $('#slideshow').append($before.clone());
+  $before.remove();
+
+  if ($('#slideshow').hasClass('initialized')) {
+    $('#slideshow').removeClass('initialized')
+  }
+  //reinit the carousel
+  $('#slideshow').carousel({fullWidth: true});
 }
 
 function createBoardElement(bob) {
@@ -37,7 +47,6 @@ function createBoardElement(bob) {
       break;
 
     case 'Image':
-      console.log(bob);
       $html.addClass('image-bobble')
         .append($('<div />', {class: "image-holder", css: {'background-image': "url(" + bob.data.Link + ")"}}));
       break;
