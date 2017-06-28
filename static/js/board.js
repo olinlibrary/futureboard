@@ -7,7 +7,7 @@ function popluateBoard(bobbles) {
 }
 
 function addBoardElement(bob) {
-  $('#slideshow').append(createBoardElement(bob));
+  $('#slideshow .carousel-item.active').after(createBoardElement(bob));
 }
 
 function createBoardElement(bob) {
@@ -51,6 +51,9 @@ function createBoardElement(bob) {
 }
 
 $(function() {
+  setInterval(function() {
+    $('#slideshow').carousel('next');
+  }, 5000);
   // $.get('/flavors', function(res) {});
 
   // var $info = $('.info-block');

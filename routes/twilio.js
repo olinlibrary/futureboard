@@ -10,7 +10,9 @@ module.exports = function(io, db) {
 		var startDate = new Date();
 		var endDate = new Date().setDate(startDate.getDate() + 7);
 
+		console.log(req.body);
 		var link = (Number(req.body.numMedia) > 0)? req.body.MediaUrl0 : req.body.Body;
+		console.log(link);
 
 		var bob = {
 			data: {Link: link},
