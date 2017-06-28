@@ -61,9 +61,6 @@ $(function() {
 
 var socket = io();
 socket.emit('connection');
-socket.emit('text_message', {data: "penis"});
-
-socket.on('text', function(msg) {console.log(msg)});
 
 socket.on('all_elements', popluateBoard);
 socket.on('add_element', addBoardElement);

@@ -10,19 +10,19 @@ module.exports = function(io, db) {
 		var startDate = new Date();
 		var endDate = new Date().setDate(startDate.getDate() + 7);
 
-		console.log(req.body);
-		var data = (Number(req.body.numMedia) > 0)? {Link: req.body.MediaUrl0} : {Text: req.body.Body};
-		console.log(data);
+		var link = (Number(req.body.numMedia) > 0)? req.body.MediaUrl0 : req.body.Body;
 
 		var bob = {
-			data: data,
+			data: {Link: link},
 			flavor: "Image",
 			startDate: startDate,
 			endDate: endDate,
 			tags: ["potluck"]
 		}
 
-		// db.Bob.saveBob(bob);
+		io.emit('add_element', bob);
+
+		db.Bob.saveBob(bob);
 		res.send('success');
 	};
 
