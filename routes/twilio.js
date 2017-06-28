@@ -11,7 +11,7 @@ module.exports = function(io, db) {
 		var endDate = new Date().setDate(startDate.getDate() + 7);
 
 		console.log(req.body['MediaUrl0']);
-		var link = (Number(req.body.numMedia) > 0)? req.body.MediaUrl0 : req.body.Body;
+		var link = (Number(req.body.numMedia) > 0)? req.body['MediaUrl0'] : req.body.Body;
 		console.log(link);
 
 		var bob = {
