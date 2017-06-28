@@ -1,0 +1,36 @@
+#slideshow {
+  height: 100vh !important;
+}
+
+.carousel-item {
+  height: 100%;
+}
+.text-bobble {
+  background: #ECF7E8;
+}
+.quote-bobble {
+  background: #DDE7F4;
+}
+.text-bobble, .quote-bobble {
+  padding: 2rem;
+}
+  .quote-bobble p, .text-bobble p {
+    font-size: 4rem !important; /* Dang ol Materialize is quite specific, we will SASS soon! */
+    line-height: 4.25rem;
+    font-weight: 400;
+    color: #333;
+  }
+    .quote-bobble p.author {
+      color: #666;
+      text-align: right;
+      margin-top: 1rem;
+    }
+
+  div.image-holder {
+		width: 100%;
+		height: 100%;
+		background-size: contain;
+		background-position: center;
+		background-repeat: no-repeat;
+		background-color: #333;
+	}

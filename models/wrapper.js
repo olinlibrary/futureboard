@@ -13,9 +13,6 @@
 	});
 */
 
-// For mocking up DB interactions
-// const Promise = require('promise');
-
 const mongoose = require('mongoose');
 
 // Use JS native promises
@@ -40,8 +37,6 @@ dbWrapper.Tag = Tag;
 dbWrapper.Flavors = Flavors;
 
 module.exports = dbWrapper;
-
-
 
 
 function connectToDB(url) {
