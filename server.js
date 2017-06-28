@@ -6,12 +6,6 @@ const bodyParser = require('body-parser');
 
 // Start http server
 const http = require('http').Server(app);
-<<<<<<< HEAD:server.js
-=======
-const PORT = process.env.PORT || 8080;
-http.listen(PORT);
-
->>>>>>> 6098bc60c269d7aca0ccb2b0533da728f897115d:server/server.js
 const io = require('socket.io')(http);
 app.set('socketio', io);
 const db = require('./models/wrapper.js');
