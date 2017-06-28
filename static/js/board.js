@@ -64,9 +64,9 @@ function createBoardElement(bob) {
 }
 
 $(function() {
- // setInterval(function() {
- //   $('#slideshow').carousel('next');
-  //}, 5000);
+  setInterval(function() {
+   $('#slideshow').carousel('next');
+  }, 5000);
   // $.get('/flavors', function(res) {});
 
   // var $info = $('.info-block');
