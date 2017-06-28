@@ -26,13 +26,17 @@ function createBoardElement(bob) {
   switch (bob.flavor) {
     case 'Quote':
       $html.addClass('quote-bobble')
-        .append($('<p>', {class: "quote", text: bob.data.Text}))
-        .append($('<p>', {class: "author", text: bob.data.Author}));
+        .append($('<div>', {class: "quote-holder"})
+          .append($('<p>', {class: "quote", text: bob.data.Text}))
+          .append($('<p>', {class: "author", text: bob.data.Author}))
+      );
       break;
 
     case 'Text':
       $html.addClass('text-bobble')
-        .append($('<p>', {text: bob.data.Text}));
+        .append($('<div>', {class: "text-holder"})
+          .append($('<p>', {text: bob.data.Text}))
+        );
       break;
 
     case 'Video':
@@ -60,9 +64,9 @@ function createBoardElement(bob) {
 }
 
 $(function() {
-  setInterval(function() {
-    $('#slideshow').carousel('next');
-  }, 5000);
+ // setInterval(function() {
+ //   $('#slideshow').carousel('next');
+  //}, 5000);
   // $.get('/flavors', function(res) {});
 
   // var $info = $('.info-block');
