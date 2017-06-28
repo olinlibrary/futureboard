@@ -28,10 +28,11 @@ $(function() {
 			let flavor = flavorArray[index];
 			$('#data').html('');
 			$.each(flavor.fields, function(i, field) {
-				$('#data').append('<div class="data-field">\
-					<label for="' + field.name + '">' + field.name + '</label><br>\
-			        <input id="' + field.name + '" name="' + field.name + '" type="' + field.input + '"></input>\
-			    </div>');
+				$('#data')
+					.append($('<label>', {for: field.name, text: field.name, class: "mui--text-title"}))
+					.append($('<div>', {class: "data-field mui-" + field.input + "field"})
+						.append($('<input>', {id: field.name, name: field.name, type: field.input}))
+			    );
 			});
 		});
 	});
