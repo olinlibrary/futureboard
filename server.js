@@ -31,10 +31,8 @@ app.post('/controller', controller.POSTbob);
 app.get('/flavors', controller.GETflavors);
 app.get('/tags', controller.GETtags);
 
-// Start socket
-io.on('connection', function(socket) {
-  require('./routes/sockets')(socket, db);
-});
+// Handle socket logic
+require('./routes/sockets')(io, db);
 
 var port = process.env.PORT || 8080;
 http.listen(port, function() {

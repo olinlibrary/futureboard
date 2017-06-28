@@ -1,7 +1,11 @@
-module.exports = function(socket, db) {
-  console.log("board connected");
+module.exports = function(io, db) {
 
-  db.Bob.getActiveBobs().then(function (bobList) {
-    socket.emit('all_elements', bobList);
-  });
+	io.on('connection', function(socket) {
+		console.log("board connected");
+	
+		db.Bob.getActiveBobs().then(function (bobList) {
+			socket.emit('all_elements', bobList);
+		});
+	});
+
 }
