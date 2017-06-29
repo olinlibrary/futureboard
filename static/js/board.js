@@ -8,7 +8,7 @@ function popluateBoard(bobbles) {
 
 function addBoardElement(bob) {
   $('#slideshow .carousel-item.active').after(createBoardElement(bob));
-  
+
   var $before = $('#slideshow .carousel-item.active').prevAll();
   $('#slideshow').append($before.clone());
   $before.remove();
@@ -21,7 +21,7 @@ function addBoardElement(bob) {
 }
 
 function createBoardElement(bob) {
-  
+
   var $html = $('<div>', {id: bob.id, class: "carousel-item"});
   switch (bob.flavor) {
     case 'Quote':
@@ -63,6 +63,15 @@ function createBoardElement(bob) {
   return $html;
 }
 
+function carouselControl(direction){
+  if(direction == "left"){
+      $('.carousel').carousel('prev', 1); // Move next n times.
+  }
+  else if(direction == "right"){
+    $('.carousel').carousel('next', 1); // Move next n times.
+  }
+}
+
 $(function() {
   setInterval(function() {
    $('#slideshow').carousel('next');
@@ -75,10 +84,22 @@ $(function() {
   // }
 })
 
+//arrowkey control
+$(document).keydown(function(e){
+    if (e.keyCode == 37) {
+       carouselControl("left");
+    }
+    if (e.keyCode == 39){
+      carouselControl("right");
+
+    }
+});
+
 var socket = io();
 socket.emit('connection');
 
 socket.on('all_elements', popluateBoard);
 socket.on('add_element', addBoardElement);
+socket.on('manual_control', carouselControl);
 
 console.log('board.js is running');
