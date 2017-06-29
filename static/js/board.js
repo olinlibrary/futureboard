@@ -73,11 +73,11 @@ function carouselControl(direction){
   console.log("manual moving carousel");
 }
 
-$(function() {
- setInterval(function() {
-   $('#slideshow').carousel('next');
-  }, 5000);
-  $.get('/flavors', function(res) {});
+// $(function() {
+//  setInterval(function() {
+//    $('#slideshow').carousel('next');
+//   }, 5000);
+//   $.get('/flavors', function(res) {});
 
   // var $info = $('.info-block');
   // for (let i=0; i<10; i++) {
