@@ -83,7 +83,7 @@ function carouselControl(direction){
   // for (let i=0; i<10; i++) {
   //   $('#sidebar').append($info.clone());
   // }
-})
+// })
 
 //arrowkey control
 $(document).keydown(function(e){
