@@ -8,7 +8,7 @@ module.exports = function(io, db) {
 		});
 
 		socket.on('manual_control', function(command){
-			io.broadcast('manual_control', command);
+			socket.broadcast.emit('manual_control', command);
 		});
 	});
 
