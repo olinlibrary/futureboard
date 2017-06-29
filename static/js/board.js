@@ -70,13 +70,14 @@ function carouselControl(direction){
   else if(direction == "right"){
     $('.carousel').carousel('next', 1); // Move next n times.
   }
+  console.log("manual moving carousel");
 }
 
 $(function() {
- // setInterval(function() {
- //   $('#slideshow').carousel('next');
-  //}, 5000);
-  // $.get('/flavors', function(res) {});
+ setInterval(function() {
+   $('#slideshow').carousel('next');
+  }, 5000);
+  $.get('/flavors', function(res) {});
 
   // var $info = $('.info-block');
   // for (let i=0; i<10; i++) {
