@@ -70,22 +70,16 @@ function carouselControl(direction){
   else if(direction == "right"){
     $('.carousel').carousel('next', 1); // Move next n times.
   }
-  console.log("manual moving carousel");
 }
 
-// $(function() {
-//  setInterval(function() {
-//    $('#slideshow').carousel('next');
-//   }, 5000);
-//   $.get('/flavors', function(res) {});
+// Init autoslide
+$(function() {
+ setInterval(function() {
+   $('#slideshow').carousel('next');
+  }, 5000);
+});
 
-  // var $info = $('.info-block');
-  // for (let i=0; i<10; i++) {
-  //   $('#sidebar').append($info.clone());
-  // }
-// })
-
-//arrowkey control
+// Arrowkey control
 $(document).keydown(function(e){
     if (e.keyCode == 37) {
        carouselControl("left");
