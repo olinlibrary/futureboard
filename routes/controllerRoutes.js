@@ -28,7 +28,7 @@ module.exports = function(io, db) {
 		res.send("success")
 	};
 
-	controller.POSTeditbob = function(req, res, next) {
+	controller.POSTupdatebob = function(req, res, next) {
 		var bob = {
 			_id:			 ObjectID(req.body.id),
 			data:      req.body.data,
@@ -39,9 +39,9 @@ module.exports = function(io, db) {
 		}
 
 		// Needs error checking
-		db.Bob.editBob(bob);
+		db.Bob.updateBob(bob);
 
-		res.send("edit successful");
+		res.send("update successful");
 	}
 
 	controller.GETflavors = function(req, res) {
