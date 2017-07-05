@@ -26,41 +26,14 @@
 
   <!-- load CSS -->
   <link rel="stylesheet" type="text/css" href="/static/css/board.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/slideshow.css">
   <!-- load board js -->
   <script src='/static/js/board.js' charset="UTF-8" type="text/javascript"></script>
 
 </head>
 
 <body>
-  <div class="navbar-fixed">
-    <nav>
-      <div class="nav-wrapper">
-        <a href="#" class="brand-logo">#FORWARDboard</a>
-        <ul id="nav-mobile" class="right">
-          <li>
-            <a href="/controller" target="_blank">
-              <button class="btn-large btn-floating red accent-4 pulse">
-                <i class="material-icons">add</i>
-              </button>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-</div>
-  <br />
-    <!-- this is the container of bobs -->
-    <bobbles id="bobbles" class="grid container ">
-      <!-- bobs are created here -->
-    </bobbles>
-  <br>
-
-  </div>
-
-  <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-  <script src="/static/vendor/animatedModal.min.js"></script>
-  <script src='/static/vendor/jquery.touch-punch.min.js' charset="UTF-8" type="text/javascript"></script>
-  <script src='/static/vendor/jquery.shapeshift.min.js' charset="UTF-8" type="text/javascript"></script>
+  <div id="slideshow" class="carousel carousel-slider"></div>
 </body>
 
 </html>
