@@ -28,6 +28,22 @@ module.exports = function(io, db) {
 		res.send("success")
 	};
 
+	controller.POSTeditbob = function(req, res, next) {
+		var bob = {
+			_id:			 ObjectID(req.body.id),
+			data:      req.body.data,
+			flavor:    req.body.flavor,
+			startDate: req.body.startDate,
+			endDate:   req.body.endDate,
+			tags:      req.body.tags
+		}
+
+		// Needs error checking
+		db.Bob.editBob(bob);
+
+		res.send("edit successful");
+	}
+
 	controller.GETflavors = function(req, res) {
 	  db.Flavors.getFlavors().then(function success(data) {
 	    res.send(data);
