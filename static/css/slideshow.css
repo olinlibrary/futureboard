@@ -1,26 +1,33 @@
 #slideshow {
   height: 90vh !important;
+  border-radius:25px;
 }
-
-.broadcast{
+#slideshow-small{
   border-radius:10px;
-  border-style:solid;
-  border-width:thin;
-  border-color:rgb(49, 54, 51);
-  background-color:rgb(245, 212, 114);
-}
-.broadcast > p{
-  font-size:25px;
-  font-style:italic;
-  margin:15px;
-  padding:2px;
 }
 .main-display{
   padding:5px;
 }
-.carousel{
-    border-radius:25px;
+.broadcast{
+
+  height: 8vh !important;
+  border-radius:20px;
+  border-style:hiddesn;
+  border-color:rgb(49, 54, 51);
+  background-color:rgb(62, 161, 252);
 }
+.broadcast > p {
+  font-size:40px;
+  font-style:italic;
+
+  margin:0px;
+  padding:2px;
+}
+.broadcast > p > marquee{
+  margin-top:10px;
+}
+
+
 .carousel-item {
   /*height: 100%;*/
   position:absolute;

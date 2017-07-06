@@ -4,6 +4,7 @@ function popluateBoard(bobbles) {
     $bobbleList.append(createBoardElement(bobbles[i]));
   }
   $('#slideshow').carousel({fullWidth: true});
+  $('#slideshow-small').carousel({fullWidth: true});
 }
 
 function addBoardElement(bob) {
@@ -18,6 +19,7 @@ function addBoardElement(bob) {
   }
   //reinit the carousel
   $('#slideshow').carousel({fullWidth: true});
+  $('#slideshow-small').carousel({fullWidth: true});
 }
 
 function createBoardElement(bob) {
@@ -70,10 +72,10 @@ function createBoardElement(bob) {
 
 function carouselControl(direction){
   if(direction == "left"){
-      $('.carousel').carousel('prev', 1); // Move next n times.
+      $('#slideshow').carousel('prev', 1); // Move next n times.
   }
   else if(direction == "right"){
-    $('.carousel').carousel('next', 1); // Move next n times.
+    $('#slideshow').carousel('next', 1); // Move next n times.
   }
 }
 
@@ -81,7 +83,10 @@ function carouselControl(direction){
 $(function() {
  setInterval(function() {
    $('#slideshow').carousel('next');
-  }, 7000);
+ }, 10000);
+setInterval(function() {
+  $('#slideshow-small').carousel('next');
+}, 7000);
 });
 
 // Arrowkey control
@@ -96,6 +101,10 @@ $(document).keydown(function(e){
     }
 });
 
+//init carrousel
+$(document).ready(function(){
+  $('#slideshow-small').carousel();
+});
 var socket = io();
 socket.emit('connection');
 
