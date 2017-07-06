@@ -5,12 +5,9 @@ function popluateTable(bobs) {
 
   let $html = $('<tr>', {});
   for (let i in tableColumns){
-    console.log(tableColumns[i]);
     $html.append($('<th>', { text: tableColumns[i] }));
   }
   $bobTable.append($html);
-
-  console.log(bobs);
   for (var i = 0; i < bobs.length; i++) {
     $bobTable.append(createBobElement(bobs[i]));
   }
@@ -26,7 +23,7 @@ function createBobElement(bob) {
     '<p>' + bob._id + '</p>',
     '<p>' + bob.startDate + '</p>',
     '<p>' + bob.endDate + '</p>',
-    '<p>' + (Date.now() > bob.startDate && Date.now() < bob.endDate) + '</p>',
+    '<p>' + (Date.now() > new Date(bob.startDate) && Date.now() < new Date(bob.endDate)) + '</p>',
     editButton,
     deleteButton
   ];
