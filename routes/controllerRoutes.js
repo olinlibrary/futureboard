@@ -10,6 +10,11 @@ module.exports = function(io, db) {
 	};
 
 	controller.POSTbob = function(req, res, next) {
+
+		if(!req.body.endDate){
+			req.body.endDate = Date.now() + 2 * 60 * 60 * 12; // Default to two days
+		}
+
 		var bob = {
 			data: req.body.data,
 			flavor: req.body.flavor,
