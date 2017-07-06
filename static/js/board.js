@@ -55,6 +55,11 @@ function createBoardElement(bob) {
         .append($('<div />', {class: "image-holder", css: {'background-image': "url(" + bob.data.Link + ")"}}));
       break;
 
+    case 'Meme':
+      $html.addClass('image-bobble')
+        .append($('<div />', {class: "image-holder", css: {'background-image': "url(" + bob.data.Link + ")"}}));
+      break;
+
     default:
       console.log("Unhandled type" + bob);
       $html = null;
@@ -76,13 +81,14 @@ function carouselControl(direction){
 $(function() {
  setInterval(function() {
    $('#slideshow').carousel('next');
-  }, 5000);
+  }, 7000);
 });
 
 // Arrowkey control
 $(document).keydown(function(e){
     if (e.keyCode == 37) {
        carouselControl("left");
+
     }
     if (e.keyCode == 39){
       carouselControl("right");

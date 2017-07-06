@@ -1,9 +1,29 @@
 #slideshow {
-  height: 100vh !important;
+  height: 90vh !important;
 }
 
+.broadcast{
+  border-radius:10px;
+  border-style:solid;
+  border-width:thin;
+  border-color:rgb(49, 54, 51);
+  background-color:rgb(245, 212, 114);
+}
+.broadcast > p{
+  font-size:25px;
+  font-style:italic;
+  margin:15px;
+  padding:2px;
+}
+.main-display{
+  padding:5px;
+}
+.carousel{
+    border-radius:25px;
+}
 .carousel-item {
-  height: 100%;
+  /*height: 100%;*/
+  position:absolute;
 }
 .text-bobble {
   background: #ECF7E8;
@@ -25,7 +45,7 @@
     .quote-bobble p.author {
       color: black;
       text-align: right;
-      margin-top: 1rem;   
+      margin-top: 1rem;
       font-style: italic;
   }
 
@@ -42,7 +62,7 @@
   position:relative;
   max-width:800px;
   font-size:.75em;
- } 
+ }
 
 .quote-holder p {
   color: black;
@@ -62,7 +82,7 @@
 }
 
 .text-holder p {
-    color:#fff; 
+    color:#fff;
 }
 .text-holder:before {
     content:"";
