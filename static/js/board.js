@@ -14,7 +14,7 @@ function addBoardElement(bob) {
   $before.remove();
 
   if ($('#slideshow').hasClass('initialized')) {
-    $('#slideshow').removeClass('initialized')
+    $('#slideshow').removeClass('initialized');
   }
   //reinit the carousel
   $('#slideshow').carousel({fullWidth: true});
@@ -86,15 +86,14 @@ $(document).keydown(function(e){
     }
     if (e.keyCode == 39){
       carouselControl("right");
-
     }
 });
 
 var socket = io();
 socket.emit('connection');
 
-socket.on('all_elements', popluateBoard);
-socket.on('add_element', addBoardElement);
+socket.on('all_elements'  , popluateBoard);
+socket.on('add_element'   , addBoardElement);
 socket.on('manual_control', carouselControl);
 
 console.log('board.js is running');

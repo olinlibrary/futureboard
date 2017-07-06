@@ -31,4 +31,4 @@ Flavors.model      = FlavorModel;
 Flavors.saveFlavor = saveFlavor;
 Flavors.getFlavors = getFlavors;
 
-module.exports = Flavors;
+module.exports     = Flavors;

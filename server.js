@@ -27,10 +27,10 @@ app.get('/', function (req, res) {
 
 // Send data to board
 const controller = require('./routes/controllerRoutes')(io, db);
-app.get('/controller', controller.GETindex);
+app.get('/controller' , controller.GETindex);
 app.post('/controller', controller.POSTbob);
-app.get('/flavors', controller.GETflavors);
-app.get('/tags', controller.GETtags);
+app.get('/flavors'    , controller.GETflavors);
+app.get('/tags'       , controller.GETtags);
 
 // Handle socket logic
 require('./routes/sockets')(io, db);

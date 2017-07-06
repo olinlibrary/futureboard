@@ -33,11 +33,11 @@ const Flavors = require('./flavor');
 
 var dbWrapper = {};
 
-dbWrapper.Bob = Bob;
-dbWrapper.Tag = Tag;
+dbWrapper.Bob     = Bob;
+dbWrapper.Tag     = Tag;
 dbWrapper.Flavors = Flavors;
 
-module.exports = dbWrapper;
+module.exports    = dbWrapper;
 
 
 function connectToDB(url) {
