@@ -1,9 +1,20 @@
+body{
+  overflow:hidden;
+}
+
+nav{
+  border-radius:10px;
+  opacity: 0.7;
+}
+
 #slideshow {
-  height: 90vh !important;
+  height: 80vh !important;
   border-radius:25px;
 }
+
 #slideshow-small{
   border-radius:10px;
+  z-index:-1;
 }
 .main-display{
   padding:5px;
@@ -16,21 +27,26 @@
   border-color:rgb(49, 54, 51);
   background-color:rgb(62, 161, 252);
 }
-.broadcast > p {
-  font-size:40px;
+.broadcast p {
+  font-size:50px;
   font-style:italic;
-
+  color:rgb(255, 255, 255);
   margin:0px;
   padding:2px;
 }
-.broadcast > p > marquee{
-  margin-top:10px;
+
+#slideshow-small.carousel.carousel-slider{
+  top:-50px;
 }
-
-
 .carousel-item {
   /*height: 100%;*/
   position:absolute;
+}
+
+.swap-button{
+
+  left:-50px;
+  top:50px;
 }
 .text-bobble {
   background: #ECF7E8;
@@ -43,6 +59,7 @@
 .text-bobble, .quote-bobble {
   padding: 1rem;
 }
+
   .quote-bobble p, .text-bobble p {
     font-size: 4rem !important; /* Dang ol Materialize is quite specific, we will SASS soon! */
     line-height: 4rem;

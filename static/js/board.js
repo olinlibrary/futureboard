@@ -98,6 +98,7 @@ $(document).keydown(function(e){
     if (e.keyCode == 39){
       carouselControl("right");
 
+
     }
 });
 
