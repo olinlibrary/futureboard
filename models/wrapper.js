@@ -13,16 +13,14 @@
 	});
 */
 
-// For mocking up DB interactions
-// const Promise = require('promise');
-
 const mongoose = require('mongoose');
 
 // Use JS native promises
 mongoose.Promise = global.Promise;
 
 // Connect to db
-connectToDB(process.env.MONGODB_URI || 'mongodb://localhost/test');
+const mongoURI = process.env.MONGODB_URI || 'mongodb://localhost/test';
+connectToDB(mongoURI);
 
 
 // Schemas we define:
@@ -35,13 +33,11 @@ const Flavors = require('./flavor');
 
 var dbWrapper = {};
 
-dbWrapper.Bob = Bob;
-dbWrapper.Tag = Tag;
+dbWrapper.Bob     = Bob;
+dbWrapper.Tag     = Tag;
 dbWrapper.Flavors = Flavors;
 
-module.exports = dbWrapper;
-
-
+module.exports    = dbWrapper;
 
 
 function connectToDB(url) {

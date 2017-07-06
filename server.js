@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 // Start http server
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+app.set('socketio', io);
 const db = require('./models/wrapper.js');
 
 
@@ -34,6 +35,9 @@ app.post('/updatebob' , controller.POSTupdatebob);
 
 // Handle socket logic
 require('./routes/sockets')(io, db);
+
+const twilio = require('./routes/twilio')(io, db);
+app.post('/twilio', twilio.POSTtext);
 
 var port = process.env.PORT || 8080;
 http.listen(port, function() {

@@ -2,7 +2,6 @@
 const path = require('path');
 
 
-
 module.exports = function(io, db) {
 	var controller = {};
 

@@ -24,8 +24,8 @@ function getTags(filter) {
 
 var Tag = {};
 
-Tag.model = TagModel;
-Tag.saveTag = saveTag;
-Tag.getTags = getTags;
+Tag.model      = TagModel;
+Tag.saveTag    = saveTag;
+Tag.getTags    = getTags;
 
 module.exports = Tag;

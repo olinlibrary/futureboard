@@ -66,4 +66,4 @@ Bob.getOneBob     = getOneBob;
 Bob.getActiveBobs = getActiveBobs;
 Bob.updateBob     = updateBob;
 
-module.exports = Bob;
+module.exports    = Bob;
