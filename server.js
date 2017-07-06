@@ -24,6 +24,9 @@ app.use('/static', express.static(path.join(__dirname, '/static')));
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/templates/board.html');
 });
+app.get('/admin', function (req, res) {
+  res.sendFile(__dirname + '/templates/admin.html');
+});
 
 // Send data to board
 const controller = require('./routes/controllerRoutes')(io, db);
