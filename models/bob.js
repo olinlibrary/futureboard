@@ -47,7 +47,7 @@ function updateBob(bobData) {
     { _id: bobData._id },
     {
       data:      bobData.data,
-      flavor:    bobData.flavor,
+      // flavor:    bobData.flavor, // Do not allow updating flavor
       tags:      bobData.tags,
       startDate: bobData.startDate,
       endDate:   bobData.endDate,

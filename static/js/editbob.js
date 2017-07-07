@@ -1,3 +1,5 @@
+var cur_bob;
+
 $(function() {
 	bobid =
 
@@ -19,11 +21,11 @@ $(function() {
 		flavors = flavorArray;
 		let $flavors = $('#flavor');
 
-		$.each(flavorArray, function(index, flavor) {
-			$flavors.append('<option value="' + flavor.name + '">' + flavor.name + '</option>');
-		});
+		// $.each(flavorArray, function(index, flavor) {
+		// 	$flavors.append('<option value="' + flavor.name + '">' + flavor.name + '</option>');
+		// });
 
-		$flavors.on('change', updateInputFromFlavor($flavors, flavorArray));
+		// $flavors.on('change', updateInputFromFlavor($flavors, flavorArray));
 
 		// Needs to run after flavors get filled, otherwise there is a race condition
 		fillInputFields();
@@ -35,11 +37,12 @@ $(function() {
 	// Populate form with current bob values
 function fillInputFields() {
   $.get('/getbob?bobid=' + getUrlParameter("bobid"), function (bob) {
+		cur_bob = bob;
 		let $form = $('add-bob-form');
 
 		$('#bob-id').val(bob._id);
 		$('#flavor').val(bob.flavor);
-		updateInputFromFlavor($('#flavor'), flavors);
+		updateInputFromFlavor(bob.flavor, flavors);
 		$('#start-date').val(bob.startDate);
 		$('#end-date').val(bob.endDate);
 
@@ -73,7 +76,6 @@ function fillInputFields() {
 		let data = {
       id: $form.find('#bob-id').val(),
 			data: bobData,
-			flavor: $form.find('#flavor').val(),
 			startDate: $form.find('#start-date').val(),
 			endDate: $form.find('#end-date').val(),
 			'tags[]': tags
@@ -100,22 +102,25 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
-function updateInputFromFlavor($flavors, flavorArray) {
+function updateInputFromFlavor(flavorName, flavorArray) {
 	// Subtract 1 from index as the first option is a placeholder
-	let index = $flavors.find('option:selected').index() - 1;
+	let flavor = null;
+	for(let i = 0; i < flavorArray.length; i++){
+		if(flavorArray[i].name === flavorName){
+			flavor = flavorArray[i];
+			break;
+		}
+	}
 
 	// On init it is -1, only after an option is selected should you update
-	if(index != -1){
-		let flavor = flavorArray[index];
-		$('#data').html('');
-		$.each(flavor.fields, function(i, field) {
-			$('#data')
-				.append($('<label>', {for: field.name, text: field.name, class: "mui--text-title"}))
-				.append($('<div>', {class: "data-field mui-" + field.input + "field"})
-					.append($('<input>', {id: field.name, name: field.name, type: field.input}))
-		    );
-		});
-	}
+	$('#data').html('');
+	$.each(flavor.fields, function(i, field) {
+		$('#data')
+			.append($('<label>', {for: field.name, text: field.name, class: "mui--text-title"}))
+			.append($('<div>', {class: "data-field mui-" + field.input + "field"})
+				.append($('<input>', {id: field.name, name: field.name, type: field.input}))
+	    );
+	});
 }
 
 console.log("controller.js running");

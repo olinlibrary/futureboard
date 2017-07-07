@@ -42,13 +42,8 @@
     <form id="add-bob-form" novalidate>
 
       <label for="flavor" class="mui--text-title">Flavor</label><br>
-      <div class="form-field mui-form">
-        <div class="mui-select">
-          <select id="flavor" name="flavor">
-          <option>--- Select One ---</option>
-          <!-- Filled in with options pulled down from DB -->
-      </select>
-        </div>
+      <div class="form-field mui-textfield">
+        <input id="flavor" class="mui--is-not-empty mui--is-untouched mui--is-pristine" disabled>
       </div>
 
       <div id="data" class="form-field"></div>
