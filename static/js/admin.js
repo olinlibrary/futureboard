@@ -17,7 +17,8 @@ function popluateTable(bobs) {
 function createBobElement(bob) {
 
   let editButton   = '<a href=./editbob?bobid='+ bob._id + '>Edit Bob</a>';
-  let deleteButton = '<a href=./deletebob?bobid='+ bob._id + '>Delete Bob</a>';
+  // let deleteButton = '<a href=./deletebob?bobid='+ bob._id + '>Delete Bob</a>';
+  let deleteButton = '<a onclick=deleteBob("' + bob._id + '") href="javascript:void(0);">Delete</a>';
 
   let bobColumns = [
     '<p>' + bob.flavor + '</p>',
@@ -29,7 +30,7 @@ function createBobElement(bob) {
     deleteButton
   ];
 
-  let $html = $('<tr>', {id: bob.id, class: "bob-item"});
+  let $html = $('<tr>', {bobid: bob._id, class: "bob-item"});
 
   for (let i in bobColumns){
     $html.append($('<td>')
@@ -41,6 +42,12 @@ function createBobElement(bob) {
   return $html;
 }
 
+function deleteBob(bobid) {
+  if(confirm("Actually delete " + bobid + "?")) {
+    $.post('/deleteBob?bobid=' + bobid);
+    $('[bobid="' + bobid + '"]').remove();
+  }
+}
 
 var socket = io();
 socket.emit('connection');

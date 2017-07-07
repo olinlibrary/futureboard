@@ -98,7 +98,7 @@ module.exports = function(io, db) {
 		});
 	}
 
-	controller.GETdeletebob = function (req, res) {
+	controller.POSTdeletebob = function (req, res) {
 		db.Bob.deleteBob(db.ObjectId(req.query.bobid)).then(function success(data) {
 			res.send("Success");
 		}, function error(err) {
