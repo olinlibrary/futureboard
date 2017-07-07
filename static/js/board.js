@@ -8,7 +8,7 @@ function popluateBoard(bobbles) {
     } else if (bob.flavor === "Meme") {
       $memes.append(createBoardElement(bob));
     } else {
-      //temporary for now, where to attach bobs that aren't memes or moments?
+      //temporary(undecided), where to attach bobs that aren't memes or moments?
       $moments.append(createBoardElement(bob));
     }
   }
@@ -30,13 +30,13 @@ function addBoardElement(bob) {
     //temporary choice
     carousel = '.moments';
   }
-  updateCarousel(bob, carousel);
+  addToCarousel(bob, carousel);
 }
 
-function updateCarousel(bob, carousel) {
+function addToCarousel(bob, carousel) {
   $carousel = $(carousel);
   $activeItem = $(carousel + " .carousel-item.active");
-  if(bob != null) {
+  if (bob != null) {
     $activeItem.after(createBoardElement(bob));
   }
   var $before = $activeItem.prevAll();
@@ -56,8 +56,6 @@ function updateCarousel(bob, carousel) {
 function swapCarousels() {
   let $momentStream = $('.moments');
   let $memeStream = $(".memes");
-
-
   let $momentActiveItem = $(".moments .carousel-item.active");
   let $memeActiveItem = $(".memes .carousel-item.active");
   let $momentNext = $momentActiveItem.nextAll();
@@ -96,6 +94,7 @@ function swapCarousels() {
   $momentStream.addClass("memes").removeClass("moments");
   $memeStream.addClass("moments").removeClass("memes");
 }
+
 function createBoardElement(bob) {
   var $html = $('<div>', {
     id: bob.id,
@@ -168,7 +167,7 @@ function createBoardElement(bob) {
   return $html;
 }
 
-// Init autoslide
+// Init Autoslide
 $(function() {
   setInterval(function() {
     $('#slideshow').carousel('next');
@@ -185,16 +184,19 @@ function carouselControl(direction) {
     $('#slideshow').carousel('next', 1); // Move next n times.
   }
 }
-// Arrowkey control
+
+//Keyboard Input Event Detection
 $(document).keydown(function(e) {
   if (e.keyCode == 37) {
+    //press left arrow key to go back to previous slide
     carouselControl("left");
   }
   if (e.keyCode == 39) {
+    //press right arrow key to go to next slide
     carouselControl("right");
   }
   if (e.keyCode == 13) {
-    //enter
+    //press enter key to swap carousels
     swapCarousels();
   }
 });

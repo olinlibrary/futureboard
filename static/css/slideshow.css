@@ -33,19 +33,25 @@ nav {
   background-color: rgb(62, 161, 252);
 }
 
-.marquee{
+.marquee {
   white-space: nowrap;
-  overflow:hidden;
+  overflow: hidden;
   box-sizing: border-box;
 }
-.marquee > p {
+
+.marquee>p {
   display: inline-block;
-  padding-left:100%;
+  padding-left: 100%;
   animation: marquee 5s linear infinite;
 }
+
 @keyframes marquee {
-    0%   { transform: translate(0, 0); }
-    100% { transform: translate(-100%, 0); }
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
 }
 
 .broadcast p {
@@ -54,8 +60,8 @@ nav {
   color: rgb(255, 255, 255);
   margin: 0px;
   padding: 2px;
-  float:left;
-  width:50%;
+  float: left;
+  width: 50%;
 }
 
 #slideshow-small.carousel.carousel-slider {
