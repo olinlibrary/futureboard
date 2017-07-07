@@ -23,7 +23,7 @@ function saveBob(bobData) {
     tags:       bobData.tags
   });
 
-  newBob.save(function (err) {
+  return newBob.save(function (err) {
     if (err) console.log("Bob save error:", err);
   });
 }

@@ -25,12 +25,15 @@ module.exports = function(io, db) {
 		}
 
 		// Send to all boards
-		io.emit('add_element', bob);
 
 		// Save in db
-		db.Bob.saveBob(bob);
+		db.Bob.saveBob(bob).then(function success(bobData) {
+			io.emit('add_element', bobData);
+			res.send("success")
+		}, function error(err) {
+	    res.status(500).send(err);
+	  });
 
-		res.send("success")
 	};
 
 	controller.POSTupdatebob = function(req, res, next) {
