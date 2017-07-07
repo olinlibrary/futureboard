@@ -42,6 +42,20 @@ function getActiveBobs(filter) {
   return query;
 }
 
+function updateBob(bobData) {
+  return BobModel.update(
+    { id: bobData._id },
+    {
+      data:      bobData.data,
+      flavor:    bobData.flavor,
+      tags:      bobData.tags,
+      startDate: bobData.startDate,
+      endDate:   bobData.endDate,
+      bobbleID:  bobData.bobbleID
+    }
+  );
+}
+
 
 let Bob = {};
 
@@ -50,5 +64,6 @@ Bob.saveBob       = saveBob;
 Bob.getBobs       = getBobs;
 Bob.getOneBob     = getOneBob;
 Bob.getActiveBobs = getActiveBobs;
+Bob.updateBob     = updateBob;
 
 module.exports    = Bob;
