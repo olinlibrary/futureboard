@@ -44,7 +44,7 @@ function getActiveBobs(filter) {
 
 function updateBob(bobData) {
   return BobModel.update(
-    { id: bobData._id },
+    { _id: bobData._id },
     {
       data:      bobData.data,
       flavor:    bobData.flavor,

@@ -23,27 +23,32 @@ $(function() {
 			$flavors.append('<option value="' + flavor.name + '">' + flavor.name + '</option>');
 		});
 
-		$flavors.on('change', function() {
-			// Subtract 1 from index as the first option is a placeholder
-			let index = $flavors.find('option:selected').index() - 1;
-			let flavor = flavorArray[index];
-			$('#data').html('');
-			$.each(flavor.fields, function(i, field) {
-				$('#data')
-					.append($('<label>', {for: field.name, text: field.name, class: "mui--text-title"}))
-					.append($('<div>', {class: "data-field mui-" + field.input + "field"})
-						.append($('<input>', {id: field.name, name: field.name, type: field.input}))
-			    );
-			});
-		});
+		$flavors.on('change', updateInputFromFlavor($flavors, flavorArray));
 	});
+
 
   // Populate form with current bob values
 
+	// WARNING: Race condition. This needs to wait for flavors to load
   $.get('/getbob?bobid=' + getUrlParameter("bobid"), function (bob) {
-    //add fill in input
-		console.log(bob);
+		let $form = $('add-bob-form');
+
+		$('#bob-id').val(bob._id);
+		$('#flavor').val(bob.flavor);
+		updateInputFromFlavor($('#flavor'), flavors);
+		$('#start-date').val(bob.startDate);
+		$('#end-date').val(bob.endDate);
+
+
+		$.each(bob.data, function (key) {
+			$(String('#' + key)).val(bob.data[key]);
+		});
+
+		$.each(bob.tags, function (i) {
+			$(':input[value="' + bob.tags[i] + '"]').attr('checked', true);
+		});
   });
+
 
 	$('#add-bob-form').submit(function(event) {
 		event.preventDefault();
@@ -62,7 +67,7 @@ $(function() {
 		});
 
 		let data = {
-      id: $form.find('#bob-id'),
+      id: $form.find('#bob-id').val(),
 			data: bobData,
 			flavor: $form.find('#flavor').val(),
 			startDate: $form.find('#start-date').val(),
@@ -70,7 +75,7 @@ $(function() {
 			'tags[]': tags
 		}
 
-		$.post('/controller', data, function(res) {
+		$.post('/editbob', data, function(res) {
 			alert('Bob saved!');
 		});
 	});
@@ -90,5 +95,23 @@ var getUrlParameter = function getUrlParameter(sParam) {
         }
     }
 };
+
+function updateInputFromFlavor($flavors, flavorArray) {
+	// Subtract 1 from index as the first option is a placeholder
+	let index = $flavors.find('option:selected').index() - 1;
+
+	// On init it is -1, only after an option is selected should you update
+	if(index != -1){
+		let flavor = flavorArray[index];
+		$('#data').html('');
+		$.each(flavor.fields, function(i, field) {
+			$('#data')
+				.append($('<label>', {for: field.name, text: field.name, class: "mui--text-title"}))
+				.append($('<div>', {class: "data-field mui-" + field.input + "field"})
+					.append($('<input>', {id: field.name, name: field.name, type: field.input}))
+		    );
+		});
+	}
+}
 
 console.log("controller.js running");

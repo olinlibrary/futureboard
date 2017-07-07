@@ -70,6 +70,7 @@ module.exports = function(io, db) {
 	};
 
 	controller.POSTeditBob = function (req, res) {
+		// console.log(req.body);
 		var bob = {
 			_id:			 db.ObjectId(req.body.id),
 			data:      req.body.data,
@@ -79,12 +80,14 @@ module.exports = function(io, db) {
 			tags:      req.body.tags
 		}
 
-
 		// Needs error checking and input sanitation
 		io.emit('update_element', bob);
-		db.Bob.updateBob(bob);
+		db.Bob.updateBob(bob).then(function success(data) {
+			res.send("update successful");
+		}, function error(err) {
+			res.status(500).send(err);
+		});
 
-		res.send("update successful");
 	}
 
 	controller.GETbob = function (req, res) {
