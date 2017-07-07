@@ -24,12 +24,16 @@ $(function() {
 		});
 
 		$flavors.on('change', updateInputFromFlavor($flavors, flavorArray));
+
+		// Needs to run after flavors get filled, otherwise there is a race condition
+		fillInputFields();
 	});
 
 
-  // Populate form with current bob values
 
-	// WARNING: Race condition. This needs to wait for flavors to load
+
+	// Populate form with current bob values
+function fillInputFields() {
   $.get('/getbob?bobid=' + getUrlParameter("bobid"), function (bob) {
 		let $form = $('add-bob-form');
 
@@ -48,7 +52,7 @@ $(function() {
 			$(':input[value="' + bob.tags[i] + '"]').attr('checked', true);
 		});
   });
-
+}
 
 	$('#add-bob-form').submit(function(event) {
 		event.preventDefault();
