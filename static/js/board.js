@@ -76,7 +76,7 @@ function swapCarousels() {
   $memeNext.remove();
   $memeStream.append($momentNext.clone());
   $memeStream.append($momentBefore.clone());
-  
+
   $momentBefore.remove();
   $memeBefore.remove();
 
@@ -192,6 +192,10 @@ $(document).keydown(function(e) {
   }
   if (e.keyCode == 39) {
     carouselControl("right");
+  }
+  if (e.keyCode == 13) {
+    //enter
+    swapCarousels();
   }
 });
 
