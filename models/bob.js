@@ -56,6 +56,12 @@ function updateBob(bobData) {
   );
 }
 
+function deleteBob(bobId) {
+  return BobModel.remove(
+    { _id: bobId}
+  );
+}
+
 
 let Bob = {};
 
@@ -65,5 +71,6 @@ Bob.getBobs       = getBobs;
 Bob.getOneBob     = getOneBob;
 Bob.getActiveBobs = getActiveBobs;
 Bob.updateBob     = updateBob;
+Bob.deleteBob     = deleteBob;
 
 module.exports    = Bob;
