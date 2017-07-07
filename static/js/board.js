@@ -103,28 +103,16 @@ function createBoardElement(bob) {
   switch (bob.flavor) {
     case 'Quote':
       $html.addClass('quote-bobble')
-        .append($('<div>', {
-            class: "quote-holder"
-          })
-          .append($('<p>', {
-            class: "quote",
-            text: bob.data.Text
-          }))
-          .append($('<p>', {
-            class: "author",
-            text: bob.data.Author
-          }))
+        .append($('<div>', {class: "quote-holder"})
+          .append($('<p>', {class: "quote", text: bob.data.Text}))
+          .append($('<p>', {class: "author", text: bob.data.Author}))
         );
       break;
 
     case 'Text':
       $html.addClass('text-bobble')
-        .append($('<div>', {
-            class: "text-holder"
-          })
-          .append($('<p>', {
-            text: bob.data.Text
-          }))
+        .append($('<div>', {class: "text-holder"})
+          .append($('<p>', {text: bob.data.Text}))
         );
       break;
 
@@ -141,22 +129,12 @@ function createBoardElement(bob) {
 
     case 'Moment':
       $html.addClass('image-bobble')
-        .append($('<div />', {
-          class: "image-holder",
-          css: {
-            'background-image': "url(" + bob.data.Link + ")"
-          }
-        }));
+        .append($('<div />', {class: "image-holder", css: {'background-image': "url(" + bob.data.Link + ")"}}));
       break;
 
     case 'Meme':
       $html.addClass('image-bobble')
-        .append($('<div />', {
-          class: "image-holder",
-          css: {
-            'background-image': "url(" + bob.data.Link + ")"
-          }
-        }));
+        .append($('<div />', {class: "image-holder", css: {'background-image': "url(" + bob.data.Link + ")"}}));
       break;
 
     default:
