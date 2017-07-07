@@ -1,35 +1,112 @@
 function popluateBoard(bobbles) {
-  var $bobbleList = $("#slideshow");
+  var $moments = $(".moments");
+  var $memes = $(".memes");
   for (var i = 0; i < bobbles.length; i++) {
-    $bobbleList.append(createBoardElement(bobbles[i]));
+    let bob = bobbles[i];
+    if (bob.flavor === "Moment") {
+      $moments.append(createBoardElement(bob));
+    } else if (bob.flavor === "Meme") {
+      $memes.append(createBoardElement(bob));
+    } else {
+      //temporary(undecided), where to attach bobs that aren't memes or moments?
+      $moments.append(createBoardElement(bob));
+    }
   }
-  $('#slideshow').carousel({fullWidth: true});
+  $moments.carousel({
+    fullWidth: true
+  });
+  $memes.carousel({
+    fullWidth: true
+  });
 }
 
 function addBoardElement(bob) {
-  $('#slideshow .carousel-item.active').after(createBoardElement(bob));
+  $carousel = null;
+  if (bob.flavor === "Moment") {
+    carousel = '.moments';
+  } else if (bob.flavor === "Meme")
+    carousel = '.memes';
+  else {
+    //temporary choice
+    carousel = '.moments';
+  }
+  addToCarousel(bob, carousel);
+}
 
-  var $before = $('#slideshow .carousel-item.active').prevAll();
-  $('#slideshow').append($before.clone());
+function addToCarousel(bob, carousel) {
+  $carousel = $(carousel);
+  $activeItem = $(carousel + " .carousel-item.active");
+  if (bob != null) {
+    $activeItem.after(createBoardElement(bob));
+  }
+  var $before = $activeItem.prevAll();
+  $carousel.append($before.clone());
   $before.remove();
 
-  if ($('#slideshow').hasClass('initialized')) {
-    $('#slideshow').removeClass('initialized');
+  if ($carousel.hasClass('initialized')) {
+    $carousel.removeClass('initialized')
   }
   //reinit the carousel
-  $('#slideshow').carousel({fullWidth: true});
+  $carousel.carousel({
+    fullWidth: true
+  });
+}
+
+// swap function called by swap button
+function swapCarousels() {
+  let $momentStream = $('.moments');
+  let $memeStream = $(".memes");
+  let $momentActiveItem = $(".moments .carousel-item.active");
+  let $memeActiveItem = $(".memes .carousel-item.active");
+  let $momentNext = $momentActiveItem.nextAll();
+  let $memeNext = $memeActiveItem.nextAll();
+  let $momentBefore = $momentActiveItem.prevAll();
+  let $memeBefore = $memeActiveItem.prevAll();
+
+  $momentActiveItem.after($memeActiveItem.clone());
+  $momentActiveItem.remove();
+  $momentNext.remove();
+  $momentStream.append($memeNext.clone());
+  $momentStream.append($memeBefore.clone());
+
+  $memeActiveItem.after($momentActiveItem.clone());
+  $memeActiveItem.remove();
+  $memeNext.remove();
+  $memeStream.append($momentNext.clone());
+  $memeStream.append($momentBefore.clone());
+
+  $momentBefore.remove();
+  $memeBefore.remove();
+
+  //reinit the carousels
+  if ($momentStream.hasClass('initialized')) {
+    $momentStream.removeClass('initialized')
+  }
+  if ($memeStream.hasClass('initialized')) {
+    $memeStream.removeClass('initialized')
+  }
+  $momentStream.carousel({
+    fullWidth: true
+  });
+  $memeStream.carousel({
+    fullWidth: true
+  });
+  $momentStream.addClass("memes").removeClass("moments");
+  $memeStream.addClass("moments").removeClass("memes");
 }
 
 function createBoardElement(bob) {
-
-  var $html = $('<div>', {id: bob.id, class: "carousel-item"});
+  var $html = $('<div>', {
+    id: bob.id,
+    class: "carousel-item"
+  });
   switch (bob.flavor) {
     case 'Quote':
       $html.addClass('quote-bobble')
         .append($('<div>', {class: "quote-holder"})
           .append($('<p>', {class: "quote", text: bob.data.Text}))
           .append($('<p>', {class: "author", text: bob.data.Author}))
-      );
+        );
       break;
 
     case 'Text':
@@ -50,7 +127,12 @@ function createBoardElement(bob) {
         });
       break;
 
-    case 'Image':
+    case 'Moment':
+      $html.addClass('image-bobble')
+        .append($('<div />', {class: "image-holder", css: {'background-image': "url(" + bob.data.Link + ")"}}));
+      break;
+
+    case 'Meme':
       $html.addClass('image-bobble')
         .append($('<div />', {class: "image-holder", css: {'background-image': "url(" + bob.data.Link + ")"}}));
       break;
@@ -63,37 +145,45 @@ function createBoardElement(bob) {
   return $html;
 }
 
-function carouselControl(direction){
-  if(direction == "left"){
-      $('.carousel').carousel('prev', 1); // Move next n times.
-  }
-  else if(direction == "right"){
-    $('.carousel').carousel('next', 1); // Move next n times.
+// Init Autoslide
+$(function() {
+  setInterval(function() {
+    $('#slideshow').carousel('next');
+  }, 10000);
+  setInterval(function() {
+    $('#slideshow-small').carousel('next');
+  }, 7000);
+});
+
+function carouselControl(direction) {
+  if (direction == "left") {
+    $('#slideshow').carousel('prev', 1); // Move next n times.
+  } else if (direction == "right") {
+    $('#slideshow').carousel('next', 1); // Move next n times.
   }
 }
 
-// Init autoslide
-$(function() {
- setInterval(function() {
-   $('#slideshow').carousel('next');
-  }, 5000);
-});
-
-// Arrowkey control
-$(document).keydown(function(e){
-    if (e.keyCode == 37) {
-       carouselControl("left");
-    }
-    if (e.keyCode == 39){
-      carouselControl("right");
-    }
+//Keyboard Input Event Detection
+$(document).keydown(function(e) {
+  if (e.keyCode == 37) {
+    //press left arrow key to go back to previous slide
+    carouselControl("left");
+  }
+  if (e.keyCode == 39) {
+    //press right arrow key to go to next slide
+    carouselControl("right");
+  }
+  if (e.keyCode == 13) {
+    //press enter key to swap carousels
+    swapCarousels();
+  }
 });
 
 var socket = io();
 socket.emit('connection');
 
-socket.on('all_elements'  , popluateBoard);
-socket.on('add_element'   , addBoardElement);
+socket.on('all_elements', popluateBoard);
+socket.on('add_element', addBoardElement);
 socket.on('manual_control', carouselControl);
 
 console.log('board.js is running');

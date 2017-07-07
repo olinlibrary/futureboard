@@ -1,90 +1,173 @@
+body {
+  overflow: auto;
+  background-color: rgb(229, 232, 225)
+}
+
+nav {
+  margin-top: 10px;
+  border-radius: 10px;
+  opacity: 0.7;
+  margin-bottom: 10px;
+}
+
 #slideshow {
-  height: 100vh !important;
+  height: 80vh !important;
+  border-radius: 25px;
+}
+
+#slideshow-small {
+  border-radius: 10px;
+  z-index: -1;
+}
+
+.main-display {
+  padding: 5px;
+}
+
+.broadcast {
+  margin-top: 10px;
+  height: 8vh !important;
+  border-radius: 20px;
+  border-style: hidden;
+  border-color: rgb(49, 54, 51);
+  background-color: rgb(62, 161, 252);
+}
+
+.marquee {
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.marquee>p {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 5s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
+}
+
+.broadcast p {
+  font-size: 50px;
+  font-style: italic;
+  color: rgb(255, 255, 255);
+  margin: 0px;
+  padding: 2px;
+  float: left;
+  width: 50%;
+}
+
+#slideshow-small.carousel.carousel-slider {
+  top: -50px;
 }
 
 .carousel-item {
-  height: 100%;
+  /*height: 100%;*/
+  position: absolute;
 }
+
+.swap-button {
+  left: -50px;
+  top: 50px;
+}
+
+.collection {
+  margin-top: 30px;
+}
+
 .text-bobble {
   background: #ECF7E8;
 }
+
 .quote-bobble {
   background: #DDE7F4;
-   font-family: "Georgia", Times, serif;
-   text
+  font-family: "Georgia", Times, serif;
+  text
 }
+
 .text-bobble, .quote-bobble {
   padding: 1rem;
 }
-  .quote-bobble p, .text-bobble p {
-    font-size: 4rem !important; /* Dang ol Materialize is quite specific, we will SASS soon! */
-    line-height: 4rem;
-    font-weight: 400;
-    color: #333;
-  }
-    .quote-bobble p.author {
-      color: black;
-      text-align: right;
-      margin-top: 1rem;   
-      font-style: italic;
-  }
 
-  div.image-holder {
-		width: 100%;
-		height: 100%;
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-		background-color: #333;
-	}
+.quote-bobble p, .text-bobble p {
+  font-size: 4rem !important;
+  /* Dang ol Materialize is quite specific, we will SASS soon! */
+  line-height: 4rem;
+  font-weight: 400;
+  color: #333;
+}
 
-.quote-holder{
-  position:relative;
-  max-width:800px;
-  font-size:.75em;
- } 
+.quote-bobble p.author {
+  color: black;
+  text-align: right;
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+div.image-holder {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: #333;
+}
+
+.quote-holder {
+  position: relative;
+  max-width: 800px;
+  font-size: .75em;
+}
 
 .quote-holder p {
   color: black;
   text-align: center;
 }
 
-.text-holder{
-  position:relative;
-  padding:10px 30px;
-   background:#0B93F6;
-  border-radius:25px;
-    margin-bottom: 20px;
-  max-width:800px;
-  font-size:.75em;
+.text-holder {
+  position: relative;
+  padding: 10px 30px;
+  background: #0B93F6;
+  border-radius: 25px;
+  margin-bottom: 20px;
+  max-width: 800px;
+  font-size: .75em;
   color: black;
   float: left;
 }
 
 .text-holder p {
-    color:#fff; 
+  color: #fff;
 }
+
 .text-holder:before {
-    content:"";
-    position:absolute;
-    z-index:2;
-    bottom:-2px;
-    left:-7px;
-    height:20px;
-    border-right:20px solid #0B93F6;
-    border-bottom-right-radius: 16px 14px;
-    -webkit-transform:translate(0, -2px);
+  content: "";
+  position: absolute;
+  z-index: 2;
+  bottom: -2px;
+  left: -7px;
+  height: 20px;
+  border-right: 20px solid #0B93F6;
+  border-bottom-right-radius: 16px 14px;
+  -webkit-transform: translate(0, -2px);
 }
 
 .text-holder:after {
-    content:"";
-    position:absolute;
-    z-index:3;
-    bottom:-2px;
-    left:4px;
-    width:26px;
-    height:20px;
-    background:#f7f6f0;
-    border-bottom-right-radius: 10px;
-    -webkit-transform:translate(-30px, -2px);
+  content: "";
+  position: absolute;
+  z-index: 3;
+  bottom: -2px;
+  left: 4px;
+  width: 26px;
+  height: 20px;
+  background: #f7f6f0;
+  border-bottom-right-radius: 10px;
+  -webkit-transform: translate(-30px, -2px);
 }
