@@ -24,13 +24,20 @@ app.use('/static', express.static(path.join(__dirname, '/static')));
 app.get('/', function (req, res) {
   res.sendFile(__dirname + '/templates/board.html');
 });
+app.get('/admin', function (req, res) {
+  res.sendFile(__dirname + '/templates/admin.html');
+});
 
 // Send data to board
 const controller = require('./routes/controllerRoutes')(io, db);
-app.get('/controller', controller.GETindex);
+app.get('/controller' , controller.GETindex);
 app.post('/controller', controller.POSTbob);
-app.get('/flavors', controller.GETflavors);
-app.get('/tags', controller.GETtags);
+app.get('/flavors'    , controller.GETflavors);
+app.get('/tags'       , controller.GETtags);
+app.get('/editbob'    , controller.GETeditBob);
+app.post('/editbob'   , controller.POSTeditBob);
+app.get('/getbob'     , controller.GETbob);
+app.post('/deletebob' , controller.POSTdeletebob);
 
 // Handle socket logic
 require('./routes/sockets')(io, db);

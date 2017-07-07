@@ -11,5 +11,4 @@ module.exports = function(io, db) {
 			socket.broadcast.emit('manual_control', command);
 		});
 	});
-
-}
+};
