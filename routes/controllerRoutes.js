@@ -38,7 +38,7 @@ module.exports = function(io, db) {
 
 	controller.POSTupdatebob = function(req, res, next) {
 		var bob = {
-			_id:			 ObjectID(req.body.id),
+			_id:       db.ObjectID(req.body.id),
 			data:      req.body.data,
 			flavor:    req.body.flavor,
 			startDate: req.body.startDate,

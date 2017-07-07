@@ -15,9 +15,16 @@ function popluateTable(bobs) {
 }
 
 function createBobElement(bob) {
-  let editButton   = '<a href=./editbob?bobid='+ bob._id + '>Edit Bob</a>';
+  let $editButton = $('<a>', {
+    href: './editbob?bobid='+ bob._id,
+    text: 'Edit'
+  });
   // let deleteButton = '<a href=./deletebob?bobid='+ bob._id + '>Delete Bob</a>';
-  let deleteButton = '<a onclick=deleteBob("' + bob._id + '") href="javascript:void(0);">Delete</a>';
+  let $deleteButton = $('<a>', {
+    onclick: 'deleteBob("' + bob._id + '")',
+    href: 'javascript:void(0);',
+    text: 'delete'
+  });
 
   let bobColumns = [
     '<p>' + bob.flavor + '</p>',
@@ -25,8 +32,8 @@ function createBobElement(bob) {
     '<p>' + bob.startDate + '</p>',
     '<p>' + bob.endDate + '</p>',
     '<p>' + (Date.now() > new Date(bob.startDate) && Date.now() < new Date(bob.endDate)) + '</p>',
-    editButton,
-    deleteButton
+    $editButton,
+    $deleteButton
   ];
 
   let $html = $('<tr>', {bobid: bob._id, class: "bob-item"});

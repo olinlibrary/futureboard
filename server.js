@@ -37,7 +37,7 @@ app.get('/tags'       , controller.GETtags);
 app.get('/editbob'    , controller.GETeditBob);
 app.post('/editbob'   , controller.POSTeditBob);
 app.get('/getbob'     , controller.GETbob);
-app.post('/deletebob'  , controller.POSTdeletebob);
+app.post('/deletebob' , controller.POSTdeletebob);
 
 // Handle socket logic
 require('./routes/sockets')(io, db);

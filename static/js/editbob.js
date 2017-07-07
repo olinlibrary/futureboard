@@ -1,8 +1,6 @@
 var cur_bob;
 
 $(function() {
-	bobid =
-
 	$('#start-date').datepicker();
 	$('#end-date').datepicker();
 	$('#start-date').datepicker('setDate', new Date());
@@ -20,12 +18,7 @@ $(function() {
 	$.get('/flavors', function(flavorArray) {
 		flavors = flavorArray;
 		let $flavors = $('#flavor');
-
-		// $.each(flavorArray, function(index, flavor) {
-		// 	$flavors.append('<option value="' + flavor.name + '">' + flavor.name + '</option>');
-		// });
-
-		// $flavors.on('change', updateInputFromFlavor($flavors, flavorArray));
+		// You cannot change flavors, so this is all we need to do.
 
 		// Needs to run after flavors get filled, otherwise there is a race condition
 		fillInputFields();
@@ -40,9 +33,11 @@ function fillInputFields() {
 		cur_bob = bob;
 		let $form = $('add-bob-form');
 
+		// Create the correct fields based on the current flavor
+		updateInputFromFlavor(bob.flavor, flavors);
+
 		$('#bob-id').val(bob._id);
 		$('#flavor').val(bob.flavor);
-		updateInputFromFlavor(bob.flavor, flavors);
 		$('#start-date').val(bob.startDate);
 		$('#end-date').val(bob.endDate);
 
@@ -90,10 +85,9 @@ function fillInputFields() {
 var getUrlParameter = function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
         sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
+        sParameterName;
 
-    for (i = 0; i < sURLVariables.length; i++) {
+    for (let i = 0; i < sURLVariables.length; i++) {
         sParameterName = sURLVariables[i].split('=');
 
         if (sParameterName[0] === sParam) {
