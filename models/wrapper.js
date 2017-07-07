@@ -33,11 +33,12 @@ const Flavors = require('./flavor');
 
 var dbWrapper = {};
 
-dbWrapper.Bob     = Bob;
-dbWrapper.Tag     = Tag;
-dbWrapper.Flavors = Flavors;
+dbWrapper.Bob      = Bob;
+dbWrapper.Tag      = Tag;
+dbWrapper.Flavors  = Flavors;
+dbWrapper.ObjectId = mongoose.Types.ObjectId; // Mongo requires _id key to be an ObjectId
 
-module.exports    = dbWrapper;
+module.exports     = dbWrapper;
 
 
 function connectToDB(url) {

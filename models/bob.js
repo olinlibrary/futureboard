@@ -23,7 +23,7 @@ function saveBob(bobData) {
     tags:       bobData.tags
   });
 
-  newBob.save(function (err) {
+  return newBob.save(function (err) {
     if (err) console.log("Bob save error:", err);
   });
 }
@@ -42,6 +42,26 @@ function getActiveBobs(filter) {
   return query;
 }
 
+function updateBob(bobData) {
+  return BobModel.update(
+    { _id: bobData._id },
+    {
+      // Do not allow updating flavor
+      data:      bobData.data,
+      tags:      bobData.tags,
+      startDate: bobData.startDate,
+      endDate:   bobData.endDate,
+      bobbleID:  bobData.bobbleID
+    }
+  );
+}
+
+function deleteBob(bobId) {
+  return BobModel.remove(
+    { _id: bobId}
+  );
+}
+
 
 let Bob = {};
 
@@ -50,5 +70,7 @@ Bob.saveBob       = saveBob;
 Bob.getBobs       = getBobs;
 Bob.getOneBob     = getOneBob;
 Bob.getActiveBobs = getActiveBobs;
+Bob.updateBob     = updateBob;
+Bob.deleteBob     = deleteBob;
 
 module.exports    = Bob;
