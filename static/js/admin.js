@@ -1,5 +1,6 @@
 function popluateTable(bobs) {
   let $bobTable = $("#bobTable");
+  $bobTable.empty(); // Clear the table before adding to it
 
   let tableColumns = ["Flavor", "ID", "StartDate", "EndDate", "Active", "Edit", "Delete"];
 
@@ -15,8 +16,8 @@ function popluateTable(bobs) {
 
 function createBobElement(bob) {
 
-  let editButton   = '<a href=./editbob?id='+ bob._id + '>Edit Bob</a>';
-  let deleteButton = '<a href=./deletebob?id='+ bob._id + '>Delete Bob</a>';
+  let editButton   = '<a href=./editbob?bobid='+ bob._id + '>Edit Bob</a>';
+  let deleteButton = '<a href=./deletebob?bobid='+ bob._id + '>Delete Bob</a>';
 
   let bobColumns = [
     '<p>' + bob.flavor + '</p>',

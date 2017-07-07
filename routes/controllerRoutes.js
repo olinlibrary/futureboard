@@ -2,6 +2,7 @@
 const path = require('path');
 
 
+
 module.exports = function(io, db) {
 	var controller = {};
 
@@ -47,6 +48,36 @@ module.exports = function(io, db) {
 	    res.status(500).send(err);
 	  });
 	};
+
+	controller.GETeditBob = function (req, res) {
+		res.sendFile(path.join(__dirname, '..', '/templates/editbob.html'));
+	};
+
+	controller.POSTeditBob = function (req, res) {
+		var bob = {
+			_id:			 db.ObjectId(req.body.id),
+			data:      req.body.data,
+			flavor:    req.body.flavor,
+			startDate: req.body.startDate,
+			endDate:   req.body.endDate,
+			tags:      req.body.tags
+		}
+
+
+		// Needs error checking and input sanitation
+		io.emit('update_element', bob);
+		db.Bob.updateBob(bob);
+
+		res.send("update successful");
+	}
+
+	controller.GETbob = function (req, res) {
+		db.Bob.getOneBob({ _id: db.ObjectId(req.query.bobid) } ).then(function success(data) {
+			res.send(data);
+		}, function error(err) {
+			res.status(500).send(err);
+		});
+	}
 
 	return controller;
 };

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Fb - Edit Bob</title>
+
+  <!-- load font -->
+  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css" />
+
+  <!-- load MUI -->
+  <link href="//cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
+  <script src="//cdn.muicss.com/mui-0.9.16/js/mui.min.js"></script>
+
+  <!-- load CSS, overrides MUI -->
+  <link rel="stylesheet" type="text/css" href="/static/css/controller.css">
+
+  <!-- load js -->
+  <script src="/static/vendor/socket.io.js" charset="UTF-8" type="text/javascript"></script>
+  <script src="/static/vendor/jquery.min.js" charset="UTF-8" type="text/javascript"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <script src="/static/js/editbob.js" charset="UTF-8" type="text/javascript"></script>
+</head>
+
+<body>
+
+  <div class="mui-container">
+    <div id="navbar" class="mui-appbar">
+      <table width="100%">
+        <tr>
+          <td class="mui--appbar-height" align="middle">
+            <legend class="mui--text-display2">Edit Bob!</legend>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="mui-divider"></div><br />
+
+    <form id="add-bob-form" novalidate>
+
+      <label for="flavor" class="mui--text-title">Flavor</label><br>
+      <div class="form-field mui-form">
+        <div class="mui-select">
+          <select id="flavor" name="flavor">
+          <option>--- Select One ---</option>
+          <!-- Filled in with options pulled down from DB -->
+      </select>
+        </div>
+      </div>
+
+      <div id="data" class="form-field"></div>
+
+      <div class="form-field">
+        <fieldset id="tag-holder" class="mui-checkbox mui--text-subhead">
+          <legend>Tags</legend>
+          <!-- Filled in with options pulled down from DB -->
+        </fieldset>
+      </div>
+
+      <div class="form-field" class="mui-textfield">
+        <label class="mui--text-title" for="start-date">Start showing on</label><br>
+        <input type="text" id="start-date"  name="start-date">
+      </div>
+
+      <div class="form-field" class="mui-textfield">
+        <label class="mui--text-title" for="end-date">Stop showing on</label><br>
+        <input type="text" id="end-date"  name="end-date">
+      </div>
+
+
+      <button type="submit" class="mui-btn mui-btn--accent mui-btn--large">Add Bob</button>
+
+      <input type="text" id="bob-id" name="bob-id" hidden>
+    </form>
+  </div>
+</body>
+
+</html>

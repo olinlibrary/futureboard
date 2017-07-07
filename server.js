@@ -34,6 +34,9 @@ app.get('/controller' , controller.GETindex);
 app.post('/controller', controller.POSTbob);
 app.get('/flavors'    , controller.GETflavors);
 app.get('/tags'       , controller.GETtags);
+app.get('/editbob'    , controller.GETeditBob);
+app.post('/editbob'   , controller.POSTeditBob);
+app.get('/getbob'     , controller.GETbob);
 
 // Handle socket logic
 require('./routes/sockets')(io, db);
