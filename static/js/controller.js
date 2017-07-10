@@ -23,6 +23,7 @@ $(function() {
 	});
 
 	var flavors = [];
+
 	/**
 	 * Loads flavors data from the server using a HTTP GET request,
 	 * @param {string} url - A string containing the URL to tags GET request
@@ -44,7 +45,7 @@ $(function() {
 
 		/**
 		 * Attaches a 'change' event handler for flavor html elements
-		 * @param {string} event - A string containing the URL to tags GET request
+		 * @param {string} event - A string containing the URL(route) to tags GET request
 		 * @param {successCallback} function - Updates "selected" html flavor
 		*/
 		$flavors.on('change', function() {
@@ -92,7 +93,7 @@ $(function() {
 
 		/**
 		 * Posts input data to the server using POST request
-		 * @param {string} url - A string containing the URL to POST request
+		 * @param {string} url - A string containing the URL(route) to POST request
 		 * @param {Object} data - An object that contains a new bob data
 		 * @param {successCallback} function - A callback called upon success
 		*/
