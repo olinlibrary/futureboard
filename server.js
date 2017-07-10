@@ -41,8 +41,8 @@ app.get('/getbob'     , controller.GETbob);
 app.post('/deletebob' , controller.POSTdeletebob);
 
 // Handle api traffic
-api = require('./routes/api')(io, db, app);
-// app.get('/api', api.GETroot);
+api = require('./routes/api')(io, db);
+app.use('/api', api);
 
 // Handle socket logic
 require('./routes/sockets')(io, db);
