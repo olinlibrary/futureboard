@@ -1,3 +1,7 @@
+/**
+ * Populates admin Table by creating jQuery DOM elements for given bobs,
+ * @param {Object[]} bobs - Array of Bob objects to be displayed on the table
+*/
 function popluateTable(bobs) {
   let $bobTable = $("#bobTable");
   $bobTable.empty(); // Clear the table before adding to it
@@ -12,12 +16,18 @@ function popluateTable(bobs) {
   }
 }
 
+/**
+ * Creates and returns a jQuery element of a given Bob object,
+ * then appends it to the admin table
+ * @param {Object} bob - A single Bob object to be added to the carousel
+ * @returns {Object} $html - new jQuery element for the new Bob
+*/
 function createBobElement(bob) {
   let $editButton = $('<a>', {
     href: './editbob?bobid='+ bob._id,
     text: 'Edit'
   });
-  // let deleteButton = '<a href=./deletebob?bobid='+ bob._id + '>Delete Bob</a>';
+
   let $deleteButton = $('<a>', {
     onclick: 'deleteBob("' + bob._id + '")',
     href: 'javascript:void(0);',
@@ -41,15 +51,21 @@ function createBobElement(bob) {
       .append(bobColumns[i])
     );
   }
-
-  console.log($html);
   return $html;
 }
 
+/**
+ * Creates a jQuery element of a new bob object
+ * @param {Object} newBob - A newly created Bob to be appended to the table
+*/
 function addTableElement(newBob) {
   $("#bobTable").append(createBobElement(newBob));
 }
 
+/**
+ * Deletes a Bob from both the server db and removes it from the bob table
+ * @param {String} bobid - the bobid of target bob to be deleted
+*/
 function deleteBob(bobid) {
   if(confirm("Actually delete " + bobid + "?")) {
     $.post('/deleteBob?bobid=' + bobid);
