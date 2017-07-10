@@ -25,7 +25,7 @@
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
 
   <!-- load CSS -->
-  <link rel="stylesheet" type="text/css" href="/static/css/board.css">
+  <!-- <link rel="stylesheet" type="text/css" href="/static/css/board.css"> -->
   <link rel="stylesheet" type="text/css" href="/static/css/slideshow.css">
   <!-- load board js -->
   <script src='/static/js/board.js' charset="UTF-8" type="text/javascript"></script>
@@ -33,7 +33,114 @@
 </head>
 
 <body>
-  <div id="slideshow" class="carousel carousel-slider"></div>
+  <div class="row">
+
+    <div class="col s12 m7 l9 xl9 left-aside">
+
+      <nav class="col s12 m12 l6 xl4 black wave">
+        <div class="nav-wrapper">
+          <a href="#!" class="brand-logo left"><i class="material-icons">fast_forward</i>FUTUREboard</a>
+
+          <div class="horizontal hide-on-med-and-up right-align">
+            <a class="btn-floating btn-large blue pulse">
+              <i class="large material-icons">mode_edit</i>
+            </a>
+            <ul>
+              <li><a class="btn-floating red"><i class="material-icons">insert_chart</i></a></li>
+              <li><a class="btn-floating yellow darken-1"><i class="material-icons">format_quote</i></a></li>
+              <li><a class="btn-floating green"><i class="material-icons">publish</i></a></li>
+              <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <div class="main-display">
+        <div id="slideshow" class="carousel carousel-slider hoverable moments"></div>
+      </div>
+      <div class="broadcast">
+        <div class="marquee">
+          <p>
+            HAPPENING NOW : DEBUG DEBUG 12:00 FIKA 15:00 ESPRESSO 16:00
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col s0 m5 l3 xl3 right-aside hide-on-small-only">
+      <div class="events">
+        <ul class="collection">
+          <li class="collection-item">
+            <div class="nav-wrapper">
+              <a href="#!" class="brand-logo">UPCOMING EVENTS</a>
+              <ul class="right hide-on-med-and-down">
+                <li><a href="sass.html"><i class="material-icons right">search</i>  </a></li>
+
+              </ul>
+            </div>
+          </li>
+          <li class="collection-item avatar">
+            <i class="material-icons circle">folder</i>
+            <span class="title">ABE Integration</span>
+            <p> July 10th, Pretty Soon<br> (labels)
+            </p>
+            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+          </li>
+          <li class="collection-item avatar">
+            <i class="material-icons circle green">insert_chart</i>
+            <span class="title">Title</span>
+            <p>First Line <br> Second Line
+            </p>
+            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+          </li>
+          <li class="collection-item avatar">
+            <i class="material-icons circle red">play_arrow</i>
+            <span class="title">Title</span>
+            <p>First Line <br> Second Line
+            </p>
+            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+          </li>
+          <li class="collection-item avatar">
+            <i class="material-icons circle red">play_arrow</i>
+            <span class="title">Title</span>
+            <p>First Line <br> Second Line
+            </p>
+            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+          </li>
+          <li class="collection-item avatar">
+            <i class="material-icons circle red">play_arrow</i>
+            <span class="title">Title</span>
+            <p>First Line <br> Second Line
+            </p>
+            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+          </li>
+
+        </ul>
+      </div>
+
+      <div class="side-display">
+
+        <!-- swapbutton -->
+        <a onclick="swapCarousels()" class="btn-floating btn-large waves-effect pulse waves-light blue swap-button"><i class="material-icons">swap_horiz</i></a>
+
+        <!-- small slideshow -->
+        <div id="slideshow-small" class="hoverable carousel carousel-slider memes">
+        </div>
+
+      </div>
+    </div>
+
+    <div class="fixed-action-btn horizontal slideshow-button hide-on-small-only">
+      <a class="btn-floating btn-large re blue">
+        <i class="large material-icons">mode_edit</i>
+      </a>
+      <ul>
+        <li><a href="/controller" class="btn-floating red"><i class="material-icons">publish</i></a></li>
+        <li><a href="/admin" class="btn-floating orange"><i class="material-icons">info</i></a></li>
+      </ul>
+    </div>
+
+  </div>
 </body>
 
 </html>

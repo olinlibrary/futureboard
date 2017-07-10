@@ -1,10 +1,19 @@
+/**
+ * Runs when the document has loaded
+ * $ -> jQuery shorthand for vanilla JS "document.ready()"
+*/
 $(function() {
-
+	// Initializes datepicker calendar
 	$('#start-date').datepicker();
 	$('#end-date').datepicker();
 	$('#start-date').datepicker('setDate', new Date());
 
-	// Runs when the document has loaded, $ is jQuery
+	/**
+	 * Loads tags data from the server using a HTTP GET request,
+	 * Creates tag holder html element for each tag
+	 * @param {string} url - A string containing the URL to tags GET request
+	 * @param {successCallback} function - creates html element tag labels
+	*/
 	$.get('/tags', function(tagArray) {
 		$.each(tagArray, function(index, tag) {
 			$('#tag-holder').append('<label>\
@@ -14,14 +23,31 @@ $(function() {
 	});
 
 	var flavors = [];
+
+	/**
+	 * Loads flavors data from the server using a HTTP GET request,
+	 * @param {string} url - A string containing the URL to tags GET request
+	 * @param {successCallback} function - A callback function
+	*/
 	$.get('/flavors', function(flavorArray) {
 		flavors = flavorArray;
 		let $flavors = $('#flavor');
 
+		/**
+		 * Loads flavors data from the server using a HTTP GET request,
+		 * Creates tag holder html element for each tag
+		 * @param {object[]} flavorArray - A list of returned flavor objects
+		 * @param {successCallback} function - creates html element tag labels
+		*/
 		$.each(flavorArray, function(index, flavor) {
 			$flavors.append('<option value="' + flavor.name + '">' + flavor.name + '</option>');
 		});
 
+		/**
+		 * Attaches a 'change' event handler for flavor html elements
+		 * @param {string} event - A string containing the URL(route) to tags GET request
+		 * @param {successCallback} function - Updates "selected" html flavor
+		*/
 		$flavors.on('change', function() {
 			// Subtract 1 from index as the first option is a placeholder
 			let index = $flavors.find('option:selected').index() - 1;
@@ -37,6 +63,9 @@ $(function() {
 		});
 	});
 
+	/**
+	 * Submits the Bob data created from reading values from each html input form
+	*/
 	$('#add-bob-form').submit(function(event) {
 		event.preventDefault();
 
@@ -53,6 +82,7 @@ $(function() {
 			bobData[$input.attr('name')] = $input.val();
 		});
 
+		// Creates bob data from the values of each input form
 		let data = {
 			data: bobData,
 			flavor: $form.find('#flavor').val(),
@@ -61,6 +91,12 @@ $(function() {
 			'tags[]': tags
 		}
 
+		/**
+		 * Posts input data to the server using POST request
+		 * @param {string} url - A string containing the URL(route) to POST request
+		 * @param {Object} data - An object that contains a new bob data
+		 * @param {successCallback} function - A callback called upon success
+		*/
 		$.post('/controller', data, function(res) {
 			alert('Bob saved!');
 		});
