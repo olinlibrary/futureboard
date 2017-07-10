@@ -25,6 +25,31 @@ nav {
   height: 80vh !important;
   border-radius: 25px;
 }
+.flip-button {
+  float:right;
+  position:relative;
+  top : 100px;
+  right: 20px;
+}
+
+.flip-button > a {
+  opacity: 0.5;
+}
+.flip-button > a:hover{
+  opacity: 1;
+}
+.slideshow-buttons {
+  float:right;
+  position:relative;
+  top : -70px;
+  right: 20px;
+}
+.slideshow-buttons > a {
+  opacity:0.5;
+}
+.slideshow-buttons > a:hover {
+  opacity:1;
+}
 
 #slideshow-small {
   border-radius: 10px;
@@ -40,7 +65,7 @@ nav {
   background-color: rgb(62, 161, 252);
 
   /*box margin*/
-  margin-top: 10px;
+  /*margin-top: 10px;*/
 
   /*border settings*/
   border-radius: 20px;
