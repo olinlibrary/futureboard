@@ -28,6 +28,7 @@ app.get('/admin', function (req, res) {
   res.sendFile(__dirname + '/templates/admin.html');
 });
 
+
 // Send data to board
 const controller = require('./routes/controllerRoutes')(io, db);
 app.get('/controller' , controller.GETindex);
@@ -39,13 +40,17 @@ app.post('/editbob'   , controller.POSTeditBob);
 app.get('/getbob'     , controller.GETbob);
 app.post('/deletebob' , controller.POSTdeletebob);
 
+// Handle api traffic
+api = require('./routes/api')(io, db, app);
+// app.get('/api', api.GETroot);
+
 // Handle socket logic
 require('./routes/sockets')(io, db);
 
 const twilio = require('./routes/twilio')(io, db);
 app.post('/twilio', twilio.POSTtext);
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 80;
 http.listen(port, function() {
-	console.log("FORWARDboard running on port 8080");
+	console.log("FORWARDboard running on port", port);
 });
