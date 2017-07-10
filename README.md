@@ -31,23 +31,23 @@ Add function to schema:
   * [wrapper.js](./models/wrapper.js) : Wrapper for all models
 * ![#f03c15](https://placehold.it/15/f03c15/000000?text=+)
 [routes](./routes)
-  * [controllerRoutes.js](./routes/controllerRoutes.js)
-  * [sockets.js](./routes/sockets.js)
-  * [twilio.js](./routes/twilio.js)
+  * [controllerRoutes.js](./routes/controllerRoutes.js) : Express controller routes
+  * [sockets.js](./routes/sockets.js) : socket.io routes
+  * [twilio.js](./routes/twilio.js) : twilio(MMS service) routes
 * ![#f03c15](https://placehold.it/15/f03c15/000000?text=+)
 [scripts](./scripts) : custom node.js scripts for mongoDB
-  * [bobs.json](./scripts/bobs.json)
-  * [flavors.json](./scripts/flavors.json)
-  * [tags.json](./scripts/tags.json)
-  * [exportDB.js](./scripts/exportDB.js)
-  * [importDB.js](./scripts/importDB.js)
+  * [bobs.json](./scripts/bobs.json) : bobs mongoDB collection in JSON
+  * [flavors.json](./scripts/flavors.json) : flavors mongoDB collection in JSON
+  * [tags.json](./scripts/tags.json) :tags mongoDB collection in JSON
+  * [exportDB.js](./scripts/exportDB.js) : exports current mongoDB into JSON
+  * [importDB.js](./scripts/importDB.js) : imports JSON into current mongoDB
   * [update_field_name.js](./scripts/update_field_name.js)
 * ![#f03c15](https://placehold.it/15/f03c15/000000?text=+)
 [physicalInterface](./physicalInterface) : Arduino Physical Controller Inteface
   * [CapacitiveSensorSketch.ino](./physicalInterface/CapacitiveSensorSketch.ino)
   * [serialController.js](./physicalInterface/serialController.js)
 * ![#c5f015](https://placehold.it/15/c5f015/000000?text=+)
-[templates](./templates)
+[templates](./templates) : html templates for pages
   * [admin.html](./templates/admin.html)
   * [board.html](./templates/board.html)
   * [controller.html](./templates/controller.html)
@@ -65,10 +65,10 @@ Add function to schema:
   * ![#c5f015](https://placehold.it/15/c5f015/000000?text=+)
   [css](./static/css)
     * [admin.css](./static/css/admin.css)
+    * [controller.css](./static/css/controller.css)
+    * [slideshow.css](./static/css/slideshow.css) : applied to board.html
     * ![#5d646b](https://placehold.it/15/5d646b/000000?text=+)
     [board.css](./static/css/board.css) (deprecated, for dragglble box UI)
-    * [controller.css](./static/css/controller.css)
-    * [slideshow.css](./static/css/slideshow.css)
   * ![#c5f015](https://placehold.it/15/c5f015/000000?text=+)
   [js](./static/js)
     * [admin.js](./static/js/admin.js)
@@ -78,9 +78,9 @@ Add function to schema:
 
 
 * ![#1589F0](https://placehold.it/15/1589F0/000000?text=+)
-[package.json](./package.json)
+[package.json](./package.json) : npm module information
 * ![#f03c15](https://placehold.it/15/f03c15/000000?text=+)
-[server.js](./server.js)
+[server.js](./server.js) : contains server logics, run this to start node server
 
 
 
