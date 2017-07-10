@@ -1,9 +1,7 @@
 function popluateTable(bobs) {
   let $bobTable = $("#bobTable");
   $bobTable.empty(); // Clear the table before adding to it
-
   let tableColumns = ["Flavor", "ID", "StartDate", "EndDate", "Active", "Edit", "Delete"];
-
   let $html = $('<tr>', {});
   for (let i in tableColumns){
     $html.append($('<th>', { text: tableColumns[i] }));
