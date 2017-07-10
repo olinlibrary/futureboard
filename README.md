@@ -41,7 +41,7 @@ Add function to schema:
   * [tags.json](./scripts/tags.json)
   * [exportDB.js](./scripts/exportDB.js)
   * [importDB.js](./scripts/importDB.js)
-  * [update field name.js](./scripts/update field name.js)
+  * [update_field_name.js](./scripts/update_field_name.js)
 * ![#f03c15](https://placehold.it/15/f03c15/000000?text=+)
 [physicalInterface](./physicalInterface) : Arduino Physical Controller Inteface
   * [CapacitiveSensorSketch.ino](./physicalInterface/CapacitiveSensorSketch.ino)
