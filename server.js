@@ -21,24 +21,29 @@ app.use('/static', express.static(path.join(__dirname, '/static')));
 
 
 // Main board
-app.get('/', function (req, res) {
+app.get('/', function(req, res) {
   res.sendFile(__dirname + '/templates/board.html');
 });
-app.get('/admin', function (req, res) {
+
+app.get('/new', function(req, res) {
+  res.sendFile(__dirname + '/templates/controller.html');
+});
+
+app.get('/admin', function(req, res) {
   res.sendFile(__dirname + '/templates/admin.html');
 });
 
 
 // Send data to board
-const controller = require('./routes/controllerRoutes')(io, db);
-app.get('/controller' , controller.GETindex);
-app.post('/controller', controller.POSTbob);
-app.get('/flavors'    , controller.GETflavors);
-app.get('/tags'       , controller.GETtags);
-app.get('/editbob'    , controller.GETeditBob);
-app.post('/editbob'   , controller.POSTeditBob);
-app.get('/getbob'     , controller.GETbob);
-app.post('/deletebob' , controller.POSTdeletebob);
+// const controller = require('./routes/controllerRoutes')(io, db);
+// app.get('/controller' , controller.GETindex);
+// app.post('/controller', controller.POSTbob);
+// app.get('/flavors'    , controller.GETflavors);
+// app.get('/tags'       , controller.GETtags);
+// app.get('/editbob'    , controller.GETeditBob);
+// app.post('/editbob'   , controller.POSTeditBob);
+// app.get('/getbob'     , controller.GETbob);
+// app.post('/deletebob' , controller.POSTdeletebob);
 
 // Handle api traffic
 api = require('./routes/api')(io, db);
