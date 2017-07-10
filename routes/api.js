@@ -11,6 +11,8 @@ module.exports = function(io, db) {
   //   next();
   // });
 
+
+  // Routing
   router.route('/')
     .get(GETapiGuide);
 
@@ -29,7 +31,7 @@ module.exports = function(io, db) {
   router.route('/flavors/:flavorname')
     .get(GETflavor);
 
-
+  // Functions below
   function ensureAuthenticated(req, res, next) {
     if(req.query.auth === 'hunter2'){
       next();
