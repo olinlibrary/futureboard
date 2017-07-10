@@ -23,13 +23,19 @@ module.exports = function(io, db) {
   router.route('/bobs/:bobid')
     .get(GETbob)
     .put(PUTbob)
-    .delete(DELETEbob);
+    .delete(ensureAuthenticated, DELETEbob);
 
   router.route('/flavors')
     .get(GETflavors);
 
   router.route('/flavors/:flavorname')
     .get(GETflavor);
+
+  router.route('/tags')
+    .get(GETtags);
+
+  router.route('/tags/:tagid')
+    .get(GETtag);
 
   // Functions below
   function ensureAuthenticated(req, res, next) {
@@ -120,13 +126,37 @@ module.exports = function(io, db) {
   }
 
   function GETflavor(req, res) {
-    db.Flavors.getFlavor(req.params.flavorname).then(function success(data) {
-	    res.send(data);
+    db.Flavors.getFlavor({ name: req.params.flavorname }).then(function success(data) {
+      // ObjectId is 24 characters long. If nothing is found by name, check by _id
+      if(data === null && req.params.flavorname.length == 24){
+        db.Flavors.getFlavor({ _id: db.ObjectId(req.params.flavorname) }).then(function success(data) {
+          res.send(data);
+        }, function error(err) {
+    	    res.status(500).send(err);
+        });
+      } else {
+        res.send(data);
+      }
 	  }, function error(err) {
 	    res.status(500).send(err);
 	  });
   }
 
+  function GETtags(req, res) {
+	  db.Tag.getTags().then(function success(data) {
+	    res.send(data);
+	  }, function error(err) {
+	    res.status(500).send(err);
+	  });
+	}
+
+  function GETtag(req, res) {
+	  db.Tag.getTag({ _id: db.ObjectId(req.params.tagid) }).then(function success(data) {
+	    res.send(data);
+	  }, function error(err) {
+	    res.status(500).send(err);
+	  });
+  }
 
   return router;
 };

@@ -23,8 +23,8 @@ function getAllFlavors(filter) {
 	return FlavorModel.find(filter);
 }
 
-function getFlavor(flavorName) {
-	return FlavorModel.findOne({ name: flavorName});
+function getFlavor(filter) {
+	return FlavorModel.findOne(filter);
 }
 
 
