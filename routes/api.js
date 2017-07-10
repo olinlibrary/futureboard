@@ -20,8 +20,8 @@ module.exports = function(io, db) {
 
   router.route('/bobs/:bobid')
     .get(GETbob)
-    .put(ensureAuthenticated, PUTbob)
-    .delete(ensureAuthenticated, DELETEbob);
+    .put(PUTbob)
+    .delete(DELETEbob);
 
   router.route('/flavors')
     .get(GETflavors);
@@ -37,7 +37,6 @@ module.exports = function(io, db) {
       res.status(401).send("User not authenticated");
     }
   }
-
 
   function GETapiGuide(req, res) {
     res.sendFile(path.join(__dirname, '..', '/templates/api.html'));
