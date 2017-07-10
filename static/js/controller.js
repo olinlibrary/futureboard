@@ -81,6 +81,7 @@ $(function() {
 			bobData[$input.attr('name')] = $input.val();
 		});
 
+		// Creates bob data from the values of each input form
 		let data = {
 			data: bobData,
 			flavor: $form.find('#flavor').val(),
