@@ -1,13 +1,24 @@
+/*
+- This file is used for the functional UI
+- Currently activated CSS for board.html
+*/
+
 body {
   overflow: auto;
   background-color: rgb(229, 232, 225)
 }
 
 nav {
+  /*box margin*/
   margin-top: 10px;
+  margin-bottom: 10px;
+
   border-radius: 10px;
   opacity: 0.7;
-  margin-bottom: 10px;
+}
+
+.main-display {
+  padding: 5px;
 }
 
 #slideshow {
@@ -20,38 +31,21 @@ nav {
   z-index: -1;
 }
 
-.main-display {
-  padding: 5px;
+#slideshow-small.carousel.carousel-slider {
+  top: -50px;
 }
 
 .broadcast {
-  margin-top: 10px;
   height: 8vh !important;
+  background-color: rgb(62, 161, 252);
+
+  /*box margin*/
+  margin-top: 10px;
+
+  /*border settings*/
   border-radius: 20px;
   border-style: hidden;
   border-color: rgb(49, 54, 51);
-  background-color: rgb(62, 161, 252);
-}
-
-.marquee {
-  white-space: nowrap;
-  overflow: hidden;
-  box-sizing: border-box;
-}
-
-.marquee>p {
-  display: inline-block;
-  padding-left: 100%;
-  animation: marquee 5s linear infinite;
-}
-
-@keyframes marquee {
-  0% {
-    transform: translate(0, 0);
-  }
-  100% {
-    transform: translate(-100%, 0);
-  }
 }
 
 .broadcast p {
@@ -64,8 +58,26 @@ nav {
   width: 50%;
 }
 
-#slideshow-small.carousel.carousel-slider {
-  top: -50px;
+/*marquee css implementation*/
+.marquee {
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.marquee > p {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 5s linear infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
 }
 
 .carousel-item {
