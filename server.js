@@ -33,17 +33,10 @@ app.get('/admin', function(req, res) {
   res.sendFile(__dirname + '/templates/admin.html');
 });
 
-
-// Send data to board
-// const controller = require('./routes/controllerRoutes')(io, db);
-// app.get('/controller' , controller.GETindex);
-// app.post('/controller', controller.POSTbob);
-// app.get('/flavors'    , controller.GETflavors);
-// app.get('/tags'       , controller.GETtags);
-// app.get('/editbob'    , controller.GETeditBob);
-// app.post('/editbob'   , controller.POSTeditBob);
-// app.get('/getbob'     , controller.GETbob);
-// app.post('/deletebob' , controller.POSTdeletebob);
+app.route('/bobs/:bobid')
+  .get(function(req, res) {
+    res.sendFile(path.join(__dirname, '/templates/editbob.html'));
+  });
 
 // Handle api traffic
 api = require('./routes/api')(io, db);
@@ -52,9 +45,12 @@ app.use('/api', api);
 // Handle socket logic
 require('./routes/sockets')(io, db);
 
+// Twilio input
 const twilio = require('./routes/twilio')(io, db);
 app.post('/twilio', twilio.POSTtext);
 
+
+// Start the server
 var port = process.env.PORT || 80;
 http.listen(port, function() {
 	console.log("FORWARDboard running on port", port);
