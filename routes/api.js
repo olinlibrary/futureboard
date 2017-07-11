@@ -1,3 +1,9 @@
+/**
+ * Handles all routing and logic of the API
+ * First half defines routing, the second half declares functions
+*/
+
+
 // External dependencies
 const path = require('path');
 const express = require('express');
@@ -42,6 +48,10 @@ module.exports = function(io, db) {
 
 
   // API functions
+  /**
+  * Checks for authentication.
+  * Currently only checks for req.query.auth, in the future it will use a more robust authentication method
+  */
   function ensureAuthenticated(req, res, next) {
     if(req.query.auth === 'hunter2'){
       next();
@@ -111,20 +121,24 @@ module.exports = function(io, db) {
 
     io.emit('update_element', bob);
     db.Bob.updateBob(bob).then(function success(data) {
+      io.emit('update_element', data);
       res.send("update successful");
     }, function error(err) {
       res.status(500).send(err);
     });
   }
 
+  // Delete a bob by id
   function DELETEbob(req, res) {
     db.Bob.deleteBob(db.ObjectId(req.params.bobid)).then(function success(data) {
+      io.emit('delete_element', data);
       res.send("Success");
     }, function error(err) {
       res.status(500).send(err);
     });
   }
 
+  // Get all flavors
   function GETflavors(req, res) {
     db.Flavors.getFlavors().then(function success(data) {
 	    res.send(data);
@@ -151,6 +165,7 @@ module.exports = function(io, db) {
 	  });
   }
 
+  // Get all tags
   function GETtags(req, res) {
 	  db.Tag.getTags().then(function success(data) {
 	    res.send(data);
@@ -159,6 +174,7 @@ module.exports = function(io, db) {
 	  });
 	}
 
+  // Get a single tag by id
   function GETtag(req, res) {
 	  db.Tag.getTag({ _id: db.ObjectId(req.params.tagid) }).then(function success(data) {
 	    res.send(data);
