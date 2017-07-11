@@ -52,7 +52,7 @@ app.post('/twilio', twilio.POSTtext);
 
 
 // Start the server
-var port = process.env.PORT || 80;
+var port = process.env.PORT || 8080;
 http.listen(port, function() {
 	console.log("FORWARDboard running on port", port);
 });
