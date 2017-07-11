@@ -33,7 +33,7 @@ let Flavors = {};
 
 Flavors.model         = FlavorModel;
 Flavors.saveFlavor    = saveFlavor;
-Flavors.getFlavors = getFlavors;
+Flavors.getFlavors 		= getFlavors;
 Flavors.getFlavor     = getFlavor;
 
 module.exports        = Flavors;
