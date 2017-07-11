@@ -156,6 +156,11 @@ Once you've setup your own version of the app, run `npm start` to get it running
 | GET | retrieve a list of bobs |
 | POST | create a new bob object |
 
+### /api/bobs/active
+| HTTP Method | Action |
+| ------------- | ------------- |
+| GET | retrieve a list of active bobs (Date.now() is between date.start and date.end) |
+
 ### /api/bobs/bobID
 | HTTP Method | Action |
 | ------------- | ------------- |
@@ -169,8 +174,8 @@ Once you've setup your own version of the app, run `npm start` to get it running
 | GET | retrieve all flavors |
 | ~POST~ | create a new flavor object |
 
-### /api/flavors/flavorID
+### /api/flavors/[flavorID : flavorName]
 | HTTP Method | Action |
 | ------------- | ------------- |
-| GET | retrieve a flavor object |
+| GET | retrieve a flavor object by name or id |
 | ~PUT~ | update the flavor object |

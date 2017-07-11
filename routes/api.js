@@ -13,15 +13,19 @@ module.exports = function(io, db) {
     .get(GETallBobs)
     .post(POSTcreateNewBob);
 
+  router.route('/bobs/active')
+    .get(GETallActiveBobs);
+
   router.route('/bobs/:bobid')
     .get(GETbob)
+    .put(PUTbob)
+    .delete(ensureAuthenticated, DELETEbob)
     .post(function(req, res) {
       res.status(405)
         .set('Access-Control-Allow-Methods', 'GET, PUT, DELETE')
         .send("error: cannot POST, use PUT to edit bobs");
-    })
-    .put(PUTbob)
-    .delete(ensureAuthenticated, DELETEbob);
+    });
+
 
   router.route('/flavors')
     .get(GETflavors);
@@ -34,6 +38,7 @@ module.exports = function(io, db) {
 
   router.route('/tags/:tagid')
     .get(GETtag);
+
 
 
   // API functions
