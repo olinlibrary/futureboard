@@ -27,6 +27,7 @@ function popluateBoard(bobs) {
   });
 }
 
+
 /**
  * Generates jQuery selector for a carousel depending on bob flavor,
  * then calls addToCarousel function, passing bob and carousel as params.
@@ -54,7 +55,7 @@ function addBoardElement(bob) {
 function addToCarousel(bob, carouselSelector) {
   $carousel = $(carouselSelector);
   $activeItem = $(carouselSelector + " .carousel-item.active");
-  if (bob != null) {
+  if (bob !== null) {
     $activeItem.after(createBoardElement(bob));
   }
   var $before = $activeItem.prevAll();
@@ -62,7 +63,7 @@ function addToCarousel(bob, carouselSelector) {
   $before.remove();
 
   if ($carousel.hasClass('initialized')) {
-    $carousel.removeClass('initialized')
+    $carousel.removeClass('initialized');
   }
   //reinit the carousel
   $carousel.carousel({
@@ -100,10 +101,10 @@ function swapCarousels() {
 
   // Reinit the carousels
   if ($momentStream.hasClass('initialized')) {
-    $momentStream.removeClass('initialized')
+    $momentStream.removeClass('initialized');
   }
   if ($memeStream.hasClass('initialized')) {
-    $memeStream.removeClass('initialized')
+    $memeStream.removeClass('initialized');
   }
   $momentStream.carousel({
     fullWidth: true
@@ -218,10 +219,11 @@ $(document).keydown(function(e) {
   }
 });
 
+$.get('/api/bobs', popluateBoard);
+
 var socket = io();
 socket.emit('connection');
 
-socket.on('all_elements', popluateBoard);
 socket.on('add_element', addBoardElement);
 socket.on('manual_control', carouselControl);
 

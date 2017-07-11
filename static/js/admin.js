@@ -73,10 +73,11 @@ function deleteBob(bobid) {
   }
 }
 
+
+$.get('/api/bobs', popluateTable);
+
 var socket = io();
 socket.emit('connection');
-
-socket.on('all_elements'  , popluateTable);
 socket.on('add_element'   , addTableElement);
 
 console.log("admin.js running");
