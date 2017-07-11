@@ -23,12 +23,17 @@ function getFlavors(filter) {
 	return FlavorModel.find(filter);
 }
 
+function getFlavor(filter) {
+	return FlavorModel.findOne(filter);
+}
+
 
 
 let Flavors = {};
 
-Flavors.model      = FlavorModel;
-Flavors.saveFlavor = saveFlavor;
-Flavors.getFlavors = getFlavors;
+Flavors.model         = FlavorModel;
+Flavors.saveFlavor    = saveFlavor;
+Flavors.getFlavors 		= getFlavors;
+Flavors.getFlavor     = getFlavor;
 
-module.exports     = Flavors;
+module.exports        = Flavors;
