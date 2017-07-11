@@ -74,6 +74,7 @@ function addToCarousel(bob, carouselSelector) {
 /**
  * Swaps main/sub carousel elements by appending and removing their child items
 */
+
 function swapCarousels() {
   let $momentStream = $('.moments');
   let $memeStream = $(".memes");
@@ -106,16 +107,18 @@ function swapCarousels() {
   if ($memeStream.hasClass('initialized')) {
     $memeStream.removeClass('initialized');
   }
+
+
+  // Swaps the class attributes of the carousel DOM elements
+  $momentStream.addClass("memes").removeClass("moments");
+  $memeStream.addClass("moments").removeClass("memes");
+
   $momentStream.carousel({
     fullWidth: true
   });
   $memeStream.carousel({
     fullWidth: true
   });
-
-  // Swaps the class attributes of the carousel DOM elements
-  $momentStream.addClass("memes").removeClass("moments");
-  $memeStream.addClass("moments").removeClass("memes");
 }
 
 /**
@@ -176,22 +179,38 @@ function createBoardElement(bob) {
 }
 
 /**
- * Defines time interval for carousel auto slides
+ * Defines time interval for carousel auto slides,
+ * Time Unit : ms.  Default Settings : 10s, 7s(small slide)
  */
+var interval1 = null;
+var interval2 = null;
 $(function() {
-  setInterval(function() {
+  interval1 = setInterval(function() {
     $('#slideshow').carousel('next');
   }, 10000);
-  setInterval(function() {
+  interval2 = setInterval(function() {
     $('#slideshow-small').carousel('next');
   }, 7000);
 });
 
 /**
+ * Reests time interval for the main carousel
+ * Time Unit : ms.  Default Settings : 10s
+ */
+function resetInterval() {
+  // Clears the existing timers
+  clearInterval(interval1);
+  // Reinits the timers
+  interval1 = setInterval(function() {
+    $('#slideshow').carousel('next');
+  }, 10000);
+}
+
+/**
  * Changes active item to either previous or next item depending on direction
  * @param {string} direction - direction of moving : left, right
  */
-function carouselControl(direction) {
+function carouselControl(direction){
   if (direction == "left") {
     $('#slideshow').carousel('prev', 1); // Move next n times.
   } else if (direction == "right") {
@@ -204,18 +223,20 @@ function carouselControl(direction) {
  * @param {event} e - jQuery event obejct
  */
 $(document).keydown(function(e) {
+
+  allowed = false;
   if (e.keyCode == 37) {
     // press left arrow key to go back to previous slide
-    carouselControl("left");
+    resetInterval(carouselControl("left"));
   }
   if (e.keyCode == 39) {
     // press right arrow key to go to next slide
-    carouselControl("right");
+    resetInterval(carouselControl("right"))
   }
   if (e.keyCode == 13) {
     // press enter key to swap carousels
     // Known Issue : holding the enter key deletes carousel child elements
-    swapCarousels();
+    resetInterval(swapCarousels());
   }
 });
 
