@@ -53,7 +53,7 @@ function fillInputFields(bobId) {
 		 * @param {string} url - A string containing the route to Bob GET request
 		 * @param {successCallback} function - Fills elements with Bob data values.
 		*/
-  $.get('/api/bobs/' + bobId, function (bob) {
+	$.get('/api/bobs/' + bobId, function (bob) {
 		cur_bob = bob;
 		let $form = $('add-bob-form');
 
@@ -74,7 +74,7 @@ function fillInputFields(bobId) {
 		$.each(bob.tags, function (i) {
 			$(':input[value="' + bob.tags[i] + '"]').attr('checked', true);
 		});
-  });
+	});
 }
 
 	/**
@@ -98,14 +98,14 @@ function fillInputFields(bobId) {
 
 		// Create bob data from the values of each input form
 		let data = {
-      id: $form.find('#bob-id').val(),
+			id: $form.find('#bob-id').val(),
 			data: bobData,
 			startDate: $form.find('#start-date').val(),
 			endDate: $form.find('#end-date').val(),
 			'tags[]': tags
 		}
 
-		// Send the bob through the api with a PUT request
+		// Send the bob through the api with a PUT request. (ajax is required to create PUT requests)
 		$.ajax({
 			url: '/api/bobs/' + bobId,
 			type: 'PUT',
@@ -140,7 +140,7 @@ function updateInputFromFlavor(flavorName, flavorArray) {
 			.append($('<label>', {for: field.name, text: field.name, class: "mui--text-title"}))
 			.append($('<div>', {class: "data-field mui-" + field.input + "field"})
 				.append($('<input>', {id: field.name, name: field.name, type: field.input}))
-	    );
+			);
 	});
 }
 

@@ -19,7 +19,7 @@ function saveFlavor(flavorData) {
 }
 
 
-function getAllFlavors(filter) {
+function getFlavors(filter) {
 	return FlavorModel.find(filter);
 }
 
@@ -33,7 +33,7 @@ let Flavors = {};
 
 Flavors.model         = FlavorModel;
 Flavors.saveFlavor    = saveFlavor;
-Flavors.getAllFlavors = getAllFlavors;
+Flavors.getFlavors = getFlavors;
 Flavors.getFlavor     = getFlavor;
 
 module.exports        = Flavors;

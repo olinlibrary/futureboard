@@ -96,9 +96,9 @@ module.exports = function(io, db) {
   // Updates an existing bob
   function PUTbob(req, res) {
     var bob = {
-      _id:			 db.ObjectId(req.body.id),
+      _id:			 db.ObjectId(req.body.id),    // Used for identifying bob in db.Bob.updateBob
       data:      req.body.data,
-      flavor:    req.body.flavor,
+      flavor:    req.body.flavor,             // Is not updated in db.Bob.updateBob
       startDate: req.body.startDate,
       endDate:   req.body.endDate,
       tags:      req.body.tags
@@ -121,7 +121,7 @@ module.exports = function(io, db) {
   }
 
   function GETflavors(req, res) {
-    db.Flavors.getAllFlavors().then(function success(data) {
+    db.Flavors.getFlavors().then(function success(data) {
 	    res.send(data);
 	  }, function error(err) {
 	    res.status(500).send(err);
