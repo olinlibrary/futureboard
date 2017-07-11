@@ -1,10 +1,8 @@
 // external dependencies
 const express = require('express');
 const path = require('path');
-const app = express();
 const bodyParser = require('body-parser');
-
-// Start http server
+const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 app.set('socketio', io);
@@ -16,6 +14,8 @@ const db = require('./models/wrapper.js');
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+
 // Serve all files from static
 app.use('/static', express.static(path.join(__dirname, '/static')));
 
@@ -33,6 +33,7 @@ app.get('/admin', function(req, res) {
   res.sendFile(__dirname + '/templates/admin.html');
 });
 
+// Show edit page on /bobs/:bobid
 app.route('/bobs/:bobid')
   .get(function(req, res) {
     res.sendFile(path.join(__dirname, '/templates/editbob.html'));

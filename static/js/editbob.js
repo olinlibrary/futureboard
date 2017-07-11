@@ -65,12 +65,12 @@ function fillInputFields(bobId) {
 		$('#start-date').val(bob.startDate);
 		$('#end-date').val(bob.endDate);
 
-		// fills the data forms
+		// Fill the data forms
 		$.each(bob.data, function (key) {
 			$(String('#' + key)).val(bob.data[key]);
 		});
 
-		// fills the tag forms
+		// Fill the tag forms
 		$.each(bob.tags, function (i) {
 			$(':input[value="' + bob.tags[i] + '"]').attr('checked', true);
 		});
@@ -78,7 +78,7 @@ function fillInputFields(bobId) {
 }
 
 	/**
-	 * Submits the Bob data created from reading values from each html input form
+	 * Submits the Bob data created from reading values from the form fields
 	*/
 	$('#add-bob-form').submit(function(event) {
 		event.preventDefault();
@@ -96,7 +96,7 @@ function fillInputFields(bobId) {
 			bobData[$input.attr('name')] = $input.val();
 		});
 
-		// Creates bob data from the values of each input form
+		// Create bob data from the values of each input form
 		let data = {
       id: $form.find('#bob-id').val(),
 			data: bobData,
@@ -105,7 +105,7 @@ function fillInputFields(bobId) {
 			'tags[]': tags
 		}
 
-		// Submit the bob through the api
+		// Send the bob through the api with a PUT request
 		$.ajax({
 			url: '/api/bobs/' + bobId,
 			type: 'PUT',

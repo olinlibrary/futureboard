@@ -5,20 +5,13 @@ var router = express.Router();
 
 
 module.exports = function(io, db) {
-
-  // router.use(function timeLog(req, res, next) {
-  //   console.log('Time: ', Date.now());
-  //   next();
-  // });
-
-
   // Routing
   router.route('/')
     .get(GETapiGuide);
 
   router.route('/bobs')
-    .get(GETallActiveBobs)
-    .post(createNewBob);
+    .get(GETallBobs)
+    .post(POSTcreateNewBob);
 
   router.route('/bobs/:bobid')
     .get(GETbob)
@@ -57,13 +50,18 @@ module.exports = function(io, db) {
   }
 
   function GETallActiveBobs(req, res) {
-    // Get all bobs
     db.Bob.getActiveBobs().then(function(bobs) {
       res.send(bobs);
     });
   }
 
-  function createNewBob(req, res, next) {
+  function GETallBobs(req, res) {
+    db.Bob.getBobs().then(function(bobs) {
+      res.send(bobs);
+    });
+  }
+
+  function POSTcreateNewBob(req, res, next) {
     if(!req.body.endDate){
       req.body.endDate = Date.now() + 2 * 60 * 60 * 12; // Default to two days
     }
@@ -76,8 +74,7 @@ module.exports = function(io, db) {
       tags:      req.body.tags
     };
 
-
-    // Save in db
+    // Save bob in db
     db.Bob.saveBob(bob).then(function success(bobData) {
       // Send to all boards
       io.emit('add_element', bobData);
@@ -87,6 +84,7 @@ module.exports = function(io, db) {
     });
   }
 
+  // Sends back one bob by id
   function GETbob(req, res) {
     db.Bob.getOneBob({ _id: db.ObjectId(req.params.bobid) } ).then(function success(data) {
       res.send(data);
@@ -95,8 +93,8 @@ module.exports = function(io, db) {
     });
   }
 
+  // Updates an existing bob
   function PUTbob(req, res) {
-    // console.log(req.body);
     var bob = {
       _id:			 db.ObjectId(req.body.id),
       data:      req.body.data,
@@ -106,7 +104,6 @@ module.exports = function(io, db) {
       tags:      req.body.tags
     };
 
-    // Needs error checking and input sanitation
     io.emit('update_element', bob);
     db.Bob.updateBob(bob).then(function success(data) {
       res.send("update successful");
@@ -131,6 +128,7 @@ module.exports = function(io, db) {
 	  });
   }
 
+  // Get one flavor by name or id
   function GETflavor(req, res) {
     db.Flavors.getFlavor({ name: req.params.flavorname }).then(function success(data) {
       // ObjectId is 24 characters long. If nothing is found by name, check by _id
