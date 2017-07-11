@@ -22,6 +22,11 @@ module.exports = function(io, db) {
 
   router.route('/bobs/:bobid')
     .get(GETbob)
+    .post(function(req, res) {
+      res.status(405)
+        .set('Access-Control-Allow-Methods', 'GET, PUT, DELETE')
+        .send("error: cannot POST, use PUT to edit bobs");
+    })
     .put(PUTbob)
     .delete(ensureAuthenticated, DELETEbob);
 
@@ -37,7 +42,8 @@ module.exports = function(io, db) {
   router.route('/tags/:tagid')
     .get(GETtag);
 
-  // Functions below
+
+  // API functions
   function ensureAuthenticated(req, res, next) {
     if(req.query.auth === 'hunter2'){
       next();
