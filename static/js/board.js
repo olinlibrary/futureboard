@@ -1,41 +1,59 @@
-function popluateBoard(bobbles) {
-  var $moments = $(".moments");
-  var $memes = $(".memes");
-  for (var i = 0; i < bobbles.length; i++) {
-    let bob = bobbles[i];
+/**
+ * Populates the board by creating jQuery DOM elements for given bobs,
+ * Bobs with Meme flavor appended to memesStream (carousel),
+ * Bobs with Moment flavor appeneded to momentsStream (carousel)
+ * @param {Object[]} bobs - Array of Bob objects to be displayed on the board
+*/
+function popluateBoard(bobs) {
+  let $momentsStream = $(".moments");
+  let $memesStream = $(".memes");
+  for (var i = 0; i < bobs.length; i++) {
+    let bob = bobs[i];
     if (bob.flavor === "Moment") {
-      $moments.append(createBoardElement(bob));
+      $momentsStream.append(createBoardElement(bob));
     } else if (bob.flavor === "Meme") {
-      $memes.append(createBoardElement(bob));
+      $memesStream.append(createBoardElement(bob));
     } else {
-      //temporary(undecided), where to attach bobs that aren't memes or moments?
-      $moments.append(createBoardElement(bob));
+      //temporary, appends bobs that aren't memes or moments to momentsStream
+      $momentsStream.append(createBoardElement(bob));
     }
   }
-  $moments.carousel({
+  // Initalizes carousels for both moments and memes streams
+  $momentsStream.carousel({
     fullWidth: true
   });
-  $memes.carousel({
+  $memesStream.carousel({
     fullWidth: true
   });
 }
 
+/**
+ * Generates jQuery selector for a carousel depending on bob flavor,
+ * then calls addToCarousel function, passing bob and carousel as params.
+ * @param {Object} bob - A single Bob object received via socket
+*/
 function addBoardElement(bob) {
-  $carousel = null;
+  carouselSelector = null; //jQuery selector for target carousel
   if (bob.flavor === "Moment") {
-    carousel = '.moments';
+    carouselSelector = '.moments';
   } else if (bob.flavor === "Meme")
-    carousel = '.memes';
+    carouselSelector = '.memes';
   else {
-    //temporary choice
-    carousel = '.moments';
+    // Temporary choice
+    carouselSelector = '.moments';
   }
-  addToCarousel(bob, carousel);
+  addToCarousel(bob, carouselSelector);
 }
 
-function addToCarousel(bob, carousel) {
-  $carousel = $(carousel);
-  $activeItem = $(carousel + " .carousel-item.active");
+/**
+ * Creates a jQuery element of a new bob object,
+ * then appends it to the target carousel DOM element
+ * @param {Object} bob - A single Bob object to be added to the carousel
+ * @param {string} carousel - jQuery selector string for the target carousel
+*/
+function addToCarousel(bob, carouselSelector) {
+  $carousel = $(carouselSelector);
+  $activeItem = $(carouselSelector + " .carousel-item.active");
   if (bob != null) {
     $activeItem.after(createBoardElement(bob));
   }
@@ -52,7 +70,9 @@ function addToCarousel(bob, carousel) {
   });
 }
 
-// swap function called by swap button
+/**
+ * Swaps main/sub carousel elements by appending and removing their child items
+*/
 function swapCarousels() {
   let $momentStream = $('.moments');
   let $memeStream = $(".memes");
@@ -78,7 +98,7 @@ function swapCarousels() {
   $momentBefore.remove();
   $memeBefore.remove();
 
-  //reinit the carousels
+  // Reinit the carousels
   if ($momentStream.hasClass('initialized')) {
     $momentStream.removeClass('initialized')
   }
@@ -91,15 +111,24 @@ function swapCarousels() {
   $memeStream.carousel({
     fullWidth: true
   });
+
+  // Swaps the class attributes of the carousel DOM elements
   $momentStream.addClass("memes").removeClass("moments");
   $memeStream.addClass("moments").removeClass("memes");
 }
 
+/**
+ * Creates and Returns a new html element from a given Bob object
+ * @param {Object} - Javascript Bob object from Mongoose
+ * @return {Object} - jQuery html elment of the created Bob
+ */
 function createBoardElement(bob) {
   var $html = $('<div>', {
     id: bob.id,
     class: "carousel-item"
   });
+
+  // Bob flavor decides how each bob is rendered
   switch (bob.flavor) {
     case 'Quote':
       $html.addClass('quote-bobble')
@@ -145,7 +174,9 @@ function createBoardElement(bob) {
   return $html;
 }
 
-// Init Autoslide
+/**
+ * Defines time interval for carousel auto slides
+ */
 $(function() {
   setInterval(function() {
     $('#slideshow').carousel('next');
@@ -155,6 +186,10 @@ $(function() {
   }, 7000);
 });
 
+/**
+ * Changes active item to either previous or next item depending on direction
+ * @param {string} direction - direction of moving : left, right
+ */
 function carouselControl(direction) {
   if (direction == "left") {
     $('#slideshow').carousel('prev', 1); // Move next n times.
@@ -163,18 +198,22 @@ function carouselControl(direction) {
   }
 }
 
-//Keyboard Input Event Detection
+/**
+ * Listens on jQuery events for keyboard controls
+ * @param {event} e - jQuery event obejct
+ */
 $(document).keydown(function(e) {
   if (e.keyCode == 37) {
-    //press left arrow key to go back to previous slide
+    // press left arrow key to go back to previous slide
     carouselControl("left");
   }
   if (e.keyCode == 39) {
-    //press right arrow key to go to next slide
+    // press right arrow key to go to next slide
     carouselControl("right");
   }
   if (e.keyCode == 13) {
-    //press enter key to swap carousels
+    // press enter key to swap carousels
+    // Known Issue : holding the enter key deletes carousel child elements
     swapCarousels();
   }
 });
