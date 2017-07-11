@@ -15,13 +15,11 @@ module.exports = function(io, db) {
 
   router.route('/bobs/:bobid')
     .get(GETbob)
-    .post(function(req, res) {
-      res.status(405)
-        .set('Access-Control-Allow-Methods', 'GET, PUT, DELETE')
-        .send("error: cannot POST, use PUT to edit bobs");
-    })
+    .post(POSTplusOne)
     .put(PUTbob)
     .delete(ensureAuthenticated, DELETEbob);
+
+  router.route('/bobs/:bobid/votes')
 
   router.route('/flavors')
     .get(GETflavors);
@@ -91,6 +89,20 @@ module.exports = function(io, db) {
     }, function error(err) {
       res.status(500).send(err);
     });
+  }
+
+  function POSTplusOne(req, res) {
+    if (req.headers['plus-one']){
+      db.Bob.plusOneBob(db.ObjectId(req.params.bobid)).then(function success(data) {
+        res.send(data);
+      }, function error(err) {
+        res.status(500).send(err);
+      });
+    } else {
+      res.status()
+    }
+
+
   }
 
   // Updates an existing bob
