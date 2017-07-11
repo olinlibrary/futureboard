@@ -14,7 +14,7 @@
   <!-- load vendor js -->
   <script src='/static/vendor/socket.io.js' charset="UTF-8" type="text/javascript"></script>
   <script src='/static/vendor/jquery.min.js' charset="UTF-8" type="text/javascript"></script>
-
+  <script src='/static/vendor/jquery.flip.min.js' charset="UTF-8" type="text/javascript"></script>
   <!-- load Materialize CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
   <!-- load Materialize js -->
@@ -52,7 +52,7 @@
 
       <div class="main-display">
 
-        <div class="flip-button">
+        <div class="flip-button" onclick="toggleActiveItem()">
           <a class="btn-floating waves-effect waves-light black hoverable"><i class="material-icons">credit_card</i></a>
         </div>
         <div id="slideshow" class="carousel carousel-slider moments"></div>

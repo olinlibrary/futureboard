@@ -17,6 +17,7 @@ function popluateBoard(bobs) {
       //temporary, appends bobs that aren't memes or moments to momentsStream
       $momentsStream.append(createBoardElement(bob));
     }
+    initFlip("#" + bob._id);
   }
   // Initalizes carousels for both moments and memes streams
   $momentsStream.carousel({
@@ -25,9 +26,23 @@ function popluateBoard(bobs) {
   $memesStream.carousel({
     fullWidth: true
   });
+
+/**
+ * Initializes Flip instance using jQuery Flip plugin
+ * @param {string} selector - jQuery selector for the html element to be flipped
+*/
+function initFlip(selector){
+  $(selector).flip({
+    trigger: 'manual'
+  })
 }
 
-
+/**
+ * Toggles the active item on the #slideshow carousel
+*/
+function toggleActiveItem(){
+  $("#slideshow > .flip.active").flip('toggle');
+}
 /**
  * Generates jQuery selector for a carousel depending on bob flavor,
  * then calls addToCarousel function, passing bob and carousel as params.
@@ -85,7 +100,7 @@ function swapCarousels() {
   let $momentBefore = $momentActiveItem.prevAll();
   let $memeBefore = $memeActiveItem.prevAll();
 
-  $momentActiveItem.after($memeActiveItem.clone());
+  $momentActiveItem.after($memeActiveItem.clone())
   $momentActiveItem.remove();
   $momentNext.remove();
   $momentStream.append($memeNext.clone());
@@ -100,6 +115,7 @@ function swapCarousels() {
   $momentBefore.remove();
   $memeBefore.remove();
 
+
   // Reinit the carousels
   if ($momentStream.hasClass('initialized')) {
     $momentStream.removeClass('initialized');
@@ -107,7 +123,6 @@ function swapCarousels() {
   if ($memeStream.hasClass('initialized')) {
     $memeStream.removeClass('initialized');
   }
-
 
   // Swaps the class attributes of the carousel DOM elements
   $momentStream.addClass("memes").removeClass("moments");
@@ -119,6 +134,12 @@ function swapCarousels() {
   $memeStream.carousel({
     fullWidth: true
   });
+  // Reinits jQuery flip instances for swapped items
+  $(".flip").each(function(index){
+    initFlip("#" + $(this).attr("id"));
+  })
+  resetInterval();
+
 }
 
 /**
@@ -161,13 +182,17 @@ function createBoardElement(bob) {
       break;
 
     case 'Moment':
-      $html.addClass('image-bobble')
-        .append($('<div />', {class: "image-holder", css: {'background-image': "url(" + bob.data.Link + ")"}}));
+      $html.addClass('image-bobble flip').attr("id", bob._id)
+        .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")"}}))
+        .append($('<div />', {class: "text-holder back"})
+          .append($('<p />', {text : "Some Text in the Back!" + bob._id})));
       break;
 
     case 'Meme':
-      $html.addClass('image-bobble')
-        .append($('<div />', {class: "image-holder", css: {'background-image': "url(" + bob.data.Link + ")"}}));
+      $html.addClass('image-bobble flip').attr("id", bob._id)
+        .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")"}}))
+        .append($('<div />', {class: "text-holder back"})
+          .append($('<p />', {text : "Some Text in the Back!" + bob._id})));
       break;
 
     default:
@@ -192,7 +217,6 @@ $(function() {
     $('#slideshow-small').carousel('next');
   }, 7000);
 });
-
 /**
  * Reests time interval for the main carousel
  * Time Unit : ms.  Default Settings : 10s
@@ -236,7 +260,7 @@ $(document).keydown(function(e) {
   if (e.keyCode == 13) {
     // press enter key to swap carousels
     // Known Issue : holding the enter key deletes carousel child elements
-    resetInterval(swapCarousels());
+    swapCarousels();
   }
 });
 

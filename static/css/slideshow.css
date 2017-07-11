@@ -24,6 +24,7 @@ nav {
   height: 80vh !important;
   border-radius: 25px;
 }
+
 .flip-button {
   float:right;
   position:relative;
@@ -107,7 +108,7 @@ nav {
 
 .carousel-item {
   /*height: 100%;*/
-  position: absolute;
+  position: absolute !important;
 }
 
 .swap-button {
