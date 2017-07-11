@@ -15,11 +15,13 @@ module.exports = function(io, db) {
 
   router.route('/bobs/:bobid')
     .get(GETbob)
-    .post(POSTplusOne)
     .put(PUTbob)
     .delete(ensureAuthenticated, DELETEbob);
 
   router.route('/bobs/:bobid/votes')
+    .get(GETvotes)
+    .post(POSTupvoteBob);
+
 
   router.route('/flavors')
     .get(GETflavors);
@@ -91,18 +93,29 @@ module.exports = function(io, db) {
     });
   }
 
-  function POSTplusOne(req, res) {
-    if (req.headers['plus-one']){
-      db.Bob.plusOneBob(db.ObjectId(req.params.bobid)).then(function success(data) {
-        res.send(data);
-      }, function error(err) {
-        res.status(500).send(err);
-      });
-    } else {
-      res.status()
-    }
+  function GETvotes(req, res) {
+    db.Bob.getOneBob(db.ObjectId(req.params.bobid)).then(function success(data) {
+      if(data){
+        res.send({ votes: data.votes });
+      } else {
+        res.send("bob not found");
+      }
+    }, function error(err) {
+      res.status(500).send(err);
+    });
+  }
 
-
+  function POSTupvoteBob(req, res) {
+    db.Bob.upvoteBob(db.ObjectId(req.params.bobid)).then(function success(data) {
+      io.emit('upvote', req.params.bobid);
+      if(data.nModified){
+        res.send("upvoted");
+      } else {
+        res.send("bob not found");
+      }
+    }, function error(err) {
+      res.status(500).send(err);
+    });
   }
 
   // Updates an existing bob
