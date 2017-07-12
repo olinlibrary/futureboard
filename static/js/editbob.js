@@ -33,7 +33,7 @@ $(function() {
 	 * @param {successCallback} function - A callback function
 	*/
 	var flavors = [];
-	$.get('/api/flavors', function(flavorArray) {
+	$.get('/api/flavors', function (flavorArray) {
 		// Editing Flavor of Bobs is not allowed.
 		flavors = flavorArray;
 		// Needs to run after flavors get filled, otherwise there is a race condition

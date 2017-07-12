@@ -33,10 +33,26 @@ app.get('/admin', function(req, res) {
   res.sendFile(__dirname + '/templates/admin.html');
 });
 
+app.get('/bobs', function (req, res) {
+  res.redirect(301, '/api/bobs/');
+});
+
 // Show edit page on /bobs/:bobid
 app.route('/bobs/:bobid')
   .get(function(req, res) {
-    res.sendFile(path.join(__dirname, '/templates/editbob.html'));
+    if(req.params.bobid.length === 24){
+      db.Bob.getOneBob({ _id: db.ObjectId(req.params.bobid)}).then(function success(data) {
+        if(data){
+          res.sendFile(path.join(__dirname, '/templates/editbob.html'));
+        } else {
+          res.status(404).send("bob not found");
+        }
+      }, function error(err) {
+        console.log(err);
+      });
+    } else {
+      res.status(404).send("bob id must be 24 characters long");
+    }
   });
 
 // Handle api traffic
@@ -52,7 +68,7 @@ app.post('/twilio', twilio.POSTtext);
 
 
 // Start the server
-var port = process.env.PORT || 80;
+var port = process.env.PORT || 8080;
 http.listen(port, function() {
 	console.log("FORWARDboard running on port", port);
 });
