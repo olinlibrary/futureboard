@@ -185,5 +185,6 @@ module.exports = function(io, db) {
 	  });
   }
 
+  router.GETallBobs = GETallBobs;
   return router;
 };

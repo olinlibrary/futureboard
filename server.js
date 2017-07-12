@@ -19,6 +19,10 @@ app.use(bodyParser.urlencoded({
 // Serve all files from static
 app.use('/static', express.static(path.join(__dirname, '/static')));
 
+// Handle api traffic
+api = require('./routes/api')(io, db);
+app.use('/api', api);
+// app.use('/', api);
 
 // Main board
 app.get('/', function(req, res) {
@@ -33,9 +37,8 @@ app.get('/admin', function(req, res) {
   res.sendFile(__dirname + '/templates/admin.html');
 });
 
-app.get('/bobs', function (req, res) {
-  res.redirect(301, '/api/bobs/');
-});
+app.get('/bobs', api.GETallBobs);
+
 
 // Show edit page on /bobs/:bobid
 app.route('/bobs/:bobid')
@@ -55,9 +58,7 @@ app.route('/bobs/:bobid')
     }
   });
 
-// Handle api traffic
-api = require('./routes/api')(io, db);
-app.use('/api', api);
+
 
 // Handle socket logic
 require('./routes/sockets')(io, db);
