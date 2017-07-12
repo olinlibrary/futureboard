@@ -32,8 +32,6 @@ module.exports = function(io, db) {
         .send("error: cannot POST, use PUT to edit bobs");
     });
 
->>>>>>> origin/dev
-
   router.route('/bobs/:bobid/votes')
     .get(GETvotes)
     .post(POSTupvoteBob);
@@ -53,7 +51,6 @@ module.exports = function(io, db) {
 
   router.route('/tags/:tagid')
     .get(GETtag);
-
 
 
   // API functions
