@@ -185,14 +185,16 @@ function createBoardElement(bob) {
       $html.addClass('image-bobble flip').attr("id", bob._id)
         .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")"}}))
         .append($('<div />', {class: "text-holder back"})
-          .append($('<p />', {text : "Some Text in the Back!" + bob._id})));
+          .append($('<p>', {class: "author", text: bob.data.Title}))
+          .append($('<p />', {text : bob.data.Descrption})));
       break;
 
     case 'Meme':
       $html.addClass('image-bobble flip').attr("id", bob._id)
         .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")"}}))
         .append($('<div />', {class: "text-holder back"})
-          .append($('<p />', {text : "Some Text in the Back!" + bob._id})));
+          .append($('<p>', {class: "author", text: bob.data.Title}))
+          .append($('<p />', {text : bob.data.Descrption})));
       break;
 
     default:

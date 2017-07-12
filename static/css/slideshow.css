@@ -20,24 +20,22 @@ nav {
   padding: 5px;
 }
 
-#slideshow {
-  height: 80vh !important;
-  border-radius: 25px;
-}
 
+
+/*button settings*/
 .flip-button {
   float:right;
   position:relative;
   top : 100px;
   right: 20px;
 }
-
 .flip-button > a {
   opacity: 0.5;
 }
 .flip-button > a:hover{
   opacity: 1;
 }
+
 .slideshow-buttons {
   float:right;
   position:relative;
@@ -50,6 +48,13 @@ nav {
 .slideshow-buttons > a:hover {
   opacity:1;
 }
+
+#slideshow {
+  height: 80vh !important;
+  border-radius: 25px;
+}
+
+
 
 #slideshow-small {
   border-radius: 10px;
@@ -175,7 +180,7 @@ div.image-holder {
   background: #0B93F6;
   border-radius: 25px;
   margin-bottom: 20px;
-  max-width: 800px;
+  /*max-width: 800px;*/
   font-size: .75em;
   color: black;
   float: left;
