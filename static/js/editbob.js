@@ -15,11 +15,10 @@ $(function() {
 	createAndPrefillForm(bobid);
 
 
-
-
 	/**
+	 * On clicking submit button
 	 * Submits the Bob data created from reading values from the form fields
-	*/
+	 */
 	$('#add-bob-form').submit(function(event) {
 		event.preventDefault();
 
@@ -90,7 +89,6 @@ function createAndPrefillForm(bobid) {
 					);
 			});
 		});
-
 
 		// Create tag checkboxes and prefill them
 		$.get('/api/tags', function(tagArray) {
