@@ -183,3 +183,9 @@ div.image-holder {
   border-bottom-right-radius: 10px;
   -webkit-transform: translate(-30px, -2px);
 }
+
+.events .collection {
+  position: absolute;
+  max-height: 50%;
+  overflow-y: auto;
+}
