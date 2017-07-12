@@ -65,7 +65,7 @@ function deleteBob(bobId) {
 }
 
 function upvoteBob(bobId) {
-  return BobModel.update(
+  return BobModel.findOneAndUpdate(
     { _id: bobId },
     {
       $inc: { votes: 1}  // Increment votes by 1
@@ -74,13 +74,10 @@ function upvoteBob(bobId) {
 }
 
 function flagBob(bobId) {
-return BobModel.update(
-    { _id: bobId },
-    {
-      flag: 1
-    }
-  );
+  // console.log('flagging bob id: ' + bobId);
+  return BobModel.findOneAndUpdate({ _id: bobId, flag: 0 }, { flag: 1 });
 }
+
 
 
 let Bob = {};

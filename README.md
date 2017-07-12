@@ -174,3 +174,12 @@ Once you've setup your own version of the app, run `npm start` to get it running
 | ------------- | ------------- |
 | GET | retrieve a flavor object |
 | ~PUT~ | update the flavor object |
+
+
+## Sockets
+| Socket Name | Input | Method |
+| ---  | --- | --- |
+| 'add_element' | bob object | Create a new bob |
+| 'update_element' | bob object | Update the bob with the same bobid |
+| 'upvote' | { id: bobid, votes: num_votes } | Set bob with id bobid to num_votes |
+| 'delete' | bobid | remove bob immediately |

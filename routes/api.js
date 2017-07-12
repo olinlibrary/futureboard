@@ -110,8 +110,8 @@ module.exports = function(io, db) {
 
   function POSTupvoteBob(req, res) {
     db.Bob.upvoteBob(db.ObjectId(req.params.bobid)).then(function success(data) {
-      io.emit('upvote', req.params.bobid);
-      if(data.nModified){
+      io.emit('upvote', { id:req.params.bobid, votes: data.votes });
+      if(data){
         res.send("upvoted");
       } else {
         res.send("bob not found");
@@ -134,12 +134,13 @@ module.exports = function(io, db) {
   }
 
   function POSTflagBob(req, res) {
+    console.log(req);
     db.Bob.flagBob(db.ObjectId(req.params.bobid)).then(function success(data) {
-      if(data.nModified){
-        io.emit('flag', req.params.bobid);
+      if(data){
+        io.emit('delete', req.params.bobid);
         res.send("flagged");
       } else {
-        res.send("bob not found");
+        res.send("bob not found or already flagged");
       }
     }, function error(err) {
       res.status(500).send(err);
