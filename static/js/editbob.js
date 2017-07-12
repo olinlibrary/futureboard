@@ -112,7 +112,12 @@ function fillInputFields(bobid) {
 			data: data,
 			success: function(res) {
 				alert(res);
-				window.location = document.referrer;
+				// Redirect to previous page or FUTUREboard
+				if (document.referrer !== "") {
+					window.location = document.referrer;
+				} else {
+					window.location = "/";
+				}
 			},
 			error: function(res) {
 				alert(res.statusText);
