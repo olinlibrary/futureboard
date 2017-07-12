@@ -3,11 +3,13 @@ const mongoose = require('mongoose');
 
 // Define and compile Bob Schema
 const bobSchema = mongoose.Schema({
-  data: {},
+  data:      {},
   startDate: { type: Date, default: Date.now() },
-  endDate: Date,
-  flavor: String,
-  tags: []
+  endDate:   Date,
+  flavor:    String,
+  tags:      [],
+  votes:     { type: Number, default: 1 },
+  flag:      { type: Number, default: 0 } // 0: OK, 1: Flagged, 2: Mod OK, 3: Mod Remove
 });
 
 const BobModel = mongoose.model('Bob', bobSchema);
@@ -62,6 +64,20 @@ function deleteBob(bobId) {
   );
 }
 
+function upvoteBob(bobId) {
+  return BobModel.findOneAndUpdate(
+    { _id: bobId },
+    {
+      $inc: { votes: 1}  // Increment votes by 1
+    }
+  );
+}
+
+function flagBob(bobId) {
+  return BobModel.findOneAndUpdate({ _id: bobId, flag: 0 }, { flag: 1 });
+}
+
+
 
 let Bob = {};
 
@@ -72,5 +88,7 @@ Bob.getOneBob     = getOneBob;
 Bob.getActiveBobs = getActiveBobs;
 Bob.updateBob     = updateBob;
 Bob.deleteBob     = deleteBob;
+Bob.upvoteBob     = upvoteBob;
+Bob.flagBob       = flagBob;
 
 module.exports    = Bob;

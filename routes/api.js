@@ -32,6 +32,13 @@ module.exports = function(io, db) {
         .send("error: cannot POST, use PUT to edit bobs");
     });
 
+  router.route('/bobs/:bobid/votes')
+    .get(GETvotes)
+    .post(POSTupvoteBob);
+
+  router.route('/bobs/:bobid/flags')
+    .get(GETflag)
+    .post(POSTflagBob);
 
   router.route('/flavors')
     .get(GETflavors);
@@ -44,7 +51,6 @@ module.exports = function(io, db) {
 
   router.route('/tags/:tagid')
     .get(GETtag);
-
 
 
   // API functions
@@ -103,6 +109,59 @@ module.exports = function(io, db) {
   function GETbob(req, res) {
     db.Bob.getOneBob({ _id: db.ObjectId(req.params.bobid) } ).then(function success(data) {
       res.send(data);
+    }, function error(err) {
+      res.status(500).send(err);
+    });
+  }
+
+  function GETvotes(req, res) {
+    db.Bob.getOneBob(db.ObjectId(req.params.bobid)).then(function success(data) {
+      if(data){
+        res.send({ votes: data.votes });
+      } else {
+        res.status(404).send("bob not found");
+      }
+    }, function error(err) {
+      res.status(500).send(err);
+    });
+  }
+
+  function POSTupvoteBob(req, res) {
+    db.Bob.upvoteBob(db.ObjectId(req.params.bobid)).then(function success(data) {
+      io.emit('upvote', { id:req.params.bobid, votes: data.votes });
+      if(data){
+        res.send("upvoted");
+      } else {
+        res.status.(404).send("bob not found");
+      }
+    }, function error(err) {
+      res.status(500).send(err);
+    });
+  }
+
+  function GETflag(req, res) {
+    db.Bob.getOneBob(db.ObjectId(req.params.bobid)).then(function success(data) {
+      if(data){
+        res.send({ flag: data.flag });
+      } else {
+        res.send("bob not found");
+      }
+    }, function error(err) {
+      res.status(500).send(err);
+    });
+  }
+
+  function POSTflagBob(req, res) {
+    console.log(req);
+    db.Bob.flagBob(db.ObjectId(req.params.bobid)).then(function success(data) {
+      if(data){
+        io.emit('delete', req.params.bobid);
+        res.send("flagged");
+      } else {
+        // flagBob searches for bobId and flag: 0.
+        // It returns null if the bob does not exist, or if has already been flagged
+        res.send("bob not found or already flagged");
+      }
     }, function error(err) {
       res.status(500).send(err);
     });
