@@ -91,14 +91,14 @@ function addToCarousel(bob, carouselSelector) {
 */
 
 function swapCarousels() {
-  let $momentStream = $('.moments');
-  let $memeStream = $(".memes");
+  let $momentStream = $('.moments').not(".flip-button"); // don't swap flip-button!
+  let $memeStream = $(".memes").not(".flip-button");
   let $momentActiveItem = $(".moments .carousel-item.active");
   let $memeActiveItem = $(".memes .carousel-item.active");
   let $momentNext = $momentActiveItem.nextAll();
   let $memeNext = $memeActiveItem.nextAll();
-  let $momentBefore = $momentActiveItem.prevAll();
-  let $memeBefore = $memeActiveItem.prevAll();
+  let $momentBefore = $momentActiveItem.prevAll().not(".flip-button");
+  let $memeBefore = $memeActiveItem.prevAll().not(".flip-button");
 
   $momentActiveItem.after($memeActiveItem.clone())
   $momentActiveItem.remove();
