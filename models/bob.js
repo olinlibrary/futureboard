@@ -9,7 +9,7 @@ const bobSchema = mongoose.Schema({
   flavor:    String,
   tags:      [],
   votes:     { type: Number, default: 1 },
-  flag:   { type: Number, default: 0 } // 0: OK, 1: Flagged, 2: Mod OK, 3: Mod Remove
+  flag:      { type: Number, default: 0 } // 0: OK, 1: Flagged, 2: Mod OK, 3: Mod Remove
 });
 
 const BobModel = mongoose.model('Bob', bobSchema);
