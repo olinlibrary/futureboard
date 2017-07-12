@@ -62,8 +62,6 @@ module.exports = function(io, db) {
     if(req.headers.auth === 'hunter2'){
       next();
     } else {
-      console.log("not authenticated");
-      console.log(req);
       res.status(401).send("User not authenticated");
     }
   }
