@@ -100,6 +100,7 @@ $(function() {
 		*/
 		$.post('/api/bobs', data, function(res) {
 			alert('Bob saved!');
+			window.location = '/new';
 		});
 	});
 });

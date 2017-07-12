@@ -111,8 +111,12 @@ function fillInputFields(bobid) {
 			type: 'PUT',
 			data: data,
 			success: function(res) {
-					alert(res);
-				}
+				alert(res);
+				window.location = document.referrer;
+			},
+			error: function(res) {
+				alert(res.statusText);
+			}
 		});
 	});
 });
