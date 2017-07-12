@@ -216,11 +216,29 @@ function createBoardElement(bob) {
 }
 
 function populateEvents(events_data) {
-  // console.log(events_data);
-  let $events_div = $('#eventsToday');
-  // console.log(events_data.length);
+  let $eventsToday = $('#eventsToday');
+  let $eventsTomorrow = $('#eventsTomorrow');
+  let $eventsThisWeek = $('#eventsThisWeek');
   for (var i = 0; i < events_data.length - 1; i++) {
-    $events_div.append(createEventObject(events_data[i]));
+    let $newEvent = createEventObject(events_data[i]);
+    let eventStart = events_data[i].start;
+    let eventTime = new Date();
+    // console.log(eventStart);
+    switch(eventTime){
+      case 'Today':
+        $eventsToday.append($newEvent);
+        $eventsThisWeek.append($newEvent);
+        break;
+      case 'Tomorrow':
+        $eventsTomorrow.append($newEvent);
+        $eventsThisWeek.append($newEvent);
+        break;
+      case 'ThisWeek':
+        $eventsThisWeek.append($newEvent);
+        break;
+    }
+    $eventsToday.append($newEvent);
+    // $eventsThisWeek.append($newEvent);
   }
 }
 
@@ -242,6 +260,7 @@ function createEventObject(event_data) {
  * Defines time interval for carousel auto slides,
  * Listens on click and touch events for flip, swap buttons
  * Listens on click and touch events for plusOne, flag buttons
+ * Listens on tab buttons for toggling the events
  * Time Unit : ms.  Default Settings : 10s, 7s(small slide)
  */
 var interval1 = null;
@@ -265,14 +284,36 @@ $(function() {
    $(".flag").on("click touchstart", function(){
      flagControl();
    });
+
+   $("#tabToday").on("click touchstart", function(){
+     $("#eventsTomorrow").addClass("hide");
+     $("#eventsThisWeek").addClass("hide");
+
+     $("#eventsToday").removeClass("hide");
+   });
+
+   $("#tabTomorrow").on("click touchstart", function(){
+     $("#eventsToday").addClass("hide");
+     $("#eventsThisWeek").addClass("hide");
+
+     $("#eventsTomorrow").removeClass("hide");
+   });
+
+   $("#tabThisWeek").on("click touchstart", function(){
+     $("#eventsToday").addClass("hide");
+     $("#eventsTomorrow").addClass("hide");
+
+     $("#eventsThisWeek").removeClass("hide");
+   });
 });
 
-
+function updateBoardElement(){
+  console.log("board elmeent updated")
+}
 function plusOneControl(){
   console.log("plus one!");
   socket.emit();
 }
-
 function flagControl(){
   console.log("flagged!");
   socket.emit();
@@ -315,7 +356,6 @@ $(document).keydown(function(e) {
 $.get('https://abe-read.herokuapp.com/events/', populateEvents);
 $.get('/api/bobs', popluateBoard);
 
-
 var socket = io();
 socket.emit('connection');
 
@@ -323,6 +363,6 @@ socket.on('add_element', addBoardElement);
 socket.on('update_element', updateBoardElement)
 socket.on('manual_control', carouselControl); // arduino control
 socket.on('upvote', plusOneControl);
-socket.on('flag', flagControl)
+socket.on('delete', flagControl)
 
 console.log('board.js is running');
