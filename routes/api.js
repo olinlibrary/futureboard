@@ -119,7 +119,7 @@ module.exports = function(io, db) {
       if(data){
         res.send({ votes: data.votes });
       } else {
-        res.send("bob not found");
+        res.status(404).send("bob not found");
       }
     }, function error(err) {
       res.status(500).send(err);
@@ -132,7 +132,7 @@ module.exports = function(io, db) {
       if(data){
         res.send("upvoted");
       } else {
-        res.send("bob not found");
+        res.status.(404).send("bob not found");
       }
     }, function error(err) {
       res.status(500).send(err);
@@ -158,6 +158,8 @@ module.exports = function(io, db) {
         io.emit('delete', req.params.bobid);
         res.send("flagged");
       } else {
+        // flagBob searches for bobId and flag: 0.
+        // It returns null if the bob does not exist, or if has already been flagged
         res.send("bob not found or already flagged");
       }
     }, function error(err) {
