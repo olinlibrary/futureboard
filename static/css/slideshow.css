@@ -87,8 +87,8 @@ span.badge.new {
 }
 
 .broadcast p {
-  font-size: 80px;
-  line-height: 80px;
+  font-size: 5rem;
+  line-height: 5rem;
   font-style: italic;
   color: rgb(255, 255, 255);
   margin: 0px;

@@ -206,7 +206,9 @@ function createBoardElement(bob) {
 }
 
 /**
+ * When Document is ready
  * Defines time interval for carousel auto slides,
+ * listens on click and touchstart event for flip button
  * Time Unit : ms.  Default Settings : 10s, 7s(small slide)
  */
 var interval1 = null;
@@ -218,6 +220,13 @@ $(function() {
   interval2 = setInterval(function() {
     $('#slideshow-small').carousel('next');
   }, 7000);
+   $(".button-collapse").sideNav();
+   $(".flip-button").on("click touchstart", function(){
+     toggleActiveItem();
+   });
+   $(".swap-button").on("click touchstart", function(){
+     swapCarousels();
+   })
 });
 /**
  * Reests time interval for the main carousel
@@ -249,7 +258,6 @@ function carouselControl(direction){
  * @param {event} e - jQuery event obejct
  */
 $(document).keydown(function(e) {
-
   allowed = false;
   if (e.keyCode == 37) {
     // press left arrow key to go back to previous slide
@@ -287,9 +295,9 @@ function createEventObject(event_data) {
   return $html;
 }
 
-
 $.get('https://abe.olin.build/events/', populateEvents);
 $.get('/api/bobs', popluateBoard);
+
 
 var socket = io();
 socket.emit('connection');
