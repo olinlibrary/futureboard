@@ -161,10 +161,10 @@ Once you've setup your own version of the app, run `npm start` to get it running
 | ------------- | ------------- |
 | GET | retrieve a list of active bobs (Date.now() is between date.start and date.end) |
 
-### /api/bobs/bobID
+### /api/bobs/bobid
 | HTTP Method | Action |
 | ------------- | ------------- |
-| GET | retrieve bob object with id bobID |
+| GET | retrieve bob object with id bobid |
 | PUT | update the bob object |
 | DELETE | delete the bob object |
 
