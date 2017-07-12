@@ -21,11 +21,16 @@ function getTags(filter) {
 	return TagModel.find(filter);
 }
 
+function getTag(filter) {
+	return TagModel.findOne(filter);
+}
+
 
 var Tag = {};
 
-Tag.model      = TagModel;
-Tag.saveTag    = saveTag;
-Tag.getTags    = getTags;
+Tag.model   = TagModel;
+Tag.saveTag = saveTag;
+Tag.getTags = getTags;
+Tag.getTag  = getTag;
 
 module.exports = Tag;
