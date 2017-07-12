@@ -21,13 +21,12 @@ nav {
 }
 
 
-
 /*button settings*/
 .flip-button {
   float:right;
-  position:relative;
-  top : 100px;
-  right: 20px;
+  position:absolute;
+  top: 10px;
+  right: 10px;
 }
 .flip-button > a {
   opacity: 0.5;
@@ -76,10 +75,7 @@ span.badge.new {
 }
 
 .broadcast {
-  height: 8vh !important;
   background-color: rgb(62, 161, 252);
-  /*box margin*/
-  /*margin-top: 10px;*/
 
   /*border settings*/
   border-radius: 20px;
@@ -91,11 +87,11 @@ span.badge.new {
 }
 
 .broadcast p {
-  font-size: 50px;
+  font-size: 80px;
+  line-height: 80px;
   font-style: italic;
   color: rgb(255, 255, 255);
   margin: 0px;
-  padding: 2px;
   float: left;
 }
 
