@@ -9,7 +9,7 @@ const bobSchema = mongoose.Schema({
   flavor:    String,
   tags:      [],
   votes:     { type: Number, default: 1 },
-  flagged:   { type: Number, default: 0 }
+  flag:   { type: Number, default: 0 } // 0: OK, 1: Flagged, 2: Mod OK, 3: Mod Remove
 });
 
 const BobModel = mongoose.model('Bob', bobSchema);
@@ -73,6 +73,15 @@ function upvoteBob(bobId) {
   );
 }
 
+function flagBob(bobId) {
+return BobModel.update(
+    { _id: bobId },
+    {
+      flag: 1
+    }
+  );
+}
+
 
 let Bob = {};
 
@@ -83,6 +92,7 @@ Bob.getOneBob     = getOneBob;
 Bob.getActiveBobs = getActiveBobs;
 Bob.updateBob     = updateBob;
 Bob.deleteBob     = deleteBob;
-Bob.plusOneBob    = plusOneBob;
+Bob.upvoteBob     = upvoteBob;
+Bob.flagBob       = flagBob;
 
 module.exports    = Bob;

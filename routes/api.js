@@ -22,6 +22,9 @@ module.exports = function(io, db) {
     .get(GETvotes)
     .post(POSTupvoteBob);
 
+  router.route('/bobs/:bobid/flags')
+    .get(GETflag)
+    .post(POSTflagBob);
 
   router.route('/flavors')
     .get(GETflavors);
@@ -110,6 +113,31 @@ module.exports = function(io, db) {
       io.emit('upvote', req.params.bobid);
       if(data.nModified){
         res.send("upvoted");
+      } else {
+        res.send("bob not found");
+      }
+    }, function error(err) {
+      res.status(500).send(err);
+    });
+  }
+
+  function GETflag(req, res) {
+    db.Bob.getOneBob(db.ObjectId(req.params.bobid)).then(function success(data) {
+      if(data){
+        res.send({ flag: data.flag });
+      } else {
+        res.send("bob not found");
+      }
+    }, function error(err) {
+      res.status(500).send(err);
+    });
+  }
+
+  function POSTflagBob(req, res) {
+    db.Bob.flagBob(db.ObjectId(req.params.bobid)).then(function success(data) {
+      if(data.nModified){
+        io.emit('flag', req.params.bobid);
+        res.send("flagged");
       } else {
         res.send("bob not found");
       }
