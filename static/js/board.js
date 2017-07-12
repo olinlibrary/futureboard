@@ -214,6 +214,29 @@ function createBoardElement(bob) {
   }
   return $html;
 }
+
+function populateEvents(events_data) {
+  // console.log(events_data);
+  let $events_div = $('#eventsToday');
+  // console.log(events_data.length);
+  for (var i = 0; i < events_data.length - 1; i++) {
+    $events_div.append(createEventObject(events_data[i]));
+  }
+}
+
+function createEventObject(event_data) {
+  var $html = $('<li>', {
+    id: event_data.id,
+    class: "collection-item avatar"
+  })
+    .append($('<span>', { class: 'title', text: event_data.title }))
+    .append($('<p>', { class: 'date', text: event_data.start }))
+    .append($('<p>', { class: 'description', text: event_data.description }));
+
+  return $html;
+}
+
+
 /**
  * When Document is ready,
  * Defines time interval for carousel auto slides,
@@ -243,6 +266,7 @@ $(function() {
      flagControl();
    });
 });
+
 
 function plusOneControl(){
   console.log("plus one!");
@@ -287,28 +311,8 @@ $(document).keydown(function(e) {
   }
 });
 
-function populateEvents(events_data) {
-  // console.log(events_data);
-  let $events_div = $('.events .collection');
-  console.log(events_data.length);
-  for (var i = 0; i < events_data.length - 1; i++) {
-    $events_div.append(createEventObject(events_data[i]));
-  }
-}
 
-function createEventObject(event_data) {
-  var $html = $('<li>', {
-    id: event_data.id,
-    class: "collection-item avatar"
-  })
-    .append($('<span>', { class: 'title', text: event_data.title }))
-    .append($('<p>', { class: 'date', text: event_data.start }))
-    .append($('<p>', { class: 'description', text: event_data.description }));
-
-  return $html;
-}
-
-$.get('https://abe.olin.build/events/', populateEvents);
+$.get('https://abe-read.herokuapp.com/events/', populateEvents);
 $.get('/api/bobs', popluateBoard);
 
 
@@ -316,8 +320,9 @@ var socket = io();
 socket.emit('connection');
 
 socket.on('add_element', addBoardElement);
-socket.on('manual_control', carouselControl);
-socket.on('plus_one', plusOneControl);
+socket.on('update_element', updateBoardElement)
+socket.on('manual_control', carouselControl); // arduino control
+socket.on('upvote', plusOneControl);
 socket.on('flag', flagControl)
 
 console.log('board.js is running');

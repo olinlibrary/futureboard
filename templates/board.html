@@ -72,33 +72,35 @@
     </div>
 
     <div class="col s0 m5 l3 xl3 right-aside hide-on-small-only">
-      <div class="events">
-        <ul class="collection">
-          <li class="collection-item">
+      <div class="events col s12">
+        <ul class="collection with-header">
+          <li class="collection-header">
             <div class="nav-wrapper">
-              <a href="#!" class="brand-logo">UPCOMING EVENTS</a>
-              <ul class="right hide-on-med-and-down">
+              <a href="#!" class="brand-logo"><h5>OLIN EVENTS</h5s></a>
+              <!-- <ul class="right hide-on-med-and-down">
                 <li><a href="sass.html"><i class="material-icons right">search</i>  </a></li>
-
-              </ul>
+              </ul> -->
             </div>
           </li>
-          <li class="collection-item avatar">
-            <i class="material-icons circle">folder</i>
-            <span class="title">ABE Integration</span>
-            <p> July 10th, Pretty Soon<br> (labels)
-            </p>
-            <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-          </li>
         </ul>
+        <ul class="tabs">
+          <li class="tab col s4"><a href="#test1">Today</a></li>
+          <li class="tab col s4"><a href="#test2">Tomorrow</a></li>
+          <li class="tab col s4"><a href="#test3">This Week</a></li>
+        </ul>
+        <ul id="eventsToday" class="collection with-header">
+        </ul>
+        <ul id="eventsTomorrow" class="collection with-header">
+        </ul>
+        <ul id="eventsThisWeek" class="collection with-header">
+        </ul>
+
+
       </div>
 
       <div class="side-display">
-
         <!-- small slideshow -->
-        <div id="slideshow-small" class="hoverable carousel carousel-slider memes">
-        </div>
-
+        <div id="slideshow-small" class="hoverable carousel carousel-slider memes"></div>
       </div>
     </div>
 
