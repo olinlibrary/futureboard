@@ -59,20 +59,16 @@ span.badge.new {
   right:5px;
 }
 
-
 #slideshow {
+  /*materialize carousel has unwanted fixed default height*/
   height: 80vh !important;
-  border-radius: 25px;
 }
 
 #slideshow-small {
-  border-radius: 10px;
+  /*puts slideshow under all buttons*/
   z-index: -1;
 }
 
-#slideshow-small.carousel.carousel-slider {
-  top: -50px;
-}
 
 .broadcast {
   background-color: rgb(62, 161, 252);
@@ -122,10 +118,6 @@ span.badge.new {
   position: absolute !important;
 }
 
-.swap-button {
-  left: -50px;
-  top: 50px;
-}
 
 .collection {
   margin-top: 30px;

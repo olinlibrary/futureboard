@@ -26,6 +26,8 @@ function popluateBoard(bobs) {
   $memesStream.carousel({
     fullWidth: true
   });
+}
+
 
 /**
  * Initializes Flip instance using jQuery Flip plugin
@@ -38,9 +40,9 @@ function initFlip(selector){
 }
 
 /**
- * Toggles the active item on the #slideshow carousel
+ * Flips the active item on the #slideshow carousel
 */
-function toggleActiveItem(){
+function flipActiveItem(){
   $("#slideshow > .flip.active").flip('toggle');
 }
 /**
@@ -87,9 +89,20 @@ function addToCarousel(bob, carouselSelector) {
 }
 
 /**
+ * Changes active item to either previous or next item depending on direction
+ * @param {string} direction - direction of moving : left, right
+ */
+function carouselControl(direction){
+  if (direction == "left") {
+    $('#slideshow').carousel('prev', 1); // Move next n times.
+  } else if (direction == "right") {
+    $('#slideshow').carousel('next', 1); // Move next n times.
+  }
+}
+
+/**
  * Swaps main/sub carousel elements by appending and removing their child items
 */
-
 function swapCarousels() {
   let $momentStream = $('.moments').not(".flip-button"); // don't swap flip-button!
   let $memeStream = $(".memes").not(".flip-button");
@@ -115,7 +128,6 @@ function swapCarousels() {
   $momentBefore.remove();
   $memeBefore.remove();
 
-
   // Reinit the carousels
   if ($momentStream.hasClass('initialized')) {
     $momentStream.removeClass('initialized');
@@ -139,7 +151,6 @@ function swapCarousels() {
     initFlip("#" + $(this).attr("id"));
   })
   resetInterval();
-
 }
 
 /**
@@ -201,14 +212,13 @@ function createBoardElement(bob) {
       console.log("Unhandled type" + bob);
       $html = null;
   }
-
   return $html;
 }
-
 /**
- * When Document is ready
+ * When Document is ready,
  * Defines time interval for carousel auto slides,
- * listens on click and touchstart event for flip button
+ * Listens on click and touch events for flip, swap buttons
+ * Listens on click and touch events for plusOne, flag buttons
  * Time Unit : ms.  Default Settings : 10s, 7s(small slide)
  */
 var interval1 = null;
@@ -220,14 +230,29 @@ $(function() {
   interval2 = setInterval(function() {
     $('#slideshow-small').carousel('next');
   }, 7000);
-   $(".button-collapse").sideNav();
    $(".flip-button").on("click touchstart", function(){
-     toggleActiveItem();
+     flipActiveItem();
    });
-   $(".swap-button").on("click touchstart", function(){
+   $(".swap-button, .swap-button-mobile").on("click", function(){
      swapCarousels();
-   })
+   });
+   $(".plusOne").on("click touchstart", function(){
+     plusOneControl();
+   });
+   $(".flag").on("click touchstart", function(){
+     flagControl();
+   });
 });
+
+function plusOneControl(){
+  console.log("plus one!");
+  socket.emit();
+}
+
+function flagControl(){
+  console.log("flagged!");
+  socket.emit();
+}
 /**
  * Reests time interval for the main carousel
  * Time Unit : ms.  Default Settings : 10s
@@ -239,18 +264,6 @@ function resetInterval() {
   interval1 = setInterval(function() {
     $('#slideshow').carousel('next');
   }, 10000);
-}
-
-/**
- * Changes active item to either previous or next item depending on direction
- * @param {string} direction - direction of moving : left, right
- */
-function carouselControl(direction){
-  if (direction == "left") {
-    $('#slideshow').carousel('prev', 1); // Move next n times.
-  } else if (direction == "right") {
-    $('#slideshow').carousel('next', 1); // Move next n times.
-  }
 }
 
 /**
@@ -304,5 +317,7 @@ socket.emit('connection');
 
 socket.on('add_element', addBoardElement);
 socket.on('manual_control', carouselControl);
+socket.on('plus_one', plusOneControl);
+socket.on('flag', flagControl)
 
 console.log('board.js is running');
