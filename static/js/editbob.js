@@ -6,7 +6,7 @@
 $(function() {
 	// Get bob id from url
 	url = window.location.href.split('/')
-	bobId = url[url.length - 1];
+	bobid = url[url.length - 1];
 
 	$('#start-date').datepicker();
 	$('#end-date').datepicker();
@@ -37,7 +37,7 @@ $(function() {
 		// Editing Flavor of Bobs is not allowed.
 		flavors = flavorArray;
 		// Needs to run after flavors get filled, otherwise there is a race condition
-		fillInputFields(bobId);
+		fillInputFields(bobid);
 	});
 
 
@@ -46,14 +46,14 @@ $(function() {
 	/**
 	 * Populates input forms with current bob values
 	*/
-function fillInputFields(bobId) {
+function fillInputFields(bobid) {
 
 		/**
 		 * Loads Bob Object from the server using a HTTP GET request,
 		 * @param {string} url - A string containing the route to Bob GET request
 		 * @param {successCallback} function - Fills elements with Bob data values.
 		*/
-	$.get('/api/bobs/' + bobId, function (bob) {
+	$.get('/api/bobs/' + bobid, function (bob) {
 		cur_bob = bob;
 		let $form = $('add-bob-form');
 
@@ -107,7 +107,7 @@ function fillInputFields(bobId) {
 
 		// Send the bob through the api with a PUT request. (ajax is required to create PUT requests)
 		$.ajax({
-			url: '/api/bobs/' + bobId,
+			url: '/api/bobs/' + bobid,
 			type: 'PUT',
 			data: data,
 			success: function(res) {
