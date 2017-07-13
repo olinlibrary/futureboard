@@ -5,7 +5,7 @@
 function popluateTable(bobs) {
   let $bobTable = $("#bobTable");
   $bobTable.empty(); // Clear the table before adding to it
-  let tableColumns = ["Flavor", "ID", "StartDate", "EndDate", "Active", "Edit", "Delete"];
+  let tableColumns = ["Flavor", "ID", "StartDate", "Votes", "Flag", "Active", "Edit", "Delete"];
   let $html = $('<tr>', {});
   for (let i in tableColumns){
     $html.append($('<th>', { text: tableColumns[i] }));
@@ -38,7 +38,8 @@ function createBobElement(bob) {
     '<p>' + bob.flavor + '</p>',
     '<p>' + bob._id + '</p>',
     '<p>' + bob.startDate + '</p>',
-    '<p>' + bob.endDate + '</p>',
+    '<p>' + bob.votes + '</p>',
+    '<p>' + bob.flag + '</p>',
     '<p>' + (Date.now() > new Date(bob.startDate) && Date.now() < new Date(bob.endDate)) + '</p>',
     $editButton,
     $deleteButton
