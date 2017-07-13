@@ -178,7 +178,6 @@ module.exports = function(io, db) {
       tags:      req.body.tags
     };
 
-    io.emit('update_element', bob);
     db.Bob.updateBob(bob).then(function success(data) {
       io.emit('update_element', data);
       res.send("update successful");
