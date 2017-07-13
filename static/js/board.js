@@ -332,23 +332,15 @@ $(document).keydown(function(e) {
   if (e.keyCode == 37) {
     // press left arrow key to go back to previous slide
     resetInterval(carouselControl("left"));
-
-    var activeBobID = $("#slideshow").find(".active").attr("id");
-    updateVoteLabel(activeBobID);
   }
   if (e.keyCode == 39) {
     // press right arrow key to go to next slide
-    resetInterval(carouselControl("right")).then(function success(){
-      var activeBobID = $("#slideshow").find(".active").attr("id");
-      updateVoteLabel(activeBobID);
-    });
+    resetInterval(carouselControl("right"));
   }
   if (e.keyCode == 13) {
     // press enter key to swap carousels
     // Known Issue : holding the enter key deletes carousel child elements
     swapCarousels();
-    var activeBobID = $("#slideshow").find(".active").attr("id");
-    updateVoteLabel(activeBobID);
   }
 });
 
@@ -377,6 +369,22 @@ $(function() {
     $('#slideshow-small').carousel('next');
   }, 7000);
 
+   $(".active, .carousel-item, .carousel").on("carouselNext", function(){
+      console.log("change detected")
+     var activeBobID = $("#slideshow").find(".active").attr("id");
+     updateVoteLabel(activeBobID);
+   });
+   $(".active, .carousel-item, .carousel").on("carouselPrev", function(){
+      console.log("change detected")
+     var activeBobID = $("#slideshow").find(".active").attr("id");
+     updateVoteLabel(activeBobID);
+   });
+   $(".active, .carousel-item, .carousel").on("DOMContentLoaded", function(){
+      console.log("change detected")
+     var activeBobID = $("#slideshow").find(".active").attr("id");
+     updateVoteLabel(activeBobID);
+   });
+   
    $(".flip-button").on("click touchstart", function(){
      flipActiveItem();
    });
@@ -391,7 +399,6 @@ $(function() {
      var activeBobID = $("#slideshow").find(".active").attr("id");
      $.post('/api/bobs/' + activeBobID + "/flags");
    });
-
    $("#tabToday").on("click touchstart", function(){
      $("#eventsTomorrow").addClass("hide");
      $("#eventsThisWeek").addClass("hide");
