@@ -56,10 +56,10 @@ module.exports = function(io, db) {
   // API functions
   /**
   * Checks for authentication.
-  * Currently only checks for req.query.auth, in the future it will use a more robust authentication method
+  * Currently only checks for req.headers.auth, in the future it will use a more robust authentication method
   */
   function ensureAuthenticated(req, res, next) {
-    if(req.query.auth === 'hunter2'){
+    if(req.headers.auth === 'hunter2'){
       next();
     } else {
       res.status(401).send("User not authenticated");
@@ -241,5 +241,6 @@ module.exports = function(io, db) {
 	  });
   }
 
+  router.GETallBobs = GETallBobs;
   return router;
 };

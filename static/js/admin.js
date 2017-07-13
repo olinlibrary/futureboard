@@ -24,7 +24,7 @@ function popluateTable(bobs) {
 */
 function createBobElement(bob) {
   let $editButton = $('<a>', {
-    href: './editbob?bobid='+ bob._id,
+    href: '/bobs/'+ bob._id,
     text: 'Edit'
   });
 
@@ -68,8 +68,18 @@ function addTableElement(newBob) {
 */
 function deleteBob(bobid) {
   if(confirm("Actually delete " + bobid + "?")) {
-    $.post('/deleteBob?bobid=' + bobid);
-    $('[bobid="' + bobid + '"]').remove();
+    $.ajax({
+			url: '/api/bobs/' + bobid,
+			type: 'DELETE',
+			headers: { auth: 'hunter2' },
+			success: function(res) {
+        $('[bobid="' + bobid + '"]').remove();
+				alert(res);
+			},
+      error: function(res) {
+        alert(res.statusText);
+      }
+		});
   }
 }
 
@@ -78,6 +88,6 @@ $.get('/api/bobs', popluateTable);
 
 var socket = io();
 socket.emit('connection');
-socket.on('add_element'   , addTableElement);
+socket.on('add_element', addTableElement);
 
 console.log("admin.js running");
