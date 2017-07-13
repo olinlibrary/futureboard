@@ -390,8 +390,24 @@ $(function() {
   interval3 = setInterval(function() {
     var activeBobID = $("#slideshow").find(".active").attr("id");
     updateVoteLabel(activeBobID);
-  }, 100); // updates votes lable pretty often...
+  }, 100); // updates votes lable pretty often
 
+  // // Initiate autoscroll for events collection
+  // var $div = $('.autoscrolling > .collection');
+  // console.log($div)
+  // var delta = 1;
+  // interval4 = setInterval(function() {
+  //   var pos = $div.scrollTop();
+  //   $div.scrollTop(pos + delta);
+  // }, 50);
+
+  // Initializes auto scroll for events
+  var scrolltopbottom = setInterval(function(){
+   $('.autoscrolling > .collection').animate({ scrollTop: $('.autoscrolling > .collection').height() }, 12000);
+   setTimeout(function() {
+      $('.autoscrolling > .collection').animate({scrollTop:0}, 8000);
+   },100);
+  },100);
   // BETTER WAY, BUT NOT WORKING PROPERLY at this point
   //  $(".carousel-item, .carousel")
   //   .on("carouselNext", "carouselPrev", "DOMContentLoaded", function(){
