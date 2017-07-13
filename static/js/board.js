@@ -217,13 +217,17 @@ function createBoardElement(bob) {
   return $html;
 }
 
-function populateEvents(events_data) {
+/**
+  * Populates events element by creating and appending even items from ABE
+  * @param {Object[]} eventsData - list of JSON events data
+*/
+function populateEvents(eventsData) {
   let $eventsToday = $('#eventsToday');
   let $eventsTomorrow = $('#eventsTomorrow');
   let $eventsThisWeek = $('#eventsThisWeek');
-  for (var i = 0; i < events_data.length - 1; i++) {
-    let $newEvent = createEventObject(events_data[i]);
-    let eventStart = events_data[i].start;
+  for (var i = 0; i < eventsData.length - 1; i++) {
+    let $newEvent = createEventObject(eventsData[i]);
+    let eventStart = eventsData[i].start;
     let eventTime = new Date();
     // console.log(eventStart);
     switch(eventTime){
@@ -244,14 +248,18 @@ function populateEvents(events_data) {
   }
 }
 
-function createEventObject(event_data) {
+/**
+  * Creates html element for an event parsed from ABE.com
+  * @param {Object} eventData - A single JSON instance of ABE event
+*/
+function createEventObject(eventData) {
   var $html = $('<li>', {
-    id: event_data.id,
+    id: eventData.id,
     class: "collection-item"
   })
-    .append($('<span>', { class: 'title', text: event_data.title }))
-    .append($('<p>', { class: 'date', text: event_data.start }))
-    .append($('<p>', { class: 'description', text: event_data.description }));
+    .append($('<span>', { class: 'title', text: eventData.title }))
+    .append($('<p>', { class: 'date', text: eventData.start }))
+    .append($('<p>', { class: 'description', text: eventData.description }));
   return $html;
 }
 
@@ -268,13 +276,18 @@ function updateBoardElement(bobData){
   $imageHolder.attr("style", newImage);
   var $textHolder = $bobToUpdate.find(".text-holder");
   $textHolder.find(".author").attr("text", bobData.Title);
-  $textHolder.find(".description").attr("text, bobData.Description");
-  console.log("board element updated")
+  $textHolder.find(".description").attr("text", bobData.Description);
 }
 
-function deleteElement(){
-  console.log("flagged!");
+/**
+  * Deletes the html bob element with bobid from carousel
+  * @param {string} bobid - id of the bob to be deleted
+*/
+function deleteElement(bobid){
+  var $bobToDelete = $("#" + bobid);
+  $bobToDelete.remove();
 }
+
 function incrementVote(){
   console.log("plus one!");
   $.get('/api/bobs')
@@ -348,7 +361,10 @@ $(function() {
      incrementVote();
    });
    $(".flag").on("click touchstart", function(){
-     deleteElement();
+     console.log("bob flagged");
+     var activeBobID = $("#slideshow").find(".active").attr("id");
+     $.post('/api/bobs/' + activeBobID + "/flags", function(res){
+     });
    });
 
    $("#tabToday").on("click touchstart", function(){
