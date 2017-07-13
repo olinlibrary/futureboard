@@ -130,13 +130,16 @@ span.badge.new {
 .events {
   margin-top: 30px;
   margin-bottom: 10px;
-
   overflow-y: hidden;
   height: 50vh !important;
 }
 .events .collection{
   margin:0px;
   border:0px;
+}
+.eventItems > .collection{
+  height: 40vh;
+  overflow-y:auto;
 }
 .tabs{
   margin:0px;

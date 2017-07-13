@@ -229,24 +229,40 @@ function populateEvents(eventsData) {
   let $eventsThisWeek = $('#eventsThisWeek');
   for (var i = 0; i < eventsData.length - 1; i++) {
     let $newEvent = createEventObject(eventsData[i]);
-    let eventStart = eventsData[i].start;
-    let eventTime = new Date();
-    // console.log(eventStart);
+    // Uses Date.JS to process time
+    let eventStart = Date.parse(eventsData[i].start);
+    let today = Date.today();
+    let tomorrow = (1).day().fromNow();
+    let thisWeek = (7).day().fromNow();
+
+    if(today <= eventStart){
+      eventTime = "Today";
+    }
+    else if(tomorrow <= eventStart){
+      eventTime = "Tomorrow";
+    }
+    else if(thisWeek <= eventStart){
+      eventTime = "ThisWeek";
+    }
+    else{
+      eventTime = null;
+    }
+    console.log(today.toString('MMdd'), eventStart.toString('MMdd'));
+    console.log(tomorrow.toString('MMdd'), eventStart.toString('MMdd'));
+    console.log(thisWeek.toString('MMdd'), eventStart.toString('MMdd'));
+    console.log(eventTime);
+
     switch(eventTime){
       case 'Today':
         $eventsToday.append($newEvent);
-        $eventsThisWeek.append($newEvent);
         break;
       case 'Tomorrow':
         $eventsTomorrow.append($newEvent);
-        $eventsThisWeek.append($newEvent);
         break;
       case 'ThisWeek':
         $eventsThisWeek.append($newEvent);
         break;
     }
-    $eventsToday.append($newEvent);
-    // $eventsThisWeek.append($newEvent);
   }
 }
 
@@ -369,22 +385,20 @@ $(function() {
     $('#slideshow-small').carousel('next');
   }, 7000);
 
-   $(".active, .carousel-item, .carousel").on("carouselNext", function(){
-      console.log("change detected")
-     var activeBobID = $("#slideshow").find(".active").attr("id");
-     updateVoteLabel(activeBobID);
-   });
-   $(".active, .carousel-item, .carousel").on("carouselPrev", function(){
-      console.log("change detected")
-     var activeBobID = $("#slideshow").find(".active").attr("id");
-     updateVoteLabel(activeBobID);
-   });
-   $(".active, .carousel-item, .carousel").on("DOMContentLoaded", function(){
-      console.log("change detected")
-     var activeBobID = $("#slideshow").find(".active").attr("id");
-     updateVoteLabel(activeBobID);
-   });
-   
+
+  // DEFINIETELY NOT THE IDEAL WAY TO DO THIS (TEMPORARY)
+  interval3 = setInterval(function() {
+    var activeBobID = $("#slideshow").find(".active").attr("id");
+    updateVoteLabel(activeBobID);
+  }, 100); // updates votes lable pretty often...
+
+  // BETTER WAY, BUT NOT WORKING PROPERLY at this point
+  //  $(".carousel-item, .carousel")
+  //   .on("carouselNext", "carouselPrev", "DOMContentLoaded", function(){
+  //     console.log("change detected")
+  //    var activeBobID = $("#slideshow").find(".active").attr("id");
+  //    updateVoteLabel(activeBobID);
+  //  });
    $(".flip-button").on("click touchstart", function(){
      flipActiveItem();
    });
