@@ -255,7 +255,7 @@ function populateEvents(eventsData) {
       case 'Today':
         $eventsToday.append($newEvent);
         broadcastText += eventsData[i].title;
-        broadcastText += "@" + Date.parse(eventsData[i].start).toString("HH:mm");
+        broadcastText += "@" + Date.parse(eventsData[i].start).toString("HH:mm") +",  ";
         break;
       case 'Tomorrow':
         $eventsTomorrow.append($newEvent);
@@ -405,8 +405,8 @@ $(function() {
    $('.autoscrolling > .collection').animate({ scrollTop: $('.autoscrolling > .collection').height() }, 12000);
    setTimeout(function() {
       $('.autoscrolling > .collection').animate({scrollTop:0}, 8000);
-   },100);
-  },100);
+   },4000);
+ },4000);
 
    $(".flip-button").on("click touchstart", function(){
      flipActiveItem();
