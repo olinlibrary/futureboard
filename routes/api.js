@@ -128,7 +128,7 @@ module.exports = function(io, db) {
 
   function POSTupvoteBob(req, res) {
     db.Bob.upvoteBob(db.ObjectId(req.params.bobid)).then(function success(data) {
-      io.emit('upvote', { id:req.params.bobid, votes: data.votes });
+      io.emit('upvote', { id:req.params.bobid, votes: data.votes + 1 });
       if(data){
         res.send("upvoted");
       } else {
@@ -152,15 +152,22 @@ module.exports = function(io, db) {
   }
 
   function POSTflagBob(req, res) {
-    console.log(req);
     db.Bob.flagBob(db.ObjectId(req.params.bobid)).then(function success(data) {
       if(data){
         io.emit('delete', req.params.bobid);
         res.send("flagged");
       } else {
+        console.log("searching for bob");
+        db.Bob.getOneBob(db.ObjectId(req.params.bobid)).then(function success(data) {
+          if(data){
+            res.send({ flag: data.flag });
+          } else {
+            res.send("bob not found");
+          }
+        });
         // flagBob searches for bobId and flag: 0.
         // It returns null if the bob does not exist, or if has already been flagged
-        res.send("bob not found or already flagged");
+        res.send("bob already flagged");
       }
     }, function error(err) {
       res.status(500).send(err);

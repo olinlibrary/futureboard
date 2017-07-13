@@ -4,15 +4,14 @@
 */
 
 body {
-  overflow: auto;
+  overflow:hidden;
   background-color: rgb(229, 232, 225)
 }
 
 nav {
   /*box margin*/
   margin-top: 10px;
-  margin-bottom: 10px;
-
+  margin-bottom: 5px;
   border-radius: 10px;
   opacity: 0.7;
 }
@@ -21,41 +20,83 @@ nav {
   padding: 5px;
 }
 
+/*button settings*/
+.flip-button {
+  float:right;
+  position:absolute;
+  top: 10px;
+  right: 10px;
+}
+.flip-button > a {
+  opacity: 0.5;
+}
+.flip-button > a:hover{
+  opacity: 1;
+}
+.swap-button {
+  position:absolute;
+  top:-150px;
+  right:-60px;
+}
+.swap-button-mobile{
+  position:absolute;
+  top:10px;
+  right:300px;
+}
+.slideshow-buttons {
+  float:right;
+  position:relative;
+  top : -70px;
+  right: 20px;
+}
+.slideshow-buttons > a {
+  opacity:0.5;
+}
+.slideshow-buttons > a:hover {
+  opacity:1;
+}
+.lables{
+  float: right;
+}
+span.badge.new {
+  height:35px;
+  line-height:35px;
+  font-size:1.3rem;
+  position:absolute;
+  top: -40px;
+  right:5px;
+}
+
 #slideshow {
+  /*materialize carousel has unwanted fixed default height*/
   height: 80vh !important;
-  border-radius: 25px;
 }
 
 #slideshow-small {
-  border-radius: 10px;
+  /*puts slideshow under all buttons*/
   z-index: -1;
 }
 
-#slideshow-small.carousel.carousel-slider {
-  top: -50px;
-}
 
 .broadcast {
-  height: 8vh !important;
   background-color: rgb(62, 161, 252);
-
-  /*box margin*/
-  margin-top: 10px;
 
   /*border settings*/
   border-radius: 20px;
   border-style: hidden;
   border-color: rgb(49, 54, 51);
+
+  position:relative;
+  top:-50px;
 }
 
 .broadcast p {
-  font-size: 50px;
+  font-size: 5rem;
+  line-height: 5rem;
   font-style: italic;
   color: rgb(255, 255, 255);
   margin: 0px;
-  padding: 2px;
   float: left;
-  width: 50%;
 }
 
 /*marquee css implementation*/
@@ -68,7 +109,7 @@ nav {
 .marquee > p {
   display: inline-block;
   padding-left: 100%;
-  animation: marquee 5s linear infinite;
+  animation: marquee 10s linear infinite;
 }
 
 @keyframes marquee {
@@ -82,17 +123,45 @@ nav {
 
 .carousel-item {
   /*height: 100%;*/
-  position: absolute;
+  position: absolute !important;
 }
 
-.swap-button {
-  left: -50px;
-  top: 50px;
-}
 
-.collection {
+.events {
   margin-top: 30px;
+  margin-bottom: 10px;
+  overflow-y: hidden;
+  height: 50vh !important;
 }
+.events .collection{
+  margin:0px;
+  border:0px;
+}
+.eventItems > .collection{
+  height: 40vh;
+  overflow-y:auto;
+}
+.collection-item > span{
+  font-size:1.7rem;
+  line-height:1.7rem;
+}
+.tabs{
+  margin:0px;
+}
+
+.tabs .tab a:hover, .tabs .tab a.active {
+    background-color: transparent;
+    color: rgb(40, 113, 237)
+}
+.tabs .tab a{
+    background-color: transparent;
+    color: rgb(82, 172, 255);
+}
+
+.tabs .indicator {
+  background-color: rgb(82, 172, 255);
+}
+
 
 .text-bobble {
   background: #ECF7E8;
@@ -149,7 +218,6 @@ div.image-holder {
   background: #0B93F6;
   border-radius: 25px;
   margin-bottom: 20px;
-  max-width: 800px;
   font-size: .75em;
   color: black;
   float: left;
@@ -182,10 +250,4 @@ div.image-holder {
   background: #f7f6f0;
   border-bottom-right-radius: 10px;
   -webkit-transform: translate(-30px, -2px);
-}
-
-.events .collection {
-  position: absolute;
-  max-height: 50%;
-  overflow-y: auto;
 }

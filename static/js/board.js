@@ -7,6 +7,8 @@
 function popluateBoard(bobs) {
   let $momentsStream = $(".moments");
   let $memesStream = $(".memes");
+  let $slideShowButtons = (".slideshow-buttons");
+
   for (var i = 0; i < bobs.length; i++) {
     let bob = bobs[i];
     if (bob.flavor === "Moment") {
@@ -17,6 +19,8 @@ function popluateBoard(bobs) {
       //temporary, appends bobs that aren't memes or moments to momentsStream
       $momentsStream.append(createBoardElement(bob));
     }
+    initFlip("#" + bob._id);
+
   }
   // Initalizes carousels for both moments and memes streams
   $momentsStream.carousel({
@@ -25,9 +29,27 @@ function popluateBoard(bobs) {
   $memesStream.carousel({
     fullWidth: true
   });
+  let activeBobID = $("#slideshow").find(".active").attr("id");
+  updateVoteLabel(activeBobID);
 }
 
 
+/**
+ * Initializes Flip instance using jQuery Flip plugin
+ * @param {string} selector - jQuery selector for the html element to be flipped
+*/
+function initFlip(selector){
+  $(selector).flip({
+    trigger: 'manual'
+  })
+}
+
+/**
+ * Flips the active item on the #slideshow carousel
+*/
+function flipActiveItem(){
+  $("#slideshow > .flip.active").flip('toggle');
+}
 /**
  * Generates jQuery selector for a carousel depending on bob flavor,
  * then calls addToCarousel function, passing bob and carousel as params.
@@ -72,19 +94,31 @@ function addToCarousel(bob, carouselSelector) {
 }
 
 /**
+ * Changes active item to either previous or next item depending on direction
+ * @param {string} direction - direction of moving : left, right
+ */
+function carouselControl(direction){
+  if (direction == "left") {
+    $('#slideshow').carousel('prev', 1); // Move next n times.
+  } else if (direction == "right") {
+    $('#slideshow').carousel('next', 1); // Move next n times.
+  }
+}
+
+/**
  * Swaps main/sub carousel elements by appending and removing their child items
 */
 function swapCarousels() {
-  let $momentStream = $('.moments');
-  let $memeStream = $(".memes");
+  let $momentStream = $('.moments').not(".flip-button"); // don't swap flip-button!
+  let $memeStream = $(".memes").not(".flip-button");
   let $momentActiveItem = $(".moments .carousel-item.active");
   let $memeActiveItem = $(".memes .carousel-item.active");
   let $momentNext = $momentActiveItem.nextAll();
   let $memeNext = $memeActiveItem.nextAll();
-  let $momentBefore = $momentActiveItem.prevAll();
-  let $memeBefore = $memeActiveItem.prevAll();
+  let $momentBefore = $momentActiveItem.prevAll().not(".flip-button");
+  let $memeBefore = $memeActiveItem.prevAll().not(".flip-button");
 
-  $momentActiveItem.after($memeActiveItem.clone());
+  $momentActiveItem.after($memeActiveItem.clone())
   $momentActiveItem.remove();
   $momentNext.remove();
   $momentStream.append($memeNext.clone());
@@ -106,18 +140,23 @@ function swapCarousels() {
   if ($memeStream.hasClass('initialized')) {
     $memeStream.removeClass('initialized');
   }
+
+  // Swaps the class attributes of the carousel DOM elements
+  $momentStream.addClass("memes").removeClass("moments");
+  $memeStream.addClass("moments").removeClass("memes");
+
   $momentStream.carousel({
     fullWidth: true
   });
   $memeStream.carousel({
     fullWidth: true
   });
-
-  // Swaps the class attributes of the carousel DOM elements
-  $momentStream.addClass("memes").removeClass("moments");
-  $memeStream.addClass("moments").removeClass("memes");
+  // Reinits jQuery flip instances for swapped items
+  $(".flip").each(function(index){
+    initFlip("#" + $(this).attr("id"));
+  })
+  resetInterval();
 }
-
 /**
  * Creates and Returns a new html element from a given Bob object
  * @param {Object} - Javascript Bob object from Mongoose
@@ -158,45 +197,147 @@ function createBoardElement(bob) {
       break;
 
     case 'Moment':
-      $html.addClass('image-bobble')
-        .append($('<div />', {class: "image-holder", css: {'background-image': "url(" + bob.data.Link + ")"}}));
+      $html.addClass('image-bobble flip').attr("id", bob._id)
+        .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")"}}))
+        .append($('<div />', {class: "text-holder back"})
+          .append($('<p>', {class: "author", text: bob.data.Title}))
+          .append($('<p />', {class:"description", text : bob.data.Descrption})));
       break;
 
     case 'Meme':
-      $html.addClass('image-bobble')
-        .append($('<div />', {class: "image-holder", css: {'background-image': "url(" + bob.data.Link + ")"}}));
+      $html.addClass('image-bobble flip').attr("id", bob._id)
+        .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")"}}))
+        .append($('<div />', {class: "text-holder back"})
+          .append($('<p>', {class: "author", text: bob.data.Title}))
+          .append($('<p />', {class:"description", text: bob.data.Descrption})));
       break;
 
     default:
       console.log("Unhandled type" + bob);
       $html = null;
   }
-
   return $html;
 }
 
 /**
- * Defines time interval for carousel auto slides
- */
-$(function() {
-  setInterval(function() {
-    $('#slideshow').carousel('next');
-  }, 10000);
-  setInterval(function() {
-    $('#slideshow-small').carousel('next');
-  }, 7000);
-});
+  * Populates events element by creating and appending even items from ABE
+  * @param {Object[]} eventsData - list of JSON events data
+*/
+function populateEvents(eventsData) {
+  let $eventsToday = $('#eventsToday');
+  let $eventsTomorrow = $('#eventsTomorrow');
+  let $eventsThisWeek = $('#eventsThisWeek');
+
+  let $broadcast = $(".happeningNow");
+  var broadcastText = "HAPPENING SOON :  ";
+  for (var i = 0; i < eventsData.length - 1; i++) {
+    let $newEvent = createEventObject(eventsData[i]);
+    // Uses Date.JS to process time
+    let eventStart = Date.parse(eventsData[i].start).toString("MMdd");
+    let today = Date.today().toString("MMdd");
+    let tomorrow = (1).day().fromNow().toString("MMdd");
+    let thisWeek = (7).day().fromNow().toString("MMdd");
+
+    if(today === eventStart){
+      eventTime = "Today";
+    }
+    else if(tomorrow === eventStart){
+      eventTime = "Tomorrow";
+    }
+    else if(eventStart > tomorrow){
+      eventTime = "ThisWeek";
+    }
+    else{
+      eventTime = null;
+    }
+
+    switch(eventTime){
+      case 'Today':
+        $eventsToday.append($newEvent);
+        broadcastText += eventsData[i].title;
+        broadcastText += "@" + Date.parse(eventsData[i].start).toString("HH:mm") +",  ";
+        break;
+      case 'Tomorrow':
+        $eventsTomorrow.append($newEvent);
+        break;
+      case 'ThisWeek':
+        $eventsThisWeek.append($newEvent);
+        break;
+    }
+  }
+  console.log(broadcastText)
+  $broadcast.append($("<p/>", {text: broadcastText}) );
+}
 
 /**
- * Changes active item to either previous or next item depending on direction
- * @param {string} direction - direction of moving : left, right
+  * Creates html element for an event parsed from ABE.com
+  * @param {Object} eventData - A single JSON instance of ABE event
+*/
+function createEventObject(eventData) {
+  var $html = $('<li>', {
+    id: eventData.id,
+    class: "collection-item"
+  })
+    .append($('<span>', { class: 'title', text: eventData.title }))
+    .append($('<p>', { class: 'date', text:  Date.parse(eventData.start).toString("HH:mm ddd, MMMM dd") +" @ " + eventData.location}))
+    .append($('<p>', { class: 'description', text: eventData.description }));
+  return $html;
+}
+
+/**
+  * Updates the caraousel item with updated bob data
+  * Called when update_element socket received
+  * @param {Object} bobData - contains updated bob data
+*/
+function updateBoardElement(bobData){
+  var bobId = bobData._id;
+  var $bobToUpdate = $("#" + bobId);
+  var $imageHolder = $bobToUpdate.find(".image-holder");
+  var newImage = "background-image: url(" + bobData.data.Link + ")";
+  $imageHolder.attr("style", newImage);
+  var $textHolder = $bobToUpdate.find(".text-holder");
+  $textHolder.find(".author").attr("text", bobData.Title);
+  $textHolder.find(".description").attr("text", bobData.Description);
+}
+
+/**
+  * Deletes the html bob element with bobid from carousel
+  * @param {string} bobid - id of the bob to be deleted
+*/
+function deleteElement(bobid){
+  $("#" + bobid).remove();
+}
+
+/**
+  * Updates the label with the votes from bob with bobid
+  * @param {string} bobid - id of the bob of the votes
+*/
+function updateVoteLabel(bobid){
+  var $labelToUpdate = $("#votes");
+  var votes =  $.get('/api/bobs/' + bobid + "/votes", function(res){
+    $labelToUpdate.attr("data-badge-caption", "+" + res.votes);
+  });
+}
+
+/**
+  * Updates the label with the votes returned from socket
+  * parpm {object} res - response from the socekt which contains bobid and votes
+*/
+function incrementVote(res){
+  $("#votes").attr("data-badge-caption", "+" + res.votes);
+}
+
+/**
+ * Resets time interval for the main carousel
+ * Time Unit : ms.  Default Settings : 10s
  */
-function carouselControl(direction) {
-  if (direction == "left") {
-    $('#slideshow').carousel('prev', 1); // Move next n times.
-  } else if (direction == "right") {
-    $('#slideshow').carousel('next', 1); // Move next n times.
-  }
+function resetInterval() {
+  // Clears the existing timers
+  clearInterval(interval1);
+  // Reinits the timers
+  interval1 = setInterval(function() {
+    $('#slideshow').carousel('next');
+  }, 10000);
 }
 
 /**
@@ -206,11 +347,11 @@ function carouselControl(direction) {
 $(document).keydown(function(e) {
   if (e.keyCode == 37) {
     // press left arrow key to go back to previous slide
-    carouselControl("left");
+    resetInterval(carouselControl("left"));
   }
   if (e.keyCode == 39) {
     // press right arrow key to go to next slide
-    carouselControl("right");
+    resetInterval(carouselControl("right"));
   }
   if (e.keyCode == 13) {
     // press enter key to swap carousels
@@ -219,35 +360,96 @@ $(document).keydown(function(e) {
   }
 });
 
-function populateEvents(events_data) {
-  // console.log(events_data);
-  let $events_div = $('.events .collection');
-  console.log(events_data.length);
-  for (var i = 0; i < events_data.length - 1; i++) {
-    $events_div.append(createEventObject(events_data[i]));
-  }
-}
 
-function createEventObject(event_data) {
-  var $html = $('<li>', {
-    id: event_data.id,
-    class: "collection-item avatar"
-  })
-    .append($('<span>', { class: 'title', text: event_data.title }))
-    .append($('<p>', { class: 'date', text: event_data.start }))
-    .append($('<p>', { class: 'description', text: event_data.description }));
+/**
+ * When Document is ready,
+ * Defines time interval for carousel auto slides,
+ * Listens on click and touch events for flip, swap buttons
+ * Listens on click and touch events for plusOne, flag buttons
+ * Listens on tab buttons for toggling the events
+ * Time Unit : ms.  Default Settings : 10s, 7s(small slide)
+ */
+var interval1 = null;
+var interval2 = null;
 
-  return $html;
-}
+$(function() {
+
+  // Populates the board with bobs and events
+  $.get('https://abeweb.herokuapp.com/events/', populateEvents);
+  $.get('/api/bobs', popluateBoard);
+
+  interval1 = setInterval(function() {
+    $('#slideshow').carousel('next');
+  }, 10000);
+  interval2 = setInterval(function() {
+    $('#slideshow-small').carousel('next');
+  }, 7000);
 
 
-$.get('https://abe.olin.build/events/', populateEvents);
-$.get('/api/bobs', popluateBoard);
+  // DEFINIETELY NOT THE IDEAL WAY TO DO THIS (TEMPORARY)
+  interval3 = setInterval(function() {
+    var activeBobID = $("#slideshow").find(".active").attr("id");
+    updateVoteLabel(activeBobID);
+  }, 100); // updates votes lable pretty often
 
+  // BETTER WAY, BUT NOT WORKING PROPERLY at this point
+  //  $(".carousel-item, .carousel")
+  //   .on("carouselNext", "carouselPrev", "DOMContentLoaded", function(){
+  //     console.log("change detected")
+  //    var activeBobID = $("#slideshow").find(".active").attr("id");
+  //    updateVoteLabel(activeBobID);
+  //  });
+
+  // Initializes auto scroll for events
+  var scrolltopbottom = setInterval(function(){
+   $('.autoscrolling > .collection').animate({ scrollTop: $('.autoscrolling > .collection').height() }, 12000);
+   setTimeout(function() {
+      $('.autoscrolling > .collection').animate({scrollTop:0}, 8000);
+   },4000);
+ },4000);
+
+   $(".flip-button").on("click touchstart", function(){
+     flipActiveItem();
+   });
+   $(".swap-button, .swap-button-mobile").on("click", function(){
+     swapCarousels();
+   });
+   $(".plusOne").on("click touchstart", function(){
+     var activeBobID = $("#slideshow").find(".active").attr("id");
+     $.post('/api/bobs/' + activeBobID + "/votes");
+   });
+   $(".flag").on("click touchstart", function(){
+     var activeBobID = $("#slideshow").find(".active").attr("id");
+     $.post('/api/bobs/' + activeBobID + "/flags");
+   });
+   $("#tabToday").on("click touchstart", function(){
+     $("#eventsTomorrow").addClass("hide");
+     $("#eventsThisWeek").addClass("hide");
+     $("#eventsToday").removeClass("hide");
+   });
+
+   $("#tabTomorrow").on("click touchstart", function(){
+     $("#eventsToday").addClass("hide");
+     $("#eventsThisWeek").addClass("hide");
+     $("#eventsTomorrow").removeClass("hide");
+   });
+
+   $("#tabThisWeek").on("click touchstart", function(){
+     $("#eventsToday").addClass("hide");
+     $("#eventsTomorrow").addClass("hide");
+     $("#eventsThisWeek").removeClass("hide");
+   });
+});
+
+
+// Socket configuration
 var socket = io();
 socket.emit('connection');
 
 socket.on('add_element', addBoardElement);
-socket.on('manual_control', carouselControl);
+socket.on('update_element', updateBoardElement)
+socket.on('upvote', incrementVote);
+socket.on('delete', deleteElement)
+// socket.on('manual_control', carouselControl); // arduino control
 
 console.log('board.js is running');

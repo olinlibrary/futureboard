@@ -74,7 +74,7 @@ function upvoteBob(bobId) {
 }
 
 function flagBob(bobId) {
-  return BobModel.findOneAndUpdate({ _id: bobId, flag: 0 }, { flag: 1 });
+  return BobModel.findOneAndUpdate({ _id: bobId }, { flag: 1 });
 }
 
 
