@@ -50,12 +50,16 @@
 
         <div class ="slideshow-buttons right-align">
           <div class ="lables">
-            <span class="new badge orange" data-badge-caption="+4"></span>
+            <span id="votes" class="new badge orange" data-badge-caption="-1"></span>
           </div>
           <!-- swapbutton -->
           <a class="btn-floating btn-large waves-effect pulse waves-light blue swap-button hide-on-small-only"><i class="material-icons">swap_horiz</i></a>
           <a class="btn-floating waves-effect pulse waves-light blue swap-button-mobile hide-on-med-and-up"><i class="material-icons">swap_horiz</i></a>
+
+          <!-- flag button -->
           <a class="btn-floating waves-effect waves-light btn-large black hoverable flag"><i class="material-icons">new_releases</i></a>
+
+          <!-- votePlusOne button -->
           <a class="btn-floating waves-effect waves-light btn-large black hoverable plusOne"><i class="material-icons">plus_one</i></a>
 
         </div>
@@ -88,13 +92,14 @@
           <li class="tab col s4" id="tabTomorrow"><a href='#'>Tomorrow</a></li>
           <li class="tab col s4" id="tabThisWeek"><a href='#'>This Week</a></li>
         </ul>
-        <ul id="eventsToday" class="collection with-header">
-        </ul>
-        <ul id="eventsTomorrow" class="collection with-header hide">
-        </ul>
-        <ul id="eventsThisWeek" class="collection with-header hide">
-        </ul>
-
+        <div class="eventItems autoscrolling">
+          <ul id="eventsToday" class="collection with-header">
+          </ul>
+          <ul id="eventsTomorrow" class="collection with-header hide">
+          </ul>
+          <ul id="eventsThisWeek" class="collection with-header hide">
+          </ul>
+        </div>
 
       </div>
 

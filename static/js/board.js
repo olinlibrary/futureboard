@@ -7,6 +7,8 @@
 function popluateBoard(bobs) {
   let $momentsStream = $(".moments");
   let $memesStream = $(".memes");
+  let $slideShowButtons = (".slideshow-buttons");
+
   for (var i = 0; i < bobs.length; i++) {
     let bob = bobs[i];
     if (bob.flavor === "Moment") {
@@ -18,6 +20,7 @@ function popluateBoard(bobs) {
       $momentsStream.append(createBoardElement(bob));
     }
     initFlip("#" + bob._id);
+
   }
   // Initalizes carousels for both moments and memes streams
   $momentsStream.carousel({
@@ -152,7 +155,6 @@ function swapCarousels() {
   })
   resetInterval();
 }
-
 /**
  * Creates and Returns a new html element from a given Bob object
  * @param {Object} - Javascript Bob object from Mongoose
@@ -197,7 +199,7 @@ function createBoardElement(bob) {
         .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")"}}))
         .append($('<div />', {class: "text-holder back"})
           .append($('<p>', {class: "author", text: bob.data.Title}))
-          .append($('<p />', {text : bob.data.Descrption})));
+          .append($('<p />', {class:"description", text : bob.data.Descrption})));
       break;
 
     case 'Meme':
@@ -205,7 +207,7 @@ function createBoardElement(bob) {
         .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")"}}))
         .append($('<div />', {class: "text-holder back"})
           .append($('<p>', {class: "author", text: bob.data.Title}))
-          .append($('<p />', {text : bob.data.Descrption})));
+          .append($('<p />', {class:"description", text: bob.data.Descrption})));
       break;
 
     default:
@@ -245,79 +247,40 @@ function populateEvents(events_data) {
 function createEventObject(event_data) {
   var $html = $('<li>', {
     id: event_data.id,
-    class: "collection-item avatar"
+    class: "collection-item"
   })
     .append($('<span>', { class: 'title', text: event_data.title }))
     .append($('<p>', { class: 'date', text: event_data.start }))
     .append($('<p>', { class: 'description', text: event_data.description }));
-
   return $html;
 }
 
-
 /**
- * When Document is ready,
- * Defines time interval for carousel auto slides,
- * Listens on click and touch events for flip, swap buttons
- * Listens on click and touch events for plusOne, flag buttons
- * Listens on tab buttons for toggling the events
- * Time Unit : ms.  Default Settings : 10s, 7s(small slide)
- */
-var interval1 = null;
-var interval2 = null;
-$(function() {
-  interval1 = setInterval(function() {
-    $('#slideshow').carousel('next');
-  }, 10000);
-  interval2 = setInterval(function() {
-    $('#slideshow-small').carousel('next');
-  }, 7000);
-   $(".flip-button").on("click touchstart", function(){
-     flipActiveItem();
-   });
-   $(".swap-button, .swap-button-mobile").on("click", function(){
-     swapCarousels();
-   });
-   $(".plusOne").on("click touchstart", function(){
-     plusOneControl();
-   });
-   $(".flag").on("click touchstart", function(){
-     flagControl();
-   });
-
-   $("#tabToday").on("click touchstart", function(){
-     $("#eventsTomorrow").addClass("hide");
-     $("#eventsThisWeek").addClass("hide");
-
-     $("#eventsToday").removeClass("hide");
-   });
-
-   $("#tabTomorrow").on("click touchstart", function(){
-     $("#eventsToday").addClass("hide");
-     $("#eventsThisWeek").addClass("hide");
-
-     $("#eventsTomorrow").removeClass("hide");
-   });
-
-   $("#tabThisWeek").on("click touchstart", function(){
-     $("#eventsToday").addClass("hide");
-     $("#eventsTomorrow").addClass("hide");
-
-     $("#eventsThisWeek").removeClass("hide");
-   });
-});
-
-function updateBoardElement(){
-  console.log("board elmeent updated")
+  * Updates the caraousel item with updated bob data
+  * Called when update_element socket received
+  * @param {Object} bobData - contains updated bob data
+*/
+function updateBoardElement(bobData){
+  var bobId = bobData._id;
+  var $bobToUpdate = $("#" + bobId);
+  var $imageHolder = $bobToUpdate.find(".image-holder");
+  var newImage = "background-image: url(" + bobData.data.Link + ")";
+  $imageHolder.attr("style", newImage);
+  var $textHolder = $bobToUpdate.find(".text-holder");
+  $textHolder.find(".author").attr("text", bobData.Title);
+  $textHolder.find(".description").attr("text, bobData.Description");
+  console.log("board element updated")
 }
-function plusOneControl(){
-  console.log("plus one!");
-  socket.emit();
-}
-function flagControl(){
+
+function deleteElement(){
   console.log("flagged!");
-  socket.emit();
 }
+function incrementVote(){
+  console.log("plus one!");
+  $.get('/api/bobs')
+}
+
+
 /**
  * Reests time interval for the main carousel
  * Time Unit : ms.  Default Settings : 10s
@@ -353,16 +316,69 @@ $(document).keydown(function(e) {
 });
 
 
-$.get('https://abe-read.herokuapp.com/events/', populateEvents);
-$.get('/api/bobs', popluateBoard);
+/**
+ * When Document is ready,
+ * Defines time interval for carousel auto slides,
+ * Listens on click and touch events for flip, swap buttons
+ * Listens on click and touch events for plusOne, flag buttons
+ * Listens on tab buttons for toggling the events
+ * Time Unit : ms.  Default Settings : 10s, 7s(small slide)
+ */
+var interval1 = null;
+var interval2 = null;
+$(function() {
 
+  // Populates the board with bobs and events
+  $.get('https://abe-read.herokuapp.com/events/', populateEvents);
+  $.get('/api/bobs', popluateBoard);
+
+  interval1 = setInterval(function() {
+    $('#slideshow').carousel('next');
+  }, 10000);
+  interval2 = setInterval(function() {
+    $('#slideshow-small').carousel('next');
+  }, 7000);
+   $(".flip-button").on("click touchstart", function(){
+     flipActiveItem();
+   });
+   $(".swap-button, .swap-button-mobile").on("click", function(){
+     swapCarousels();
+   });
+   $(".plusOne").on("click touchstart", function(){
+     incrementVote();
+   });
+   $(".flag").on("click touchstart", function(){
+     deleteElement();
+   });
+
+   $("#tabToday").on("click touchstart", function(){
+     $("#eventsTomorrow").addClass("hide");
+     $("#eventsThisWeek").addClass("hide");
+     $("#eventsToday").removeClass("hide");
+   });
+
+   $("#tabTomorrow").on("click touchstart", function(){
+     $("#eventsToday").addClass("hide");
+     $("#eventsThisWeek").addClass("hide");
+     $("#eventsTomorrow").removeClass("hide");
+   });
+
+   $("#tabThisWeek").on("click touchstart", function(){
+     $("#eventsToday").addClass("hide");
+     $("#eventsTomorrow").addClass("hide");
+     $("#eventsThisWeek").removeClass("hide");
+   });
+});
+
+
+// Socket configuration
 var socket = io();
 socket.emit('connection');
 
 socket.on('add_element', addBoardElement);
 socket.on('update_element', updateBoardElement)
-socket.on('manual_control', carouselControl); // arduino control
-socket.on('upvote', plusOneControl);
-socket.on('delete', flagControl)
+socket.on('upvote', incrementVote);
+socket.on('delete', deleteElement)
+// socket.on('manual_control', carouselControl); // arduino control
 
 console.log('board.js is running');
