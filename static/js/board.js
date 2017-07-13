@@ -305,8 +305,7 @@ function updateBoardElement(bobData){
   * @param {string} bobid - id of the bob to be deleted
 */
 function deleteElement(bobid){
-  var $bobToDelete = $("#" + bobid);
-  $bobToDelete.remove();
+  $("#" + bobid).remove();
 }
 
 /**
@@ -325,12 +324,11 @@ function updateVoteLabel(bobid){
   * parpm {object} res - response from the socekt which contains bobid and votes
 */
 function incrementVote(res){
-  var $labelToUpdate = $("#votes");
-  $labelToUpdate.attr("data-badge-caption", "+" + res.votes);
+  $("#votes").attr("data-badge-caption", "+" + res.votes);
 }
 
 /**
- * Reests time interval for the main carousel
+ * Resets time interval for the main carousel
  * Time Unit : ms.  Default Settings : 10s
  */
 function resetInterval() {
@@ -347,7 +345,6 @@ function resetInterval() {
  * @param {event} e - jQuery event obejct
  */
 $(document).keydown(function(e) {
-  allowed = false;
   if (e.keyCode == 37) {
     // press left arrow key to go back to previous slide
     resetInterval(carouselControl("left"));

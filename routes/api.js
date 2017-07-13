@@ -152,18 +152,13 @@ module.exports = function(io, db) {
   }
 
   function POSTflagBob(req, res) {
-    // console.log(req);
-    console.log(req.params.bobid);
     db.Bob.flagBob(db.ObjectId(req.params.bobid)).then(function success(data) {
-      console.log(data);
       if(data){
-        console.log("sending socket")
         io.emit('delete', req.params.bobid);
         res.send("flagged");
       } else {
         console.log("searching for bob");
         db.Bob.getOneBob(db.ObjectId(req.params.bobid)).then(function success(data) {
-          console.log(data);
           if(data){
             res.send({ flag: data.flag });
           } else {
@@ -172,7 +167,7 @@ module.exports = function(io, db) {
         });
         // flagBob searches for bobId and flag: 0.
         // It returns null if the bob does not exist, or if has already been flagged
-        // res.send("bob not found or already flagged");
+        res.send("bob already flagged");
       }
     }, function error(err) {
       res.status(500).send(err);
