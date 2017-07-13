@@ -50,8 +50,17 @@ $(function() {
 			type: 'PUT',
 			data: data,
 			success: function(res) {
-					alert(res);
+				alert(res);
+				// Redirect to previous page or FUTUREboard
+				if (document.referrer !== "") {
+					window.location = document.referrer;
+				} else {
+					window.location = "/";
 				}
+			},
+			error: function(res) {
+				alert(res.statusText);
+			}
 		});
 	});
 });

@@ -100,6 +100,8 @@ $(function() {
 		*/
 		$.post('/api/bobs', data, function(res) {
 			alert('Bob saved!');
+			// Redirect to FUTUREboard
+			window.location = '/';
 		});
 	});
 });
