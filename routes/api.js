@@ -128,7 +128,7 @@ module.exports = function(io, db) {
 
   function POSTupvoteBob(req, res) {
     db.Bob.upvoteBob(db.ObjectId(req.params.bobid)).then(function success(data) {
-      io.emit('upvote', { id:req.params.bobid, votes: data.votes });
+      io.emit('upvote', { id:req.params.bobid, votes: data.votes + 1 });
       if(data){
         res.send("upvoted");
       } else {

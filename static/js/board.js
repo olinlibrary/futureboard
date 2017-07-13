@@ -29,6 +29,8 @@ function popluateBoard(bobs) {
   $memesStream.carousel({
     fullWidth: true
   });
+  let activeBobID = $("#slideshow").find(".active").attr("id");
+  updateVoteLabel(activeBobID);
 }
 
 
@@ -288,11 +290,25 @@ function deleteElement(bobid){
   $bobToDelete.remove();
 }
 
-function incrementVote(){
-  console.log("plus one!");
-  $.get('/api/bobs')
+/**
+  * Updates the label with the votes from bob with bobid
+  * @param {string} bobid - id of the bob of the votes
+*/
+function updateVoteLabel(bobid){
+  var $labelToUpdate = $("#votes");
+  var votes =  $.get('/api/bobs/' + bobid + "/votes", function(res){
+    $labelToUpdate.attr("data-badge-caption", "+" + res.votes);
+  });
 }
 
+/**
+  * Updates the label with the votes returned from socket
+  * parpm {object} res - response from the socekt which contains bobid and votes
+*/
+function incrementVote(res){
+  var $labelToUpdate = $("#votes");
+  $labelToUpdate.attr("data-badge-caption", "+" + res.votes);
+}
 
 /**
  * Reests time interval for the main carousel
@@ -316,15 +332,23 @@ $(document).keydown(function(e) {
   if (e.keyCode == 37) {
     // press left arrow key to go back to previous slide
     resetInterval(carouselControl("left"));
+
+    var activeBobID = $("#slideshow").find(".active").attr("id");
+    updateVoteLabel(activeBobID);
   }
   if (e.keyCode == 39) {
     // press right arrow key to go to next slide
-    resetInterval(carouselControl("right"))
+    resetInterval(carouselControl("right")).then(function success(){
+      var activeBobID = $("#slideshow").find(".active").attr("id");
+      updateVoteLabel(activeBobID);
+    });
   }
   if (e.keyCode == 13) {
     // press enter key to swap carousels
     // Known Issue : holding the enter key deletes carousel child elements
     swapCarousels();
+    var activeBobID = $("#slideshow").find(".active").attr("id");
+    updateVoteLabel(activeBobID);
   }
 });
 
@@ -339,6 +363,7 @@ $(document).keydown(function(e) {
  */
 var interval1 = null;
 var interval2 = null;
+
 $(function() {
 
   // Populates the board with bobs and events
@@ -351,6 +376,7 @@ $(function() {
   interval2 = setInterval(function() {
     $('#slideshow-small').carousel('next');
   }, 7000);
+
    $(".flip-button").on("click touchstart", function(){
      flipActiveItem();
    });
@@ -358,13 +384,12 @@ $(function() {
      swapCarousels();
    });
    $(".plusOne").on("click touchstart", function(){
-     incrementVote();
+     var activeBobID = $("#slideshow").find(".active").attr("id");
+     $.post('/api/bobs/' + activeBobID + "/votes");
    });
    $(".flag").on("click touchstart", function(){
-     console.log("bob flagged");
      var activeBobID = $("#slideshow").find(".active").attr("id");
-     $.post('/api/bobs/' + activeBobID + "/flags", function(res){
-     });
+     $.post('/api/bobs/' + activeBobID + "/flags");
    });
 
    $("#tabToday").on("click touchstart", function(){
