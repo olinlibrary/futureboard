@@ -227,34 +227,35 @@ function populateEvents(eventsData) {
   let $eventsToday = $('#eventsToday');
   let $eventsTomorrow = $('#eventsTomorrow');
   let $eventsThisWeek = $('#eventsThisWeek');
+
+  let $broadcast = $(".happeningNow");
+  var broadcastText = "HAPPENING SOON :  ";
   for (var i = 0; i < eventsData.length - 1; i++) {
     let $newEvent = createEventObject(eventsData[i]);
     // Uses Date.JS to process time
-    let eventStart = Date.parse(eventsData[i].start);
-    let today = Date.today();
-    let tomorrow = (1).day().fromNow();
-    let thisWeek = (7).day().fromNow();
+    let eventStart = Date.parse(eventsData[i].start).toString("MMdd");
+    let today = Date.today().toString("MMdd");
+    let tomorrow = (1).day().fromNow().toString("MMdd");
+    let thisWeek = (7).day().fromNow().toString("MMdd");
 
-    if(today <= eventStart){
+    if(today === eventStart){
       eventTime = "Today";
     }
-    else if(tomorrow <= eventStart){
+    else if(tomorrow === eventStart){
       eventTime = "Tomorrow";
     }
-    else if(thisWeek <= eventStart){
+    else if(eventStart > tomorrow){
       eventTime = "ThisWeek";
     }
     else{
       eventTime = null;
     }
-    console.log(today.toString('MMdd'), eventStart.toString('MMdd'));
-    console.log(tomorrow.toString('MMdd'), eventStart.toString('MMdd'));
-    console.log(thisWeek.toString('MMdd'), eventStart.toString('MMdd'));
-    console.log(eventTime);
 
     switch(eventTime){
       case 'Today':
         $eventsToday.append($newEvent);
+        broadcastText += eventsData[i].title;
+        broadcastText += "@" + Date.parse(eventsData[i].start).toString("HH:mm");
         break;
       case 'Tomorrow':
         $eventsTomorrow.append($newEvent);
@@ -264,6 +265,8 @@ function populateEvents(eventsData) {
         break;
     }
   }
+  console.log(broadcastText)
+  $broadcast.append($("<p/>", {text: broadcastText}) );
 }
 
 /**
@@ -276,7 +279,7 @@ function createEventObject(eventData) {
     class: "collection-item"
   })
     .append($('<span>', { class: 'title', text: eventData.title }))
-    .append($('<p>', { class: 'date', text: eventData.start }))
+    .append($('<p>', { class: 'date', text:  Date.parse(eventData.start).toString("HH:mm ddd, MMMM dd") +" @ " + eventData.location}))
     .append($('<p>', { class: 'description', text: eventData.description }));
   return $html;
 }
@@ -375,7 +378,7 @@ var interval2 = null;
 $(function() {
 
   // Populates the board with bobs and events
-  $.get('https://abe-read.herokuapp.com/events/', populateEvents);
+  $.get('https://abeweb.herokuapp.com/events/', populateEvents);
   $.get('/api/bobs', popluateBoard);
 
   interval1 = setInterval(function() {
@@ -392,14 +395,13 @@ $(function() {
     updateVoteLabel(activeBobID);
   }, 100); // updates votes lable pretty often
 
-  // // Initiate autoscroll for events collection
-  // var $div = $('.autoscrolling > .collection');
-  // console.log($div)
-  // var delta = 1;
-  // interval4 = setInterval(function() {
-  //   var pos = $div.scrollTop();
-  //   $div.scrollTop(pos + delta);
-  // }, 50);
+  // BETTER WAY, BUT NOT WORKING PROPERLY at this point
+  //  $(".carousel-item, .carousel")
+  //   .on("carouselNext", "carouselPrev", "DOMContentLoaded", function(){
+  //     console.log("change detected")
+  //    var activeBobID = $("#slideshow").find(".active").attr("id");
+  //    updateVoteLabel(activeBobID);
+  //  });
 
   // Initializes auto scroll for events
   var scrolltopbottom = setInterval(function(){
@@ -408,13 +410,7 @@ $(function() {
       $('.autoscrolling > .collection').animate({scrollTop:0}, 8000);
    },100);
   },100);
-  // BETTER WAY, BUT NOT WORKING PROPERLY at this point
-  //  $(".carousel-item, .carousel")
-  //   .on("carouselNext", "carouselPrev", "DOMContentLoaded", function(){
-  //     console.log("change detected")
-  //    var activeBobID = $("#slideshow").find(".active").attr("id");
-  //    updateVoteLabel(activeBobID);
-  //  });
+
    $(".flip-button").on("click touchstart", function(){
      flipActiveItem();
    });

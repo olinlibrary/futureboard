@@ -141,6 +141,10 @@ span.badge.new {
   height: 40vh;
   overflow-y:auto;
 }
+.collection-item > span{
+  font-size:1.7rem;
+  line-height:1.7rem;
+}
 .tabs{
   margin:0px;
 }
