@@ -23,8 +23,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
   <!-- load Materialize icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/static/css/slideshow-featured-events.css">
 
-  <link rel="stylesheet" type="text/css" href="/static/css/slideshow.css">
+  <!-- load board components-->
+  <script src='/static/js/board_carousel.js' charset="UTF-8" type="text/javascript"></script>
+  <script src='/static/js/board_events.js' charset="UTF-8" type="text/javascript"></script>
+
   <!-- load board js -->
   <script src='/static/js/board.js' charset="UTF-8" type="text/javascript"></script>
 
@@ -33,7 +37,8 @@
 <body>
   <div class="row">
 
-    <div class="col s12 m7 l9 xl9 left-aside">
+    <div class="col s12 m6 l8 xl8 left-aside">
+      <!-- navigation bar -->
       <nav class="col s12 m12 l6 xl4 black wave">
         <div class="nav-wrapper">
           <a href="/" class="brand-logo"><i class="material-icons hide-on-small-only">fast_forward</i>FUTUREboard</a>
@@ -42,66 +47,65 @@
       </nav>
 
       <div class="main-display ">
+        <!-- main carousel -->
         <div id="slideshow" class="carousel carousel-slider moments">
-          <div class="flip-button">
-            <a class="btn-floating waves-effect waves-light black hoverable"><i class="material-icons">credit_card</i></a>
-          </div>
         </div>
 
-        <div class ="slideshow-buttons right-align">
-          <div class ="lables">
+        <!-- vote and flag buttons -->
+        <div class="slideshow-buttons right-align">
+          <div class="lables">
             <span id="votes" class="new badge orange" data-badge-caption=""></span>
           </div>
-          <!-- swapbutton -->
-          <a class="btn-floating btn-large waves-effect pulse waves-light blue swap-button hide-on-small-only"><i class="material-icons">swap_horiz</i></a>
-          <a class="btn-floating waves-effect pulse waves-light blue swap-button-mobile hide-on-med-and-up"><i class="material-icons">swap_horiz</i></a>
-
           <!-- flag button -->
           <a class="btn-floating waves-effect waves-light btn-large black hoverable flag"><i class="material-icons">new_releases</i></a>
 
-          <!-- votePlusOne button -->
+          <!-- vote button -->
           <a class="btn-floating waves-effect waves-light btn-large black hoverable plusOne"><i class="material-icons">plus_one</i></a>
-
         </div>
 
       </div>
-        <div class="broadcast col s12">
-          <div class="marquee happeningNow">
-          </div>
-        </div>
     </div>
 
-    <div class="col s0 m5 l3 xl3 right-aside hide-on-small-only">
+    <div class="col s0 m6 l4 xl4 right-aside hide-on-small-only">
       <div class="events col s12">
+        <!-- events nav bar -->
         <ul class="collection with-header">
           <li class="collection-header">
             <div class="nav-wrapper">
-              <a href="#!" class="brand-logo"><h5>OLIN EVENTS</h5s></a>
+              <a href="#!" class="brand-logo"><h5>EVENTS TODAY</h5s></a>
             </div>
           </li>
         </ul>
-        <ul class="tabs">
-          <li class="tab col s3.5" id="tabToday"> <a href="#">Today</a></li>
-          <li class="tab col s3.5" id="tabTomorrow"><a href='#'>Tomorrow</a></li>
-          <li class="tab col s5" id="tabThisWeek"><a href='#'>Later This Week</a></li>
-        </ul>
+
+        <!-- events today -->
         <div class="eventItems autoscrolling">
           <ul id="eventsToday" class="collection with-header">
-          </ul>
-          <ul id="eventsTomorrow" class="collection with-header hide">
-          </ul>
-          <ul id="eventsThisWeek" class="collection with-header hide">
           </ul>
         </div>
 
       </div>
 
-      <div class="side-display">
-        <!-- small slideshow -->
-        <div id="slideshow-small" class="hoverable carousel carousel-slider memes"></div>
+
+      <div class="events col s12">
+        <!-- events nav bar -->
+        <ul class="collection with-header">
+          <li class="collection-header">
+            <div class="nav-wrapper">
+              <a href="#!" class="brand-logo"><h5>FEATURED EVENTS</h5s></a>
+            </div>
+          </li>
+        </ul>
+
+        <!-- featured events -->
+        <div class="eventItems autoscrolling">
+          <ul id="featuredEvents" class="collection with-header">
+          </ul>
+        </div>
+
       </div>
     </div>
 
+    <!-- control button -->
     <div class="fixed-action-btn horizontal slideshow-button hide-on-small-only">
       <a class="btn-floating btn-large re blue">
         <i class="large material-icons">mode_edit</i>
