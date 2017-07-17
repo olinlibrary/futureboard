@@ -15,7 +15,6 @@
   <script src='/static/vendor/socket.io.js' charset="UTF-8" type="text/javascript"></script>
   <script src='/static/vendor/jquery.min.js' charset="UTF-8" type="text/javascript"></script>
   <script src='/static/vendor/jquery.flip.min.js' charset="UTF-8" type="text/javascript"></script>
-  <script src='/static/vendor/date.js' charset="UTF-8" type="text/javascript"></script>
 
   <!-- load Materialize CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
@@ -42,7 +41,16 @@
       <nav class="col s12 black wave">
         <div class="nav-wrapper">
           <a href="/" class="brand-logo"><i class="material-icons hide-on-small-only">fast_forward</i>FUTUREboard</a>
-          <a href="#" data-activates="mobile-demo" class="button-collapse hide-on-med-and-up"><i class="material-icons">menu</i></a>
+          <ul id="nav-mobile" class="right">
+            <li>
+               <div id="clock">
+                  <p class="unit" id="hours"></p>
+                  <p class="unit" id="minutes"></p>
+                  <p class="unit" id="seconds"></p>
+                  <p class="unit" id="ampm"></p>
+                </div>
+            </li>
+           </ul>
         </div>
       </nav>
 
@@ -50,7 +58,6 @@
         <!-- main carousel -->
         <div id="slideshow" class="carousel carousel-slider moments">
         </div>
-
         <!-- vote and flag buttons -->
         <div class="slideshow-buttons right-align">
           <div class="lables">
@@ -62,17 +69,16 @@
           <!-- vote button -->
           <a class="btn-floating waves-effect waves-light btn-large black hoverable plusOne"><i class="material-icons">plus_one</i></a>
         </div>
-
       </div>
     </div>
 
     <div class="col s0 m6 l4 xl4 right-aside hide-on-small-only">
-      <div class="events col s12">
+      <div class="events today col s12">
         <!-- events nav bar -->
         <ul class="collection with-header">
           <li class="collection-header">
             <div class="nav-wrapper">
-              <a href="#!" class="brand-logo"><h5>EVENTS TODAY</h5s></a>
+              <a href="#!" class="brand-logo"><h5>EVENTS TODAY </h5></a>
             </div>
           </li>
         </ul>
@@ -85,12 +91,13 @@
 
       </div>
 
-      <div class="events col s12">
+      <div class="events featured col s12">
         <!-- events nav bar -->
         <ul class="collection with-header">
           <li class="collection-header">
             <div class="nav-wrapper">
-              <a href="#!" class="brand-logo"><h5>FEATURED EVENTS</h5s></a>
+              <a href="#!" class="brand-logo"><h5>FEATURED EVENTS</h5></a>
+
             </div>
           </li>
         </ul>
@@ -101,21 +108,16 @@
           </ul>
         </div>
       </div>
-      
-    </div>
 
-    <!-- control button -->
-    <div class="fixed-action-btn horizontal slideshow-button hide-on-small-only">
-      <a class="btn-floating btn-large re blue">
-        <i class="large material-icons">mode_edit</i>
-      </a>
-      <ul>
-        <li><a href="/new" class="btn-floating red"><i class="material-icons">publish</i></a></li>
-        <li><a href="/admin" class="btn-floating orange"><i class="material-icons">info</i></a></li>
-      </ul>
     </div>
-
   </div>
+
+  <!-- load Showdown Markdown Parser -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.7.1/showdown.min.js" charset="utf-8"></script>
+
+  <!-- load jQuery Clock for navbar-->
+  <script src='/static/vendor/date.js' charset="UTF-8" type="text/javascript"></script>
+  <script src="/static/js/clock.js" charset="utf-8"></script>
 </body>
 
 </html>

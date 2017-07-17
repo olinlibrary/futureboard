@@ -36,7 +36,7 @@ $(function() {
   }, 10000);
 
   // DEFINIETELY NOT THE IDEAL WAY TO DO THIS (TEMPORARY)
-  interval3 = setInterval(function() {
+  updateVoteLabelInterval= setInterval(function() {
     var activeBobID = $("#slideshow").find(".active").attr("id");
     updateVoteLabel(activeBobID);
   }, 100); // updates votes lable pretty often
@@ -49,13 +49,22 @@ $(function() {
   //    updateVoteLabel(activeBobID);
   //  });
 
-  // Initializes auto scroll for events
+
+ //  // Initializes auto scroll for events
   var scrolltopbottom = setInterval(function(){
-   $('.autoscrolling > .collection').animate({ scrollTop: $('.autoscrolling > .collection').height() }, 12000);
+   $('.today .autoscrolling > .collection').animate({ scrollTop: $('.today .autoscrolling > .collection').prop('scrollHeight') }, 12000);
    setTimeout(function() {
       $('.autoscrolling > .collection').animate({scrollTop:0}, 8000);
    },4000);
  },4000);
+
+ //  // Initializes auto scroll for events
+  var scrolltopbottom = setInterval(function(){
+   $('.featured .autoscrolling > .collection').animate({ scrollTop: $('.featured .autoscrolling > .collection').prop('scrollHeight')  }, 10000);
+   setTimeout(function() {
+      $('.featured .autoscrolling > .collection').animate({scrollTop:0}, 8000);
+   },4000);
+ },1000);
 
    $(".plusOne").on("click touchstart", function(){
      var activeBobID = $("#slideshow").find(".active").attr("id");
@@ -87,7 +96,7 @@ function resetInterval() {
   // Clears the existing timers
   clearInterval(carouselInterval);
   // Reinits the timers
-  carouselInteral = setInterval(function() {
+  carouselInterval = setInterval(function() {
     $('#slideshow').carousel('next');
   }, 10000);
 }

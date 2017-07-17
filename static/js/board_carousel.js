@@ -36,7 +36,7 @@ function createBoardElement(bob) {
   // Bob flavor decides how each bob is rendered
   switch (bob.flavor) {
     case 'Quote':
-      $html.addClass('quote-bobble')
+      $html.addClass('quote-bobble').attr("id", bob._id)
         .append($('<div>', {class: "quote-holder"})
           .append($('<p>', {class: "quote", text: bob.data.Text}))
           .append($('<p>', {class: "author", text: bob.data.Author}))
@@ -44,14 +44,14 @@ function createBoardElement(bob) {
       break;
 
     case 'Text':
-      $html.addClass('text-bobble')
+      $html.addClass('text-bobble').attr("id", bob._id)
         .append($('<div>', {class: "text-holder"})
           .append($('<p>', {text: bob.data.Text}))
         );
       break;
 
     case 'Video':
-      $html.addClass('video-bobble')
+      $html.addClass('video-bobble').attr("id", bob._id)
         .append('<iframe>', {
           width: "560",
           height: "315",
