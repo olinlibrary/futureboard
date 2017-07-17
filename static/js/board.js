@@ -1,8 +1,8 @@
 /*
-Contains socket configuration for the board, listens on keyboard events,
-executes functions when document is ready.
+Main Futureboard general JS components :
+Contains socket configuration, listens on board controls,
+Executes functions when document is ready(auto scroll, carousel interval).
 */
-
 
 // Socket.io configuration
 var socket = io();
@@ -67,6 +67,30 @@ $(function() {
    });
 });
 
+/**
+ * Changes active item to either previous or next item depending on direction
+ * @param {string} direction - direction of moving : left, right
+ */
+function carouselControl(direction){
+  if (direction == "left") {
+    $('#slideshow').carousel('prev', 1); // Move next n times.
+  } else if (direction == "right") {
+    $('#slideshow').carousel('next', 1); // Move next n times.
+  }
+}
+
+/**
+ * Resets time interval for the main carousel
+ * Time Unit : ms.  Default Settings : 10s
+ */
+function resetInterval() {
+  // Clears the existing timers
+  clearInterval(carouselInterval);
+  // Reinits the timers
+  carouselInteral = setInterval(function() {
+    $('#slideshow').carousel('next');
+  }, 10000);
+}
 
 /**
  * Listens on jQuery events for keyboard controls

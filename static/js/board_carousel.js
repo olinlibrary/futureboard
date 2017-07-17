@@ -12,93 +12,14 @@ function popluateBoard(bobs) {
     let bob = bobs[i];
     $momentsStream.append(createBoardElement(bob));
   }
+
   // Initalizes carousels for both moments and memes streams
   $momentsStream.carousel({
     fullWidth: true
   });
-
   // Initializes value for vote lable
   let activeBobID = $("#slideshow").find(".active").attr("id");
   updateVoteLabel(activeBobID);
-}
-
-/**
- * Generates jQuery selector for a carousel depending on bob flavor,
- * then calls addToCarousel function, passing bob and carousel as params.
- * @param {Object} bob - A single Bob object received via socket
-*/
-function addBoardElement(bob) {
-  carouselSelector = null; //jQuery selector for target carousel
-  if (bob.flavor === "Moment") {
-    carouselSelector = '.moments';
-  } else if (bob.flavor === "Meme")
-    carouselSelector = '.memes';
-  else {
-    // Temporary choice
-    carouselSelector = '.moments';
-  }
-  addToCarousel(bob, carouselSelector);
-}
-
-/**
- * Creates a jQuery element of a new bob object,
- * then appends it to the target carousel DOM element
- * @param {Object} bob - A single Bob object to be added to the carousel
- * @param {string} carousel - jQuery selector string for the target carousel
-*/
-function addToCarousel(bob, carouselSelector) {
-  $carousel = $(carouselSelector);
-  $activeItem = $(carouselSelector + " .carousel-item.active");
-  if (bob !== null) {
-    $activeItem.after(createBoardElement(bob));
-  }
-  var $before = $activeItem.prevAll();
-  $carousel.append($before.clone());
-  $before.remove();
-
-  if ($carousel.hasClass('initialized')) {
-    $carousel.removeClass('initialized');
-  }
-  //reinit the carousel
-  $carousel.carousel({
-    fullWidth: true
-  });
-}
-
-/**
- * Changes active item to either previous or next item depending on direction
- * @param {string} direction - direction of moving : left, right
- */
-function carouselControl(direction){
-  if (direction == "left") {
-    $('#slideshow').carousel('prev', 1); // Move next n times.
-  } else if (direction == "right") {
-    $('#slideshow').carousel('next', 1); // Move next n times.
-  }
-}
-
-/**
-  * Updates the caraousel item with updated bob data
-  * Called when update_element socket received
-  * @param {Object} bobData - contains updated bob data
-*/
-function updateBoardElement(bobData){
-  var bobId = bobData._id;
-  var $bobToUpdate = $("#" + bobId);
-  var $imageHolder = $bobToUpdate.find(".image-holder");
-  var newImage = "background-image: url(" + bobData.data.Link + ")";
-  $imageHolder.attr("style", newImage);
-  var $textHolder = $bobToUpdate.find(".text-holder");
-  $textHolder.find(".author").attr("text", bobData.Title);
-  $textHolder.find(".description").attr("text", bobData.Description);
-}
-
-/**
-  * Deletes the html bob element with bobid from carousel
-  * @param {string} bobid - id of the bob to be deleted
-*/
-function deleteElement(bobid){
-  $("#" + bobid).remove();
 }
 
 /**
@@ -163,6 +84,64 @@ function createBoardElement(bob) {
   return $html;
 }
 
+/**
+ * Generates jQuery selector for a carousel depending on bob flavor,
+ * then calls addToCarousel function, passing bob and carousel as params.
+ * @param {Object} bob - A single Bob object received via socket
+*/
+function addBoardElement(bob) {
+  carouselSelector = ".moments"; //jQuery selector for target carousel
+  appendToCarousel(bob, carouselSelector);
+}
+
+/**
+ * Creates a jQuery element of a new bob object,
+ * then appends it to the target carousel DOM element
+ * @param {Object} bob - A single Bob object to be added to the carousel
+ * @param {string} carousel - jQuery selector string for the target carousel
+*/
+function appendToCarousel(bob, carouselSelector) {
+  $carousel = $(carouselSelector);
+  $activeItem = $(carouselSelector + " .carousel-item.active");
+  if (bob !== null) {
+    $activeItem.after(createBoardElement(bob));
+  }
+  var $before = $activeItem.prevAll();
+  $carousel.append($before.clone());
+  $before.remove();
+
+  if ($carousel.hasClass('initialized')) {
+    $carousel.removeClass('initialized');
+  }
+  //reinit the carousel
+  $carousel.carousel({
+    fullWidth: true
+  });
+}
+
+/**
+  * Updates the caraousel item with updated bob data
+  * Called when update_element socket received
+  * @param {Object} bobData - contains updated bob data
+*/
+function updateBoardElement(bobData){
+  var bobId = bobData._id;
+  var $bobToUpdate = $("#" + bobId);
+  var $imageHolder = $bobToUpdate.find(".image-holder");
+  var newImage = "background-image: url(" + bobData.data.Link + ")";
+  $imageHolder.attr("style", newImage);
+  var $textHolder = $bobToUpdate.find(".text-holder");
+  $textHolder.find(".author").attr("text", bobData.Title);
+  $textHolder.find(".description").attr("text", bobData.Description);
+}
+
+/**
+  * Deletes the html bob element with bobid from carousel
+  * @param {string} bobid - id of the bob to be deleted
+*/
+function deleteElement(bobid){
+  $("#" + bobid).remove();
+}
 
 /**
   * Updates the label with the votes from bob with bobid
@@ -181,17 +160,4 @@ function updateVoteLabel(bobid){
 */
 function incrementVote(res){
   $("#votes").attr("data-badge-caption", "+" + res.votes);
-}
-
-/**
- * Resets time interval for the main carousel
- * Time Unit : ms.  Default Settings : 10s
- */
-function resetInterval() {
-  // Clears the existing timers
-  clearInterval(carouselInterval);
-  // Reinits the timers
-  carouselInteral = setInterval(function() {
-    $('#slideshow').carousel('next');
-  }, 10000);
 }
