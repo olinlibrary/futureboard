@@ -7,9 +7,10 @@ function populateEvents(eventsData) {
   let $eventsToday = $('#eventsToday');
   let $featuredEvents = $('#featuredEvents');
 
-  for (var i = 0; i < eventsData.length - 1; i++) {
+  for (var i = 0; i < eventsData.length ; i++) {
     // Uses Date.JS to process time
-    let featured = eventsData[i].featured;
+    console.log(eventsData[i].labels)
+    let featured = $.inArray("featured", eventsData[i].labels);
     let eventStart = Date.parse(eventsData[i].start).toString("YYMMdd");
     let today = Date.today().toString("YYMMdd");
     // let tomorrow = (1).day().fromNow().toString("MMdd");
@@ -19,7 +20,7 @@ function populateEvents(eventsData) {
       let $newEvent = createEventObject(eventsData[i]);
       $eventsToday.append($newEvent);
     }
-    if(featured){
+    if(featured >= 0){
       let $newEvent = createFeaturedEventObject(eventsData[i]);
       $featuredEvents.append($newEvent);
     }

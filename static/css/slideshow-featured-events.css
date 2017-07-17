@@ -1,11 +1,10 @@
 /*
-- This file is used for the functional UI
 - Currently activated CSS for board.html
 */
 
 body {
   overflow:hidden;
-  background-color: rgb(229, 232, 225)
+  background-color: rgb(229, 232, 225);
 }
 
 nav {
@@ -15,34 +14,60 @@ nav {
   border-radius: 10px;
   opacity: 0.7;
 }
-.main-display {
-  padding: 5px;
-}
 
+/*general slideshow settings*/
 #slideshow {
   /*materialize carousel has unwanted fixed default height*/
   height: 90vh !important;
 }
+.slideshow-buttons {
+  float:right;
+  position:relative;
+  top : -70px;
+  right: 20px;
+}
+.slideshow-buttons > a {
+  opacity:0.5;
+}
+.slideshow-buttons > a:hover {
+  opacity:1;
+}
+.lables{
+  float: right;
+}
+span.badge.new {
+  height:35px;
+  line-height:35px;
+  font-size:1.3rem;
+  position:absolute;
+  top: -40px;
+  right:5px;
+}
+
+/*slideshow content(individual carousels items)*/
 .carousel-item {
   /*height: 100%;*/
   position: absolute !important;
 }
 
-/*css for individual carousels*/
 .text-bobble {
   background: #ECF7E8;
 }
-
 .quote-bobble {
   background: #DDE7F4;
   font-family: "Georgia", Times, serif;
   text
 }
+.quote-bobble p.author {
+  color: black;
+  text-align: right;
+  margin-top: 1rem;
+  font-style: italic;
+}
 
 .text-bobble, .quote-bobble {
   padding: 1rem;
 }
-
 .quote-bobble p, .text-bobble p {
   font-size: 4rem !important;
   /* Dang ol Materialize is quite specific, we will SASS soon! */
@@ -51,12 +76,6 @@ nav {
   color: #333;
 }
 
-.quote-bobble p.author {
-  color: black;
-  text-align: right;
-  margin-top: 1rem;
-  font-style: italic;
-}
 
 div.image-holder {
   width: 100%;
@@ -118,38 +137,7 @@ div.image-holder {
   -webkit-transform: translate(-30px, -2px);
 }
 
-
-.slideshow-buttons {
-  float:right;
-  position:relative;
-  top : -70px;
-  right: 20px;
-}
-.slideshow-buttons > a {
-  opacity:0.5;
-}
-.slideshow-buttons > a:hover {
-  opacity:1;
-}
-.lables{
-  float: right;
-}
-span.badge.new {
-  height:35px;
-  line-height:35px;
-  font-size:1.3rem;
-  position:absolute;
-  top: -40px;
-  right:5px;
-}
-
-
-#slideshow-small {
-  /*puts slideshow under all buttons*/
-  z-index: -1;
-}
-
-/*events css*/
+/*events today*/
 .events {
   margin-top: 10px;
   margin-bottom: 10px;
