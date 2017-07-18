@@ -7,7 +7,58 @@ const http = require('http').Server(app);
 const io = require('socket.io')(http);
 app.set('socketio', io);
 const db = require('./models/wrapper.js');
+const aws = require('aws-sdk');
 
+
+// NOTE: Currently connects to fake-s3 (https://github.com/jubos/fake-s3/).
+// Switch to real production before merge
+// fakes3 -r fakes3/ -p 4567
+
+const S3_BUCKET         = process.env.S3_BUCKET;
+const ACCESS_KEY_ID     = process.env.ACCESS_KEY_ID;
+const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY;
+
+/*
+ * Respond to GET requests to /sign-s3.
+ * Upon request, return JSON containing the temporarily-signed S3 request and
+ * the anticipated URL of the image.
+ */
+app.get('/sign-s3', (req, res) => {
+  const s3 = new aws.S3({
+      s3ForcePathStyle: true,
+      accessKeyId: ACCESS_KEY_ID,
+      secretAccessKey: SECRET_ACCESS_KEY,
+      endpoint: new aws.Endpoint('http://10.25.9.138:4567')
+    });
+  const fileName = req.query['file-name'];
+  const fileType = req.query['file-type'];
+  const s3Params = {
+    Bucket: S3_BUCKET,
+    Key: fileName,
+    Expires: 60,
+    ContentType: fileType,
+    ACL: 'public-read'
+  };
+
+  s3.getSignedUrl('putObject', s3Params, (err, data) => {
+    if(err){
+      console.log(err);
+      return res.end();
+    }
+    const returnData = {
+      signedRequest: data,
+      // url: 'http://'+ S3_BUCKET + '.localhost:4567/'+ fileName
+      url: 'http://10.25.9.138:4567/' + S3_BUCKET + '/' + fileName
+    };
+    res.write(JSON.stringify(returnData));
+    res.end();
+  });
+});
+
+app.post('/sign-s3', function (req, res) {
+  console.log(req);
+  res.send("success");
+});
 
 /******* CONFIG *******/
 // Use body parser for requests
@@ -31,6 +82,10 @@ app.get('/', function(req, res) {
 
 app.get('/new', function(req, res) {
   res.sendFile(__dirname + '/templates/controller.html');
+});
+
+app.get('/upload', function (req, res) {
+  res.sendFile(__dirname + '/templates/uploadfile.html');
 });
 
 app.get('/admin', function(req, res) {
