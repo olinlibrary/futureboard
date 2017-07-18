@@ -2,9 +2,39 @@
 - Currently activated CSS for board.html
 */
 
+@font-face{
+    font-family: "DINOT-Bold";
+    src: url(DINOT-Bold.otf);
+}
+@font-face{
+    font-family: "DINOT-BoldItalic";
+    src: url(DINOT-BoldItalic.otf);
+}
+@font-face{
+    font-family: "DINOT-CondMediIta";
+    src: url(DINOT-CondMediIta.otf);
+}
+@font-face{
+    font-family: "DINOT-Italic";
+    src: url(DINOT-Italic.otf);
+}
+@font-face{
+    font-family: "DINOT-LightItalic";
+    src: url(DINOT-LightItalic.otf);
+}
+@font-face{
+    font-family: "DINOT";
+    src: url(DINOT.otf);
+}
+
+html {
+  font-family: "DINOT-Bold", "DINOT-BoldItalic", "DINOT-CondMediIta", "DINOT-Italic", "DINOT-LightItalic", "DINOT";
+}
+
 body {
   overflow:hidden;
   background-color: #FFFFFF;
+  font-family: "DINOT";
 }
 
 nav {
@@ -12,7 +42,11 @@ nav {
   background-color:#009BDF;
   margin-top: 10px;
   margin-bottom: 5px;
+  font-family: "DINOT-Bold";
   /*border-radius: 10px;*/
+}
+nav .brand-logo{
+  font-size: 50px;
 }
 /*navbar clock setting*/
 #clock{
@@ -28,7 +62,7 @@ nav {
 }
 .unit{
   color: #FFFFFF;
-  font-size: 4em;
+  font-size: 3.5rem;
   height: 100%;
   margin: 0 10px;
   text-align: center;
@@ -72,12 +106,10 @@ span.badge.new {
 }
 
 .text-bobble {
-  background: #ECF7E8;
+  background: rgba(#a7a9ac, 0.22);
 }
 .quote-bobble {
-  background: #DDE7F4;
-  font-family: "Georgia", Times, serif;
-  text
+  background: rgba(#a7a9ac, 0.22);
 }
 .quote-bobble p.author {
   color: black;
@@ -94,7 +126,7 @@ span.badge.new {
   /* Dang ol Materialize is quite specific, we will SASS soon! */
   line-height: 4rem;
   font-weight: 400;
-  color: #333;
+  color: rgba(#a7a9ac, 0.22);;
 }
 
 
@@ -104,7 +136,7 @@ div.image-holder {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  background-color: #333;
+  background-color: rgba(#a7a9ac, 0.22);;
 }
 
 .quote-holder {
@@ -153,7 +185,7 @@ div.image-holder {
   left: 4px;
   width: 26px;
   height: 20px;
-  background: #f7f6f0;
+  background: rgba(#a7a9ac, 0.22);
   border-bottom-right-radius: 10px;
   -webkit-transform: translate(-30px, -2px);
 }
@@ -166,11 +198,20 @@ div.image-holder {
   overflow-y: hidden;
   height: 43vh !important;
 }
+.events .nav-wrapper{
+
+}
 .events .collection.with-header .collection-header{
+  transform: skewX(-20deg);
   background-color:#000000;
+  font-family: "DINOT-Bold";
+  font-size:1.6rem;
+  width:90%;
+  margin-left:5%;
 }
 .events.featured .collection.with-header .collection-header{
   background-color:#ED037C;
+  font-family: "DINOT-Bold";
 }
 .events .nav-wrapper a.brand-logo{
   color:#FFFFFF;
@@ -192,7 +233,7 @@ div.image-holder {
 .collection-item > span{
   font-size:1.7rem;
   line-height:1.7rem;
-  font-style:oblique;
+  font-family: "DINOT-Bold";
 }
 .collection-item > p.date{
   font-size:1.4rem;
