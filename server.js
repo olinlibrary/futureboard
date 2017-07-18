@@ -17,6 +17,7 @@ const aws = require('aws-sdk');
   gem install fakes3
   mkdir fakes3/
  start with:
+  change ip to your current ip!
   set envirnoment variables: S3_BUCKET: FUTUREboard, ACCESS_KEY_ID: anything, SECRET_ACCESS_KEY: anything
   fakes3 -r fakes3/ -p 4567
 */
