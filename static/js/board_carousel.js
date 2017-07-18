@@ -63,7 +63,7 @@ function createBoardElement(bob) {
 
     case 'Moment':
       $html.addClass('image-bobble flip').attr("id", bob._id)
-        .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")"}}))
+        .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")", 'background-size': "contain"}}))
         .append($('<div />', {class: "text-holder back"})
           .append($('<p>', {class: "author", text: bob.data.Title}))
           .append($('<p />', {class:"description", text : bob.data.Descrption})));
@@ -71,7 +71,7 @@ function createBoardElement(bob) {
 
     case 'Meme':
       $html.addClass('image-bobble flip').attr("id", bob._id)
-        .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")"}}))
+        .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")", 'background-size': "contain"}}))
         .append($('<div />', {class: "text-holder back"})
           .append($('<p>', {class: "author", text: bob.data.Title}))
           .append($('<p />', {class:"description", text: bob.data.Descrption})));
@@ -161,3 +161,90 @@ function updateVoteLabel(bobid){
 function incrementVote(res){
   $("#votes").attr("data-badge-caption", "+" + res.votes);
 }
+
+/**
+ * When Document is ready,
+ * Defines time interval for carousel auto slides,
+ * Listens on click and touch events for flip, swap buttons
+ * Listens on click and touch events for plusOne, flag buttons
+ * Listens on tab buttons for toggling the events
+ * Time Unit : ms.  Default Settings : 10s, 7s(small slide)
+ */
+
+var carouselInterval = null;
+
+$(function(){
+    $.get('/api/bobs', popluateBoard);
+    carouselInterval = setInterval(function() {
+      $('#slideshow').carousel('next');
+    }, 10000);
+
+    // DEFINIETELY NOT THE IDEAL WAY TO DO THIS (TEMPORARY)
+    updateVoteLabelInterval= setInterval(function() {
+      var activeBobID = $("#slideshow").find(".active").attr("id");
+      updateVoteLabel(activeBobID);
+    }, 100); // updates votes lable pretty often
+
+    // BETTER WAY, BUT NOT WORKING PROPERLY at this point
+    //  $(".carousel-item, .carousel")
+    //   .on("carouselNext", "carouselPrev", "DOMContentLoaded", function(){
+    //     console.log("change detected")
+    //    var activeBobID = $("#slideshow").find(".active").attr("id");
+    //    updateVoteLabel(activeBobID);
+    //  });
+    $(".plusOne").on("click touchstart", function(){
+      var activeBobID = $("#slideshow").find(".active").attr("id");
+      $.post('/api/bobs/' + activeBobID + "/votes");
+    });
+    $(".flag").on("click touchstart", function(){
+      var activeBobID = $("#slideshow").find(".active").attr("id");
+      $.post('/api/bobs/' + activeBobID + "/flags");
+    });
+});
+
+
+/**
+ * Changes active item to either previous or next item depending on direction
+ * @param {string} direction - direction of moving : left, right
+ */
+function carouselControl(direction){
+  if (direction == "left") {
+    $('#slideshow').carousel('prev', 1); // Move next n times.
+  } else if (direction == "right") {
+    $('#slideshow').carousel('next', 1); // Move next n times.
+  }
+}
+
+/**
+ * Resets time interval for the main carousel
+ * Time Unit : ms.  Default Settings : 10s
+ */
+function resetInterval() {
+  // Clears the existing timers
+  clearInterval(carouselInterval);
+  // Reinits the timers
+  carouselInterval = setInterval(function() {
+    $('#slideshow').carousel('next');
+  }, 10000);
+}
+
+/**
+ * Listens on jQuery events for keyboard controls
+ * @param {event} e - jQuery event obejct
+ */
+$(document).keydown(function(e) {
+  if (e.keyCode == 37) {
+    // press left arrow key to go back to previous slide
+    resetInterval(carouselControl("left"));
+  }
+  if (e.keyCode == 39) {
+    // press right arrow key to go to next slide
+    resetInterval(carouselControl("right"));
+  }
+});
+var socket = io();
+
+socket.on('add_element', addBoardElement);
+socket.on('update_element', updateBoardElement)
+socket.on('upvote', incrementVote);
+socket.on('delete', deleteElement)

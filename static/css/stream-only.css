@@ -32,7 +32,9 @@
 html {
   font-family: "DINOT-Bold", "DINOT-BoldItalic", "DINOT-CondMediIta", "DINOT-Italic", "DINOT-LightItalic", "DINOT";
 }
-
+.row .col{
+  padding:0;
+}
 body {
   overflow:hidden;
   background-color: #FFFFFF;
@@ -43,7 +45,6 @@ body {
 nav {
   /*box margin*/
   background-color:#009BDF;
-
   font-family: "DINOT-BoldItalic";
   /*transform: skewX(-20deg);*/
 }
@@ -81,33 +82,18 @@ nav .brand-logo{
   height: 94vh !important;
 }
 .slideshow-buttons {
-  float:right;
   position:relative;
-  top : -70px;
-  right: 20px;
-}
-.main-button{
-  opacity:0.5;
-}
-.main-button:hover{
-  opacity:1.0;
-}
-.slideshow-buttons > a {
-  opacity:0.5;
-}
-.slideshow-buttons > a:hover {
-  opacity:1;
 }
 .lables{
   float: right;
+  postion:absolute;
+
 }
 span.badge.new {
-  height:35px;
-  line-height:35px;
-  font-size:1.3rem;
-  position:absolute;
-  top: -40px;
-  right:5px;
+  height:64px;
+  line-height:64px;
+  font-size:64px;
+  margin-right:20px;
   background-color: #F47920;
 }
 
@@ -199,92 +185,4 @@ div.image-holder {
   background: rgba(#a7a9ac, 0.22);
   border-bottom-right-radius: 10px;
   -webkit-transform: translate(-30px, -2px);
-}
-
-.row .left-aside.col{
-  padding: 0;
-}
-.row .right-aside.col{
-  padding: 0;
-}
-/*events today*/
-.events {
-  overflow-y: hidden;
-  height: 48vh !important;
-}
-.events .collection.with-header .collection-header{
-  transform: skewX(-20deg);
-  background-color:#000000;
-  font-family: "DINOT-Bold";
-  font-size:31px;
-  width:100%;
-  margin-left:1.4vh;
-}
-.events.featured .collection.with-header .collection-header{
-  background-color:#ED037C;
-  font-family: "DINOT-Bold";
-}
-.events .nav-wrapper a.brand-logo{
-  color:#FFFFFF;
-}
-.events .collection{
-  margin:0px;
-  border:0px;
-
-}
-.row .events.col{
-  padding:0;
-}
-
-.eventItems > .collection{
-  height: 40vh;
-  overflow-y:auto;
-}
-.collection-header{
-  font-size:1rem;
-}
-.collection-item > p{
-  margin-bottom:0px;
-}
-.collection-item > span{
-  font-size:1.7rem;
-  line-height:1.7rem;
-  font-family: "DINOT-Bold";
-}
-.collection-item > p.date{
-  font-size:1.4rem;
-  line-height:1.4rem;
-
-}
-.collection-item > p.location{
-  float:right;
-  font-size:1.4rem;
-  line-height:1.4rem;
-  font-style:italic;
-}
-.collection-item > *{
-  font-size:1.4rem;
-  line-height:1.4rem;
-}
-/*featured events*/
-.events.featured {
-  overflow-y: hidden;
-  height: 55vh !important;
-}
-.events.featured .eventItems > .collection{
-  height: 45vh;
-  overflow-y:auto;
-}
-
-.events img{
-  height:35vh;
-  margin-left:3vh;
-  margin-right:3vh;
-  float:left;
-}
-
-/*//hide scroll bar*/
-::-webkit-scrollbar {
-    width: 0px;
-    background: transparent; /* make scrollbar transparent */
 }

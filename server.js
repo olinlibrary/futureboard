@@ -24,9 +24,27 @@ api = require('./routes/api')(io, db);
 app.use('/api', api);
 
 
-// Main board
+// Main board (on computer screens)
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/templates/board.html');
+});
+
+
+app.get('/views', function(req, res) {
+  res.sendFile(__dirname + '/templates/views.html');
+});
+
+app.get('/views/board', function(req, res) {
+  res.sendFile(__dirname + '/templates/board.html');
+});
+// Stream only View
+app.get('/views/stream', function(req, res) {
+  res.sendFile(__dirname + '/templates/stream.html');
+});
+
+// Events only View
+app.get('/views/events', function(req, res) {
+  res.sendFile(__dirname + '/templates/events.html');
 });
 
 app.get('/new', function(req, res) {
