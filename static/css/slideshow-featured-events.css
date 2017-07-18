@@ -4,15 +4,15 @@
 
 body {
   overflow:hidden;
-  background-color: rgb(229, 232, 225);
+  background-color: #FFFFFF;
 }
 
 nav {
   /*box margin*/
+  background-color:#009BDF;
   margin-top: 10px;
   margin-bottom: 5px;
-  border-radius: 10px;
-  opacity: 0.7;
+  /*border-radius: 10px;*/
 }
 /*navbar clock setting*/
 #clock{
@@ -27,7 +27,7 @@ nav {
   width: 600px;
 }
 .unit{
-  color: #fff;
+  color: #FFFFFF;
   font-size: 4em;
   height: 100%;
   margin: 0 10px;
@@ -62,6 +62,7 @@ span.badge.new {
   position:absolute;
   top: -40px;
   right:5px;
+  background-color: #F47920;
 }
 
 /*slideshow content(individual carousels items)*/
@@ -120,7 +121,7 @@ div.image-holder {
 .text-holder {
   position: relative;
   padding: 10px 30px;
-  background: #0B93F6;
+  background: #009BDF;
   border-radius: 25px;
   margin-bottom: 20px;
   font-size: .75em;
@@ -139,7 +140,7 @@ div.image-holder {
   bottom: -2px;
   left: -7px;
   height: 20px;
-  border-right: 20px solid #0B93F6;
+  border-right: 20px solid #009BDF;
   border-bottom-right-radius: 16px 14px;
   -webkit-transform: translate(0, -2px);
 }
@@ -163,14 +164,23 @@ div.image-holder {
   margin-top: 10px;
   margin-bottom: 5px;
   overflow-y: hidden;
-  height: 30vh !important;
+  height: 43vh !important;
+}
+.events .collection.with-header .collection-header{
+  background-color:#000000;
+}
+.events.featured .collection.with-header .collection-header{
+  background-color:#ED037C;
+}
+.events .nav-wrapper a.brand-logo{
+  color:#FFFFFF;
 }
 .events .collection{
   margin:0px;
   border:0px;
 }
 .eventItems > .collection{
-  height: 26vh;
+  height: 45vh;
   overflow-y:auto;
 }
 .collection-header{
@@ -199,10 +209,10 @@ div.image-holder {
 /*featured events*/
 .events.featured {
   overflow-y: hidden;
-  height: 65vh !important;
+  height: 47vh !important;
 }
 .events.featured .eventItems > .collection{
-  height: 55vh;
+  height: 45vh;
   overflow-y:auto;
 }
 
