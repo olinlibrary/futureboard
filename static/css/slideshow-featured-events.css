@@ -262,7 +262,10 @@ div.image-holder {
   line-height:1.4rem;
   font-style:italic;
 }
-
+.collection-item > *{
+  font-size:1.4rem;
+  line-height:1.4rem;
+}
 /*featured events*/
 .events.featured {
   overflow-y: hidden;
