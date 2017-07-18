@@ -86,6 +86,12 @@ nav .brand-logo{
   top : -70px;
   right: 20px;
 }
+.main-button{
+  opacity:0.5;
+}
+.main-button:hover{
+  opacity:1.0;
+}
 .slideshow-buttons > a {
   opacity:0.5;
 }
@@ -268,8 +274,10 @@ div.image-holder {
 }
 
 .events img{
-  height:30vh;
+  height:35vh;
   margin-left:3vh;
+  margin-right:3vh;
+  float:left;
 }
 
 /*//hide scroll bar*/

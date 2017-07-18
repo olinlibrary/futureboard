@@ -116,8 +116,10 @@ body {
 }
 
 .events img{
-  height:73vh;
+  height:77vh;
   margin-left:3vh;
+  margin-right:3vh;
+  float:left;
 }
 
 /*//hide scroll bar*/
