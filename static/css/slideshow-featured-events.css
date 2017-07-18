@@ -31,6 +31,12 @@ html {
   font-family: "DINOT-Bold", "DINOT-BoldItalic", "DINOT-CondMediIta", "DINOT-Italic", "DINOT-LightItalic", "DINOT";
 }
 
+.row nav.col.s12{
+  margin-left: auto;
+  left: -10px;
+  z-index:999;
+
+}
 body {
   overflow:hidden;
   background-color: #FFFFFF;
@@ -40,12 +46,11 @@ body {
 nav {
   /*box margin*/
   background-color:#009BDF;
-  margin-top: 10px;
-  margin-bottom: 5px;
-  font-family: "DINOT-Bold";
-    transform: skewX(-20deg);
-  /*border-radius: 10px;*/
+
+  font-family: "DINOT-BoldItalic";
+  /*transform: skewX(-20deg);*/
 }
+
 nav .brand-logo{
   font-size: 50px;
 }
@@ -73,7 +78,8 @@ nav .brand-logo{
 /*general slideshow settings*/
 #slideshow {
   /*materialize carousel has unwanted fixed default height*/
-  height: 90vh !important;
+  float:left;
+  height: 94vh !important;
 }
 .slideshow-buttons {
   float:right;
@@ -102,7 +108,6 @@ span.badge.new {
 
 /*slideshow content(individual carousels items)*/
 .carousel-item {
-  /*height: 100%;*/
   position: absolute !important;
 }
 
@@ -192,23 +197,21 @@ div.image-holder {
 }
 
 .row .left-aside.col{
-  padding-left:20px;
+  padding: 0;
 }
 .row .right-aside.col{
-  padding:0;
+  padding: 0;
 }
 /*events today*/
 .events {
-  margin-top: 10px;
-  margin-bottom: 5px;
   overflow-y: hidden;
-  height: 43vh !important;
+  height: 48vh !important;
 }
 .events .collection.with-header .collection-header{
   transform: skewX(-20deg);
   background-color:#000000;
   font-family: "DINOT-Bold";
-  font-size:1.6rem;
+  font-size:31px;
   width:100%;
   margin-left:5%;
 }
@@ -233,7 +236,7 @@ div.image-holder {
     background: transparent; /* make scrollbar transparent */
 }
 .eventItems > .collection{
-  height: 45vh;
+  height: 40vh;
   overflow-y:auto;
 }
 .collection-header{
@@ -262,7 +265,7 @@ div.image-holder {
 /*featured events*/
 .events.featured {
   overflow-y: hidden;
-  height: 47vh !important;
+  height: 55vh !important;
 }
 .events.featured .eventItems > .collection{
   height: 45vh;
