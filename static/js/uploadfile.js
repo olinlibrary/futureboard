@@ -1,13 +1,20 @@
+SUBMIT_URL = null;
+
 /*
   Function to carry out the actual PUT request to S3 using the signed request from the app.
 */
 function uploadFile(file, signedRequest, url){
   const xhr = new XMLHttpRequest();
+
+  console.log(url, signedRequest);
+
   xhr.open('PUT', signedRequest);
 
   xhr.onreadystatechange = () => {
     if(xhr.readyState === 4){
       if(xhr.status === 200){
+        console.log(xhr);
+        SUBMIT_URL = url;
         if(file.type.match('image')){
           $('#preview').empty().append($('<img>', { src: url }));
         } else if (file.type.match('video')) {
@@ -19,6 +26,7 @@ function uploadFile(file, signedRequest, url){
       }
       else{
         alert('Could not upload file.');
+        SUBMIT_URL = null;
       }
     }
   };
@@ -37,6 +45,7 @@ function getSignedRequest(file){
     if(xhr.readyState === 4){
       if(xhr.status === 200){
         const response = JSON.parse(xhr.response);
+        console.log(response);
         if(response.signedRequest === null){
           return alert("Did not get S3 signed request!");
         }
@@ -66,18 +75,24 @@ function initUpload(file){
  Function to submit the new bob.
 */
 function submitBob() {
-  let data = {
-    data: { 'Link': document.getElementById('preview').src },
-    flavor: 'Moment',
-    startDate: Date.now(),
-    'tags[]': ['uploadSubmit']
-  }
+  if(SUBMIT_URL){
+    let data = {
+      data: { 'Link': SUBMIT_URL },
+      flavor: 'Moment',
+      startDate: Date.now(),
+      'tags[]': ['uploadSubmit']
+    }
+    console.log(data);
 
-  $.post('/api/bobs', data, function(res) {
-			alert('Bob saved!');
-			// Redirect to FUTUREboard
-			window.location = '/';
-		});
+    $.post('/api/bobs', data, function(res) {
+  			alert('Bob saved!');
+  			// Redirect to FUTUREboard
+  			window.location = '/';
+  		});
+    } else {
+      alert("No file selected!")
+    }
+
 }
 
 /*
@@ -92,6 +107,16 @@ window.onload = function () {
 */
 Dropzone.options.dropzoneInput = {
   addedfile: function() {
+    $('#preview').empty();
+    document.getElementById('submit-button').disabled = "disabled";
+    // Remove all extra files
+    if(this.files.length >= 2){
+      while(this.files.length >=2) { this.removeFile(this.files[0]); }
+    }
+    initUpload(this.files[0]);
+  },
+  drop: function() {
+    this.element.classList.remove("dz-drag-hover");
     $('#preview').empty();
     document.getElementById('submit-button').disabled = "disabled";
     // Remove all extra files

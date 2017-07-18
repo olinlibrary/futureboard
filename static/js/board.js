@@ -314,6 +314,7 @@ function deleteElement(bobid){
 */
 function updateVoteLabel(bobid){
   var $labelToUpdate = $("#votes");
+  console.log(bobid);
   var votes =  $.get('/api/bobs/' + bobid + "/votes", function(res){
     $labelToUpdate.attr("data-badge-caption", "+" + res.votes);
   });
@@ -389,8 +390,9 @@ $(function() {
   // DEFINIETELY NOT THE IDEAL WAY TO DO THIS (TEMPORARY)
   interval3 = setInterval(function() {
     var activeBobID = $("#slideshow").find(".active").attr("id");
+    console.log(activeBobID);
     updateVoteLabel(activeBobID);
-  }, 100); // updates votes lable pretty often
+  }, 1000); // updates votes lable pretty often
 
   // BETTER WAY, BUT NOT WORKING PROPERLY at this point
   //  $(".carousel-item, .carousel")

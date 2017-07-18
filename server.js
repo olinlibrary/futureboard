@@ -3,13 +3,20 @@ const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
 const app = express();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
-app.set('socketio', io);
+// const http = require('http').Server(app);
 const db = require('./models/wrapper.js');
 const aws = require('aws-sdk');
+const tls = require("tls");
+const fs = require('fs');
 
+var options = {
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('cert.pem')
+};
 
+const https = require('https').Server(options, app)
+const io = require('socket.io')(https);
+app.set('socketio', io);
 /*
  NOTE: Currently connects to fake-s3 (https://github.com/jubos/fake-s3/).
  Switch to real production before merge
@@ -26,6 +33,7 @@ const S3_BUCKET         = process.env.S3_BUCKET;
 const ACCESS_KEY_ID     = process.env.ACCESS_KEY_ID;
 const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY;
 
+
 /*
  * Respond to GET requests to /sign-s3.
  * Upon request, return JSON containing the temporarily-signed S3 request and
@@ -33,10 +41,11 @@ const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY;
  */
 app.get('/sign-s3', (req, res) => {
   const s3 = new aws.S3({
-      s3ForcePathStyle: true,
       accessKeyId: ACCESS_KEY_ID,
       secretAccessKey: SECRET_ACCESS_KEY,
-      endpoint: new aws.Endpoint('http://10.25.9.138:4567')
+      signatureVersion: 'v4',
+      region: 'us-east-2',
+      endpoint: new aws.Endpoint('https://s3.us-east-2.amazonaws.com')
     });
   const fileName = req.query['file-name'];
   const fileType = req.query['file-type'];
@@ -53,10 +62,11 @@ app.get('/sign-s3', (req, res) => {
       console.log(err);
       return res.end();
     }
+    console.log(data);
     const returnData = {
       signedRequest: data,
-      // url: 'http://'+ S3_BUCKET + '.localhost:4567/'+ fileName
-      url: 'http://10.25.9.138:4567/' + S3_BUCKET + '/' + fileName
+      url: 'https://'+ S3_BUCKET + '.s3.us-east-2.amazonaws.com/'+ fileName
+      // url: 'http://10.25.9.138:4567/' + S3_BUCKET + '/' + fileName
     };
     res.write(JSON.stringify(returnData));
     res.end();
@@ -131,6 +141,6 @@ app.post('/twilio', twilio.POSTtext);
 
 // Start the server
 var port = process.env.PORT || 8080;
-http.listen(port, function() {
+https.listen(port, function() {
 	console.log("FORWARDboard running on port", port);
 });
