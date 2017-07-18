@@ -2,6 +2,8 @@
 - Currently activated CSS for board.html
 */
 
+
+/*font declration*/
 @font-face{
     font-family: "DINOT-Bold";
     src: url(DINOT-Bold.otf);
@@ -31,18 +33,13 @@ html {
   font-family: "DINOT-Bold", "DINOT-BoldItalic", "DINOT-CondMediIta", "DINOT-Italic", "DINOT-LightItalic", "DINOT";
 }
 
-.row nav.col.s12{
-  margin-left: auto;
-  left: -10px;
-  z-index:999;
-
-}
 body {
   overflow:hidden;
   background-color: #FFFFFF;
   font-family: "DINOT";
 }
 
+/*navbar settings*/
 nav {
   /*box margin*/
   background-color:#009BDF;
@@ -54,6 +51,8 @@ nav {
 nav .brand-logo{
   font-size: 50px;
 }
+
+
 /*navbar clock setting*/
 #clock{
   align-items: center;
