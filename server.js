@@ -10,9 +10,15 @@ const db = require('./models/wrapper.js');
 const aws = require('aws-sdk');
 
 
-// NOTE: Currently connects to fake-s3 (https://github.com/jubos/fake-s3/).
-// Switch to real production before merge
-// fakes3 -r fakes3/ -p 4567
+/*
+ NOTE: Currently connects to fake-s3 (https://github.com/jubos/fake-s3/).
+ Switch to real production before merge
+ To setup fakes3:
+  gem install fakes3
+  mkdir fakes3/
+ start with:
+  fakes3 -r fakes3/ -p 4567
+*/
 
 const S3_BUCKET         = process.env.S3_BUCKET;
 const ACCESS_KEY_ID     = process.env.ACCESS_KEY_ID;
