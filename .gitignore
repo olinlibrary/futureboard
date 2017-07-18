@@ -6,6 +6,8 @@ bobs.json
 flavors.json
 tags.json
 
+/fakes3
+
 # Logs
 logs
 *.log
@@ -64,4 +66,3 @@ typings/
 
 # dotenv environment variables file
 .env
-
