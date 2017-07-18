@@ -43,6 +43,7 @@ nav {
   margin-top: 10px;
   margin-bottom: 5px;
   font-family: "DINOT-Bold";
+    transform: skewX(-20deg);
   /*border-radius: 10px;*/
 }
 nav .brand-logo{
@@ -190,7 +191,12 @@ div.image-holder {
   -webkit-transform: translate(-30px, -2px);
 }
 
-
+.row .left-aside.col{
+  padding-left:20px;
+}
+.row .right-aside.col{
+  padding:0;
+}
 /*events today*/
 .events {
   margin-top: 10px;
@@ -198,15 +204,12 @@ div.image-holder {
   overflow-y: hidden;
   height: 43vh !important;
 }
-.events .nav-wrapper{
-
-}
 .events .collection.with-header .collection-header{
   transform: skewX(-20deg);
   background-color:#000000;
   font-family: "DINOT-Bold";
   font-size:1.6rem;
-  width:90%;
+  width:100%;
   margin-left:5%;
 }
 .events.featured .collection.with-header .collection-header{
@@ -219,6 +222,15 @@ div.image-holder {
 .events .collection{
   margin:0px;
   border:0px;
+
+}
+.row .events.col{
+  padding:0;
+}
+/*//hide scroll bar*/
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
 }
 .eventItems > .collection{
   height: 45vh;
