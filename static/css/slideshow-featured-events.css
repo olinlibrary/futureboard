@@ -229,11 +229,7 @@ div.image-holder {
 .row .events.col{
   padding:0;
 }
-/*//hide scroll bar*/
-::-webkit-scrollbar {
-    width: 0px;
-    background: transparent; /* make scrollbar transparent */
-}
+
 .eventItems > .collection{
   height: 40vh;
   overflow-y:auto;
@@ -271,7 +267,13 @@ div.image-holder {
   overflow-y:auto;
 }
 
-.events.featured img{
-  width:50%;
-  /*margin-left:33%;*/
+.events img{
+  height:30vh;
+  margin-left:3vh;
+}
+
+/*//hide scroll bar*/
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
 }

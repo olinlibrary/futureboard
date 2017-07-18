@@ -18,7 +18,6 @@ function populateEvents(eventsData) {
       let $newEvent = createEventObject(eventsData[i]);
       $eventsToday.append($newEvent);
     }
-
     if (featured){
       let $newEvent = createFeaturedEventObject(eventsData[i]);
       $featuredEvents.append($newEvent);
@@ -32,6 +31,7 @@ function populateEvents(eventsData) {
   * @param {Object} eventData - A single JSON instance of ABE event
 */
 function createEventObject(eventData) {
+  var converter = new showdown.Converter(); // markdown converter
   var $html = $('<li>', {
     id: eventData.id,
     class: "collection-item"
@@ -39,6 +39,7 @@ function createEventObject(eventData) {
     .append($('<span>', { class: 'title', text: eventData.title.substring(0, 30) }))
     .append($('<p>', { class: 'location', text:"@ " + eventData.location.substring(0, 30) }))
     .append($('<p>', { class: 'date', text: Date.parse(eventData.start).toString("hh:mm tt") + " - " + Date.parse(eventData.end).toString("hh:mm tt") }))
+    .append(converter.makeHtml(eventData.description));
   return $html;
 }
 
