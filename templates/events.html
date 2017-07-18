@@ -8,13 +8,9 @@
   <meta content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
   <title>FutureBoard</title>
 
-  <!-- load font -->
-  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css" />
-
   <!-- load vendor js -->
   <script src='/static/vendor/socket.io.js' charset="UTF-8" type="text/javascript"></script>
   <script src='/static/vendor/jquery.min.js' charset="UTF-8" type="text/javascript"></script>
-  <script src='/static/vendor/jquery.flip.min.js' charset="UTF-8" type="text/javascript"></script>
 
   <!-- load Materialize CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
@@ -22,10 +18,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
   <!-- load Materialize icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="/static/css/slideshow-featured-events.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/events-only.css">
 
   <!-- load board components-->
-  <script src='/static/js/board_carousel.js' charset="UTF-8" type="text/javascript"></script>
   <script src='/static/js/board_events.js' charset="UTF-8" type="text/javascript"></script>
 
   <!-- load board js -->
@@ -35,45 +30,8 @@
 
 <body>
   <div class="row">
-
-    <div class="col s12 m8 l8 xl8 left-aside">
-      <!-- navigation bar -->
-      <nav class="col s12 wave">
-        <div class="nav-wrapper">
-          <a href="/" class="brand-logo"><i class="material-icons hide-on-small-only">fast_forward</i>FutureBoard</a>
-          <ul id="nav-mobile" class="right">
-            <li>
-               <div id="clock" class="hide-on-med-and-down">
-                  <p class="unit" id="hours"></p>
-                  <p class="unit" id="minutes"></p>
-                  <p class="unit" id="seconds"></p>
-                  <p class="unit" id="ampm"></p>
-                </div>
-            </li>
-           </ul>
-        </div>
-      </nav>
-
-      <div class="main-display ">
-        <!-- main carousel -->
-        <div id="slideshow" class="carousel carousel-slider moments">
-        </div>
-        <!-- vote and flag buttons -->
-        <div class="slideshow-buttons right-align">
-          <div class="lables">
-            <span id="votes" class="new badge" data-badge-caption=""></span>
-          </div>
-          <!-- flag button -->
-          <a class="btn-floating waves-effect waves-light btn-large black hoverable flag"><i class="material-icons">new_releases</i></a>
-
-          <!-- vote button -->
-          <a class="btn-floating waves-effect waves-light btn-large black hoverable plusOne"><i class="material-icons">plus_one</i></a>
-        </div>
-      </div>
-    </div>
-
-    <div class="col s0 m4 l4 xl4 right-aside hide-on-small-only">
-      <div class="events today col s12">
+    <div class="col s12">
+      <div class="events today col s6">
         <!-- events nav bar -->
         <ul class="collection with-header">
           <li class="collection-header">
@@ -91,7 +49,7 @@
 
       </div>
 
-      <div class="events featured col s12">
+      <div class="events featured col s6">
         <!-- events nav bar -->
         <ul class="collection with-header">
           <li class="collection-header">
@@ -114,10 +72,7 @@
 
   <!-- load Showdown Markdown Parser -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.7.1/showdown.min.js" charset="utf-8"></script>
-
-  <!-- load jQuery Clock for navbar-->
   <script src='/static/vendor/date.js' charset="UTF-8" type="text/javascript"></script>
-  <script src="/static/js/clock.js" charset="utf-8"></script>
 </body>
 
 </html>

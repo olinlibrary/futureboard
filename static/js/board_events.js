@@ -12,12 +12,12 @@ function populateEvents(eventsData) {
     let eventStart = Date.parse(eventsData[i].start).toString("YYMMdd");
     let today = Date.today().toString("YYMMdd");
     // let tomorrow = (1).day().fromNow().toString("MMdd");
-    // let thisWeek = (7).day().fromNow().toString("MMdd");
-
+    // let thisWeek = (7).day().fromNow().toString("MMdd");  
     if(today === eventStart){
       let $newEvent = createEventObject(eventsData[i]);
       $eventsToday.append($newEvent);
     }
+
     if (featured){
       let $newEvent = createFeaturedEventObject(eventsData[i]);
       $featuredEvents.append($newEvent);
@@ -59,3 +59,30 @@ function createFeaturedEventObject(eventData) {
     .append(converter.makeHtml(eventData.description));
   return $html;
 }
+
+/**
+ * When Document is ready,
+ * Defines time interval for carousel auto slides,
+ * Listens on click and touch events for flip, swap buttons
+ * Listens on click and touch events for plusOne, flag buttons
+ * Listens on tab buttons for toggling the events
+ * Time Unit : ms.  Default Settings : 10s, 7s(small slide)
+ */
+$(function(){
+  $.get('https://abeweb.herokuapp.com/events/', populateEvents);
+  //  // Initializes auto scroll for events
+   var scrolltopbottom = setInterval(function(){
+    $('.today .autoscrolling > .collection').animate({ scrollTop: $('.today .autoscrolling > .collection').prop('scrollHeight') }, 12000);
+    setTimeout(function() {
+       $('.autoscrolling > .collection').animate({scrollTop:0}, 8000);
+    },4000);
+  },4000);
+
+  //  // Initializes auto scroll for events
+   var scrolltopbottom = setInterval(function(){
+    $('.featured .autoscrolling > .collection').animate({ scrollTop: $('.featured .autoscrolling > .collection').prop('scrollHeight')  }, 10000);
+    setTimeout(function() {
+       $('.featured .autoscrolling > .collection').animate({scrollTop:0}, 8000);
+    },4000);
+  },1000);
+});
