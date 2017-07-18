@@ -15,20 +15,20 @@
   <script src="//cdn.muicss.com/mui-0.9.16/js/mui.min.js"></script>
 
   <!-- load CSS, overrides MUI -->
-  <link rel="stylesheet" type="text/css" href="/static/css/controller.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/upload.css">
 
   <!-- load js -->
-  <!-- <script src="/static/vendor/socket.io.js" charset="UTF-8" type="text/javascript"></script> -->
   <script src="/static/vendor/jquery.min.js" charset="UTF-8" type="text/javascript"></script>
   <script src="./static/vendor/dropzone.js"></script>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   <script src="/static/js/uploadfile.js" charset="UTF-8" type="text/javascript"></script>
+
 </head>
 
 <body>
 
-  <div class="mui-container">
+  <div class="mui-container main-container">
     <div id="navbar" class="mui-appbar">
       <table width="100%">
         <tr>
@@ -45,7 +45,7 @@
       </div>
     </form>
     <br>
-    <div id='preview' width='100%'></div>
+    <div id='preview'></div>
 
     <input type="button" class="mui-btn mui-btn--accent mui-btn--large" disabled="disabled" id="submit-button" value="Submit">
 

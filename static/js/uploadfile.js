@@ -7,12 +7,11 @@ function uploadFile(file, signedRequest, url){
 
   xhr.onreadystatechange = () => {
     if(xhr.readyState === 4){
-      console.log("Ready 4");
       if(xhr.status === 200){
         if(file.type.match('image')){
-          $('#preview').empty().append($('<img>', { src: url, width: "100%" }));
+          $('#preview').empty().append($('<img>', { src: url }));
         } else if (file.type.match('video')) {
-          $('#preview').empty().append($('<video>', { src: url, autoplay: true, loop: true, width: "100%" }));
+          $('#preview').empty().append($('<video>', { src: url, autoplay: true, loop: true }));
         } else {
           alert('Bad filetype');
         }
@@ -67,14 +66,12 @@ function initUpload(file){
  Function to submit the new bob.
 */
 function submitBob() {
-  console.log("submitting");
   let data = {
     data: { 'Link': document.getElementById('preview').src },
     flavor: 'Moment',
     startDate: Date.now(),
     'tags[]': ['uploadSubmit']
   }
-  console.log(data);
 
   $.post('/api/bobs', data, function(res) {
 			alert('Bob saved!');
@@ -104,11 +101,10 @@ Dropzone.options.dropzoneInput = {
     initUpload(this.files[0]);
   },
   autoProcessQueue: false,
+  resizeWidth: 1000, // Pixels
   maxFilesize: 10, // MB
   maxFiles: 1,
   acceptedFiles: 'video/mp4,image/*'
 
   // iOS defaults to camera when capture is defined: capture: 'camcorder,camera'
 };
-
-  resizeWidth: 1000, // Pixels

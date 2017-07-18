@@ -1,0 +1,74 @@
+/*
+CSS for upload.html
+*/
+
+body {
+  padding: 10;
+  margin: 10;
+}
+
+#submit-button {
+  position: absolute;
+  bottom: 5%;
+}
+
+#preview {
+  margin: auto;
+  height: 50%;
+}
+
+#preview img{
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.main-container {
+  position: absolute;
+  width: 90%;
+  height: 100%;
+  margin: 0 5%;
+}
+
+.form-field {
+  margin-bottom: 25px;
+}
+#navbar > table > tr{
+  vertical-align:middle;
+}
+
+#tag-holder label {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+#navbar {
+  background-color: #E57373;
+  border-radius:5px;
+}
+
+.mui-textfield > input:focus {
+  border-bottom:1px solid #E57373
+}
+.mui-select:focus>select{
+  border-bottom:1px solid #E57373
+}
+.mui-btn {
+  background-color: #E57373;
+  width:50%;
+  margin-left:25%;
+  text-align:center;
+  font-size:200%;
+  border-radius: 10px;
+}
+body,
+.mui-body {
+  background-color: #eee;
+  font-size: 15px;
+}
+
+.mui-container,
+.mui-container-fixed {
+  background-color: rgb(249, 245, 245);
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-radius: 15px;
+}
