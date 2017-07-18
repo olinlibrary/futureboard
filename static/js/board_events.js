@@ -11,8 +11,6 @@ function populateEvents(eventsData) {
     let featured = (($.inArray("featured", eventsData[i].labels)) >= 0);
     let eventStart = Date.parse(eventsData[i].start).toString("YYMMdd");
     let today = Date.today().toString("YYMMdd");
-    // let tomorrow = (1).day().fromNow().toString("MMdd");
-    // let thisWeek = (7).day().fromNow().toString("MMdd");  
     if(today === eventStart){
       let $newEvent = createEventObject(eventsData[i]);
       $eventsToday.append($newEvent);

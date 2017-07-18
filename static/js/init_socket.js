@@ -1,9 +1,4 @@
-/*
-Main Futureboard general JS components :
-*/
-
-// Socket.io configuration
+// Socket.io initialization
 var socket = io();
 socket.emit('connection');
-
 console.log('board.js is running');
