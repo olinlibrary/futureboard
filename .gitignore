@@ -6,7 +6,10 @@ bobs.json
 flavors.json
 tags.json
 
-/fakes3
+# SSL certs
+*.key
+*.pem
+
 
 # Logs
 logs
