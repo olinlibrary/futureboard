@@ -77,9 +77,14 @@ function initUpload(file){
 */
 function submitBob() {
   if(SUBMIT_URL){
+    let flavor = 'Moment';
+    if(SUBMIT_URL.split('.').pop() === 'mp4'){
+      flavor = 'Video';
+    }
+    
     let data = {
       data: { 'Link': SUBMIT_URL },
-      flavor: 'Moment',
+      flavor: flavor,
       startDate: Date.now(),
       'tags[]': ['uploadSubmit']
     }
