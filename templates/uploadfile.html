@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Fb - Add Bob</title>
+
+  <!-- load font -->
+  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css" />
+
+  <!-- load MUI -->
+  <link href="//cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
+  <script src="//cdn.muicss.com/mui-0.9.16/js/mui.min.js"></script>
+
+  <!-- load CSS, overrides MUI -->
+  <link rel="stylesheet" type="text/css" href="/static/css/upload.css">
+
+  <!-- load js -->
+  <script src="/static/vendor/jquery.min.js" charset="UTF-8" type="text/javascript"></script>
+  <script src="./static/vendor/dropzone.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+  <script src="/static/js/uploadfile.js" charset="UTF-8" type="text/javascript"></script>
+
+</head>
+
+<body>
+
+  <div class="mui-container main-container">
+    <div id="navbar" class="mui-appbar">
+      <table width="100%">
+        <tr>
+          <td class="mui--appbar-height" align="middle">
+            <legend class="mui--text-display2">Create a New Bob!</legend>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="mui-divider"></div><br />
+    <form action="/file-upload" class="dropzone" id='dropzone-input'>
+      <div class="fallback">
+        <input name="file" type="file" multiple />
+      </div>
+    </form>
+    <br>
+    <div id='preview'></div>
+
+    <input type="button" class="mui-btn mui-btn--accent mui-btn--large" disabled="disabled" id="submit-button" value="Submit">
+
+
+
+  </div>
+</body>
+
+</html>

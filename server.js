@@ -1,12 +1,23 @@
 // external dependencies
-const express = require('express');
-const path = require('path');
+const express    = require('express');
+const path       = require('path');
 const bodyParser = require('body-parser');
-const app = express();
-const http = require('http').Server(app);
-const io = require('socket.io')(http);
+const app        = express();
+const db         = require('./models/wrapper.js');
+
+// Import ssl certificate and start https server (Required by s3)
+const tls = require("tls");
+const fs = require('fs');
+
+var httpsOptions = {
+  key:  fs.readFileSync('server.key'),
+  cert: fs.readFileSync('cert.pem')
+};
+const https = require('https').Server(httpsOptions, app);
+
+const io = require('socket.io')(https);
 app.set('socketio', io);
-const db = require('./models/wrapper.js');
+
 
 
 /******* CONFIG *******/
@@ -20,8 +31,12 @@ app.use(bodyParser.urlencoded({
 app.use('/static', express.static(path.join(__dirname, '/static')));
 
 // Handle api traffic
-api = require('./routes/api')(io, db);
+const api = require('./routes/api')(io, db);
 app.use('/api', api);
+
+// Handle s3 file uploading
+const s3 = require('./routes/s3api')();
+app.use('/sign-s3', s3);
 
 
 // Main board (on computer screens)
@@ -49,6 +64,10 @@ app.get('/views/events', function(req, res) {
 
 app.get('/new', function(req, res) {
   res.sendFile(__dirname + '/templates/controller.html');
+});
+
+app.get('/upload', function (req, res) {
+  res.sendFile(__dirname + '/templates/uploadfile.html');
 });
 
 app.get('/admin', function(req, res) {
@@ -86,6 +105,6 @@ app.post('/twilio', twilio.POSTtext);
 
 // Start the server
 var port = process.env.PORT || 8080;
-http.listen(port, function() {
+https.listen(port, function() {
 	console.log("FORWARDboard running on port", port);
 });
