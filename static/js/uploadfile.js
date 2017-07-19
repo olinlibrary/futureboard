@@ -51,8 +51,8 @@ function getSignedRequest(file){
         }
         uploadFile(file, response.signedRequest, response.url);
       }
-      else{
-        alert('Could not get signed URL.');
+      else {
+        return alert('Could not get signed URL.');
       }
     }
   };
@@ -67,6 +67,10 @@ function initUpload(file){
   if(file == null){
     return alert('No file selected.');
   }
+
+  $('#preview').empty();
+  document.getElementById('submit-button').disabled = "disabled";
+
   // Resize images here
   getSignedRequest(file);
 }
@@ -82,7 +86,6 @@ function submitBob() {
       startDate: Date.now(),
       'tags[]': ['uploadSubmit']
     }
-    console.log(data);
 
     $.post('/api/bobs', data, function(res) {
   			alert('Bob saved!');
@@ -107,29 +110,29 @@ window.onload = function () {
 */
 Dropzone.options.dropzoneInput = {
   addedfile: function() {
-    $('#preview').empty();
-    document.getElementById('submit-button').disabled = "disabled";
-    // Remove all extra files
-    if(this.files.length >= 2){
-      while(this.files.length >=2) { this.removeFile(this.files[0]); }
+    // Remove old files
+    if(this.files.length > 1){
+      while(this.files.length > 1) { this.removeFile(this.files[0]); }
     }
     initUpload(this.files[0]);
   },
   drop: function() {
     this.element.classList.remove("dz-drag-hover");
-    $('#preview').empty();
-    document.getElementById('submit-button').disabled = "disabled";
-    // Remove all extra files
-    if(this.files.length >= 2){
-      while(this.files.length >=2) { this.removeFile(this.files[0]); }
+    // Remove old files
+    if(this.files.length > 1){
+      while(this.files.length > 1) { this.removeFile(this.files[0]); }
     }
     initUpload(this.files[0]);
   },
+  // Disable processing by dropzone
   autoProcessQueue: false,
-  resizeWidth: 1000, // Pixels
   maxFilesize: 10, // MB
   maxFiles: 1,
   acceptedFiles: 'video/mp4,image/*'
-
-  // iOS defaults to camera when capture is defined: capture: 'camcorder,camera'
+  /*
+  Not using dropzone for resizing:
+  resizeWidth: 1000, // Pixels
+  iOS defaults to camera when capture is defined (Do not use!):
+  capture: 'camcorder,camera'
+  */
 };
