@@ -1,0 +1,129 @@
+/*
+- Currently activated CSS for board.html
+*/
+
+
+/*font declration*/
+@font-face{
+    font-family: "DINOT-Bold";
+    src: url(DINOT-Bold.otf);
+}
+@font-face{
+    font-family: "DINOT-BoldItalic";
+    src: url(DINOT-BoldItalic.otf);
+}
+@font-face{
+    font-family: "DINOT-CondMediIta";
+    src: url(DINOT-CondMediIta.otf);
+}
+@font-face{
+    font-family: "DINOT-Italic";
+    src: url(DINOT-Italic.otf);
+}
+@font-face{
+    font-family: "DINOT-LightItalic";
+    src: url(DINOT-LightItalic.otf);
+}
+@font-face{
+    font-family: "DINOT";
+    src: url(DINOT.otf);
+}
+
+html {
+  font-family: "DINOT-Bold", "DINOT-BoldItalic", "DINOT-CondMediIta", "DINOT-Italic", "DINOT-LightItalic", "DINOT";
+}
+
+body {
+  overflow:hidden;
+  background-color: #FFFFFF;
+  font-family: "DINOT";
+}
+.row .col{
+  padding:0;
+}
+/*events today*/
+.events {
+  overflow-y: hidden;
+  height: 99vh !important;
+}
+.events .collection.with-header .collection-header{
+  transform: skewX(-20deg);
+  background-color:#000000;
+  font-family: "DINOT-Bold";
+  font-size:40px;
+  width:100%;
+  margin-left:2vh;
+}
+.events.featured .collection.with-header .collection-header{
+  background-color:#ED037C;
+  font-family: "DINOT-Bold";
+}
+.events .nav-wrapper a.brand-logo{
+  color:#FFFFFF;
+}
+.events .collection{
+  margin:0px;
+  border:0px;
+
+}
+.row .events.col{
+  padding:0;
+}
+
+.eventItems > .collection{
+  height: 90vh;
+  overflow-y:auto;
+}
+.collection-header{
+  font-size:1rem;
+}
+.collection-item > p{
+  margin-bottom:0px;
+}
+.collection-item > span{
+  font-size:2.5rem;
+  line-height:2.5rem;
+  font-family: "DINOT-Bold";
+}
+.collection-item > p.date{
+  font-size:2.0rem;
+  line-height:2.0rem;
+
+}
+.collection-item > p.location{
+  float:right;
+  font-size:1.9rem;
+  line-height:1.9rem;
+  font-style:italic;
+}
+.collection-item p{
+  font-size:1.4rem;
+  line-height:1.4rem;
+}
+
+.collection-item > *{
+  font-size:1.4rem;
+  line-height:1.4rem;
+}
+/*featured events*/
+.events.featured {
+  overflow-y: hidden;
+  height: 99vh !important;
+}
+.events.featured .eventItems > .collection{
+  height: 90vh;
+  overflow-y:auto;
+}
+
+.events img{
+  height:77vh;
+  margin-left:3vh;
+  margin-right:3vh;
+  float:left;
+}
+
+/*//hide scroll bar*/
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
+}

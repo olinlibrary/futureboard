@@ -5,6 +5,8 @@ package-lock.json
 bobs.json
 flavors.json
 tags.json
+dump/
+
 
 # SSL certs
 *.key
