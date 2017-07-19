@@ -190,3 +190,10 @@ div.image-holder {
   border-bottom-right-radius: 10px;
   -webkit-transform: translate(-30px, -2px);
 }
+
+video{
+    text-align:center;
+    vertical-align:center;
+    width: 100%;
+    height: 93vh; /* Could also use width: 100%; */*/
+}

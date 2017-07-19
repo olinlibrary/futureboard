@@ -51,14 +51,8 @@ function createBoardElement(bob) {
       break;
 
     case 'Video':
-      $html.addClass('video-bobble').attr("id", bob._id)
-        .append('<iframe>', {
-          width: "560",
-          height: "315",
-          src: bob.data.Link,
-          frameborder: "0",
-          allowfullscreen: ""
-        });
+      $html.addClass('video-bobble ').attr("id", bob._id)
+        .append($('<video controls autoplay>').append($('<source>', {src:bob.data.Link})));
       break;
 
     case 'Moment':
@@ -177,7 +171,7 @@ $(function(){
     $.get('/api/bobs', popluateBoard);
     carouselInterval = setInterval(function() {
       $('#slideshow').carousel('next');
-    }, 10000);
+    }, 12000);
 
     // DEFINIETELY NOT THE IDEAL WAY TO DO THIS (TEMPORARY)
     updateVoteLabelInterval= setInterval(function() {
@@ -225,7 +219,7 @@ function resetInterval() {
   // Reinits the timers
   carouselInterval = setInterval(function() {
     $('#slideshow').carousel('next');
-  }, 10000);
+  }, 12000);
 }
 
 /**

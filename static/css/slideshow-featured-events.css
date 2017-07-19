@@ -203,6 +203,13 @@ div.image-holder {
   -webkit-transform: translate(-30px, -2px);
 }
 
+video{
+    text-align:center;
+    vertical-align:center;
+    width: 100%; /* Could also use width: 100%; */*/
+}
+
+
 .row .left-aside.col{
   padding: 0;
 }
