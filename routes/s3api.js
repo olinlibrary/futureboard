@@ -15,6 +15,10 @@ const S3_BUCKET         = "media.futureboard.olin.build";
 const ACCESS_KEY_ID     = process.env.ACCESS_KEY_ID;
 const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY;
 
+if(ACCESS_KEY_ID == null || SECRET_ACCESS_KEY == null){
+  console.log("ERROR: s3 envirnomet variables not set!");
+}
+
 
 module.exports = function () {
   router.route('/')
@@ -27,7 +31,6 @@ module.exports = function () {
    * the anticipated URL of the image.
    */
   function GETSignRequest(req, res) {
-    console.log('GETSignRequest');
     const s3 = new aws.S3({
         accessKeyId: ACCESS_KEY_ID,
         secretAccessKey: SECRET_ACCESS_KEY,
@@ -45,8 +48,6 @@ module.exports = function () {
       ContentType: fileType,
       ACL: 'public-read'
     };
-
-    console.log(s3Params);
 
     s3.getSignedUrl('putObject', s3Params, function (err, data) {
       if(err){
