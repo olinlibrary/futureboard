@@ -40,59 +40,8 @@ app.use('/sign-s3', s3);
 
 
 // Main board (on computer screens)
-app.get('/', function(req, res) {
-  res.sendFile(__dirname + '/templates/board.html');
-});
-
-
-app.get('/views', function(req, res) {
-  res.sendFile(__dirname + '/templates/views.html');
-});
-
-app.get('/views/board', function(req, res) {
-  res.sendFile(__dirname + '/templates/board.html');
-});
-// Stream only View
-app.get('/views/stream', function(req, res) {
-  res.sendFile(__dirname + '/templates/stream.html');
-});
-
-// Events only View
-app.get('/views/events', function(req, res) {
-  res.sendFile(__dirname + '/templates/events.html');
-});
-
-app.get('/new', function(req, res) {
-  res.sendFile(__dirname + '/templates/controller.html');
-});
-
-app.get('/upload', function (req, res) {
-  res.sendFile(__dirname + '/templates/uploadfile.html');
-});
-
-app.get('/admin', function(req, res) {
-  res.sendFile(__dirname + '/templates/admin.html');
-});
-
-app.get('/bobs', api.GETallBobs);
-
-// Show edit page on /bobs/:bobid
-app.route('/bobs/:bobid')
-  .get(function(req, res) {
-    if(req.params.bobid.length === 24){
-      db.Bob.getOneBob({ _id: db.ObjectId(req.params.bobid)}).then(function success(data) {
-        if(data){
-          res.sendFile(path.join(__dirname, '/templates/editbob.html'));
-        } else {
-          res.status(404).send("bob not found");
-        }
-      }, function error(err) {
-        console.log(err);
-      });
-    } else {
-      res.status(404).send("bob id must be 24 characters long");
-    }
-  });
+const browserRoutes = require('./routes/browser')(api, __dirname);
+app.use('/', browserRoutes);
 
 
 // Handle socket logic
