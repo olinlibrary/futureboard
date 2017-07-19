@@ -1,22 +1,23 @@
 // external dependencies
-const express = require('express');
-const path = require('path');
+const express    = require('express');
+const path       = require('path');
 const bodyParser = require('body-parser');
-const app = express();
-// const http = require('http').Server(app);
-const db = require('./models/wrapper.js');
+const app        = express();
+const db         = require('./models/wrapper.js');
 
+// Import ssl certificate and start https server (Required by s3)
 const tls = require("tls");
 const fs = require('fs');
 
-var options = {
-  key: fs.readFileSync('server.key'),
+var httpsOptions = {
+  key:  fs.readFileSync('server.key'),
   cert: fs.readFileSync('cert.pem')
 };
+const https = require('https').Server(httpsOptions, app);
 
-const https = require('https').Server(options, app)
 const io = require('socket.io')(https);
 app.set('socketio', io);
+
 
 
 /******* CONFIG *******/
