@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const app = express();
 // const http = require('http').Server(app);
 const db = require('./models/wrapper.js');
-const aws = require('aws-sdk');
+
 const tls = require("tls");
 const fs = require('fs');
 
@@ -17,66 +17,7 @@ var options = {
 const https = require('https').Server(options, app)
 const io = require('socket.io')(https);
 app.set('socketio', io);
-/*
- NOTE: Currently connects to fake-s3 (https://github.com/jubos/fake-s3/).
- Switch to real production before merge
- To setup fakes3:
-  gem install fakes3
-  mkdir fakes3/
- start with:
-  change ip to your current ip!
-  set envirnoment variables: S3_BUCKET: FUTUREboard, ACCESS_KEY_ID: anything, SECRET_ACCESS_KEY: anything
-  fakes3 -r fakes3/ -p 4567
-*/
 
-const S3_BUCKET         = process.env.S3_BUCKET;
-const ACCESS_KEY_ID     = process.env.ACCESS_KEY_ID;
-const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY;
-
-
-/*
- * Respond to GET requests to /sign-s3.
- * Upon request, return JSON containing the temporarily-signed S3 request and
- * the anticipated URL of the image.
- */
-app.get('/sign-s3', (req, res) => {
-  const s3 = new aws.S3({
-      accessKeyId: ACCESS_KEY_ID,
-      secretAccessKey: SECRET_ACCESS_KEY,
-      signatureVersion: 'v4',
-      region: 'us-east-2',
-      endpoint: new aws.Endpoint('https://s3.us-east-2.amazonaws.com')
-    });
-  const fileName = req.query['file-name'];
-  const fileType = req.query['file-type'];
-  const s3Params = {
-    Bucket: S3_BUCKET,
-    Key: fileName,
-    Expires: 60,
-    ContentType: fileType,
-    ACL: 'public-read'
-  };
-
-  s3.getSignedUrl('putObject', s3Params, (err, data) => {
-    if(err){
-      console.log(err);
-      return res.end();
-    }
-    console.log(data);
-    const returnData = {
-      signedRequest: data,
-      url: 'https://'+ S3_BUCKET + '.s3.us-east-2.amazonaws.com/'+ fileName
-      // url: 'http://10.25.9.138:4567/' + S3_BUCKET + '/' + fileName
-    };
-    res.write(JSON.stringify(returnData));
-    res.end();
-  });
-});
-
-app.post('/sign-s3', function (req, res) {
-  console.log(req);
-  res.send("success");
-});
 
 /******* CONFIG *******/
 // Use body parser for requests
@@ -89,8 +30,12 @@ app.use(bodyParser.urlencoded({
 app.use('/static', express.static(path.join(__dirname, '/static')));
 
 // Handle api traffic
-api = require('./routes/api')(io, db);
+const api = require('./routes/api')(io, db);
 app.use('/api', api);
+
+// Handle s3 file uploading
+const s3 = require('./routes/s3api')();
+app.use('/sign-s3', s3);
 
 
 // Main board
