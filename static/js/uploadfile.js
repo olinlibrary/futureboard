@@ -6,8 +6,6 @@ SUBMIT_URL = null;
 function uploadFile(file, signedRequest, url){
   const xhr = new XMLHttpRequest();
 
-  console.log(url, signedRequest);
-
   xhr.open('PUT', signedRequest);
 
   xhr.onreadystatechange = () => {
@@ -45,7 +43,6 @@ function getSignedRequest(file){
     if(xhr.readyState === 4){
       if(xhr.status === 200){
         const response = JSON.parse(xhr.response);
-        console.log(response);
         if(response.signedRequest === null){
           return alert("Did not get S3 signed request!");
         }
@@ -102,7 +99,7 @@ function submitBob() {
  Bind listeners when the page loads.
 */
 window.onload = function () {
-    document.getElementById('submit-button').onclick = submitBob;
+  $('#submit-button').on("click touchstart", sumbmitBob);
 }
 
 /*
@@ -117,7 +114,7 @@ Dropzone.options.dropzoneInput = {
     initUpload(this.files[0]);
   },
   drop: function() {
-    this.element.classList.remove("dz-drag-hover");
+    $(this).removeClass("dz-drag-hover");
     // Remove old files
     if(this.files.length > 1){
       while(this.files.length > 1) { this.removeFile(this.files[0]); }
