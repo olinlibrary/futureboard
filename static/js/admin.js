@@ -34,10 +34,28 @@ function createBobElement(bob) {
     text: 'delete'
   });
 
+  let $preview = null;
+  if(bob.flavor === 'Moment'){
+    $preview = $('<img>', {
+      src: bob.data.Link,
+      href: bob.data.Link,
+      class: 'preview'
+    });
+  } else if (bob.flavor === 'Video') {
+    $preview = $('<video>', {
+      src: bob.data.Link,
+      autoplay: true,
+      loop: true,
+      href: bob.data.Link,
+      class: 'preview'
+    });
+  }
+
   let bobColumns = [
     '<p>' + bob.flavor + '</p>',
     '<p>' + bob._id + '</p>',
     '<p>' + bob.startDate + '</p>',
+    $preview,
     '<p>' + bob.votes + '</p>',
     '<p>' + bob.flag + '</p>',
     '<p>' + (Date.now() > new Date(bob.startDate) && Date.now() < new Date(bob.endDate)) + '</p>',

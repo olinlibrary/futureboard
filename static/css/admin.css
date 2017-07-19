@@ -23,6 +23,20 @@ body {
   color: white;
 }
 
-tr:hover {
-  background-color: #a5a4a4;
+#bobTable tr {
+  height: 50px;
 }
+
+#bobTable tr:hover {
+  background-color: #a5a4a4;
+  /* Make preview bigger on hover
+  height: 200px;*/
+}
+
+.preview {
+  height: 60px;
+}
+/*
+.preview:hover {
+  max-height: 200px;
+}*/
