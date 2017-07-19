@@ -23,6 +23,15 @@ body {
   color: white;
 }
 
-tr:hover {
+#bobTable tr {
+  height: 50px;
+}
+
+#bobTable tr:not(:first-child):hover * {
   background-color: #a5a4a4;
+  height: 300px;
+}
+
+.preview {
+  height: 60px;
 }

@@ -18,8 +18,7 @@ function popluateBoard(bobs) {
     fullWidth: true
   });
   // Initializes value for vote lable
-  let activeBobID = $("#slideshow").find(".active").attr("id");
-  updateVoteLabel(activeBobID);
+  updateVoteLabel();
 }
 
 /**
@@ -127,6 +126,7 @@ function updateBoardElement(bobData){
   var $textHolder = $bobToUpdate.find(".text-holder");
   $textHolder.find(".author").attr("text", bobData.Title);
   $textHolder.find(".description").attr("text", bobData.Description);
+  updateVoteLabel();
 }
 
 /**
@@ -138,16 +138,14 @@ function deleteElement(bobid){
 }
 
 /**
-  * Updates the label with the votes from bob with bobid
-  * @param {string} bobid - id of the bob of the votes
+  * Updates the label with the votes label for currently active bob
 */
-function updateVoteLabel(bobid){
+function updateVoteLabel(){
   var $labelToUpdate = $("#votes");
-  if(bobid != undefined){
-    var votes =  $.get('/api/bobs/' + bobid + "/votes", function(res){
-      $labelToUpdate.attr("data-badge-caption", "+" + res.votes);
-    });
-  }
+  var activeBobID = $("#slideshow").find(".active").attr("id");
+  var votes =  $.get('/api/bobs/' + activeBobID + "/votes", function(res){
+    $labelToUpdate.attr("data-badge-caption", "+" + res.votes);
+  });
 }
 
 /**
@@ -156,6 +154,7 @@ function updateVoteLabel(bobid){
 */
 function incrementVote(res){
   $("#votes").attr("data-badge-caption", "+" + res.votes);
+  updateVoteLabel();
 }
 
 /**
@@ -173,21 +172,8 @@ $(function(){
     $.get('/api/bobs', popluateBoard);
     carouselInterval = setInterval(function() {
       $('#slideshow').carousel('next');
+      updateVoteLabel();
     }, 12000);
-
-    // DEFINIETELY NOT THE IDEAL WAY TO DO THIS (TEMPORARY)
-    updateVoteLabelInterval= setInterval(function() {
-      var activeBobID = $("#slideshow").find(".active").attr("id");
-      updateVoteLabel(activeBobID);
-    }, 100); // updates votes lable pretty often
-
-    // BETTER WAY, BUT NOT WORKING PROPERLY at this point
-    //  $(".carousel-item, .carousel")
-    //   .on("carouselNext", "carouselPrev", "DOMContentLoaded", function(){
-    //     console.log("change detected")
-    //    var activeBobID = $("#slideshow").find(".active").attr("id");
-    //    updateVoteLabel(activeBobID);
-    //  });
     $(".plusOne").on("click touchstart", function(){
       var activeBobID = $("#slideshow").find(".active").attr("id");
       $.post('/api/bobs/' + activeBobID + "/votes");
@@ -222,6 +208,7 @@ function resetInterval() {
   carouselInterval = setInterval(function() {
     $('#slideshow').carousel('next');
   }, 12000);
+  updateVoteLabel();
 }
 
 /**
