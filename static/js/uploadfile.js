@@ -99,7 +99,7 @@ function submitBob() {
  Bind listeners when the page loads.
 */
 window.onload = function () {
-  $('#submit-button').on("click touchstart", sumbmitBob);
+  $('#submit-button').on("click touchstart", submitBob);
 }
 
 /*
