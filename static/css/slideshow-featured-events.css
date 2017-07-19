@@ -60,19 +60,21 @@ nav .brand-logo{
   display: flex;
   display: -webkit-flex;
   height: inherit;
-  left: calc(70%);
+  right:0.1vh;
   position: absolute;
   top: calc(50% - 30px);
   width: 600px;
 }
 .unit{
   color: #FFFFFF;
-  font-size: 3.5rem;
+  font-size: 3.3rem;
   height: 100%;
   margin: 0 10px;
   text-align: center;
 }
-
+.unit#dateToday{
+  font-size:2.0rem;
+}
 
 /*general slideshow settings*/
 #slideshow {
