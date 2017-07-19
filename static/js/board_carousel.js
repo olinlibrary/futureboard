@@ -52,7 +52,7 @@ function createBoardElement(bob) {
 
     case 'Video':
       $html.addClass('video-bobble ').attr("id", bob._id)
-        .append($('<video controls autoplay>').append($('<source>', {src:bob.data.Link})));
+        .append($('<video controls autoplay loop>').append($('<source>', {src:bob.data.Link})));
       break;
 
     case 'Moment':
@@ -143,9 +143,11 @@ function deleteElement(bobid){
 */
 function updateVoteLabel(bobid){
   var $labelToUpdate = $("#votes");
-  var votes =  $.get('/api/bobs/' + bobid + "/votes", function(res){
-    $labelToUpdate.attr("data-badge-caption", "+" + res.votes);
-  });
+  if(bobid != undefined){
+    var votes =  $.get('/api/bobs/' + bobid + "/votes", function(res){
+      $labelToUpdate.attr("data-badge-caption", "+" + res.votes);
+    });
+  }
 }
 
 /**
