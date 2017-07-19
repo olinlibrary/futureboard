@@ -1,4 +1,4 @@
-var $dOut = $('#date'),
+var $dOut = $('#dateToday'),
     $hOut = $('#hours'),
     $mOut = $('#minutes'),
     $sOut = $('#seconds'),
@@ -8,7 +8,7 @@ var months = [
 ];
 
 var days = [
-  'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'
+  'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'
 ];
 
 function update(){
@@ -43,7 +43,7 @@ function update(){
   $hOut.text(hours +":");
   $mOut.text(minutes +":");
   $sOut.text(seconds);
-  $ampmOut.text(ampm);
+  $ampmOut.text(ampm) ;
 }
 
 update();
