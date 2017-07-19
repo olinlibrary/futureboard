@@ -21,12 +21,6 @@ module.exports = function () {
     .get(GETSignRequest)
     .post(POSTS3Sign);
 
-  router.route('/a')
-    .get(function (res, res) {
-      console.log('A');
-      res.sendFile(__dirname + '/templates/board.html');
-    });
-
   /*
    * Respond to GET requests to /sign-s3.
    * Upon request, return JSON containing the temporarily-signed S3 request and
@@ -59,7 +53,6 @@ module.exports = function () {
         console.log(err);
         return res.end();
       }
-      console.log(data);
       const returnData = {
         signedRequest: data,
         // The location of the future media, to be used for previering and submitting a bob
