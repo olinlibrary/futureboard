@@ -4,6 +4,7 @@
   "description": "FORWARDboard server ===",
   "main": "server.js",
   "dependencies": {
+    "aws-sdk": "^2.87.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "mongoose": "^4.10.6",
