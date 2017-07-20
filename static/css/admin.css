@@ -1,0 +1,37 @@
+/*
+CSS for admin.html
+*/
+body {
+  font-family: "Roboto";
+  background-color: #e0e0e0;
+}
+
+/*custom font sizes*/
+.text--small {font-size: 1rem;}
+.text--medium {font-size: 1.3rem;}
+.text--big {font-size: 2.2rem;}
+
+.bobTable {
+  width: 100%;
+  display: block;
+  overflow-x: auto;
+  border-collapse: collapse;
+}
+
+.bobTable th {
+  background-color: #3d3d3d;
+  color: white;
+}
+
+.bobTable tr {
+  height: 50px;
+}
+
+.bobTable tr:not(:first-child):hover * {
+  background-color: #a5a4a4;
+  height: 300px;
+}
+
+.preview {
+  height: 60px;
+}

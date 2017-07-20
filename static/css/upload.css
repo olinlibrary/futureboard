@@ -1,0 +1,86 @@
+/*
+CSS for upload.html
+*/
+/*font declration*/
+@font-face{
+    font-family: "DINOT-Bold";
+    src: url(DINOT-Bold.otf);
+}
+@font-face{
+    font-family: "DINOT-BoldItalic";
+    src: url(DINOT-BoldItalic.otf);
+}
+@font-face{
+    font-family: "DINOT-CondMediIta";
+    src: url(DINOT-CondMediIta.otf);
+}
+@font-face{
+    font-family: "DINOT-Italic";
+    src: url(DINOT-Italic.otf);
+}
+@font-face{
+    font-family: "DINOT-LightItalic";
+    src: url(DINOT-LightItalic.otf);
+}
+@font-face{
+    font-family: "DINOT";
+    src: url(DINOT.otf);
+}
+
+html {
+  font-family: "DINOT-Bold", "DINOT-BoldItalic", "DINOT-CondMediIta", "DINOT-Italic", "DINOT-LightItalic", "DINOT";
+}
+
+
+body {
+  overflow:hidden;
+  background-color: #FFFFFF;
+  font-family: "DINOT";
+  font-size:1.8em;
+}
+nav {
+  background-color:#000000;
+  font-family: "DINOT-Bold";
+  /*transform: skewX(-20deg);*/
+  margin: 0 50px;
+  margin-top:1vh;
+}
+.nav-wrapper{
+  margin-left:1.4vh;
+}
+nav .brand-logo{
+  font-size:1.7em;
+}
+
+form{
+  margin:1vh;
+  height:77vh;
+  border-style:dashed !important;
+  border-width:0.4vh !important;
+  border-color:#000000 !important;
+}
+.dropzone .dz-message{
+  margin:0.5vh !important;
+}
+#submit-button{
+  height:8vh;
+  background-color: #009BDF;
+  font-size:2em;
+}
+
+#preview {
+  /*margin: auto;*/
+  text-align: center;
+  height: 63vh;
+}
+
+#preview img{
+  /*width: 100%;*/
+  max-width:100%;
+  max-height: 67vh;
+}
+
+#preview video{
+  max-width:100%;
+  max-height: 67vh;
+}

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Forward Board</title>
+</head>
+<body>
+<h2 id="api">API</h2>
+<p><sub>Strikethrough</sub> indicates functionality not implemented yet</p>
+<h3 id="api-1">/api/</h3>
+<table>
+  <thead>
+    <tr class="header">
+      <th align="left">HTTP Method</th>
+      <th align="left">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="odd">
+      <td align="left">GET</td>
+      <td align="left">retrieve this documentation</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="apibobs">/api/bobs</h3>
+<table>
+  <thead>
+    <tr class="header">
+      <th align="left">HTTP Method</th>
+      <th align="left">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="odd">
+      <td align="left">GET</td>
+      <td align="left">retrieve a list of bobs</td>
+    </tr>
+    <tr class="even">
+      <td align="left">POST</td>
+      <td align="left">create a new bob object</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="apibobsactive">/api/bobs/active</h3>
+<table>
+  <thead>
+    <tr class="header">
+      <th align="left">HTTP Method</th>
+      <th align="left">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="odd">
+      <td align="left">GET</td>
+      <td align="left">retrieve a list of active bobs (Date.now() is between date.start and date.end)</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="apibobsbobid">/api/bobs/bobID</h3>
+<table>
+  <thead>
+    <tr class="header">
+      <th align="left">HTTP Method</th>
+      <th align="left">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="odd">
+      <td align="left">GET</td>
+      <td align="left">retrieve bob object with id bobID</td>
+    </tr>
+    <tr class="even">
+      <td align="left">PUT</td>
+      <td align="left">update the bob object</td>
+    </tr>
+    <tr class="odd">
+      <td align="left">DELETE</td>
+      <td align="left">delete the bob object</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="apiflavors">/api/flavors</h3>
+<table>
+  <thead>
+    <tr class="header">
+      <th align="left">HTTP Method</th>
+      <th align="left">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="odd">
+      <td align="left">GET</td>
+      <td align="left">retrieve all flavors</td>
+    </tr>
+    <tr class="even">
+      <td align="left"><sub>POST</sub></td>
+      <td align="left">create a new flavor object</td>
+    </tr>
+  </tbody>
+</table>
+<h3 id="apiflavorsflavorid-flavorname">/api/flavors/[flavorID : flavorName]</h3>
+<table>
+  <thead>
+    <tr class="header">
+      <th align="left">HTTP Method</th>
+      <th align="left">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="odd">
+      <td align="left">GET</td>
+      <td align="left">retrieve a flavor object by name or id</td>
+    </tr>
+    <tr class="even">
+      <td align="left"><sub>PUT</sub></td>
+      <td align="left">update the flavor object</td>
+    </tr>
+  </tbody>
+</table>
+</body>
+</html>

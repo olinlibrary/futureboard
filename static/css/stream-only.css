@@ -1,0 +1,199 @@
+/*
+- Currently activated CSS for board.html
+*/
+
+
+/*font declration*/
+@font-face{
+    font-family: "DINOT-Bold";
+    src: url(DINOT-Bold.otf);
+}
+@font-face{
+    font-family: "DINOT-BoldItalic";
+    src: url(DINOT-BoldItalic.otf);
+}
+@font-face{
+    font-family: "DINOT-CondMediIta";
+    src: url(DINOT-CondMediIta.otf);
+}
+@font-face{
+    font-family: "DINOT-Italic";
+    src: url(DINOT-Italic.otf);
+}
+@font-face{
+    font-family: "DINOT-LightItalic";
+    src: url(DINOT-LightItalic.otf);
+}
+@font-face{
+    font-family: "DINOT";
+    src: url(DINOT.otf);
+}
+
+html {
+  font-family: "DINOT-Bold", "DINOT-BoldItalic", "DINOT-CondMediIta", "DINOT-Italic", "DINOT-LightItalic", "DINOT";
+}
+.row .col{
+  padding:0;
+}
+body {
+  overflow:hidden;
+  background-color: #FFFFFF;
+  font-family: "DINOT";
+}
+
+/*navbar settings*/
+nav {
+  /*box margin*/
+  background-color:#009BDF;
+  font-family: "DINOT-BoldItalic";
+  /*transform: skewX(-20deg);*/
+}
+
+nav .brand-logo{
+  font-size: 50px;
+}
+
+
+/*navbar clock setting*/
+#clock{
+  align-items: center;
+  -webkit-align-items: center;
+  display: flex;
+  display: -webkit-flex;
+  height: inherit;
+  right:0.1vh;
+  position: absolute;
+  top: calc(50% - 30px);
+  width: 600px;
+}
+.unit{
+  color: #FFFFFF;
+  font-size: 3.3rem;
+  height: 100%;
+  margin: 0 10px;
+  text-align: center;
+}
+.unit#dateToday{
+  font-size:2.0rem;
+}
+
+
+/*general slideshow settings*/
+#slideshow {
+  /*materialize carousel has unwanted fixed default height*/
+  float:left;
+  height: 94vh !important;
+}
+.slideshow-buttons {
+  position:relative;
+}
+.lables{
+  float: right;
+  postion:absolute;
+  margin-right:50vh;
+
+}
+span.badge.new {
+  height:64px;
+  line-height:64px;
+  font-size:64px;
+  margin-right:20px;
+  background-color: #F47920;
+}
+
+/*slideshow content(individual carousels items)*/
+.carousel-item {
+  position: absolute !important;
+}
+
+.text-bobble {
+  background: rgba(#a7a9ac, 0.22);
+}
+.quote-bobble {
+  background: rgba(#a7a9ac, 0.22);
+}
+.quote-bobble p.author {
+  color: black;
+  text-align: right;
+  margin-top: 1rem;
+  font-style: italic;
+}
+
+.text-bobble, .quote-bobble {
+  padding: 1rem;
+}
+.quote-bobble p, .text-bobble p {
+  font-size: 4rem !important;
+  /* Dang ol Materialize is quite specific, we will SASS soon! */
+  line-height: 4rem;
+  font-weight: 400;
+  color: rgba(#a7a9ac, 0.22);;
+}
+
+
+div.image-holder {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: rgba(#a7a9ac, 0.22);;
+}
+
+.quote-holder {
+  position: relative;
+  max-width: 800px;
+  font-size: .75em;
+}
+
+.quote-holder p {
+  color: black;
+  text-align: center;
+}
+
+.text-holder {
+  position: relative;
+  padding: 10px 30px;
+  background: #009BDF;
+  border-radius: 25px;
+  margin-bottom: 20px;
+  font-size: .75em;
+  color: black;
+  float: left;
+}
+
+.text-holder p {
+  color: #fff;
+}
+
+.text-holder:before {
+  content: "";
+  position: absolute;
+  z-index: 2;
+  bottom: -2px;
+  left: -7px;
+  height: 20px;
+  border-right: 20px solid #009BDF;
+  border-bottom-right-radius: 16px 14px;
+  -webkit-transform: translate(0, -2px);
+}
+
+.text-holder:after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  bottom: -2px;
+  left: 4px;
+  width: 26px;
+  height: 20px;
+  background: rgba(#a7a9ac, 0.22);
+  border-bottom-right-radius: 10px;
+  -webkit-transform: translate(-30px, -2px);
+}
+
+video{
+    text-align:center;
+    vertical-align:center;
+    width: 100%;
+    height: 93vh; /* Could also use width: 100%; */*/
+}

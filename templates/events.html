@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <!-- refresh every minute -->
+  <meta http-equiv="refresh" content="60">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+  <title>FutureBoard</title>
+
+  <!-- load vendor js -->
+  <script src='/static/vendor/socket.io.js' charset="UTF-8" type="text/javascript"></script>
+  <script src='/static/vendor/jquery.min.js' charset="UTF-8" type="text/javascript"></script>
+
+  <!-- load Materialize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+  <!-- load Materialize js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+  <!-- load Materialize icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="/static/css/events-only.css">
+
+  <!-- load board components-->
+  <script src='/static/js/board_events.js' charset="UTF-8" type="text/javascript"></script>
+
+  <!-- load board js -->
+  <script src='/static/js/init_socket.js' charset="UTF-8" type="text/javascript"></script>
+
+</head>
+
+<body>
+  <div class="row">
+    <div class="col s12">
+      <div class="events today col s6">
+        <!-- events nav bar -->
+        <ul class="collection with-header">
+          <li class="collection-header">
+            <div class="nav-wrapper">
+              <a href="#!" class="brand-logo">EVENTS TODAY</a>
+            </div>
+          </li>
+        </ul>
+
+        <!-- events today -->
+        <div class="eventItems autoscrolling">
+          <ul id="eventsToday" class="collection with-header">
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="events featured col s6">
+        <!-- events nav bar -->
+        <ul class="collection with-header">
+          <li class="collection-header">
+            <div class="nav-wrapper">
+              <a href="#!" class="brand-logo">FEATURED EVENTS</a>
+
+            </div>
+          </li>
+        </ul>
+
+        <!-- featured events -->
+        <div class="eventItems autoscrolling">
+          <ul id="featuredEvents" class="collection with-header">
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- load Showdown Markdown Parser -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.7.1/showdown.min.js" charset="utf-8"></script>
+  <script src='/static/vendor/date.js' charset="UTF-8" type="text/javascript"></script>
+</body>
+
+</html>
