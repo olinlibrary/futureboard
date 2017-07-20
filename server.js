@@ -12,7 +12,7 @@ if(process.env.PORT) {
   const http = require('http').Server(app);
   SERVER = http;
   http.listen(process.env.PORT, function() {
-  	console.log("FORWARDboard running over https on port", process.env.PORT);
+  	console.log("FORWARDboard running over http on port", process.env.PORT);
   });
 } else {
   const httpredirect = require('./routes/httpredirect');
