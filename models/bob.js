@@ -38,11 +38,12 @@ function getOneBob(filter) {
   return BobModel.findOne(filter).and({flag: [0, 2]});
 }
 
-function getActiveBobs(filter) {
+function getActiveBobs(filter, maxBobs = 20) {
+  // Get first $maxBobs bobs that aren't flagged. Can flesh out with fancier algorithms in the future
   let query = BobModel.find(filter).lean();
   query.and({flag: [0, 2]});  // If not flagged
   query.sort('-startDate');   // Sort newest to oldest
-  query.limit(20);            // First n bobs
+  query.limit(maxBobs);       // First n bobs
   return query;
 }
 
