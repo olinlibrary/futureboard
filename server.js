@@ -1,9 +1,10 @@
 // external dependencies
 const express    = require('express');
+const app        = express();
 const path       = require('path');
 const bodyParser = require('body-parser');
-const app        = express();
 const db         = require('./models/wrapper.js');
+const httpredirect = require('./routes/httpredirect');
 
 // Import ssl certificate and start https server (Required by s3)
 const tls = require("tls");
@@ -53,7 +54,12 @@ app.post('/twilio', twilio.POSTtext);
 
 
 // Start the server
-var port = process.env.PORT || 8080;
-https.listen(port, function() {
-	console.log("FORWARDboard running on port", port);
+const HTTPport = process.env.PORT || 80;
+const HTTPSport = 443
+https.listen(HTTPSport, function() {
+	console.log("FORWARDboard running over https on port", HTTPSport);
+});
+
+httpredirect.listen(HTTPport, function() {
+  console.log("httpredirect running on port", HTTPport);
 });
