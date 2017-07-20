@@ -75,7 +75,7 @@ Set environment variables for AWS:
 `ACCESS_KEY_ID
 SECRET_ACCESS_KEY`
 
-Once you've setup your own version of the app, run `sudo nodejs server.js` to get it running.
+Once you've setup your own version of the app, run `sudo -E nodejs server.js` to get it running.
 
 
 ## Directory Structure
