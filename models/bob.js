@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const bobSchema = mongoose.Schema({
   data:      {},
   startDate: { type: Date, default: Date.now() },
-  endDate:   Date,
+  endDate:   { type: Date, default: Date.now() + 604800 }, // One week from now
   flavor:    String,
   tags:      [],
   votes:     { type: Number, default: 1 },
@@ -31,17 +31,23 @@ function saveBob(bobData) {
 }
 
 function getBobs(filter) {
-  return BobModel.find(filter);
+  return BobModel.find(filter).and({flag: [0, 2]}).sort('-startDate').lean();
 }
 
 function getOneBob(filter) {
-  return BobModel.findOne(filter);
+  return BobModel.findOne(filter).and({flag: [0, 2]});
 }
 
 function getActiveBobs(filter) {
-  let query = BobModel.find(filter);
-  query.and({startDate: { $lte: Date.now() }, endDate: { $gte: Date.now() }});
+  let query = BobModel.find(filter).lean();
+  query.and({flag: [0, 2]});  // If not flagged
+  query.sort('-startDate');   // Sort newest to oldest
+  query.limit(20);            // First n bobs
   return query;
+}
+
+function getFlaggedBobs(filter) {
+  return BobModel.find(filter).and({ flag: 1 }).sort('-startDate').lean();
 }
 
 function updateBob(bobData) {
@@ -70,25 +76,26 @@ function upvoteBob(bobId) {
     {
       $inc: { votes: 1}  // Increment votes by 1
     }
-  );
+  ).and({flag: [0, 2]}).lean();
 }
 
 function flagBob(bobId) {
-  return BobModel.findOneAndUpdate({ _id: bobId }, { flag: 1 });
+  return BobModel.findOneAndUpdate({ _id: bobId }, { flag: 1 }).and({flag: [0, 2]}).lean();
 }
 
 
 
 let Bob = {};
 
-Bob.model         = BobModel;
-Bob.saveBob       = saveBob;
-Bob.getBobs       = getBobs;
-Bob.getOneBob     = getOneBob;
-Bob.getActiveBobs = getActiveBobs;
-Bob.updateBob     = updateBob;
-Bob.deleteBob     = deleteBob;
-Bob.upvoteBob     = upvoteBob;
-Bob.flagBob       = flagBob;
+Bob.model          = BobModel;
+Bob.saveBob        = saveBob;
+Bob.getBobs        = getBobs;
+Bob.getOneBob      = getOneBob;
+Bob.getActiveBobs  = getActiveBobs;
+Bob.getFlaggedBobs = getFlaggedBobs;
+Bob.updateBob      = updateBob;
+Bob.deleteBob      = deleteBob;
+Bob.upvoteBob      = upvoteBob;
+Bob.flagBob        = flagBob;
 
-module.exports    = Bob;
+module.exports     = Bob;

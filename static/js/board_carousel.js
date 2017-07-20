@@ -169,7 +169,7 @@ function incrementVote(res){
 var carouselInterval = null;
 
 $(function(){
-    $.get('/api/bobs', popluateBoard);
+    $.get('/api/bobs/active', popluateBoard);
     carouselInterval = setInterval(function() {
       $('#slideshow').carousel('next');
       updateVoteLabel();
