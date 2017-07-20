@@ -84,6 +84,9 @@ function createBoardElement(bob) {
 */
 function addBoardElement(bob) {
   carouselSelector = ".moments"; //jQuery selector for target carousel
+  if($("#slideshow > div").length > 20) {
+    $("#slideshow > div:last-child").remove();   // deletes the oldest bob
+  }
   appendToCarousel(bob, carouselSelector);
 }
 
