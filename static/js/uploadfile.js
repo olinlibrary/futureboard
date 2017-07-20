@@ -64,9 +64,9 @@ function initUpload(file){
   if(file == null){
     return alert('No file selected.');
   }
-
+  $("form").append($('<div/>').attr("id", "preview"));
   $('#preview').empty();
-  document.getElementById('submit-button').disabled = "disabled";
+  $('#submit-button').attr("disabled", "disabled");
 
   // Resize images here
   getSignedRequest(file);
@@ -81,7 +81,7 @@ function submitBob() {
     if(SUBMIT_URL.split('.').pop() === 'mp4'){
       flavor = 'Video';
     }
-    
+
     let data = {
       data: { 'Link': SUBMIT_URL },
       flavor: flavor,
@@ -130,7 +130,9 @@ Dropzone.options.dropzoneInput = {
   autoProcessQueue: false,
   maxFilesize: 10, // MB
   maxFiles: 1,
-  acceptedFiles: 'video/mp4,image/*'
+  acceptedFiles: 'video/mp4,image/*',
+  dictDefaultMessage : "Drop files here, <br>Touch to Upload",
+  dictFallbackMessage : "Your browser does not support drag'n'drop file uploads."
   /*
   Not using dropzone for resizing:
   resizeWidth: 1000, // Pixels

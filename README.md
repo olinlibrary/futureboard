@@ -77,6 +77,7 @@ SECRET_ACCESS_KEY`
 
 Once you've setup your own version of the app, run `sudo nodejs server.js` to get it running.
 
+
 ## Directory Structure
 ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Backend`
 ![#c5f015](https://placehold.it/15/c5f015/000000?text=+) `Frontend`
