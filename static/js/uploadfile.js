@@ -78,7 +78,7 @@ function initUpload(file){
 function submitBob() {
   if(SUBMIT_URL){
     let flavor = 'Moment';
-    if(SUBMIT_URL.split('.').pop() === 'mp4'){
+    if(['mp4','mov','avi'].indexOf(SUBMIT_URL.split('.').pop()) > -1){
       flavor = 'Video';
     }
 
@@ -87,15 +87,15 @@ function submitBob() {
       flavor: flavor,
       startDate: Date.now(),
       'tags[]': ['uploadSubmit']
-    }
+    };
 
     $.post('/api/bobs', data, function(res) {
-  			alert('Bob saved!');
+        alert('Bob saved!');
   			// Redirect to FUTUREboard
   			window.location = '/';
   		});
     } else {
-      alert("No file selected!")
+      alert("No file selected!");
     }
 
 }
