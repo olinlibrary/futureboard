@@ -71,7 +71,11 @@ After all of that, go ahead and open a new pull request onto the upstream versio
 First start the mongodb server:
 `sudo service mongod start` or `mongod` (To restart, `sudo service mongod restart`)
 
-Once you've setup your own version of the app, run `npm start` to get it running.
+Set environment variables for AWS:
+`ACCESS_KEY_ID
+SECRET_ACCESS_KEY`
+
+Once you've setup your own version of the app, run `sudo nodejs server.js` to get it running.
 
 ## Directory Structure
 ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Backend`
