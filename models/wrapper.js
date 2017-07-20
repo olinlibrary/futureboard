@@ -48,6 +48,6 @@ function connectToDB(url) {
   db.on('error', console.error.bind(console, 'mongoose connection error:'));
 
   db.once('open', function(){
-    console.log("Connected to mongodb");
+    console.log("Connected to mongodb (Note: deprication warning above is a bug)");
   });
 }
