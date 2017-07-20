@@ -5,51 +5,48 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Fb - Add Bob</title>
+  <title>FutureBoard - Upload</title>
 
-  <!-- load font -->
-  <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet" type="text/css" />
+  <!-- load Materialize CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+  <!-- load Materialize js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+  <!-- load Materialize icons -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-  <!-- load MUI -->
-  <link href="//cdn.muicss.com/mui-0.9.16/css/mui.min.css" rel="stylesheet" type="text/css" />
-  <script src="//cdn.muicss.com/mui-0.9.16/js/mui.min.js"></script>
-
-  <!-- load CSS, overrides MUI -->
+  <!-- load CSS -->
   <link rel="stylesheet" type="text/css" href="/static/css/upload.css">
-
-  <!-- load js -->
+    <link rel="stylesheet" type="text/css" href="/static/css/dropzone.css">
+  <!-- load vendor js -->
   <script src="/static/vendor/jquery.min.js" charset="UTF-8" type="text/javascript"></script>
   <script src="./static/vendor/dropzone.js"></script>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+
+  <!-- load js -->
   <script src="/static/js/uploadfile.js" charset="UTF-8" type="text/javascript"></script>
 
 </head>
 
 <body>
 
-  <div class="mui-container main-container">
-    <div id="navbar" class="mui-appbar">
-      <table width="100%">
-        <tr>
-          <td class="mui--appbar-height" align="middle">
-            <legend class="mui--text-display2">Create a New Bob!</legend>
-          </td>
-        </tr>
-      </table>
+  <div class="container">
+    <div class="row">
+      <nav class="col s12">
+        <div class="nav-wrapper">
+          <a class="brand-logo"><i class="material-icons hide-on-small-only">fast_forward</i>Upload</a>
+        </div>
+      </nav>
+        <form action="/file-upload" class="dropzone hoverable col s12" id='dropzone-input'>
+          <div class="fallback">
+            <input name="file" type="file" multiple />
+          </div>
+        </form>
+
+      <button type="submit" name="action" class="col s12 btn-large btn waves-effect waves-light submit" disabled="disabled" id="submit-button">
+        <i class="material-icons">send</i> SUBMIT
+      </button>
     </div>
-    <div class="mui-divider"></div><br />
-    <form action="/file-upload" class="dropzone" id='dropzone-input'>
-      <div class="fallback">
-        <input name="file" type="file" multiple />
-      </div>
-    </form>
-    <br>
-    <div id='preview'></div>
-
-    <input type="button" class="mui-btn mui-btn--accent mui-btn--large" disabled="disabled" id="submit-button" value="Submit">
-
-
 
   </div>
 </body>

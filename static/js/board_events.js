@@ -67,7 +67,7 @@ function createFeaturedEventObject(eventData) {
  * Time Unit : ms.  Default Settings : 10s, 7s(small slide)
  */
 $(function(){
-  $.get('https://abeweb.herokuapp.com/events/', populateEvents);
+  $.get('https://abe-dev.herokuapp.com/events/', populateEvents);
   //  // Initializes auto scroll for events
    var scrolltopbottom = setInterval(function(){
     $('.today .autoscrolling > .collection').animate({ scrollTop: $('.today .autoscrolling > .collection').prop('scrollHeight') }, 12000);
