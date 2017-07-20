@@ -66,7 +66,7 @@ function initUpload(file){
   }
   $("form").append($('<div/>').attr("id", "preview"));
   $('#preview').empty();
-  $('#submit-button').attr("disabled", "disabled").addClass("pulse");
+  $('#submit-button').attr("disabled", "disabled");
 
   // Resize images here
   getSignedRequest(file);
