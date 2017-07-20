@@ -35,9 +35,8 @@ module.exports = function () {
         accessKeyId: ACCESS_KEY_ID,
         secretAccessKey: SECRET_ACCESS_KEY,
         signatureVersion: 'v4',
-        region: 'us-east-2',
         // Endpoint can be switched to https://media.futureboard.olin.build/' after we get an ssl cert for media.FUTUREboard.olin.build
-        endpoint: new aws.Endpoint('https://s3.us-east-2.amazonaws.com')
+        endpoint: new aws.Endpoint('https://s3.amazonaws.com')
       });
     const fileName = req.query['file-name'];
     const fileType = req.query['file-type'];
@@ -62,10 +61,10 @@ module.exports = function () {
       res.write(JSON.stringify(returnData));
       res.end();
     });
-  };
+  }
 
   function POSTS3Sign(req, res) {
     res.send("success");
-  };
+  }
   return router;
 };
