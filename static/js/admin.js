@@ -5,7 +5,7 @@
 function popluateTable(bobs) {
   let $bobTable = $("#bobTable");
   $bobTable.empty(); // Clear the table before adding to it
-  let tableColumns = ["Flavor", "ID", "StartDate", "Votes", "Flag", "Active", "Edit", "Delete"];
+  let tableColumns = ["Flavor", "ID", "StartDate", "Preview", "Votes", "Flag", "Active", "Edit", "Delete"];
   let $html = $('<tr>', {});
   for (let i in tableColumns){
     $html.append($('<th>', { text: tableColumns[i] }));
@@ -13,6 +13,20 @@ function popluateTable(bobs) {
   $bobTable.append($html);
   for (var i = 0; i < bobs.length; i++) {
     $bobTable.append(createBobElement(bobs[i]));
+  }
+}
+
+function popluateFlaggedTable(flaggedBobs) {
+  let $flaggedBobTable = $("#flaggedBobTable");
+  $flaggedBobTable.empty(); // Clear the table before adding to it
+  let tableColumns = ["Flavor", "ID", "StartDate", "Preview", "Votes", "Flag", "Active", "Edit", "Delete"];
+  let $html = $('<tr>', {});
+  for (let i in tableColumns){
+    $html.append($('<th>', { text: tableColumns[i] }));
+  }
+  $flaggedBobTable.append($html);
+  for (var i = 0; i < flaggedBobs.length; i++) {
+    $flaggedBobTable.append(createBobElement(flaggedBobs[i]));
   }
 }
 
@@ -104,6 +118,11 @@ function deleteBob(bobid) {
 
 
 $.get('/api/bobs', popluateTable);
+$.ajax({
+    url: '/api/bobs/flagged',
+    headers: {'auth': 'hunter2'},
+    success: popluateFlaggedTable
+  });
 
 var socket = io();
 socket.emit('connection');

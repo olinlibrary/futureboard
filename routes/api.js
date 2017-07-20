@@ -22,6 +22,9 @@ module.exports = function(io, db) {
   router.route('/bobs/active')
     .get(GETallActiveBobs);
 
+  router.route('/bobs/flagged')
+    .get(ensureAuthenticated, GETallFlaggedBobs);
+
   router.route('/bobs/:bobid')
     .get(GETbob)
     .put(PUTbob)
@@ -78,6 +81,12 @@ module.exports = function(io, db) {
 
   function GETallBobs(req, res) {
     db.Bob.getBobs().then(function(bobs) {
+      res.send(bobs);
+    });
+  }
+
+  function GETallFlaggedBobs(req, res) {
+    db.Bob.getFlaggedBobs().then(function(bobs) {
       res.send(bobs);
     });
   }
