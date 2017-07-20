@@ -78,7 +78,7 @@ function initUpload(file){
 function submitBob() {
   if(SUBMIT_URL){
     let flavor = 'Moment';
-    if(['mp4','mov','avi'].indexOf(SUBMIT_URL.split('.').pop()) > -1){
+    if(['mp4','mov','avi'].indexOf(SUBMIT_URL.split('.').pop().toLowerCase()) > -1){
       flavor = 'Video';
     }
 
@@ -104,7 +104,7 @@ function submitBob() {
  Bind listeners when the page loads.
 */
 window.onload = function () {
-  $('#submit-button').on("click touchstart", submitBob);
+  $('#submit-button').on("click", submitBob);
 }
 
 /*
