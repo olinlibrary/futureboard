@@ -1,80 +1,85 @@
 /*
 CSS for upload.html
 */
-
-body {
-  padding: 10;
-  margin: 10;
+/*font declration*/
+@font-face{
+    font-family: "DINOT-Bold";
+    src: url(DINOT-Bold.otf);
+}
+@font-face{
+    font-family: "DINOT-BoldItalic";
+    src: url(DINOT-BoldItalic.otf);
+}
+@font-face{
+    font-family: "DINOT-CondMediIta";
+    src: url(DINOT-CondMediIta.otf);
+}
+@font-face{
+    font-family: "DINOT-Italic";
+    src: url(DINOT-Italic.otf);
+}
+@font-face{
+    font-family: "DINOT-LightItalic";
+    src: url(DINOT-LightItalic.otf);
+}
+@font-face{
+    font-family: "DINOT";
+    src: url(DINOT.otf);
 }
 
-#submit-button {
-  position: absolute;
-  bottom: 5%;
+html {
+  font-family: "DINOT-Bold", "DINOT-BoldItalic", "DINOT-CondMediIta", "DINOT-Italic", "DINOT-LightItalic", "DINOT";
+}
+
+
+body {
+  overflow:hidden;
+  background-color: #FFFFFF;
+  font-family: "DINOT";
+  font-size:1.8em;
+}
+nav {
+  background-color:#000000;
+  font-family: "DINOT-Bold";
+  /*transform: skewX(-20deg);*/
+  margin: 0 50px;
+  margin-top:1vh;
+}
+.nav-wrapper{
+  margin-left:1.4vh;
+}
+nav .brand-logo{
+  font-size:1.7em;
+}
+
+form{
+  margin:1vh;
+  height:77vh;
+  border-style:dashed !important;
+  border-width:0.4vh !important;
+  border-color:#000000 !important;
+}
+.dropzone .dz-message{
+  margin:0.5vh !important;
+}
+#submit-button{
+  height:8vh;
+  background-color: #009BDF;
+  font-size:2em;
 }
 
 #preview {
-  margin: auto;
+  /*margin: auto;*/
   text-align: center;
-  height: 50%;
+  height: 65vh;
 }
 
 #preview img{
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  max-height: 70vh;
 }
 
 #preview video{
-  max-width: 100%;
-  max-height: 100%;
-}
-
-.main-container {
-  position: absolute;
-  min-width: 90%;
-  height: 100%;
-  margin-left: 5%;
-}
-
-.form-field {
-  margin-bottom: 25px;
-}
-#navbar > table > tr{
-  vertical-align:middle;
-}
-
-#tag-holder label {
-  display: inline-block;
-  margin-bottom: 10px;
-}
-#navbar {
-  background-color: #E57373;
-  border-radius:5px;
-}
-
-.mui-textfield > input:focus {
-  border-bottom:1px solid #E57373
-}
-.mui-select:focus>select{
-  border-bottom:1px solid #E57373
-}
-.mui-btn {
-  background-color: #E57373;
-  width:50%;
-  margin-left:25%;
-  text-align:center;
-  font-size:200%;
-  border-radius: 10px;
-}
-body,
-.mui-body {
-  background-color: #eee;
-  font-size: 15px;
-}
-
-.mui-container,
-.mui-container-fixed {
-  background-color: rgb(249, 245, 245);
-  padding-top: 15px;
-  padding-bottom: 15px;
-  border-radius: 15px;
+  width: 100%;
+  max-height: 70vh;
 }
