@@ -4,19 +4,38 @@ const app        = express();
 const path       = require('path');
 const bodyParser = require('body-parser');
 const db         = require('./models/wrapper.js');
-const httpredirect = require('./routes/httpredirect');
 
-// Import ssl certificate and start https server (Required by s3)
-const tls = require("tls");
-const fs = require('fs');
+// Start the server
+let SERVER;
+// If running in Heroku
+if(process.env.PORT) {
+  const http = require('http').Server(app);
+  SERVER = http;
+  http.listen(process.env.PORT, function() {
+  	console.log("FORWARDboard running over https on port", HTTPSport);
+  });
+} else {
+  const httpredirect = require('./routes/httpredirect');
+  const tls = require("tls");
+  const fs = require('fs');
 
-var httpsOptions = {
-  key:  fs.readFileSync('server.key'),
-  cert: fs.readFileSync('cert.pem')
-};
-const https = require('https').Server(httpsOptions, app);
+  var httpsOptions = {
+    key:  fs.readFileSync('server.key'),
+    cert: fs.readFileSync('cert.pem')
+  };
+  const https = require('https').Server(httpsOptions, app);
+  SERVER = https;
 
-const io = require('socket.io')(https);
+  https.listen(443, function() {
+  	console.log("FORWARDboard running over https on port", 443);
+  });
+
+  httpredirect.listen(80, function() {
+    console.log("httpredirect running on port", 80);
+  });
+}
+
+const io = require('socket.io')(SERVER);
 app.set('socketio', io);
 
 
@@ -51,15 +70,3 @@ require('./routes/sockets')(io, db);
 // Twilio input
 const twilio = require('./routes/twilio')(io, db);
 app.post('/twilio', twilio.POSTtext);
-
-
-// Start the server
-const HTTPport = process.env.PORT || 80;
-const HTTPSport = 443
-https.listen(HTTPSport, function() {
-	console.log("FORWARDboard running over https on port", HTTPSport);
-});
-
-httpredirect.listen(HTTPport, function() {
-  console.log("httpredirect running on port", HTTPport);
-});
