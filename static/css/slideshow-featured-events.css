@@ -290,7 +290,9 @@ video{
   margin-left:3vh;
   margin-right:3vh;
   float:left;
+  display:inline-block;
 }
+.events span.clear { clear: left; display: block; }
 
 /*//hide scroll bar*/
 ::-webkit-scrollbar {
