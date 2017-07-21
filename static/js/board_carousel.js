@@ -138,6 +138,14 @@ function updateBoardElement(bobData){
 */
 function deleteElement(bobid){
   $("#" + bobid).remove();
+  if ($('#slideshow').hasClass('initialized')) {
+    $('#slideshow').removeClass('initialized');
+  }
+  //reinit the carousel
+  $('#slideshow').carousel({
+    fullWidth: true
+  });
+  carouselControl("right");
 }
 
 /**
