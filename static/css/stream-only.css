@@ -85,22 +85,36 @@ nav .brand-logo{
   height: 94vh !important;
 }
 .slideshow-buttons {
+  float:right;
   position:relative;
+  top : -70px;
+  right: 20px;
+}
+.main-button{
+  opacity:0.5;
+}
+.main-button:hover{
+  opacity:1.0;
+}
+.slideshow-buttons > a {
+  opacity:0.5;
+}
+.slideshow-buttons > a:hover {
+  opacity:1;
 }
 .lables{
   float: right;
-  postion:absolute;
-  margin-right:50vh;
-
 }
 span.badge.new {
-  height:64px;
-  line-height:64px;
-  font-size:64px;
-  margin-right:20px;
+  height:35px;
+  line-height:35px;
+  font-size:1.3rem;
+  position:absolute;
+  top: -40px;
+  right:5px;
   background-color: #F47920;
 }
-
+gi
 /*slideshow content(individual carousels items)*/
 .carousel-item {
   position: absolute !important;
@@ -190,6 +204,7 @@ div.image-holder {
   border-bottom-right-radius: 10px;
   -webkit-transform: translate(-30px, -2px);
 }
+
 video {
     text-align:center;
     width:100%;
