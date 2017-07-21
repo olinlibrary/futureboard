@@ -203,10 +203,11 @@ div.image-holder {
   -webkit-transform: translate(-30px, -2px);
 }
 
-video{
+
+video {
     text-align:center;
-    vertical-align:center;
-    width: 100%; /* Could also use width: 100%; */*/
+    max-width:100%;
+    height: 100%;
 }
 
 
@@ -290,7 +291,9 @@ video{
   margin-left:3vh;
   margin-right:3vh;
   float:left;
+  display:inline-block;
 }
+.events span.clear { clear: left; display: block; }
 
 /*//hide scroll bar*/
 ::-webkit-scrollbar {
