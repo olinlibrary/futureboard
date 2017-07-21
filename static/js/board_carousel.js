@@ -19,7 +19,7 @@ function popluateBoard(bobs) {
   });
   // Initializes value for vote lable
   updateVoteLabel();
-  loadVideo();
+  loadVideo("movingToNext");
 }
 
 /**
@@ -148,7 +148,6 @@ function deleteElement(bobid){
   $('#slideshow').carousel({
     fullWidth: true
   });
-
   // force move to next slide
   carouselControl("right");
 }
@@ -188,7 +187,7 @@ $(function(){
     $.get('/api/bobs/active', popluateBoard);
     carouselInterval = setInterval(function() {
       $('#slideshow').carousel('next');
-      $(document).trigger("activeItemChanged");
+      $(document).trigger("movingToNext");
     }, 12000);
 
 
@@ -200,22 +199,40 @@ $(function(){
       var activeBobID = $("#slideshow").find(".active").attr("id");
       $.post('/api/bobs/' + activeBobID + "/flags");
     });
-    $(document).on("activeItemChanged", function(){
+    $(document).on("movingToNext", function(){
       updateVoteLabel();
-      loadVideo();
+      loadVideo("movingToNext");
+    })
+    $(document).on("movingToPrev", function(){
+      updateVoteLabel();
+      loadVideo("movingToPrev");
     })
 });
 
-function loadVideo(){
-  if ($(".active").hasClass("video-bobble")){
-    $(".active").find("video")[0].play();
+function loadVideo(trigger){
+  if(trigger === "movingToNext"){
+    if ($(".active").hasClass("video-bobble")){
+      $(".active").find("video")[0].play();
+    }
+    if ($(".active").next().hasClass("video-bobble")){
+      $(".active").next().find("video")[0].load();
+      $(".active").next().find("video")[0].play();
+    }
+    if ($(".active").prev().hasClass("video-bobble")){
+      $(".active").prev().find("video")[0].pause();
+    }
   }
-  if ($(".active").next().hasClass("video-bobble")){
-    $(".active").next().find("video")[0].load();
-    $(".active").next().find("video")[0].play();
-  }
-  if ($(".active").prev().hasClass("video-bobble")){
-    $(".active").prev().find("video")[0].pause();
+  else if(trigger === "movingToPrev"){
+    if ($(".active").hasClass("video-bobble")){
+      $(".active").find("video")[0].play();
+    }
+    if ($(".active").prev().hasClass("video-bobble")){
+      $(".active").prev().find("video")[0].load();
+      $(".active").prev().find("video")[0].play();
+    }
+    if ($(".active").prev().hasClass("video-bobble")){
+      $(".active").next().find("video")[0].pause();
+    }
   }
 }
 /**
@@ -225,10 +242,10 @@ function loadVideo(){
 function carouselControl(direction){
   if (direction == "left") {
     $('#slideshow').carousel('prev', 1); // Move next n times.
-    $(document).trigger("activeItemChanged");
+    $(document).trigger("movingToPrev");
   } else if (direction == "right") {
     $('#slideshow').carousel('next', 1); // Move next n times.
-    $(document).trigger("activeItemChanged");
+    $(document).trigger("movingToNext");
   }
 }
 
@@ -242,7 +259,7 @@ function resetInterval() {
   // Reinits the timers
   carouselInterval = setInterval(function() {
     $('#slideshow').carousel('next');
-    $(document).trigger("activeItemChanged");
+    $(document).trigger("movingToNext");
   }, 12000);
 }
 
