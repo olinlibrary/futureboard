@@ -51,7 +51,7 @@ function createBoardElement(bob) {
 
     case 'Video':
       $html.addClass('video-bobble ').attr("id", bob._id)
-        .append($('<video controls autoplay loop>').append($('<source>', {src:bob.data.Link})));
+        .append($('<video controls autoplay loop muted>').append($('<source>', {src:bob.data.Link})));
       break;
 
     case 'Moment':
@@ -141,10 +141,13 @@ function deleteElement(bobid){
   if ($('#slideshow').hasClass('initialized')) {
     $('#slideshow').removeClass('initialized');
   }
-  //reinit the carousel
+
+  // reinit the carousel
   $('#slideshow').carousel({
     fullWidth: true
   });
+
+  // force move to next slide
   carouselControl("right");
 }
 
