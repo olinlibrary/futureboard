@@ -121,6 +121,7 @@ body {
   margin-right:3vh;
   float:left;
 }
+.events span.clear { clear: left; display: block; }
 
 /*//hide scroll bar*/
 ::-webkit-scrollbar {

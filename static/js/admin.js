@@ -60,6 +60,7 @@ function createBobElement(bob) {
       src: bob.data.Link,
       autoplay: true,
       loop: true,
+      muted: true, 
       href: bob.data.Link,
       class: 'preview'
     });

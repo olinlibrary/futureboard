@@ -19,6 +19,7 @@ function popluateBoard(bobs) {
   });
   // Initializes value for vote lable
   updateVoteLabel();
+  loadVideo("movingToNext");
 }
 
 /**
@@ -51,7 +52,8 @@ function createBoardElement(bob) {
 
     case 'Video':
       $html.addClass('video-bobble ').attr("id", bob._id)
-        .append($('<video controls autoplay loop>').append($('<source>', {src:bob.data.Link})));
+        .append(($('<video loop muted>').attr("preload", "none"))
+        .append($('<source>', {src:bob.data.Link})));
       break;
 
     case 'Moment':
@@ -138,6 +140,16 @@ function updateBoardElement(bobData){
 */
 function deleteElement(bobid){
   $("#" + bobid).remove();
+  if ($('#slideshow').hasClass('initialized')) {
+    $('#slideshow').removeClass('initialized');
+  }
+
+  // reinit the carousel
+  $('#slideshow').carousel({
+    fullWidth: true
+  });
+  // force move to next slide
+  carouselControl("right");
 }
 
 /**
@@ -175,19 +187,54 @@ $(function(){
     $.get('/api/bobs/active', popluateBoard);
     carouselInterval = setInterval(function() {
       $('#slideshow').carousel('next');
-      updateVoteLabel();
+      $(document).trigger("movingToNext");
     }, 12000);
-    $(".plusOne").on("click touchstart", function(){
+
+
+    $(".plusOne").on("click", function(){
       var activeBobID = $("#slideshow").find(".active").attr("id");
       $.post('/api/bobs/' + activeBobID + "/votes");
     });
-    $(".flag").on("click touchstart", function(){
+    $(".flag").on("click", function(){
       var activeBobID = $("#slideshow").find(".active").attr("id");
       $.post('/api/bobs/' + activeBobID + "/flags");
     });
+    $(document).on("movingToNext", function(){
+      updateVoteLabel();
+      loadVideo("movingToNext");
+    })
+    $(document).on("movingToPrev", function(){
+      updateVoteLabel();
+      loadVideo("movingToPrev");
+    })
 });
 
-
+function loadVideo(trigger){
+  if(trigger === "movingToNext"){
+    if ($(".active").hasClass("video-bobble")){
+      $(".active").find("video")[0].play();
+    }
+    if ($(".active").next().hasClass("video-bobble")){
+      $(".active").next().find("video")[0].load();
+      $(".active").next().find("video")[0].play();
+    }
+    if ($(".active").prev().hasClass("video-bobble")){
+      $(".active").prev().find("video")[0].pause();
+    }
+  }
+  else if(trigger === "movingToPrev"){
+    if ($(".active").hasClass("video-bobble")){
+      $(".active").find("video")[0].play();
+    }
+    if ($(".active").prev().hasClass("video-bobble")){
+      $(".active").prev().find("video")[0].load();
+      $(".active").prev().find("video")[0].play();
+    }
+    if ($(".active").prev().hasClass("video-bobble")){
+      $(".active").next().find("video")[0].pause();
+    }
+  }
+}
 /**
  * Changes active item to either previous or next item depending on direction
  * @param {string} direction - direction of moving : left, right
@@ -195,8 +242,10 @@ $(function(){
 function carouselControl(direction){
   if (direction == "left") {
     $('#slideshow').carousel('prev', 1); // Move next n times.
+    $(document).trigger("movingToPrev");
   } else if (direction == "right") {
     $('#slideshow').carousel('next', 1); // Move next n times.
+    $(document).trigger("movingToNext");
   }
 }
 
@@ -210,8 +259,8 @@ function resetInterval() {
   // Reinits the timers
   carouselInterval = setInterval(function() {
     $('#slideshow').carousel('next');
+    $(document).trigger("movingToNext");
   }, 12000);
-  updateVoteLabel();
 }
 
 /**
