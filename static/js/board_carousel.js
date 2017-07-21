@@ -58,7 +58,7 @@ function createBoardElement(bob) {
 
     case 'Moment':
       $html.addClass('image-bobble flip').attr("id", bob._id)
-        .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")", 'background-size': "contain", 'background-position': "center top"}}))
+        .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")", 'image-orientation': '0deg', 'background-size': "contain", 'background-position': "center top"}}))
         .append($('<div />', {class: "text-holder back"})
           .append($('<p>', {class: "author", text: bob.data.Title}))
           .append($('<p />', {class:"description", text : bob.data.Descrption})));
@@ -66,7 +66,7 @@ function createBoardElement(bob) {
 
     case 'Meme':
       $html.addClass('image-bobble flip').attr("id", bob._id)
-        .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")", 'background-size': "contain", 'background-position': "center top"}}))
+        .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")", 'image-orientation': '0deg', 'background-size': "contain", 'background-position': "center top"}}))
         .append($('<div />', {class: "text-holder back"})
           .append($('<p>', {class: "author", text: bob.data.Title}))
           .append($('<p />', {class:"description", text: bob.data.Descrption})));
