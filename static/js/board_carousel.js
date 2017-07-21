@@ -19,6 +19,7 @@ function popluateBoard(bobs) {
   });
   // Initializes value for vote lable
   updateVoteLabel();
+  loadVideo();
 }
 
 /**
@@ -51,7 +52,8 @@ function createBoardElement(bob) {
 
     case 'Video':
       $html.addClass('video-bobble ').attr("id", bob._id)
-        .append($('<video controls autoplay loop muted>').append($('<source>', {src:bob.data.Link})));
+        .append(($('<video loop muted>').attr("preload", "none"))
+        .append($('<source>', {src:bob.data.Link})));
       break;
 
     case 'Moment':
@@ -186,8 +188,10 @@ $(function(){
     $.get('/api/bobs/active', popluateBoard);
     carouselInterval = setInterval(function() {
       $('#slideshow').carousel('next');
-      updateVoteLabel();
+      $(document).trigger("activeItemChanged");
     }, 12000);
+
+
     $(".plusOne").on("click touchstart", function(){
       var activeBobID = $("#slideshow").find(".active").attr("id");
       $.post('/api/bobs/' + activeBobID + "/votes");
@@ -196,9 +200,24 @@ $(function(){
       var activeBobID = $("#slideshow").find(".active").attr("id");
       $.post('/api/bobs/' + activeBobID + "/flags");
     });
+    $(document).on("activeItemChanged", function(){
+      updateVoteLabel();
+      loadVideo();
+    })
 });
 
-
+function loadVideo(){
+  if ($(".active").hasClass("video-bobble")){
+    $(".active").find("video")[0].play();
+  }
+  if ($(".active").next().hasClass("video-bobble")){
+    $(".active").next().find("video")[0].load();
+    $(".active").next().find("video")[0].play();
+  }
+  if ($(".active").prev().hasClass("video-bobble")){
+    $(".active").prev().find("video")[0].pause();
+  }
+}
 /**
  * Changes active item to either previous or next item depending on direction
  * @param {string} direction - direction of moving : left, right
@@ -206,8 +225,10 @@ $(function(){
 function carouselControl(direction){
   if (direction == "left") {
     $('#slideshow').carousel('prev', 1); // Move next n times.
+    $(document).trigger("activeItemChanged");
   } else if (direction == "right") {
     $('#slideshow').carousel('next', 1); // Move next n times.
+    $(document).trigger("activeItemChanged");
   }
 }
 
@@ -221,8 +242,8 @@ function resetInterval() {
   // Reinits the timers
   carouselInterval = setInterval(function() {
     $('#slideshow').carousel('next');
+    $(document).trigger("activeItemChanged");
   }, 12000);
-  updateVoteLabel();
 }
 
 /**
