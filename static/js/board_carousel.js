@@ -192,11 +192,11 @@ $(function(){
     }, 12000);
 
 
-    $(".plusOne").on("click touchstart", function(){
+    $(".plusOne").on("click", function(){
       var activeBobID = $("#slideshow").find(".active").attr("id");
       $.post('/api/bobs/' + activeBobID + "/votes");
     });
-    $(".flag").on("click touchstart", function(){
+    $(".flag").on("click", function(){
       var activeBobID = $("#slideshow").find(".active").attr("id");
       $.post('/api/bobs/' + activeBobID + "/flags");
     });
