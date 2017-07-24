@@ -60,9 +60,10 @@ function createBobElement(bob) {
       src: bob.data.Link,
       autoplay: true,
       loop: true,
-      muted: true, 
+      muted: true,
       href: bob.data.Link,
-      class: 'preview'
+      class: 'preview',
+      poster:'static/images/test-pump.gif'
     });
   }
 
