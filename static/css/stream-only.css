@@ -108,8 +108,9 @@ nav .brand-logo{
 .flag-buttons > a {
   opacity:0.5;
 }
-.flag > a:hover {
-  
+.flag-buttons > a:hover {
+  opacity:1.0;
+}
 .slideshow-buttons > a {
   opacity:0.5;
 }
