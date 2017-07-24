@@ -60,9 +60,10 @@ function createBobElement(bob) {
       src: bob.data.Link,
       autoplay: true,
       loop: true,
-      muted: true, 
+      muted: true,
       href: bob.data.Link,
-      class: 'preview'
+      class: 'preview',
+      poster: 'https://s-media-cache-ak0.pinimg.com/originals/65/97/87/659787288f1824921c38dcf4d3158768.gif'
     });
   }
 
