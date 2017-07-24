@@ -54,33 +54,38 @@ nav .brand-logo{
 
 form{
   margin:1vh;
-  height:77vh;
+  height:59vh;
   border-style:dashed !important;
   border-width:0.4vh !important;
   border-color:#000000 !important;
 }
+progress{
+  width:100%;
+  background-color:black:
+}
+
 .dropzone .dz-message{
-  margin:0.5vh !important;
+  margin:0.2vh !important;
 }
 #submit-button{
-  height:8vh;
+  height:10vh;
   background-color: #009BDF;
-  font-size:2em;
+  font-size:8vh;
 }
 
 #preview {
   /*margin: auto;*/
   text-align: center;
-  height: 63vh;
+  height: 38vh;
 }
 
 #preview img{
   /*width: 100%;*/
   max-width:100%;
-  max-height: 67vh;
+  max-height: 38vh;
 }
 
 #preview video{
   max-width:100%;
-  max-height: 67vh;
+  max-height: 38vh;
 }
