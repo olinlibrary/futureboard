@@ -205,10 +205,10 @@ $(function(){
       updateVoteLabel();
       loadVideo("movingToPrev");
     });
-    $(document).on("swipeleft",function(){
+    $('#slideshow').on("swipeleft",function(){
       resetInterval(carouselControl("left"));
     });
-    $(document).on("swiperight",function(){
+    $('#slideshow').on("swiperight",function(){
       resetInterval(carouselControl("right"));
     });
 });
