@@ -55,6 +55,14 @@ module.exports = function(io, db) {
   router.route('/tags/:tagid')
     .get(GETtag);
 
+  router.route('/mediaReady')
+    .post(function (req, res) {
+      console.log();
+      console.log(req.headers);
+      console.log(req);
+      res.send("OK");
+    });
+
 
   // API functions
   /**
@@ -107,7 +115,7 @@ module.exports = function(io, db) {
     // Save bob in db
     db.Bob.saveBob(bob).then(function success(bobData) {
       // Send to all boards
-      io.emit('add_element', bobData);
+      // io.emit('add_element', bobData);
       res.send("success");
     }, function error(err) {
       res.status(500).send(err);

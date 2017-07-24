@@ -55,8 +55,8 @@ const api = require('./routes/api')(io, db);
 app.use('/api', api);
 
 // Handle s3 file uploading
-const s3 = require('./routes/s3api')();
-app.use('/sign-s3', s3);
+const awsApi = require('./routes/awsapi')(io, db);
+app.use('/aws', awsApi);
 
 
 // Main board (on computer screens)

@@ -3,13 +3,14 @@ const mongoose = require('mongoose');
 
 // Define and compile Bob Schema
 const bobSchema = mongoose.Schema({
-  data:      {},
-  startDate: { type: Date, default: Date.now() },
-  endDate:   { type: Date, default: Date.now() + 604800 }, // One week from now
-  flavor:    String,
-  tags:      [],
-  votes:     { type: Number, default: 1 },
-  flag:      { type: Number, default: 0 } // 0: OK, 1: Flagged, 2: Mod OK, 3: Mod Remove
+  data:       {},
+  startDate:  { type: Date, default: Date.now() },
+  endDate:    { type: Date, default: Date.now() + 604800 }, // One week from now
+  flavor:     String,
+  tags:       [],
+  votes:      { type: Number, default: 1 },
+  flag:       { type: Number, default: 0 }, // 0: OK, 1: Flagged, 2: Mod OK, 3: Mod Remove
+  mediaReady: { type: Boolean, default: false }
 });
 
 const BobModel = mongoose.model('Bob', bobSchema);
@@ -121,6 +122,10 @@ function flagBob(bobId) {
   return BobModel.findOneAndUpdate({ _id: bobId }, { flag: 1 }).and({flag: [0, 2]}).lean();
 }
 
+function setMediaStatus(mediaURL, status = true) {
+  return BobModel.findOneAndUpdate({ data: { Link: mediaURL }}, { mediaReady: true }).lean();
+}
+
 
 
 let Bob = {};
@@ -135,5 +140,6 @@ Bob.updateBob      = updateBob;
 Bob.deleteBob      = deleteBob;
 Bob.upvoteBob      = upvoteBob;
 Bob.flagBob        = flagBob;
+Bob.setMediaStatus = setMediaStatus;
 
 module.exports     = Bob;
