@@ -88,6 +88,12 @@ nav .brand-logo{
   top : -70px;
   right: 20px;
 }
+.flag-buttons {
+  float:left;
+  position:relative;
+  top : -70px;
+  right: -20px;
+}
 .main-button{
   opacity:0.5;
 }
@@ -98,6 +104,12 @@ nav .brand-logo{
   opacity:0.5;
 }
 .slideshow-buttons > a:hover {
+  opacity:1;
+}
+.flag-buttons > a {
+  opacity:0.5;
+}
+.flag > a:hover {
   opacity:1;
 }
 .lables{

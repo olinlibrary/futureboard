@@ -205,6 +205,12 @@ $(function(){
       updateVoteLabel();
       loadVideo("movingToPrev");
     });
+    $(document).on("swipeleft",function(){
+      resetInterval(carouselControl("left"));
+    });
+    $(document).on("swiperight",function(){
+      resetInterval(carouselControl("right"));
+    });
 });
 
 function loadVideo(trigger){
@@ -275,6 +281,8 @@ $(document).keydown(function(e) {
     resetInterval(carouselControl("right"));
   }
 });
+
+
 var socket = io();
 
 socket.on('add_element', addBoardElement);
