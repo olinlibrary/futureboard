@@ -52,7 +52,7 @@ function createBoardElement(bob) {
 
     case 'Video':
       $html.addClass('video-bobble ').attr("id", bob._id)
-        .append(($('<video loop muted>').attr("preload", "none").attr("poster", "https://s-media-cache-ak0.pinimg.com/originals/65/97/87/659787288f1824921c38dcf4d3158768.gif"))
+        .append(($('<video loop muted poster>').attr("preload", "none").attr("poster", '/static/images/test-pump.gif'))
         .append($('<source>', {src:bob.data.Link})));
       break;
 
@@ -205,14 +205,6 @@ $(function(){
       updateVoteLabel();
       loadVideo("movingToPrev");
     });
-    // $(document).on("loadstart", function(e){
-    //   console.log(e);
-    //   $(this).addClass("loading");
-    // });
-    // $(document).on("canplay", function(e){
-    //   console.log(e);
-    //   $(this).removeClass("loading");
-    // });
 });
 
 function loadVideo(trigger){
