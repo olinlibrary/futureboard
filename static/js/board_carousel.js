@@ -52,13 +52,13 @@ function createBoardElement(bob) {
 
     case 'Video':
       $html.addClass('video-bobble ').attr("id", bob._id)
-        .append(($('<video loop muted>').attr("preload", "none"))
+        .append(($('<video loop muted poster>').attr("preload", "none").attr("poster", '/static/images/test-pump.gif'))
         .append($('<source>', {src:bob.data.Link})));
       break;
 
     case 'Moment':
       $html.addClass('image-bobble flip').attr("id", bob._id)
-        .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")", 'image-orientation': '0deg', 'background-size': "contain", 'background-position': "center top"}}))
+        .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")", 'image-orientation': '0deg', 'background-size': "contain", 'background-position': "center center"}}))
         .append($('<div />', {class: "text-holder back"})
           .append($('<p>', {class: "author", text: bob.data.Title}))
           .append($('<p />', {class:"description", text : bob.data.Descrption})));
@@ -66,7 +66,7 @@ function createBoardElement(bob) {
 
     case 'Meme':
       $html.addClass('image-bobble flip').attr("id", bob._id)
-        .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")", 'image-orientation': '0deg', 'background-size': "contain", 'background-position': "center top"}}))
+        .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")", 'image-orientation': '0deg', 'background-size': "contain", 'background-position': "center center"}}))
         .append($('<div />', {class: "text-holder back"})
           .append($('<p>', {class: "author", text: bob.data.Title}))
           .append($('<p />', {class:"description", text: bob.data.Descrption})));
@@ -189,8 +189,6 @@ $(function(){
       $('#slideshow').carousel('next');
       $(document).trigger("movingToNext");
     }, 12000);
-
-
     $(".plusOne").on("click", function(){
       var activeBobID = $("#slideshow").find(".active").attr("id");
       $.post('/api/bobs/' + activeBobID + "/votes");
@@ -202,11 +200,17 @@ $(function(){
     $(document).on("movingToNext", function(){
       updateVoteLabel();
       loadVideo("movingToNext");
-    })
+    });
     $(document).on("movingToPrev", function(){
       updateVoteLabel();
       loadVideo("movingToPrev");
-    })
+    });
+    $('#slideshow').on("swipeleft",function(){
+      resetInterval(carouselControl("left"));
+    });
+    $('#slideshow').on("swiperight",function(){
+      resetInterval(carouselControl("right"));
+    });
 });
 
 function loadVideo(trigger){
@@ -230,7 +234,7 @@ function loadVideo(trigger){
       $(".active").prev().find("video")[0].load();
       $(".active").prev().find("video")[0].play();
     }
-    if ($(".active").prev().hasClass("video-bobble")){
+    if ($(".active").next().hasClass("video-bobble")){
       $(".active").next().find("video")[0].pause();
     }
   }
@@ -277,6 +281,8 @@ $(document).keydown(function(e) {
     resetInterval(carouselControl("right"));
   }
 });
+
+
 var socket = io();
 
 socket.on('add_element', addBoardElement);

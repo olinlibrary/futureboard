@@ -7,7 +7,20 @@ function uploadFile(file, signedRequest, url){
   const xhr = new XMLHttpRequest();
 
   xhr.open('PUT', signedRequest);
-
+  var $progressBar = document.getElementById("progress");
+  xhr.upload.onprogress = function(e){
+    if (e.lengthComputable) {
+       $progressBar.max = e.total;
+       $progressBar.value = e.loaded;
+       var ratio = Math.floor((e.loaded / e.total) * 100) + '%';
+    }
+  }
+  xhr.upload.onloadstart = function (e) {
+      $progressBar.value = 0;
+  }
+  xhr.upload.onloadend = function (e) {
+      $progressBar.value = e.loaded;
+  }
   xhr.onreadystatechange = () => {
     if(xhr.readyState === 4){
       if(xhr.status === 200){
@@ -16,7 +29,7 @@ function uploadFile(file, signedRequest, url){
         if(file.type.match('image')){
           $('#preview').empty().append($('<img>', { src: url }));
         } else if (file.type.match('video')) {
-          $('#preview').empty().append($('<video>', { src: url, autoplay: true, loop: true }));
+          $('#preview').empty().append($('<video>', { src: url, autoplay: true, loop: true, poster:"/static/images/test-pump.gif" }));
         } else {
           alert('Bad filetype');
         }

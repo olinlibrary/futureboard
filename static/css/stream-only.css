@@ -90,12 +90,26 @@ nav .brand-logo{
   top : -70px;
   right: 20px;
 }
+
+.flag-buttons {
+  float:left;
+  position:relative;
+  top : -70px;
+  right: -20px;
+}
+
 .main-button{
   opacity:0.5;
 }
 .main-button:hover{
   opacity:1.0;
 }
+
+.flag-buttons > a {
+  opacity:0.5;
+}
+.flag > a:hover {
+  
 .slideshow-buttons > a {
   opacity:0.5;
 }
