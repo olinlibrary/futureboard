@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const request = require('request');
 
 // Define and compile Bob Schema
 const bobSchema = mongoose.Schema({
@@ -23,16 +23,33 @@ const BobModel = mongoose.model('Bob', bobSchema);
   @param {Object[]} bobData
 */
 function saveBob(bobData) {
+  if(bobData.data.Link) {
+    const mediaStatus = getMediaStatus(bobData.data.Link);
+  }
   const newBob = new BobModel({
     data:       bobData.data,
     startDate:  bobData.startDate,
     endDate:    bobData.endDate,
     flavor:     bobData.flavor,
-    tags:       bobData.tags
+    tags:       bobData.tags,
+    mediaReady: mediaStatus
   });
 
   return newBob.save(function (err) {
     if (err) console.log("Bob save error:", err);
+  });
+}
+
+/**
+ * Get the status of a media
+ * @param {String} url
+ * @returns {Boolean} exists
+ */
+function getMediaStatus(url) {
+  request.head(url, function (err, res, body) {
+    // console.log(res);
+    if(err){ console.log(err); }
+    return (res.statusCode == 200);
   });
 }
 /**
