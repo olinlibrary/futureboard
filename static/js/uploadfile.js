@@ -24,7 +24,6 @@ function uploadFile(file, signedRequest, url){
   xhr.onreadystatechange = () => {
     if(xhr.readyState === 4){
       if(xhr.status === 200){
-        console.log(xhr);
         SUBMIT_URL = url;
         if(file.type.match('image')){
           $('#preview').empty().append($('<img>', { src: url }));
@@ -33,6 +32,7 @@ function uploadFile(file, signedRequest, url){
         } else {
           alert('Bad filetype');
         }
+        $('.dz-message').hide();
         $('#submit-button').attr('disabled', false);
       }
       else{
@@ -77,7 +77,7 @@ function initUpload(file){
   if(file == null){
     return alert('No file selected.');
   }
-  $("form").append($('<div/>').attr("id", "preview"));
+  $("form.dropzone").append($('<div/>').attr("id", "preview"));
   $('#preview').empty();
   $('#submit-button').attr("disabled", "disabled");
 
@@ -98,6 +98,7 @@ function submitBob() {
     let data = {
       data: { 'Link': SUBMIT_URL },
       flavor: flavor,
+      description: $('#description').val(),
       startDate: Date.now(),
       'tags[]': ['uploadSubmit']
     };
