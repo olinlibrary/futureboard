@@ -6,22 +6,23 @@
 function populateEvents(eventsData) {
   let $eventsToday = $('#eventsToday');
   let $featuredEvents = $('#featuredEvents');
-
+  let $addedFeaturedEventsTitles = [];
   for (var i = 0; i < eventsData.length ; i++) {
     let featured = (($.inArray("featured", eventsData[i].labels)) >= 0);
-
     let eventStart = Date.parse(eventsData[i].start).toString("YYMMdd");
     let today = Date.today().toString("YYMMdd");
     if (today === eventStart){
       let $newEvent = createEventObject(eventsData[i]);
       $eventsToday.append($newEvent);
     }
-
     if (featured && (Date.today().compareTo(Date.parse(eventsData[i].start)) == -1)){
-      let $newEvent = createFeaturedEventObject(eventsData[i]);
-      $featuredEvents.append($newEvent);
+      // checks for recurring events, adds only the first instance of recurring events
+      if ($.inArray(eventsData[i].title, $addedFeaturedEventsTitles) < 0){
+        let $newEvent = createFeaturedEventObject(eventsData[i]);
+        $featuredEvents.append($newEvent);
+        $addedFeaturedEventsTitles.push(eventsData[i].title);
+      }
     }
-
   }
 }
 
