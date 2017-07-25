@@ -8,7 +8,7 @@ const db         = require('./models/wrapper.js');
 // Start the server
 let SERVER;
 // If running in Heroku
-if(process.env.PORT) {
+if (process.env.PORT) {
   const http = require('http').Server(app);
   SERVER = http;
   http.listen(process.env.PORT, function() {

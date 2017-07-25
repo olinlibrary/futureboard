@@ -24,7 +24,7 @@ const BobModel = mongoose.model('Bob', bobSchema);
 */
 function saveBob(bobData) {
   let mediaStatus = "";
-  if(bobData.data.Link) {
+  if (bobData.data.Link) {
     mediaStatus = false;
   } else {
     console.log("Warning: Saving bob without Link");
@@ -52,7 +52,7 @@ function saveBob(bobData) {
  */
 function checkMediaStatus(url) {
   request.head(url, function (err, res, body) {
-    if(err){ console.log(err); }
+    if (err){ console.log(err); }
     if (res.statusCode === 200) {
       setMediaStatus(url, true);
     } else {

@@ -41,9 +41,9 @@ module.exports = function (api, rootDir) {
   // Show edit page on /bobs/:bobid
   router.route('/bobs/:bobid')
     .get(function(req, res) {
-      if(req.params.bobid.length === 24){
+      if (req.params.bobid.length === 24){
         db.Bob.getOneBob({ _id: db.ObjectId(req.params.bobid)}).then(function success(data) {
-          if(data){
+          if (data){
             res.sendFile(path.join(rootDir, '/templates/editbob.html'));
           } else {
             res.status(404).send("bob not found");

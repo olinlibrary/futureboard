@@ -18,7 +18,7 @@ const S3_BUCKET         = "upload.media.futureboard.olin.build";
 const ACCESS_KEY_ID     = process.env.ACCESS_KEY_ID;
 const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY;
 
-if(ACCESS_KEY_ID == null || SECRET_ACCESS_KEY == null){
+if (ACCESS_KEY_ID == null || SECRET_ACCESS_KEY == null){
   console.log("ERROR: s3 envirnoment variables not set!");
 }
 
@@ -55,7 +55,7 @@ module.exports = function (io, db) {
     let outputFileName = '';
     const new_uuid = uuidv1();
 
-    if(mediaType === 'image'){
+    if (mediaType === 'image'){
       uploadFileName = 'img-' + new_uuid + '.' + inputFileExtension;
       outputFileName = 'img-' + new_uuid + '.jpg';
     } else if (mediaType === 'video') {
@@ -74,7 +74,7 @@ module.exports = function (io, db) {
     };
 
     s3.getSignedUrl('putObject', s3Params, function (err, data) {
-      if(err){
+      if (err){
         console.log(err);
         return res.end();
       }
@@ -103,15 +103,15 @@ module.exports = function (io, db) {
         try {
           var message = JSON.parse(chunks.join(''));
           // If it is a subscribtion confirmation, get the page
-          if(req.headers['x-amz-sns-message-type'] === 'SubscriptionConfirmation'){
+          if (req.headers['x-amz-sns-message-type'] === 'SubscriptionConfirmation'){
             request(message.SubscribeURL, function (err, res, body) {
-              if(err){ console.log(err); }
+              if (err){ console.log(err); }
             });
           // Else set the bob media status to true
           } else {
             var SNSmessage = JSON.parse(message.Message);
             SNSmessage.Records.forEach((record) => {
-              if(record.s3.object.key.indexOf('/') == -1){
+              if (record.s3.object.key.indexOf('/') == -1){
                 db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
                 .then(function (bobData) {
                   io.emit('add_element', bobData);

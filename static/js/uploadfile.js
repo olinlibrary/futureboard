@@ -9,11 +9,11 @@ function uploadFile(file, signedRequest, url){
   xhr.open('PUT', signedRequest);
 
   xhr.onreadystatechange = () => {
-    if(xhr.readyState === 4){
-      if(xhr.status === 200){
+    if (xhr.readyState === 4){
+      if (xhr.status === 200){
         console.log(xhr);
         SUBMIT_URL = url;
-        if(file.type.match('image')){
+        if (file.type.match('image')){
           $('#preview').empty().append($('<img>', { src: url }));
         } else if (file.type.match('video')) {
           $('#preview').empty().append($('<video>', { src: url, autoplay: true, loop: true }));
@@ -40,10 +40,10 @@ function getSignedRequest(file){
   const xhr = new XMLHttpRequest();
   xhr.open('GET', `/aws/s3-sign?file-name=${file.name}&file-type=${file.type}`);
   xhr.onreadystatechange = () => {
-    if(xhr.readyState === 4){
-      if(xhr.status === 200){
+    if (xhr.readyState === 4){
+      if (xhr.status === 200){
         const response = JSON.parse(xhr.response);
-        if(response.signedRequest === null){
+        if (response.signedRequest === null){
           return alert("Did not get S3 signed request!");
         }
         uploadFile(file, response.signedRequest, response.url);
@@ -61,7 +61,7 @@ function getSignedRequest(file){
  start upload procedure by asking for a signed request from the app.
 */
 function initUpload(file){
-  if(file == null){
+  if (file == null){
     return alert('No file selected.');
   }
   $("form").append($('<div/>').attr("id", "preview"));
@@ -76,9 +76,9 @@ function initUpload(file){
  Function to submit the new bob.
 */
 function submitBob() {
-  if(SUBMIT_URL){
+  if (SUBMIT_URL){
     let flavor = 'Moment';
-    if(['mp4','mov','avi'].indexOf(SUBMIT_URL.split('.').pop().toLowerCase()) > -1){
+    if (['mp4','mov','avi'].indexOf(SUBMIT_URL.split('.').pop().toLowerCase()) > -1){
       flavor = 'Video';
     }
 
@@ -113,7 +113,7 @@ window.onload = function () {
 Dropzone.options.dropzoneInput = {
   addedfile: function() {
     // Remove old files
-    if(this.files.length > 1){
+    if (this.files.length > 1){
       while(this.files.length > 1) { this.removeFile(this.files[0]); }
     }
     initUpload(this.files[0]);
@@ -121,7 +121,7 @@ Dropzone.options.dropzoneInput = {
   drop: function() {
     $(this).removeClass("dz-drag-hover");
     // Remove old files
-    if(this.files.length > 1){
+    if (this.files.length > 1){
       while(this.files.length > 1) { this.removeFile(this.files[0]); }
     }
     initUpload(this.files[0]);
