@@ -33,42 +33,7 @@ module.exports = function (io, db) {
     .post(POSTS3Sign);
 
   router.route('/mediaStatus')
-    .post(function (req, res) {
-
-      var chunks = [];
-      req.on('data', function (chunk) {
-          chunks.push(chunk);
-      });
-      req.on('end', function () {
-          var message = JSON.parse(chunks.join(''));
-          if(req.headers['x-amz-sns-message-type'] === 'SubscriptionConfirmation'){
-            request(message.SubscribeURL, function (err, res, body) {
-              if(err){ console.log(err); }
-            });
-          } else {
-            var SNSmessage = JSON.parse(message.Message);
-            // console.log(SNSmessage.Records);
-            // console.log("---");
-            SNSmessage.Records.forEach((record) => {
-              if(record.s3.object.key.indexOf('/') == -1){
-                db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
-                  .then(function (bobData) {
-                    io.emit('add_element', bobData);
-                  });
-
-                console.log("s3 ready:", record.s3.object.key);
-              }
-            });
-          }
-
-
-      });
-      res.end();
-
-
-    });
-
-
+    .post(POSTSNSNotify);
 
   return router;
 };
@@ -130,4 +95,43 @@ function GETSignRequest(req, res) {
 
 function POSTS3Sign(req, res) {
   res.send("success");
+}
+
+function POSTSNSNotify (req, res) {
+  // Recieve all data
+  var chunks = [];
+  req.on('data', function (chunk) {
+      chunks.push(chunk);
+  });
+  // After all data is received
+  req.on('end', function () {
+      try {
+        var message = JSON.parse(chunks.join(''));
+        // If it is a subscribtion confirmation, get the page
+        if(req.headers['x-amz-sns-message-type'] === 'SubscriptionConfirmation'){
+          request(message.SubscribeURL, function (err, res, body) {
+            if(err){ console.log(err); }
+          });
+        // Else set the bob media status to true
+        } else {
+          var SNSmessage = JSON.parse(message.Message);
+          SNSmessage.Records.forEach((record) => {
+            if(record.s3.object.key.indexOf('/') == -1){
+              db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
+              .then(function (bobData) {
+                io.emit('add_element', bobData);
+              });
+
+              console.log("s3 ready:", record.s3.object.key);
+            }
+          });
+        }
+
+      } catch (e) {
+        // Errors caused by bad jso
+        console.log(e);
+        return;
+      }
+  });
+  res.end();
 }
