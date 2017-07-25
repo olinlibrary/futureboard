@@ -9,8 +9,6 @@
 
   <!-- load Materialize CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
-  <!-- load Materialize js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
   <!-- load Materialize icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -32,16 +30,25 @@
 
   <div class="container">
     <div class="row">
+      
       <nav class="col s12">
         <div class="nav-wrapper">
           <a class="brand-logo"><i class="material-icons hide-on-small-only">fast_forward</i>Upload</a>
         </div>
       </nav>
-        <form action="/file-upload" class="dropzone hoverable col s12" id='dropzone-input'>
-          <div class="fallback">
-            <input name="file" type="file" multiple />
-          </div>
-        </form>
+
+      <!-- Dropzone automatically runs on a form with the "dropzone-input" id -->
+      <form action="/file-upload" class="dropzone hoverable col s12" id='dropzone-input'>
+        <div class="fallback">
+          <input name="file" type="file" multiple />
+        </div>
+      </form>
+      
+      <progress id="progress" value="0">
+      </progress>
+
+      <label for="description">Description <span>Who are you? Where is the media from? Anything else?</span></label>
+      <input id="description" type="text" name="description" placeholder="Some text">
 
       <button type="submit" name="action" class="col s12 btn-large btn waves-effect waves-light submit" disabled="disabled" id="submit-button">
         <i class="material-icons">send</i> SUBMIT

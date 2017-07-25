@@ -97,11 +97,12 @@ module.exports = function(io, db) {
     }
 
     var bob = {
-      data:      req.body.data,
-      flavor:    req.body.flavor,
-      startDate: req.body.startDate,
-      endDate:   req.body.endDate,
-      tags:      req.body.tags
+      data:        req.body.data,
+      flavor:      req.body.flavor,
+      description: req.body.description,
+      startDate:   req.body.startDate,
+      endDate:     req.body.endDate,
+      tags:        req.body.tags
     };
 
     // Save bob in db
@@ -118,6 +119,7 @@ module.exports = function(io, db) {
 
   // Sends back one bob by id
   function GETbob(req, res) {
+    if (!req.params.bobid) return res.status(400).send("bob id not defined");
     db.Bob.getOneBob({ _id: db.ObjectId(req.params.bobid) } ).then(function success(data) {
       res.send(data);
     }, function error(err) {
@@ -126,6 +128,7 @@ module.exports = function(io, db) {
   }
 
   function GETvotes(req, res) {
+    if (!req.params.bobid) return res.status(404).send("bob not found");
     db.Bob.getOneBob(db.ObjectId(req.params.bobid)).then(function success(data) {
       if (data){
         res.send({ votes: data.votes });

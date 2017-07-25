@@ -9,6 +9,7 @@ function populateEvents(eventsData) {
 
   for (var i = 0; i < eventsData.length ; i++) {
     let featured = (($.inArray("featured", eventsData[i].labels)) >= 0);
+
     let eventStart = Date.parse(eventsData[i].start).toString("YYMMdd");
     let today = Date.today().toString("YYMMdd");
     if (today === eventStart){
@@ -16,7 +17,7 @@ function populateEvents(eventsData) {
       $eventsToday.append($newEvent);
     }
 
-    if (featured){
+    if (featured && (Date.today().compareTo(Date.parse(eventsData[i].start)) == -1)){
       let $newEvent = createFeaturedEventObject(eventsData[i]);
       $featuredEvents.append($newEvent);
     }
@@ -30,14 +31,21 @@ function populateEvents(eventsData) {
 */
 function createEventObject(eventData) {
   var converter = new showdown.Converter(); // markdown converter
+  if(eventData.location != null){
+    var location = "@ " + eventData.location.substring(0, 30);
+  }
+  else {
+    var location = "";
+  }
   var $html = $('<li>', {
     id: eventData.id,
     class: "collection-item"
   })
     .append($('<span>', { class: 'title', text: eventData.title.substring(0, 30) }))
-    .append($('<p>', { class: 'location', text:"@ " + eventData.location.substring(0, 30) }))
+    .append($('<p>', { class: 'location', text: location }))
     .append($('<p>', { class: 'date', text: Date.parse(eventData.start).toString("hh:mm tt") + " - " + Date.parse(eventData.end).toString("hh:mm tt") }))
-    .append(converter.makeHtml(eventData.description));
+    .append(converter.makeHtml(eventData.description))
+    .append($('<span/>', {class: "clear"}));
   return $html;
 }
 
@@ -47,14 +55,21 @@ function createEventObject(eventData) {
 */
 function createFeaturedEventObject(eventData) {
   var converter = new showdown.Converter(); // markdown converter
+  if(eventData.location != null){
+    var location = "@ " + eventData.location.substring(0, 30);
+  }
+  else {
+    var location = "";
+  }
   var $html = $('<li>', {
     id: eventData.id,
     class: "collection-item"
   })
     .append($('<span>', { class: 'title', text: eventData.title.substring(0, 30) }))
-    .append($('<p>', { class: 'location', text:"@ " + eventData.location.substring(0, 30) }))
+    .append($('<p>', { class: 'location', text: location }))
     .append($('<p>', { class: 'date', text: Date.parse(eventData.start).toString("hh:mm tt, ddd, MMMM dd ") + " - " + Date.parse(eventData.end).toString("hh:mm tt, ddd, MMMM dd") }))
-    .append(converter.makeHtml(eventData.description));
+    .append(converter.makeHtml(eventData.description))
+    .append($('<span/>', {class: "clear"}));
   return $html;
 }
 

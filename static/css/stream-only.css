@@ -85,19 +85,48 @@ nav .brand-logo{
   height: 94vh !important;
 }
 .slideshow-buttons {
+  float:right;
   position:relative;
+  top : -70px;
+  right: 20px;
+}
+
+.flag-buttons {
+  float:left;
+  position:relative;
+  top : -70px;
+  right: -20px;
+}
+
+.main-button{
+  opacity:0.7;
+}
+.main-button:hover{
+  opacity:1.0;
+}
+
+.flag-buttons > a {
+  opacity:1;
+}
+.flag-buttons > a:hover {
+  opacity:1.0;
+}
+.slideshow-buttons > a {
+  opacity:0.7;
+}
+.slideshow-buttons > a:hover {
+  opacity:1;
 }
 .lables{
   float: right;
-  postion:absolute;
-  margin-right:50vh;
-
 }
 span.badge.new {
-  height:64px;
-  line-height:64px;
-  font-size:64px;
-  margin-right:20px;
+  height:35px;
+  line-height:35px;
+  font-size:1.3rem;
+  position:absolute;
+  top: -40px;
+  right:5px;
   background-color: #F47920;
 }
 
@@ -191,9 +220,8 @@ div.image-holder {
   -webkit-transform: translate(-30px, -2px);
 }
 
-video{
+video {
     text-align:center;
-    vertical-align:center;
-    width: 100%;
-    height: 93vh; /* Could also use width: 100%; */*/
+    width:100%;
+    max-height: 100%;
 }

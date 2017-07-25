@@ -3,7 +3,7 @@ var router = express.Router();
 
 module.exports = function (api, rootDir) {
   router.route('/').get(function(req, res) {
-    res.sendFile(rootDir + '/templates/board.html');
+    res.sendFile(rootDir + '/templates/landing.html');
   });
 
   router.route('/views').get(function(req, res) {

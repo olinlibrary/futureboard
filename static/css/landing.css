@@ -1,0 +1,66 @@
+/*
+- Currently activated CSS for board.html
+*/
+
+
+/*font declration*/
+@font-face{
+    font-family: "DINOT-Bold";
+    src: url(DINOT-Bold.otf);
+}
+@font-face{
+    font-family: "DINOT-BoldItalic";
+    src: url(DINOT-BoldItalic.otf);
+}
+@font-face{
+    font-family: "DINOT-CondMediIta";
+    src: url(DINOT-CondMediIta.otf);
+}
+@font-face{
+    font-family: "DINOT-Italic";
+    src: url(DINOT-Italic.otf);
+}
+@font-face{
+    font-family: "DINOT-LightItalic";
+    src: url(DINOT-LightItalic.otf);
+}
+@font-face{
+    font-family: "DINOT";
+    src: url(DINOT.otf);
+}
+
+html {
+  font-family: "DINOT-Bold", "DINOT-BoldItalic", "DINOT-CondMediIta", "DINOT-Italic", "DINOT-LightItalic", "DINOT";
+}
+
+body {
+  overflow:hidden;
+  background-color: #FFFFFF;
+  font-family: "DINOT";
+}
+.top{
+  background-color:#009BDF;
+  height:50vh;
+  line-height:25vmin;
+  text-align:center;
+  display: table;
+}
+.top a{
+  font-size:25vmin;
+  color:white;
+  vertical-align: middle;
+  display: table-cell;
+}
+.bottom{
+  display: table;
+  background-color:#FFFFFF;
+  line-height:25vmin;
+  height:50vh;
+  text-align:center;
+}
+.bottom a{
+  font-size:25vmin;
+  color:black;
+  vertical-align: middle;
+  display: table-cell;
+}

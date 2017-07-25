@@ -52,35 +52,57 @@ nav .brand-logo{
   font-size:1.7em;
 }
 
-form{
-  margin:1vh;
-  height:77vh;
+label {
+  color: #333;
+  font-weight: 500;
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  line-height: 1rem;
+}
+  label span {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #666;
+  }
+
+form#dropzone-input {
+  margin:1vh 0;
+  height:45vh;
   border-style:dashed !important;
   border-width:0.4vh !important;
   border-color:#000000 !important;
 }
-.dropzone .dz-message{
-  margin:0.5vh !important;
-}
-#submit-button{
-  height:8vh;
-  background-color: #009BDF;
-  font-size:2em;
+
+progress{
+  width:100%;
+  background-color:black:
 }
 
+.dropzone .dz-message{
+  margin:0.2vh !important;
+}
+#submit-button {
+  height: 10vh;
+  background-color: #009BDF;
+  font-size: 3rem;
+}
+  #submit-button i {
+    font-size: 2.25rem;
+  }
+
 #preview {
-  /*margin: auto;*/
   text-align: center;
-  height: 63vh;
+  height: 100%;
+  overflow: hidden;
 }
 
 #preview img{
-  /*width: 100%;*/
+  margin:2% 0;
   max-width:100%;
-  max-height: 67vh;
+  max-height: 90%;
 }
 
 #preview video{
   max-width:100%;
-  max-height: 67vh;
+  max-height: 38vh;
 }

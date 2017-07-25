@@ -88,18 +88,45 @@ nav .brand-logo{
   top : -70px;
   right: 20px;
 }
+.flag-buttons {
+  float:left;
+  position:relative;
+  top : -70px;
+  right: -20px;
+}
 .main-button{
-  opacity:0.5;
+  opacity:0.7;
 }
 .main-button:hover{
   opacity:1.0;
 }
 .slideshow-buttons > a {
-  opacity:0.5;
+  opacity:0.7;
 }
 .slideshow-buttons > a:hover {
   opacity:1;
 }
+.flag-buttons > a {
+  opacity:0.9;
+}
+.flag > a:hover {
+  opacity:1;
+}
+
+.description {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.5);
+  padding: 1rem 7rem 3rem;
+}
+  .description p {
+    font-size: 1.5rem !important;
+    color: white;
+    font-weight: 900;
+  }
+
 .lables{
   float: right;
 }
@@ -202,13 +229,15 @@ div.image-holder {
   border-bottom-right-radius: 10px;
   -webkit-transform: translate(-30px, -2px);
 }
-
-video{
-    text-align:center;
-    vertical-align:center;
-    width: 100%; /* Could also use width: 100%; */*/
+.video-bobble{
+  text-align:center;
 }
 
+video {
+    text-align:center;
+    max-width:100%;
+    height: 100%;
+}
 
 .row .left-aside.col{
   padding: 0;
@@ -290,7 +319,9 @@ video{
   margin-left:3vh;
   margin-right:3vh;
   float:left;
+  display:inline-block;
 }
+.events span.clear { clear: left; display: block; }
 
 /*//hide scroll bar*/
 ::-webkit-scrollbar {
