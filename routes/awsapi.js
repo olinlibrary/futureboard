@@ -32,7 +32,7 @@ module.exports = function (io, db) {
     .get(GETSignRequest)
     .post(POSTS3Sign);
 
-  router.route('/mediaStatus')
+  router.route('/MediaStatusSNS')
     .post(POSTSNSNotify);
 
   /*
