@@ -60,22 +60,28 @@ function createBoardElement(bob) {
       $html.addClass('image-bobble flip').attr("id", bob._id)
         .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")", 'image-orientation': '0deg', 'background-size': "contain", 'background-position': "center center"}}))
         .append($('<div />', {class: "text-holder back"})
-          .append($('<p>', {class: "author", text: bob.data.Title}))
-          .append($('<p />', {class:"description", text : bob.data.Descrption})));
+          .append($('<p>', {class: "author", text: bob.data.Title})));
       break;
 
     case 'Meme':
       $html.addClass('image-bobble flip').attr("id", bob._id)
         .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")", 'image-orientation': '0deg', 'background-size': "contain", 'background-position': "center center"}}))
         .append($('<div />', {class: "text-holder back"})
-          .append($('<p>', {class: "author", text: bob.data.Title}))
-          .append($('<p />', {class:"description", text: bob.data.Descrption})));
+          .append($('<p>', {class: "author", text: bob.data.Title})));
       break;
 
     default:
       console.log("Unhandled type" + bob);
       $html = null;
   }
+  
+  var description = bob.description || bob.data.Description;
+  if (description !== undefined) {
+    $html.append($('<div>', {class: "description"}).append(
+      $('<p>', {text: description}))
+    );
+  }
+
   return $html;
 }
 

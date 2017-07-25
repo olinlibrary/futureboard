@@ -3,13 +3,14 @@ const mongoose = require('mongoose');
 
 // Define and compile Bob Schema
 const bobSchema = mongoose.Schema({
-  data:      {},
-  startDate: { type: Date, default: Date.now() },
-  endDate:   { type: Date, default: Date.now() + 604800 }, // One week from now
-  flavor:    String,
-  tags:      [],
-  votes:     { type: Number, default: 1 },
-  flag:      { type: Number, default: 0 } // 0: OK, 1: Flagged, 2: Mod OK, 3: Mod Remove
+  data:        {},
+  startDate:   { type: Date, default: Date.now() },
+  endDate:     { type: Date, default: Date.now() + 604800 }, // One week from now
+  description: String,
+  flavor:      String,
+  tags:        [],
+  votes:       { type: Number, default: 1 },
+  flag:        { type: Number, default: 0 } // 0: OK, 1: Flagged, 2: Mod OK, 3: Mod Remove
 });
 
 const BobModel = mongoose.model('Bob', bobSchema);
@@ -23,11 +24,12 @@ const BobModel = mongoose.model('Bob', bobSchema);
 */
 function saveBob(bobData) {
   const newBob = new BobModel({
-    data:       bobData.data,
-    startDate:  bobData.startDate,
-    endDate:    bobData.endDate,
-    flavor:     bobData.flavor,
-    tags:       bobData.tags
+    data:        bobData.data,
+    startDate:   bobData.startDate,
+    description: bobData.description,
+    endDate:     bobData.endDate,
+    flavor:      bobData.flavor,
+    tags:        bobData.tags
   });
 
   return newBob.save(function (err) {
