@@ -25,6 +25,8 @@ const BobModel = mongoose.model('Bob', bobSchema);
 function saveBob(bobData) {
   if(bobData.data.Link) {
     const mediaStatus = getMediaStatus(bobData.data.Link);
+  } else {
+    const mediaStatus = true;
   }
   const newBob = new BobModel({
     data:       bobData.data,
