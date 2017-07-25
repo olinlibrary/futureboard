@@ -13,6 +13,10 @@ function popluateBoard(bobs) {
     $momentsStream.append(createBoardElement(bob));
   }
   // Initalizes carousels for both moments and memes streams
+  initCarousel();
+}
+
+function initCarousel(){
   $momentsStream.carousel({
     fullWidth: true,
     onCycleTo: function(activeItem){
@@ -20,9 +24,7 @@ function popluateBoard(bobs) {
       loadVideo(activeItem);
     }
   });
-  // Initializes value for vote lablef
 }
-
 /**
  * Creates and Returns a new html element from a given Bob object
  * @param {Object} - Javascript Bob object from Mongoose
@@ -75,7 +77,7 @@ function createBoardElement(bob) {
       console.log("Unhandled type" + bob);
       $html = null;
   }
-  
+
   var description = bob.description || bob.data.Description;
   if (description !== undefined) {
     $html.append($('<div>', {class: "description"}).append(
@@ -118,13 +120,7 @@ function appendToCarousel(bob, carouselSelector) {
     $carousel.removeClass('initialized');
   }
   //reinit the carousel
-  $carousel.carousel({
-    fullWidth: true,
-    onCycleTo: function(activeItem){
-      updateVoteLabel(activeItem);
-      loadVideo(activeItem);
-    }
-  });
+  initCarousel();
 }
 
 /**
@@ -153,13 +149,7 @@ function deleteElement(bobid){
     $('#slideshow').removeClass('initialized');
   }
   // reinit the carousel
-  $('#slideshow').carousel({
-    fullWidth: true,
-    onCycleTo: function(activeItem){
-      updateVoteLabel(activeItem);
-      loadVideo(activeItem);
-    }
-  });
+  initCarousel();
   // force move to next slide
   carouselControl("right");
 }
@@ -170,7 +160,7 @@ function deleteElement(bobid){
 */
 function updateVoteLabel(activeItem){
   var $labelToUpdate = $("#votes");
-  var $activeBobID = ($(activeItem).attr("id"));
+  var $activeBobID = $(activeItem).attr("id");
   var votes =  $.get('/api/bobs/' + $activeBobID + "/votes", function(res){
     $labelToUpdate.attr("data-badge-caption", "+" + res.votes);
   });
@@ -178,7 +168,7 @@ function updateVoteLabel(activeItem){
 
 /**
   * Updates the label with the votes returned from socket
-  * @param {object} res - response from the socekt which contains bobid and votes
+  * @param {object} res - response from the socket which contains bobid and votes
 */
 function incrementVote(res){
   $("#votes").attr("data-badge-caption", "+" + res.votes);
@@ -190,7 +180,7 @@ function incrementVote(res){
   * Pauses the previous video, plays the current video, loads the next video
 */
 function loadVideo(activeItem){
-  var $activeItem = $(activeItem); // wrapping jQuery to vanilla JS Obejct
+  var $activeItem = $(activeItem); // wrapping jQuery to vanilla JS Object
   if ($activeItem.hasClass("video-bobble")){
     $activeItem.find("video")[0].play();
   }
