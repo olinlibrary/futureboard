@@ -65,7 +65,6 @@ module.exports = function (io, db) {
       res.status(415).send('unsuported media type');
       return;
     }
-    console.log(mediaType, fileType, uploadFileName);
     const s3Params = {
       Bucket: S3_BUCKET,
       Key: uploadFileName,
@@ -84,7 +83,6 @@ module.exports = function (io, db) {
         // The location of the future media, to be used for previering and submitting a bob
         url: 'http://media.futureboard.olin.build/' + outputFileName
       };
-      console.log(returnData);
       res.write(JSON.stringify(returnData));
       res.end();
     });
@@ -118,14 +116,11 @@ module.exports = function (io, db) {
                 .then(function (bobData) {
                   io.emit('add_element', bobData);
                 });
-
-                console.log("s3 ready:", record.s3.object.key);
               }
             });
           }
-
         } catch (e) {
-          // Errors caused by bad jso
+          // Errors caused by bad json
           console.log(e);
           return;
         }
