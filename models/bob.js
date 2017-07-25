@@ -144,7 +144,7 @@ function flagBob(bobId) {
 
 
 /**
-  Sets a bob's media ready to status
+  Sets a bob's mediaReady status
   @param {String} mediaURL - URL that is ready
   @param {Boolean} [status=true] - status of media to set
 */
