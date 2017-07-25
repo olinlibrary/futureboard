@@ -114,8 +114,10 @@ module.exports = function(io, db) {
 
     // Save bob in db
     db.Bob.saveBob(bob).then(function success(bobData) {
-      // Send to all boards
-      // io.emit('add_element', bobData);
+      // Send to all boards if the media is ready
+      if(bobData.mediaReady){
+        io.emit('add_element', bobData);
+      }
       res.send("success");
     }, function error(err) {
       res.status(500).send(err);
