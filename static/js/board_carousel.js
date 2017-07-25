@@ -6,8 +6,6 @@
 */
 function popluateBoard(bobs) {
   let $momentsStream = $(".moments");
-  let $slideShowButtons = (".slideshow-buttons");
-
   for (var i = 0; i < bobs.length; i++) {
     let bob = bobs[i];
     $momentsStream.append(createBoardElement(bob));
@@ -17,6 +15,7 @@ function popluateBoard(bobs) {
 }
 
 function initCarousel(){
+  let $momentsStream = $(".moments");
   $momentsStream.carousel({
     fullWidth: true,
     onCycleTo: function(activeItem){
