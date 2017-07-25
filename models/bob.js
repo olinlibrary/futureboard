@@ -77,6 +77,7 @@ function getActiveBobs(filter, maxBobs = 20) {
   // Get first maxBobs bobs that aren't flagged. Can flesh out with fancier algorithms in the future
   let query = BobModel.find(filter).lean();
   query.and({flag: [0, 2]});  // If not flagged
+  query.and({mediaReady: true}); // Only bobs with media ready
   query.sort('-startDate');   // Sort newest to oldest
   query.limit(maxBobs);       // First n bobs
   return query;
@@ -139,6 +140,12 @@ function flagBob(bobId) {
   return BobModel.findOneAndUpdate({ _id: bobId }, { flag: 1 }).and({flag: [0, 2]}).lean();
 }
 
+
+/**
+  Sets a bob's media ready to status
+  @param {String} mediaURL - URL that is ready
+  @param {Boolean} [status=true] - status of media to set
+*/
 function setMediaStatus(mediaURL, status = true) {
   return BobModel.findOneAndUpdate({ data: { Link: mediaURL }}, { mediaReady: true }).lean();
 }
