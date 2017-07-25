@@ -45,6 +45,11 @@ Once you've set these environment variables, you should be able to run the app l
 
 NOTE: You'll need to [add these as environment variables to your Heroku instance](https://devcenter.heroku.com/articles/heroku-local#set-up-your-local-environment-variables) as well. Depending on your setup, you may want to have a separate database for local vs. production, but for just getting the app running it's not a crime to use the same.
 
+Setting up AWS: We use s3 to store media, and have lambda functions to resize images and transcode video.
+
+We used [aws-lambda-ffmpeg](https://github.com/binoculars/aws-lambda-ffmpeg) and [aws-lambda-image](https://github.com/ysugimoto/aws-lambda-image) for resizing the media. Install aws-lambda-ffmpeg first, because its installer fails if you try to use existing buckets. You can also install it with temporary buckets and then change the settings in the aws console. Create two buckets, an 'upload' bucket and a 'media' bucket. Users will upload to the 'upload' bucket, triggering a lambda function to process the file and save it to your 'media' bucket. Currently, images are prepended with 'img-' and video is with 'vid-' to differentiate lambda triggers. Create AWS keys for your app and set the following environment variables:
+`ACCESS_KEY_ID, SECRET_ACCESS_KEY`. Finally set up the 'media' bucket to publish to an SNS topic on ObjectCreate, and create an HTTPS subscription to `<url>/aws/MediaStatusSNS`. You will have to confirm this once you spin up the heroku instance.
+
 Now that you've got these variables set, you need to get the [Heroku toolbelt](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up) set up. Once logged in through the command line interface, run `heroku git:remote -a <YOUR PROJECT NAME>`. Now when you've committed changes to Github, you can [push to Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs#push-local-changes) by running `git push heroku master`. If everything was done correctly, your app should deploy and you can access it at `<YOUR PROJECT NAME>.herokuapp.com`.
 
 ### Development
