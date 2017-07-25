@@ -1,5 +1,6 @@
 /*
-This file holds all aws s3 upload routes.
+This file holds all aws logic
+It handles file upload signing and SNS notification
 */
 
 const aws = require('aws-sdk');
