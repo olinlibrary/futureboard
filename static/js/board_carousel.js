@@ -12,14 +12,15 @@ function popluateBoard(bobs) {
     let bob = bobs[i];
     $momentsStream.append(createBoardElement(bob));
   }
-
   // Initalizes carousels for both moments and memes streams
   $momentsStream.carousel({
-    fullWidth: true
+    fullWidth: true,
+    onCycleTo: function(activeItem){
+      updateVoteLabel(activeItem);
+      loadVideo(activeItem);
+    }
   });
-  // Initializes value for vote lable
-  updateVoteLabel();
-  loadVideo("movingToNext");
+  // Initializes value for vote lablef
 }
 
 /**
@@ -113,13 +114,16 @@ function appendToCarousel(bob, carouselSelector) {
   var $before = $activeItem.prevAll();
   $carousel.append($before.clone());
   $before.remove();
-
   if ($carousel.hasClass('initialized')) {
     $carousel.removeClass('initialized');
   }
   //reinit the carousel
   $carousel.carousel({
-    fullWidth: true
+    fullWidth: true,
+    onCycleTo: function(activeItem){
+      updateVoteLabel(activeItem);
+      loadVideo(activeItem);
+    }
   });
 }
 
@@ -137,7 +141,6 @@ function updateBoardElement(bobData){
   var $textHolder = $bobToUpdate.find(".text-holder");
   $textHolder.find(".author").attr("text", bobData.Title);
   $textHolder.find(".description").attr("text", bobData.Description);
-  updateVoteLabel();
 }
 
 /**
@@ -149,34 +152,57 @@ function deleteElement(bobid){
   if ($('#slideshow').hasClass('initialized')) {
     $('#slideshow').removeClass('initialized');
   }
-
   // reinit the carousel
   $('#slideshow').carousel({
-    fullWidth: true
+    fullWidth: true,
+    onCycleTo: function(activeItem){
+      updateVoteLabel(activeItem);
+      loadVideo(activeItem);
+    }
   });
   // force move to next slide
   carouselControl("right");
 }
 
 /**
-  * Updates the label with the votes label for currently active bob
+  * @param {object} activeItem - Currently Active Item of the carousel
+  * Updates the label with the votes label for currently activeItem
 */
-function updateVoteLabel(){
+function updateVoteLabel(activeItem){
   var $labelToUpdate = $("#votes");
-  var activeBobID = $("#slideshow").find(".active").attr("id");
-  var votes =  $.get('/api/bobs/' + activeBobID + "/votes", function(res){
+  var $activeBobID = ($(activeItem).attr("id"));
+  var votes =  $.get('/api/bobs/' + $activeBobID + "/votes", function(res){
     $labelToUpdate.attr("data-badge-caption", "+" + res.votes);
   });
 }
 
 /**
   * Updates the label with the votes returned from socket
-  * parpm {object} res - response from the socekt which contains bobid and votes
+  * @param {object} res - response from the socekt which contains bobid and votes
 */
 function incrementVote(res){
   $("#votes").attr("data-badge-caption", "+" + res.votes);
-  updateVoteLabel();
 }
+
+
+/**
+  * @param {object} activeItem - Currently Active Item of the carousel
+  * Pauses the previous video, plays the current video, loads the next video
+*/
+function loadVideo(activeItem){
+
+  if ($(".active").hasClass("video-bobble")){
+    $(".active").find("video")[0].play();
+  }
+  if ($(".active").next().hasClass("video-bobble")){
+    $(".active").next().find("video")[0].load();
+    $(".active").next().find("video")[0].play();
+  }
+  if ($(".active").prev().hasClass("video-bobble")){
+    $(".active").prev().find("video")[0].pause();
+  }
+}
+
 
 /**
  * When Document is ready,
@@ -190,10 +216,10 @@ function incrementVote(res){
 var carouselInterval = null;
 
 $(function(){
+    // initial interval setting
     $.get('/api/bobs/active', popluateBoard);
     carouselInterval = setInterval(function() {
       $('#slideshow').carousel('next');
-      $(document).trigger("movingToNext");
     }, 12000);
     $(".plusOne").on("click", function(){
       var activeBobID = $("#slideshow").find(".active").attr("id");
@@ -203,48 +229,14 @@ $(function(){
       var activeBobID = $("#slideshow").find(".active").attr("id");
       $.post('/api/bobs/' + activeBobID + "/flags");
     });
-    $(document).on("movingToNext", function(){
-      updateVoteLabel();
-      loadVideo("movingToNext");
-    });
-    $(document).on("movingToPrev", function(){
-      updateVoteLabel();
-      loadVideo("movingToPrev");
-    });
-    $('#slideshow').on("swipeleft",function(){
+    $('#slideshow').on("swipeleft", function(){
       resetInterval(carouselControl("left"));
     });
-    $('#slideshow').on("swiperight",function(){
+    $('#slideshow').on("swiperight", function(){
       resetInterval(carouselControl("right"));
     });
 });
 
-function loadVideo(trigger){
-  if(trigger === "movingToNext"){
-    if ($(".active").hasClass("video-bobble")){
-      $(".active").find("video")[0].play();
-    }
-    if ($(".active").next().hasClass("video-bobble")){
-      $(".active").next().find("video")[0].load();
-      $(".active").next().find("video")[0].play();
-    }
-    if ($(".active").prev().hasClass("video-bobble")){
-      $(".active").prev().find("video")[0].pause();
-    }
-  }
-  else if(trigger === "movingToPrev"){
-    if ($(".active").hasClass("video-bobble")){
-      $(".active").find("video")[0].play();
-    }
-    if ($(".active").prev().hasClass("video-bobble")){
-      $(".active").prev().find("video")[0].load();
-      $(".active").prev().find("video")[0].play();
-    }
-    if ($(".active").next().hasClass("video-bobble")){
-      $(".active").next().find("video")[0].pause();
-    }
-  }
-}
 /**
  * Changes active item to either previous or next item depending on direction
  * @param {string} direction - direction of moving : left, right
@@ -252,12 +244,10 @@ function loadVideo(trigger){
 function carouselControl(direction){
   if (direction == "left") {
     $('#slideshow').carousel('prev', 1); // Move next n times.
-    $(document).trigger("movingToPrev");
   } else if (direction == "right") {
     $('#slideshow').carousel('next', 1); // Move next n times.
-    $(document).trigger("movingToNext");
   }
-}
+};
 
 /**
  * Resets time interval for the main carousel
@@ -269,9 +259,8 @@ function resetInterval() {
   // Reinits the timers
   carouselInterval = setInterval(function() {
     $('#slideshow').carousel('next');
-    $(document).trigger("movingToNext");
   }, 12000);
-}
+};
 
 /**
  * Listens on jQuery events for keyboard controls
@@ -292,6 +281,6 @@ $(document).keydown(function(e) {
 var socket = io();
 
 socket.on('add_element', addBoardElement);
-socket.on('update_element', updateBoardElement)
+socket.on('update_element', updateBoardElement);
 socket.on('upvote', incrementVote);
-socket.on('delete', deleteElement)
+socket.on('delete', deleteElement);
