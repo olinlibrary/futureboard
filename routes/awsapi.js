@@ -102,17 +102,16 @@ module.exports = function (io, db) {
     req.on('end', function () {
         try {
           var message = JSON.parse(chunks.join(''));
-          // If it is a subscribtion confirmation, get the page
-          if (req.headers['x-amz-sns-message-type'] === 'SubscriptionConfirmation'){
+          // If it is a subscription confirmation, get the page
+          if (req.headers['x-amz-sns-message-type'] === 'SubscriptionConfirmation') {
             request(message.SubscribeURL, function (err, res, body) {
               if (err){ console.log(err); }
             });
           // Else set the bob media status to true
-          } else {
+        } else if (req.headers['x-amz-sns-message-type'] === 'Notification') {
             var SNSmessage = JSON.parse(message.Message);
             SNSmessage.Records.forEach((record) => {
-              if (record.s3.object.key.indexOf('/') == -1){
-                db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
+              if (record.s3.object.key.indexOf('/') == -1) {                db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
                 .then(function (bobData) {
                   io.emit('add_element', bobData);
                 });
