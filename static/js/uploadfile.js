@@ -130,7 +130,7 @@ Dropzone.options.dropzoneInput = {
   autoProcessQueue: false,
   maxFilesize: 10, // MB
   maxFiles: 1,
-  acceptedFiles: 'video/mp4,image/*',
+  acceptedFiles: 'video/*,image/*',
   dictDefaultMessage : "Drop files here, <br>Touch to Upload",
   dictFallbackMessage : "Your browser does not support drag'n'drop file uploads."
   /*
