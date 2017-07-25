@@ -107,10 +107,10 @@ nav .brand-logo{
   opacity:1;
 }
 .flag-buttons > a {
-  opacity:0.9;
+  opacity:0.7;
 }
 .flag-buttons > a:hover {
-  opacity:1;
+  opacity:1.0;
 }
 
 .description {
