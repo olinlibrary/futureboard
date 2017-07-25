@@ -55,14 +55,6 @@ module.exports = function(io, db) {
   router.route('/tags/:tagid')
     .get(GETtag);
 
-  router.route('/mediaReady')
-    .post(function (req, res) {
-      console.log();
-      console.log(req.headers);
-      console.log(req);
-      res.send("OK");
-    });
-
 
   // API functions
   /**
