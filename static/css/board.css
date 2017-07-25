@@ -316,8 +316,7 @@ video {
 
 .events img{
   height:35vh;
-  margin-left:3vh;
-  margin-right:3vh;
+  margin-left:0.5vh;
   float:left;
   display:inline-block;
 }

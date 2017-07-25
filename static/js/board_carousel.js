@@ -228,9 +228,11 @@ $(function(){
       $.post('/api/bobs/' + activeBobID + "/flags");
     });
     $('#slideshow').on("swipeleft", function(){
+      $('#slideshow').stop();
       resetInterval(carouselControl("left"));
     });
     $('#slideshow').on("swiperight", function(){
+      $('#slideshow').stop();
       resetInterval(carouselControl("right"));
     });
 });
