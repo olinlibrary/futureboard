@@ -10,7 +10,7 @@ const bobSchema = mongoose.Schema({
   tags:       [],
   votes:      { type: Number, default: 1 },
   flag:       { type: Number, default: 0 }, // 0: OK, 1: Flagged, 2: Mod OK, 3: Mod Remove
-  mediaReady: { type: Boolean, default: false }
+  mediaReady: { type: Boolean, default: true }
 });
 
 const BobModel = mongoose.model('Bob', bobSchema);
@@ -23,11 +23,14 @@ const BobModel = mongoose.model('Bob', bobSchema);
   @param {Object[]} bobData
 */
 function saveBob(bobData) {
+  let mediaStatus = "";
   if(bobData.data.Link) {
-    const mediaStatus = getMediaStatus(bobData.data.Link);
+    mediaStatus = false;
   } else {
-    const mediaStatus = true;
+    console.log("Warning: Saving bob without Link");
+    mediaStatus = true;
   }
+
   const newBob = new BobModel({
     data:       bobData.data,
     startDate:  bobData.startDate,
@@ -38,20 +41,23 @@ function saveBob(bobData) {
   });
 
   return newBob.save(function (err) {
+    checkMediaStatus(bobData.data.Link);
     if (err) console.log("Bob save error:", err);
   });
 }
 
 /**
- * Get the status of a media
+ * Updates the status of a mediaReady
  * @param {String} url
- * @returns {Boolean} exists
  */
-function getMediaStatus(url) {
+function checkMediaStatus(url) {
   request.head(url, function (err, res, body) {
-    // console.log(res);
     if(err){ console.log(err); }
-    return (res.statusCode == 200);
+    if (res.statusCode === 200) {
+      setMediaStatus(url, true);
+    } else {
+      setMediaStatus(url, false);
+    }
   });
 }
 /**
