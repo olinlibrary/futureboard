@@ -10,6 +10,7 @@
     "mongoose": "^4.10.6",
     "package.json": "^2.0.1",
     "promise": "^7.1.1",
+    "request": "^2.81.0",
     "socket.io": "^2.0.3"
   },
   "devDependencies": {},
