@@ -107,11 +107,11 @@ $(function(){
   },1000); // interval set after 1000ms
 
   // clears the interval on scroll event, resets timer 10 seconds later
-  $(".events.today").on("click", function(){
+  $(".events.today, .events.today *").on("click", function(){
     $('.today .autoscrolling > .collection').stop(); //stops the animationi
     clearInterval(eventsTodayScroll);
   });
-  $(".events.featured").on("click", function(){
+  $(".events.featured, .events.featured *").on("click", function(){
     $('.featured .autoscrolling > .collection').stop(); //stops the animationi
     clearInterval(eventsFeaturedScroll);
   });
