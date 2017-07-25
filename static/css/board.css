@@ -107,10 +107,10 @@ nav .brand-logo{
   opacity:1;
 }
 .flag-buttons > a {
-  opacity:0.9;
+  opacity:0.7;
 }
-.flag > a:hover {
-  opacity:1;
+.flag-buttons > a:hover {
+  opacity:1.0;
 }
 
 .description {
@@ -315,9 +315,7 @@ video {
 }
 
 .events img{
-  height:35vh;
-  margin-left:3vh;
-  margin-right:3vh;
+  height:30vh;
   float:left;
   display:inline-block;
 }

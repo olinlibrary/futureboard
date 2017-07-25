@@ -9,9 +9,11 @@
   <title>FutureBoard</title>
 
   <!-- load Materialize CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/vendor/materialize.min.css">
   <!-- load Materialize js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+  <script src='/static/vendor/jquery.min.js' charset="UTF-8" type="text/javascript"></script>
+  <script src='/static/vendor/materialize.min.js' charset="UTF-8" type="text/javascript"></script>
+  <script src='/static/js/landing.js' charset="UTF-8" type="text/javascript"></script>
   <!-- load Materialize icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="/static/css/landing.css">
@@ -20,7 +22,16 @@
 
 <body>
   <div class="row">
-
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4>Welcome to FutureBoard!</h4>
+        <h6><p>We have a lot of potentially large videos and images. <br />We recommend connecting your device to WI-FI to avoid data drainage.</p></h6>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat"><h4>>Got it!</h4></a>
+      </div>
+    </div>
     <div class="col s12 top">
       <a href="/views/board">BOARD</a>
     </div>
