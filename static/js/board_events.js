@@ -83,20 +83,36 @@ function createFeaturedEventObject(eventData) {
  * Time Unit : ms.  Default Settings : 10s, 7s(small slide)
  */
 $(function(){
+
+  // parse events from abe JSON URL
   $.get('https://abe-dev.herokuapp.com/events/', populateEvents);
-  //  // Initializes auto scroll for events
-   var scrolltopbottom = setInterval(function(){
+
+  // Initializes auto scroll for events
+   var eventsTodayScroll = setInterval(function(){
     $('.today .autoscrolling > .collection').animate({ scrollTop: $('.today .autoscrolling > .collection').prop('scrollHeight') }, 12000);
     setTimeout(function() {
-       $('.autoscrolling > .collection').animate({scrollTop:0}, 8000);
+       $('.today .autoscrolling > .collection').animate({scrollTop:0}, 12000);
     },4000);
-  },4000);
+  },2000);
 
-  //  // Initializes auto scroll for events
-   var scrolltopbottom = setInterval(function(){
-    $('.featured .autoscrolling > .collection').animate({ scrollTop: $('.featured .autoscrolling > .collection').prop('scrollHeight')  }, 10000);
+  // Initializes auto scroll for featured events
+   var eventsFeaturedScroll = setInterval(function(){
+    // scrolls to bottom over 12000ms
+    $('.featured .autoscrolling > .collection').animate({ scrollTop: $('.featured .autoscrolling > .collection').prop('scrollHeight')  }, 12000);
+
+    // scrolls back to top after 4000 ms over 12000ms
     setTimeout(function() {
-       $('.featured .autoscrolling > .collection').animate({scrollTop:0}, 8000);
+       $('.featured .autoscrolling > .collection').animate({scrollTop:0}, 12000);
     },4000);
-  },1000);
+  },1000); // interval set after 1000ms
+
+  // clears the interval on scroll event, resets timer 10 seconds later
+  $(".events.today").on("click", function(){
+    $('.today .autoscrolling > .collection').stop(); //stops the animationi
+    clearInterval(eventsTodayScroll);
+  });
+  $(".events.featured").on("click", function(){
+    $('.featured .autoscrolling > .collection').stop(); //stops the animationi
+    clearInterval(eventsFeaturedScroll);
+  });
 });
