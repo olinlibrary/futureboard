@@ -109,7 +109,7 @@ nav .brand-logo{
 .flag-buttons > a {
   opacity:0.9;
 }
-.flag > a:hover {
+.flag-buttons > a:hover {
   opacity:1;
 }
 
