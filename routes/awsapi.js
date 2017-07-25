@@ -5,6 +5,7 @@ This file holds all aws s3 upload routes.
 const aws = require('aws-sdk');
 const request = require('request');
 const express = require('express');
+const uuidv1 = require('uuid/v1');
 var router = express.Router();
 
 
@@ -32,9 +33,6 @@ module.exports = function (io, db) {
     .post(POSTS3Sign);
 
   router.route('/mediaStatus')
-    .get(function (req, res) {
-      console.log(req.body);
-    })
     .post(function (req, res) {
 
       var chunks = [];
@@ -58,7 +56,7 @@ module.exports = function (io, db) {
                     io.emit('add_element', bobData);
                   });
 
-                console.log(record.s3.object.key);
+                console.log("s3 ready:", record.s3.object.key);
               }
             });
           }
@@ -87,11 +85,28 @@ function GETSignRequest(req, res) {
       // Endpoint can be switched to https://media.futureboard.olin.build/' after we get an ssl cert for media.FUTUREboard.olin.build
       endpoint: new aws.Endpoint('https://s3.amazonaws.com')
     });
-  const fileName = req.query['file-name'];
+  const inputFileName = req.query['file-name'].split('.');
   const fileType = req.query['file-type'];
+  const mediaType = fileType.split('/')[0]; // Get image or video
+  const inputFileExtension = inputFileName[inputFileName.length - 1];
+  let uploadFileName = '';
+  let outputFileName = '';
+  const new_uuid = uuidv1();
+
+  if(mediaType === 'image'){
+    uploadFileName = 'img-' + new_uuid + '.' + inputFileExtension;
+    outputFileName = 'img-' + new_uuid + '.jpg';
+  } else if (mediaType === 'video') {
+    uploadFileName = 'vid-' + new_uuid + '.' + inputFileExtension;
+    outputFileName = 'vid-' + new_uuid + '.mp4';
+  } else {
+    res.status(415).send('unsuported media type');
+    return;
+  }
+  console.log(mediaType, fileType, uploadFileName);
   const s3Params = {
     Bucket: S3_BUCKET,
-    Key: fileName,
+    Key: uploadFileName,
     Expires: 60,
     ContentType: fileType,
     ACL: 'public-read'
@@ -105,8 +120,9 @@ function GETSignRequest(req, res) {
     const returnData = {
       signedRequest: data,
       // The location of the future media, to be used for previering and submitting a bob
-      url: 'http://media.futureboard.olin.build/' + fileName
+      url: 'http://media.futureboard.olin.build/' + outputFileName
     };
+    console.log(returnData);
     res.write(JSON.stringify(returnData));
     res.end();
   });
