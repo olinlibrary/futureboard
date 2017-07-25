@@ -165,7 +165,7 @@ function deleteElement(bobid){
 }
 
 /**
-  * @param {object} activeItem - Currently Active Item of the carousel
+  * @param {object} activeItem - Vanilla JS Object of activeItem
   * Updates the label with the votes label for currently activeItem
 */
 function updateVoteLabel(activeItem){
@@ -186,23 +186,21 @@ function incrementVote(res){
 
 
 /**
-  * @param {object} activeItem - Currently Active Item of the carousel
+  * @param {object} activeItem - Vanilla JS Object of activeItem
   * Pauses the previous video, plays the current video, loads the next video
 */
 function loadVideo(activeItem){
-
-  if ($(".active").hasClass("video-bobble")){
-    $(".active").find("video")[0].play();
+  var $activeItem = $(activeItem); // wrapping jQuery to vanilla JS Obejct
+  if ($activeItem.hasClass("video-bobble")){
+    $activeItem.find("video")[0].play();
   }
   if ($(".active").next().hasClass("video-bobble")){
     $(".active").next().find("video")[0].load();
-    $(".active").next().find("video")[0].play();
   }
   if ($(".active").prev().hasClass("video-bobble")){
     $(".active").prev().find("video")[0].pause();
   }
 }
-
 
 /**
  * When Document is ready,
