@@ -1,0 +1,27 @@
+/*
+- Currently activated mobileCSS for board.html
+*/
+@media screen and (max-width: 700px) {
+  body {
+    overflow:auto
+    background-color: #FFFFFF;
+    font-family: "DINOT";
+  }
+
+  /*navbar settings*/
+  nav {
+    background-color:#009BDF;
+    font-family: "DINOT-BoldItalic";
+    height:30px;
+  }
+  nav .brand-logo{
+    font-size: 30px;
+    line-height: 30px;
+  }
+
+  /*general slideshow settings*/
+  #slideshow {
+    /*materialize carousel has unwanted fixed default height*/
+    float:left;
+    height: 95vh !important;
+  }

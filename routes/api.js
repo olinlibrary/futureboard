@@ -62,7 +62,7 @@ module.exports = function(io, db) {
   * Currently only checks for req.headers.auth, in the future it will use a more robust authentication method
   */
   function ensureAuthenticated(req, res, next) {
-    if(req.headers.auth === 'hunter2'){
+    if (req.headers.auth === 'hunter2'){
       next();
     } else {
       res.status(401).send("User not authenticated");
@@ -92,22 +92,25 @@ module.exports = function(io, db) {
   }
 
   function POSTcreateNewBob(req, res, next) {
-    if(!req.body.endDate){
+    if (!req.body.endDate){
       req.body.endDate = Date.now() + 2 * 60 * 60 * 12; // Default to two days
     }
 
     var bob = {
-      data:      req.body.data,
-      flavor:    req.body.flavor,
-      startDate: req.body.startDate,
-      endDate:   req.body.endDate,
-      tags:      req.body.tags
+      data:        req.body.data,
+      flavor:      req.body.flavor,
+      description: req.body.description,
+      startDate:   req.body.startDate,
+      endDate:     req.body.endDate,
+      tags:        req.body.tags
     };
 
     // Save bob in db
     db.Bob.saveBob(bob).then(function success(bobData) {
-      // Send to all boards
-      io.emit('add_element', bobData);
+      // Send to all boards if the media is ready
+      if (bobData.mediaReady){
+        io.emit('add_element', bobData);
+      }
       res.send("success");
     }, function error(err) {
       res.status(500).send(err);
@@ -116,6 +119,7 @@ module.exports = function(io, db) {
 
   // Sends back one bob by id
   function GETbob(req, res) {
+    if (!req.params.bobid) return res.status(400).send("bob id not defined");
     db.Bob.getOneBob({ _id: db.ObjectId(req.params.bobid) } ).then(function success(data) {
       res.send(data);
     }, function error(err) {
@@ -124,8 +128,9 @@ module.exports = function(io, db) {
   }
 
   function GETvotes(req, res) {
+    if (!req.params.bobid) return res.status(404).send("bob not found");
     db.Bob.getOneBob(db.ObjectId(req.params.bobid)).then(function success(data) {
-      if(data){
+      if (data){
         res.send({ votes: data.votes });
       } else {
         res.status(404).send("bob not found");
@@ -138,7 +143,7 @@ module.exports = function(io, db) {
   function POSTupvoteBob(req, res) {
     db.Bob.upvoteBob(db.ObjectId(req.params.bobid)).then(function success(data) {
       io.emit('upvote', { id:req.params.bobid, votes: data.votes + 1 });
-      if(data){
+      if (data){
         res.send("upvoted");
       } else {
         res.status(404).send("bob not found");
@@ -150,7 +155,7 @@ module.exports = function(io, db) {
 
   function GETflag(req, res) {
     db.Bob.getOneBob(db.ObjectId(req.params.bobid)).then(function success(data) {
-      if(data){
+      if (data){
         res.send({ flag: data.flag });
       } else {
         res.send("bob not found");
@@ -162,13 +167,13 @@ module.exports = function(io, db) {
 
   function POSTflagBob(req, res) {
     db.Bob.flagBob(db.ObjectId(req.params.bobid)).then(function success(data) {
-      if(data){
+      if (data){
         io.emit('delete', req.params.bobid);
         res.send("flagged");
       } else {
         console.log("searching for bob");
         db.Bob.getOneBob(db.ObjectId(req.params.bobid)).then(function success(data) {
-          if(data){
+          if (data){
             res.send({ flag: data.flag });
           } else {
             res.send("bob not found");
@@ -225,7 +230,7 @@ module.exports = function(io, db) {
   function GETflavor(req, res) {
     db.Flavors.getFlavor({ name: req.params.flavorname }).then(function success(data) {
       // ObjectId is 24 characters long. If nothing is found by name, check by _id
-      if(data === null && req.params.flavorname.length == 24){
+      if (data === null && req.params.flavorname.length == 24){
         db.Flavors.getFlavor({ _id: db.ObjectId(req.params.flavorname) }).then(function success(data) {
           res.send(data);
         }, function error(err) {

@@ -99,20 +99,21 @@ nav .brand-logo{
 }
 
 .main-button{
-  opacity:0.5;
+  opacity:0.7;
 }
 .main-button:hover{
   opacity:1.0;
 }
 
 .flag-buttons > a {
-  opacity:0.5;
+  opacity:1;
 }
 .flag-buttons > a:hover {
   opacity:1.0;
 }
+<<<<<<< HEAD
 .slideshow-buttons > a {
-  opacity:0.5;
+  opacity:0.7;
 }
 .slideshow-buttons > a:hover {
   opacity:1;
@@ -129,7 +130,7 @@ span.badge.new {
   right:5px;
   background-color: #F47920;
 }
-gi
+
 /*slideshow content(individual carousels items)*/
 .carousel-item {
   position: absolute !important;

@@ -14,6 +14,6 @@ function redirectToHTTPS(req, res) {
 
 
 module.exports.listen = function(port) {
-  http.listen(port);
-  console.log('http listening on', port);
+  console.log('httpredirect running on', port);
+  return http.listen(port);
 };

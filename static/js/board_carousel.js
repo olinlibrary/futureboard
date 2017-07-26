@@ -6,22 +6,24 @@
 */
 function popluateBoard(bobs) {
   let $momentsStream = $(".moments");
-  let $slideShowButtons = (".slideshow-buttons");
-
   for (var i = 0; i < bobs.length; i++) {
     let bob = bobs[i];
     $momentsStream.append(createBoardElement(bob));
   }
-
   // Initalizes carousels for both moments and memes streams
-  $momentsStream.carousel({
-    fullWidth: true
-  });
-  // Initializes value for vote lable
-  updateVoteLabel();
-  loadVideo("movingToNext");
+  initCarousel();
 }
 
+function initCarousel(){
+  let $momentsStream = $(".moments");
+  $momentsStream.carousel({
+    fullWidth: true,
+    onCycleTo: function(activeItem){
+      updateVoteLabel(activeItem);
+      loadVideo(activeItem);
+    }
+  });
+}
 /**
  * Creates and Returns a new html element from a given Bob object
  * @param {Object} - Javascript Bob object from Mongoose
@@ -60,22 +62,28 @@ function createBoardElement(bob) {
       $html.addClass('image-bobble flip').attr("id", bob._id)
         .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")", 'image-orientation': '0deg', 'background-size': "contain", 'background-position': "center center"}}))
         .append($('<div />', {class: "text-holder back"})
-          .append($('<p>', {class: "author", text: bob.data.Title}))
-          .append($('<p />', {class:"description", text : bob.data.Descrption})));
+          .append($('<p>', {class: "author", text: bob.data.Title})));
       break;
 
     case 'Meme':
       $html.addClass('image-bobble flip').attr("id", bob._id)
         .append($('<div />', {class: "image-holder front", css: {'background-image': "url(" + bob.data.Link + ")", 'image-orientation': '0deg', 'background-size': "contain", 'background-position': "center center"}}))
         .append($('<div />', {class: "text-holder back"})
-          .append($('<p>', {class: "author", text: bob.data.Title}))
-          .append($('<p />', {class:"description", text: bob.data.Descrption})));
+          .append($('<p>', {class: "author", text: bob.data.Title})));
       break;
 
     default:
       console.log("Unhandled type" + bob);
       $html = null;
   }
+
+  var description = bob.description || bob.data.Description;
+  if (description !== undefined) {
+    $html.append($('<div>', {class: "description"}).append(
+      $('<p>', {text: description}))
+    );
+  }
+
   return $html;
 }
 
@@ -86,7 +94,7 @@ function createBoardElement(bob) {
 */
 function addBoardElement(bob) {
   carouselSelector = ".moments"; //jQuery selector for target carousel
-  if($("#slideshow > div").length > 20) {
+  if ($("#slideshow > div").length > 20) {
     $("#slideshow > div:last-child").remove();   // deletes the oldest bob
   }
   appendToCarousel(bob, carouselSelector);
@@ -107,14 +115,11 @@ function appendToCarousel(bob, carouselSelector) {
   var $before = $activeItem.prevAll();
   $carousel.append($before.clone());
   $before.remove();
-
   if ($carousel.hasClass('initialized')) {
     $carousel.removeClass('initialized');
   }
   //reinit the carousel
-  $carousel.carousel({
-    fullWidth: true
-  });
+  initCarousel();
 }
 
 /**
@@ -131,7 +136,6 @@ function updateBoardElement(bobData){
   var $textHolder = $bobToUpdate.find(".text-holder");
   $textHolder.find(".author").attr("text", bobData.Title);
   $textHolder.find(".description").attr("text", bobData.Description);
-  updateVoteLabel();
 }
 
 /**
@@ -143,33 +147,48 @@ function deleteElement(bobid){
   if ($('#slideshow').hasClass('initialized')) {
     $('#slideshow').removeClass('initialized');
   }
-
   // reinit the carousel
-  $('#slideshow').carousel({
-    fullWidth: true
-  });
+  initCarousel();
   // force move to next slide
   carouselControl("right");
 }
 
 /**
-  * Updates the label with the votes label for currently active bob
+  * @param {object} activeItem - Vanilla JS Object of activeItem
+  * Updates the label with the votes label for currently activeItem
 */
-function updateVoteLabel(){
+function updateVoteLabel(activeItem){
   var $labelToUpdate = $("#votes");
-  var activeBobID = $("#slideshow").find(".active").attr("id");
-  var votes =  $.get('/api/bobs/' + activeBobID + "/votes", function(res){
+  var $activeBobID = $(activeItem).attr("id");
+  var votes =  $.get('/api/bobs/' + $activeBobID + "/votes", function(res){
     $labelToUpdate.attr("data-badge-caption", "+" + res.votes);
   });
 }
 
 /**
   * Updates the label with the votes returned from socket
-  * parpm {object} res - response from the socekt which contains bobid and votes
+  * @param {object} res - response from the socket which contains bobid and votes
 */
 function incrementVote(res){
   $("#votes").attr("data-badge-caption", "+" + res.votes);
-  updateVoteLabel();
+}
+
+
+/**
+  * @param {object} activeItem - Vanilla JS Object of activeItem
+  * Pauses the previous video, plays the current video, loads the next video
+*/
+function loadVideo(activeItem){
+  var $activeItem = $(activeItem); // wrapping jQuery to vanilla JS Object
+  if ($activeItem.hasClass("video-bobble")){
+    $activeItem.find("video")[0].play();
+  }
+  if ($(".active").next().hasClass("video-bobble")){
+    $(".active").next().find("video")[0].load();
+  }
+  if ($(".active").prev().hasClass("video-bobble")){
+    $(".active").prev().find("video")[0].pause();
+  }
 }
 
 /**
@@ -184,10 +203,10 @@ function incrementVote(res){
 var carouselInterval = null;
 
 $(function(){
+    // initial interval setting
     $.get('/api/bobs/active', popluateBoard);
     carouselInterval = setInterval(function() {
       $('#slideshow').carousel('next');
-      $(document).trigger("movingToNext");
     }, 12000);
     $(".plusOne").on("click", function(){
       var activeBobID = $("#slideshow").find(".active").attr("id");
@@ -197,48 +216,16 @@ $(function(){
       var activeBobID = $("#slideshow").find(".active").attr("id");
       $.post('/api/bobs/' + activeBobID + "/flags");
     });
-    $(document).on("movingToNext", function(){
-      updateVoteLabel();
-      loadVideo("movingToNext");
-    });
-    $(document).on("movingToPrev", function(){
-      updateVoteLabel();
-      loadVideo("movingToPrev");
-    });
-    $('#slideshow').on("swipeleft",function(){
+    $('#slideshow').on("swipeleft", function(){
+      $('#slideshow').stop();
       resetInterval(carouselControl("left"));
     });
-    $('#slideshow').on("swiperight",function(){
+    $('#slideshow').on("swiperight", function(){
+      $('#slideshow').stop();
       resetInterval(carouselControl("right"));
     });
 });
 
-function loadVideo(trigger){
-  if(trigger === "movingToNext"){
-    if ($(".active").hasClass("video-bobble")){
-      $(".active").find("video")[0].play();
-    }
-    if ($(".active").next().hasClass("video-bobble")){
-      $(".active").next().find("video")[0].load();
-      $(".active").next().find("video")[0].play();
-    }
-    if ($(".active").prev().hasClass("video-bobble")){
-      $(".active").prev().find("video")[0].pause();
-    }
-  }
-  else if(trigger === "movingToPrev"){
-    if ($(".active").hasClass("video-bobble")){
-      $(".active").find("video")[0].play();
-    }
-    if ($(".active").prev().hasClass("video-bobble")){
-      $(".active").prev().find("video")[0].load();
-      $(".active").prev().find("video")[0].play();
-    }
-    if ($(".active").next().hasClass("video-bobble")){
-      $(".active").next().find("video")[0].pause();
-    }
-  }
-}
 /**
  * Changes active item to either previous or next item depending on direction
  * @param {string} direction - direction of moving : left, right
@@ -246,12 +233,10 @@ function loadVideo(trigger){
 function carouselControl(direction){
   if (direction == "left") {
     $('#slideshow').carousel('prev', 1); // Move next n times.
-    $(document).trigger("movingToPrev");
   } else if (direction == "right") {
     $('#slideshow').carousel('next', 1); // Move next n times.
-    $(document).trigger("movingToNext");
   }
-}
+};
 
 /**
  * Resets time interval for the main carousel
@@ -263,9 +248,8 @@ function resetInterval() {
   // Reinits the timers
   carouselInterval = setInterval(function() {
     $('#slideshow').carousel('next');
-    $(document).trigger("movingToNext");
   }, 12000);
-}
+};
 
 /**
  * Listens on jQuery events for keyboard controls
@@ -286,6 +270,6 @@ $(document).keydown(function(e) {
 var socket = io();
 
 socket.on('add_element', addBoardElement);
-socket.on('update_element', updateBoardElement)
+socket.on('update_element', updateBoardElement);
 socket.on('upvote', incrementVote);
-socket.on('delete', deleteElement)
+socket.on('delete', deleteElement);

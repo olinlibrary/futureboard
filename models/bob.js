@@ -1,15 +1,16 @@
 const mongoose = require('mongoose');
-
+const request = require('request');
 
 // Define and compile Bob Schema
 const bobSchema = mongoose.Schema({
-  data:      {},
-  startDate: { type: Date, default: Date.now() },
-  endDate:   { type: Date, default: Date.now() + 604800 }, // One week from now
-  flavor:    String,
-  tags:      [],
-  votes:     { type: Number, default: 1 },
-  flag:      { type: Number, default: 0 } // 0: OK, 1: Flagged, 2: Mod OK, 3: Mod Remove
+  data:       {},
+  startDate:  { type: Date, default: Date.now() },
+  endDate:    { type: Date, default: Date.now() + 604800 }, // One week from now
+  flavor:     String,
+  tags:       [],
+  votes:      { type: Number, default: 1 },
+  flag:       { type: Number, default: 0 }, // 0: OK, 1: Flagged, 2: Mod OK, 3: Mod Remove
+  mediaReady: { type: Boolean, default: true }
 });
 
 const BobModel = mongoose.model('Bob', bobSchema);
@@ -22,16 +23,41 @@ const BobModel = mongoose.model('Bob', bobSchema);
   @param {Object[]} bobData
 */
 function saveBob(bobData) {
+  let mediaStatus = "";
+  if (bobData.data.Link) {
+    mediaStatus = false;
+  } else {
+    console.log("Warning: Saving bob without Link");
+    mediaStatus = true;
+  }
+
   const newBob = new BobModel({
     data:       bobData.data,
     startDate:  bobData.startDate,
     endDate:    bobData.endDate,
     flavor:     bobData.flavor,
-    tags:       bobData.tags
+    tags:       bobData.tags,
+    mediaReady: mediaStatus
   });
 
   return newBob.save(function (err) {
+    checkMediaStatus(bobData.data.Link);
     if (err) console.log("Bob save error:", err);
+  });
+}
+
+/**
+ * Updates the status of a mediaReady
+ * @param {String} url
+ */
+function checkMediaStatus(url) {
+  request.head(url, function (err, res, body) {
+    if (err){ console.log(err); }
+    if (res.statusCode === 200) {
+      setMediaStatus(url, true);
+    } else {
+      setMediaStatus(url, false);
+    }
   });
 }
 /**
@@ -59,6 +85,7 @@ function getActiveBobs(filter, maxBobs = 20) {
   // Get first maxBobs bobs that aren't flagged. Can flesh out with fancier algorithms in the future
   let query = BobModel.find(filter).lean();
   query.and({flag: [0, 2]});  // If not flagged
+  query.and({mediaReady: true}); // Only bobs with media ready
   query.sort('-startDate');   // Sort newest to oldest
   query.limit(maxBobs);       // First n bobs
   return query;
@@ -122,6 +149,16 @@ function flagBob(bobId) {
 }
 
 
+/**
+  Sets a bob's mediaReady status
+  @param {String} mediaURL - URL that is ready
+  @param {Boolean} [status=true] - status of media to set
+*/
+function setMediaStatus(mediaURL, status = true) {
+  return BobModel.findOneAndUpdate({ data: { Link: mediaURL }}, { mediaReady: true }).lean();
+}
+
+
 
 let Bob = {};
 
@@ -135,5 +172,6 @@ Bob.updateBob      = updateBob;
 Bob.deleteBob      = deleteBob;
 Bob.upvoteBob      = upvoteBob;
 Bob.flagBob        = flagBob;
+Bob.setMediaStatus = setMediaStatus;
 
 module.exports     = Bob;

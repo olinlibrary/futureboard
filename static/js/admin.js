@@ -49,7 +49,7 @@ function createBobElement(bob) {
   });
 
   let $preview = null;
-  if(bob.flavor === 'Moment'){
+  if (bob.flavor === 'Moment'){
     $preview = $('<img>', {
       src: bob.data.Link,
       href: bob.data.Link,
@@ -102,7 +102,7 @@ function addTableElement(newBob) {
  * @param {String} bobid - the bobid of target bob to be deleted
 */
 function deleteBob(bobid) {
-  if(confirm("Actually delete " + bobid + "?")) {
+  if (confirm("Actually delete " + bobid + "?")) {
     $.ajax({
 			url: '/api/bobs/' + bobid,
 			type: 'DELETE',
