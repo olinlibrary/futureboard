@@ -215,7 +215,7 @@ $(function(){
       var activeBobID = $("#slideshow").find(".active").attr("id");
       $.post('/api/bobs/' + activeBobID + "/flags");
     });
-    jQuery( window ).on( "swipe", function( event ) {
+    $( window ).on( "swipe", function( event ) {
       $.event.special.swipe.horizontalDistanceThreshold = (screen.availWidth) / 80;
     });
     $('#slideshow').on("swipeleft", function(){
