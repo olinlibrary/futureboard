@@ -74,6 +74,12 @@ function createFeaturedEventObject(eventData) {
   return $html;
 }
 
+/**
+  * Initializes auto scroll events
+  * @param {Object} $collectionSelection - jQuery object of the selected events
+  * @param {Object} $scrollToBottom - boolean flag for scrolling direction
+*/
+
 function scrollEvents($collectionSelection, scrollToBottom = true) {
   $collectionSelection.animate({ scrollTop: (scrollToBottom) ? $collectionSelection.prop('scrollHeight') : 0 }, 12000);
   setTimeout(function() {
@@ -101,11 +107,11 @@ $(function(){
   var eventsFeaturedScroll = scrollEvents($eventsFeatured, true);
 
   // clears the interval on scroll event, resets timer 10 seconds later
-  $(".events.today, .events.today *").on("click", function(){
+  $eventsToday.on("click", function(){
     clearInterval(eventsTodayScroll);
     $eventsToday.stop(); // stops the animation
   });
-  $(".events.featured, .events.featured *").on("click", function(){
+  $eventsFeatured.on("click", function(){
     clearInterval(eventsFeaturedScroll);
     $eventsFeatured.stop(); // stops the animation
   });
