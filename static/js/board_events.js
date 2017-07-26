@@ -75,6 +75,19 @@ function createFeaturedEventObject(eventData) {
 }
 
 /**
+  * Initializes auto scroll events
+  * @param {Object} $collectionSelection - jQuery object of the selected events
+  * @param {Object} $scrollToBottom - boolean flag for scrolling direction
+*/
+
+function scrollEvents($collectionSelection, scrollToBottom = true) {
+  $collectionSelection.animate({ scrollTop: (scrollToBottom) ? $collectionSelection.prop('scrollHeight') : 0 }, 12000);
+  setTimeout(function() {
+    scrollEvents($collectionSelection, !scrollToBottom);
+  }, 4000)
+}
+
+/**
  * When Document is ready,
  * Defines time interval for carousel auto slides,
  * Listens on click and touch events for flip, swap buttons
@@ -88,31 +101,18 @@ $(function(){
   $.get('https://abe-dev.herokuapp.com/events/', populateEvents);
 
   // Initializes auto scroll for events
-   var eventsTodayScroll = setInterval(function(){
-    $('.today .autoscrolling > .collection').animate({ scrollTop: $('.today .autoscrolling > .collection').prop('scrollHeight') }, 12000);
-    setTimeout(function() {
-       $('.today .autoscrolling > .collection').animate({scrollTop:0}, 12000);
-    },4000);
-  },2000);
-
-  // Initializes auto scroll for featured events
-   var eventsFeaturedScroll = setInterval(function(){
-    // scrolls to bottom over 12000ms
-    $('.featured .autoscrolling > .collection').animate({ scrollTop: $('.featured .autoscrolling > .collection').prop('scrollHeight')  }, 12000);
-
-    // scrolls back to top after 4000 ms over 12000ms
-    setTimeout(function() {
-       $('.featured .autoscrolling > .collection').animate({scrollTop:0}, 12000);
-    },4000);
-  },1000); // interval set after 1000ms
+  var $eventsToday = $('.today .autoscrolling > .collection')
+  var $eventsFeatured = $('.featured .autoscrolling > .collection')
+  var eventsTodayScroll = scrollEvents($eventsToday, true);
+  var eventsFeaturedScroll = scrollEvents($eventsFeatured, true);
 
   // clears the interval on scroll event, resets timer 10 seconds later
-  $(".events.today, .events.today *").on("click", function(){
-    $('.today .autoscrolling > .collection').stop(); //stops the animationi
+  $eventsToday.on("click", function(){
     clearInterval(eventsTodayScroll);
+    $eventsToday.stop(); // stops the animation
   });
-  $(".events.featured, .events.featured *").on("click", function(){
-    $('.featured .autoscrolling > .collection').stop(); //stops the animationi
+  $eventsFeatured.on("click", function(){
     clearInterval(eventsFeaturedScroll);
+    $eventsFeatured.stop(); // stops the animation
   });
 });
