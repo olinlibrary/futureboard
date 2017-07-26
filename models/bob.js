@@ -11,7 +11,7 @@ const bobSchema = mongoose.Schema({
   tags:        [],
   votes:       { type: Number, default: 1 },
   flag:        { type: Number, default: 0 }, // 0: OK, 1: Flagged, 2: Mod OK, 3: Mod Remove
-  mediaReady:  { type: Boolean, default: true }
+  mediaReady:  Boolean
 });
 
 const BobModel = mongoose.model('Bob', bobSchema);
@@ -157,7 +157,7 @@ function flagBob(bobId) {
   @param {Boolean} [status=true] - status of media to set
 */
 function setMediaStatus(mediaURL, status = true) {
-  return BobModel.findOneAndUpdate({ data: { Link: mediaURL }}, { mediaReady: true }).lean();
+  return BobModel.findOneAndUpdate({ data: { Link: mediaURL }}, { mediaReady: status }).lean();
 }
 
 
