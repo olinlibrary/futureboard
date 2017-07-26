@@ -7,19 +7,19 @@
 
   <title>FutureBoard - Upload</title>
 
-  <!-- load Materialize CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/vendor/materialize.min.css">
   <!-- load Materialize js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+  <script src='/static/vendor/materialize.min.js' charset="UTF-8" type="text/javascript"></script>
+
   <!-- load Materialize icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <!-- load CSS -->
   <link rel="stylesheet" type="text/css" href="/static/css/upload.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/dropzone.css">
+  <link rel="stylesheet" type="text/css" href="/static/vendor/dropzone.css">
   <!-- load vendor js -->
   <script src="/static/vendor/jquery.min.js" charset="UTF-8" type="text/javascript"></script>
-  <script src="./static/vendor/dropzone.js"></script>
+  <script src="/static/vendor/dropzone.js"></script>
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
 
@@ -32,13 +32,14 @@
 
   <div class="container">
     <div class="row">
+
       <nav class="col s12">
         <div class="nav-wrapper">
           <a class="brand-logo"><i class="material-icons hide-on-small-only">fast_forward</i>Upload</a>
         </div>
       </nav>
 
-
+      <!-- Dropzone automatically runs on a form with the "dropzone-input" id -->
       <form action="/file-upload" class="dropzone hoverable col s12" id='dropzone-input'>
         <div class="fallback">
           <input name="file" type="file" multiple />
@@ -48,6 +49,8 @@
       <progress id="progress" value="0">
       </progress>
 
+      <label for="description">Description <span>Who are you? Where is the media from? Anything else?</span></label>
+      <input id="description" type="text" name="description" placeholder="Some text">
 
       <button type="submit" name="action" class="col s12 btn-large btn waves-effect waves-light submit" disabled="disabled" id="submit-button">
         <i class="material-icons">send</i> SUBMIT

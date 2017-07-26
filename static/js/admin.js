@@ -2,10 +2,11 @@
  * Populates admin Table by creating jQuery DOM elements for given bobs,
  * @param {Object[]} bobs - Array of Bob objects to be displayed on the table
 */
+tableColumns = ["Flavor", "ID", "StartDate", "Preview", "Description", "Votes", "Flag", "MediaReady", "Edit", "Delete"];
+
 function popluateTable(bobs) {
   let $bobTable = $("#bobTable");
   $bobTable.empty(); // Clear the table before adding to it
-  let tableColumns = ["Flavor", "ID", "StartDate", "Preview", "Votes", "Flag", "Active", "Edit", "Delete"];
   let $html = $('<tr>', {});
   for (let i in tableColumns){
     $html.append($('<th>', { text: tableColumns[i] }));
@@ -19,7 +20,6 @@ function popluateTable(bobs) {
 function popluateFlaggedTable(flaggedBobs) {
   let $flaggedBobTable = $("#flaggedBobTable");
   $flaggedBobTable.empty(); // Clear the table before adding to it
-  let tableColumns = ["Flavor", "ID", "StartDate", "Preview", "Votes", "Flag", "Active", "Edit", "Delete"];
   let $html = $('<tr>', {});
   for (let i in tableColumns){
     $html.append($('<th>', { text: tableColumns[i] }));
@@ -49,7 +49,7 @@ function createBobElement(bob) {
   });
 
   let $preview = null;
-  if(bob.flavor === 'Moment'){
+  if (bob.flavor === 'Moment'){
     $preview = $('<img>', {
       src: bob.data.Link,
       href: bob.data.Link,
@@ -72,9 +72,10 @@ function createBobElement(bob) {
     '<p>' + bob._id + '</p>',
     '<p>' + bob.startDate + '</p>',
     $preview,
+    '<p>' + bob.description + '</p>',
     '<p>' + bob.votes + '</p>',
     '<p>' + bob.flag + '</p>',
-    '<p>' + (Date.now() > new Date(bob.startDate) && Date.now() < new Date(bob.endDate)) + '</p>',
+    '<p>' + bob.mediaReady + '</p>',
     $editButton,
     $deleteButton
   ];
@@ -102,7 +103,7 @@ function addTableElement(newBob) {
  * @param {String} bobid - the bobid of target bob to be deleted
 */
 function deleteBob(bobid) {
-  if(confirm("Actually delete " + bobid + "?")) {
+  if (confirm("Actually delete " + bobid + "?")) {
     $.ajax({
 			url: '/api/bobs/' + bobid,
 			type: 'DELETE',

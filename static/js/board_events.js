@@ -6,23 +6,23 @@
 function populateEvents(eventsData) {
   let $eventsToday = $('#eventsToday');
   let $featuredEvents = $('#featuredEvents');
-
+  let $addedFeaturedEventsTitles = [];
   for (var i = 0; i < eventsData.length ; i++) {
     let featured = (($.inArray("featured", eventsData[i].labels)) >= 0);
-
     let eventStart = Date.parse(eventsData[i].start).toString("YYMMdd");
     let today = Date.today().toString("YYMMdd");
-
-    if(today === eventStart){
+    if (today === eventStart){
       let $newEvent = createEventObject(eventsData[i]);
       $eventsToday.append($newEvent);
     }
-
     if (featured && (Date.today().compareTo(Date.parse(eventsData[i].start)) == -1)){
-      let $newEvent = createFeaturedEventObject(eventsData[i]);
-      $featuredEvents.append($newEvent);
+      // checks for recurring events, adds only the first instance of recurring events
+      if ($.inArray(eventsData[i].title, $addedFeaturedEventsTitles) < 0){
+        let $newEvent = createFeaturedEventObject(eventsData[i]);
+        $featuredEvents.append($newEvent);
+        $addedFeaturedEventsTitles.push(eventsData[i].title);
+      }
     }
-
   }
 }
 
@@ -75,6 +75,19 @@ function createFeaturedEventObject(eventData) {
 }
 
 /**
+  * Initializes auto scroll events
+  * @param {Object} $collectionSelection - jQuery object of the selected events
+  * @param {Object} $scrollToBottom - boolean flag for scrolling direction
+*/
+
+function scrollEvents($collectionSelection, scrollToBottom = true) {
+  $collectionSelection.animate({ scrollTop: (scrollToBottom) ? $collectionSelection.prop('scrollHeight') : 0 }, 12000);
+  setTimeout(function() {
+    scrollEvents($collectionSelection, !scrollToBottom);
+  }, 4000)
+}
+
+/**
  * When Document is ready,
  * Defines time interval for carousel auto slides,
  * Listens on click and touch events for flip, swap buttons
@@ -83,20 +96,23 @@ function createFeaturedEventObject(eventData) {
  * Time Unit : ms.  Default Settings : 10s, 7s(small slide)
  */
 $(function(){
-  $.get('https://abe-dev.herokuapp.com/events/', populateEvents);
-  //  // Initializes auto scroll for events
-   var scrolltopbottom = setInterval(function(){
-    $('.today .autoscrolling > .collection').animate({ scrollTop: $('.today .autoscrolling > .collection').prop('scrollHeight') }, 12000);
-    setTimeout(function() {
-       $('.autoscrolling > .collection').animate({scrollTop:0}, 8000);
-    },4000);
-  },4000);
 
-  //  // Initializes auto scroll for events
-   var scrolltopbottom = setInterval(function(){
-    $('.featured .autoscrolling > .collection').animate({ scrollTop: $('.featured .autoscrolling > .collection').prop('scrollHeight')  }, 10000);
-    setTimeout(function() {
-       $('.featured .autoscrolling > .collection').animate({scrollTop:0}, 8000);
-    },4000);
-  },1000);
+  // parse events from abe JSON URL
+  $.get('https://abe-dev.herokuapp.com/events/', populateEvents);
+
+  // Initializes auto scroll for events
+  var $eventsToday = $('.today .autoscrolling > .collection')
+  var $eventsFeatured = $('.featured .autoscrolling > .collection')
+  var eventsTodayScroll = scrollEvents($eventsToday, true);
+  var eventsFeaturedScroll = scrollEvents($eventsFeatured, true);
+
+  // clears the interval on scroll event, resets timer 10 seconds later
+  $eventsToday.on("click", function(){
+    clearInterval(eventsTodayScroll);
+    $eventsToday.stop(); // stops the animation
+  });
+  $eventsFeatured.on("click", function(){
+    clearInterval(eventsFeaturedScroll);
+    $eventsFeatured.stop(); // stops the animation
+  });
 });

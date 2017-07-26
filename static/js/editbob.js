@@ -69,7 +69,7 @@ $(function() {
 * Populates input forms with current bob values
 */
 function createAndPrefillForm(bobid) {
-	if(bobid.length !== 24){
+	if (bobid.length !== 24){
 		throw("bobid not valid");
 	}
 	/**

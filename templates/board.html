@@ -3,6 +3,8 @@
 
 <head>
   <meta charset="UTF-8">
+  <!-- refreshes every 6 min -->
+  <meta http-equiv="refresh" content="1200" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
@@ -13,12 +15,13 @@
   <script src='/static/vendor/jquery.min.js' charset="UTF-8" type="text/javascript"></script>
 
   <!-- load Materialize CSS -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="/static/vendor/materialize.min.css">
   <!-- load Materialize js -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.2/js/materialize.min.js"></script>
+  <script src='/static/vendor/materialize.min.js' charset="UTF-8" type="text/javascript"></script>
   <!-- load Materialize icons -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="/static/css/slideshow-featured-events.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/board.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/board_mobile.css">
 
   <!-- load board components-->
   <script src='/static/js/board_carousel.js' charset="UTF-8" type="text/javascript"></script>
@@ -108,21 +111,11 @@
           </ul>
         </div>
       </div>
-
-    </div>
-    <div class="fixed-action-btn horizontal slideshow-button hide-on-small-only">
-      <a class="btn-floating btn-large blue main-button">
-        <i class="large material-icons">mode_edit</i>
-      </a>
-      <ul>
-        <li><a href="/new" class="btn-floating red"><i class="material-icons">publish</i></a></li>
-        <li><a href="/admin" class="btn-floating orange"><i class="material-icons">info</i></a></li>
-      </ul>
     </div>
   </div>
 
     <div class="fixed-action-btn horizontal slideshow-button hide-on-small-only">
-      <a class="btn-floating btn-large blue main-button">
+      <a class="btn-floating btn-large blue main-button pulse">
         <i class="large material-icons">mode_edit</i>
       </a>
       <ul>
@@ -132,8 +125,7 @@
     </div>
   </div>
   <!-- load Showdown Markdown Parser -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.7.1/showdown.min.js" charset="utf-8"></script>
-
+  <script src="/static/vendor/showdown.min.js" charset="utf-8"></script>
   <!-- load jQuery Clock for navbar-->
   <script src='/static/vendor/date.js' charset="UTF-8" type="text/javascript"></script>
   <script src="/static/js/clock.js" charset="utf-8"></script>

@@ -22,17 +22,25 @@ function uploadFile(file, signedRequest, url){
       $progressBar.value = e.loaded;
   }
   xhr.onreadystatechange = () => {
-    if(xhr.readyState === 4){
-      if(xhr.status === 200){
-        console.log(xhr);
+    if (xhr.readyState === 4){
+      if (xhr.status === 200){
         SUBMIT_URL = url;
-        if(file.type.match('image')){
-          $('#preview').empty().append($('<img>', { src: url }));
-        } else if (file.type.match('video')) {
-          $('#preview').empty().append($('<video>', { src: url, autoplay: true, loop: true, poster:"/static/images/test-pump.gif" }));
-        } else {
-          alert('Bad filetype');
+        let fileName = url.match(/[^/\\&\?]+\.\w{3,4}(?=([\?&].*$|$))/)[0].split('.')[0];
+        let fileExtension = file.name.split('.')[1];
+        if (fileExtension.toLowerCase() === 'jpeg') {
+          fileExtension = 'jpg';
         }
+        // Wait 800 ms for the file to be up on aws - loading the original file
+        setTimeout(function () {
+          if (file.type.match('image')){
+            $('#preview').empty().append($('<img>', { src: 'https://s3.amazonaws.com/media.futureboard.olin.build/original/' + fileName + '.' + fileExtension.toLowerCase() }));
+          } else if (file.type.match('video')) {
+            $('#preview').empty().append($('<video>', { src: 'https://s3.amazonaws.com/upload.media.futureboard.olin.build/' + fileName + '.' + fileExtension, autoplay: true, loop: true, poster:"/static/images/test-pump.gif" }));
+          } else {
+            alert('Bad filetype');
+          }
+        }, 800);
+        $('.dz-message').hide();
         $('#submit-button').attr('disabled', false);
       }
       else{
@@ -51,12 +59,12 @@ function uploadFile(file, signedRequest, url){
 */
 function getSignedRequest(file){
   const xhr = new XMLHttpRequest();
-  xhr.open('GET', `/sign-s3?file-name=${file.name}&file-type=${file.type}`);
+  xhr.open('GET', `/aws/s3-sign?file-name=${file.name}&file-type=${file.type}`);
   xhr.onreadystatechange = () => {
-    if(xhr.readyState === 4){
-      if(xhr.status === 200){
+    if (xhr.readyState === 4){
+      if (xhr.status === 200){
         const response = JSON.parse(xhr.response);
-        if(response.signedRequest === null){
+        if (response.signedRequest === null){
           return alert("Did not get S3 signed request!");
         }
         uploadFile(file, response.signedRequest, response.url);
@@ -74,10 +82,10 @@ function getSignedRequest(file){
  start upload procedure by asking for a signed request from the app.
 */
 function initUpload(file){
-  if(file == null){
+  if (file == null){
     return alert('No file selected.');
   }
-  $("form").append($('<div/>').attr("id", "preview"));
+  $("form.dropzone").append($('<div/>').attr("id", "preview"));
   $('#preview').empty();
   $('#submit-button').attr("disabled", "disabled");
 
@@ -89,15 +97,16 @@ function initUpload(file){
  Function to submit the new bob.
 */
 function submitBob() {
-  if(SUBMIT_URL){
+  if (SUBMIT_URL){
     let flavor = 'Moment';
-    if(['mp4','mov','avi'].indexOf(SUBMIT_URL.split('.').pop().toLowerCase()) > -1){
+    if (['mp4','mov','avi'].indexOf(SUBMIT_URL.split('.').pop().toLowerCase()) > -1){
       flavor = 'Video';
     }
 
     let data = {
       data: { 'Link': SUBMIT_URL },
       flavor: flavor,
+      description: $('#description').val(),
       startDate: Date.now(),
       'tags[]': ['uploadSubmit']
     };
@@ -126,7 +135,7 @@ window.onload = function () {
 Dropzone.options.dropzoneInput = {
   addedfile: function() {
     // Remove old files
-    if(this.files.length > 1){
+    if (this.files.length > 1){
       while(this.files.length > 1) { this.removeFile(this.files[0]); }
     }
     initUpload(this.files[0]);
@@ -134,7 +143,7 @@ Dropzone.options.dropzoneInput = {
   drop: function() {
     $(this).removeClass("dz-drag-hover");
     // Remove old files
-    if(this.files.length > 1){
+    if (this.files.length > 1){
       while(this.files.length > 1) { this.removeFile(this.files[0]); }
     }
     initUpload(this.files[0]);
@@ -143,7 +152,7 @@ Dropzone.options.dropzoneInput = {
   autoProcessQueue: false,
   maxFilesize: 10, // MB
   maxFiles: 1,
-  acceptedFiles: 'video/mp4,image/*',
+  acceptedFiles: 'video/*,image/*',
   dictDefaultMessage : "Drop files here, <br>Touch to Upload",
   dictFallbackMessage : "Your browser does not support drag'n'drop file uploads."
   /*

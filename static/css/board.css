@@ -95,23 +95,38 @@ nav .brand-logo{
   right: -20px;
 }
 .main-button{
-  opacity:0.5;
+  opacity:0.7;
 }
 .main-button:hover{
   opacity:1.0;
 }
 .slideshow-buttons > a {
-  opacity:0.5;
+  opacity:0.7;
 }
 .slideshow-buttons > a:hover {
   opacity:1;
 }
 .flag-buttons > a {
-  opacity:0.5;
+  opacity:0.7;
 }
-.flag > a:hover {
-  opacity:1;
+.flag-buttons > a:hover {
+  opacity:1.0;
 }
+
+.description {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.5);
+  padding: 1rem 7rem 3rem;
+}
+  .description p {
+    font-size: 1.5rem !important;
+    color: white;
+    font-weight: 900;
+  }
+
 .lables{
   float: right;
 }
@@ -300,9 +315,7 @@ video {
 }
 
 .events img{
-  height:35vh;
-  margin-left:3vh;
-  margin-right:3vh;
+  height:30vh;
   float:left;
   display:inline-block;
 }
