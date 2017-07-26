@@ -27,7 +27,10 @@ function uploadFile(file, signedRequest, url){
         SUBMIT_URL = url;
         let fileName = url.match(/[^/\\&\?]+\.\w{3,4}(?=([\?&].*$|$))/)[0].split('.')[0];
         let fileExtension = file.name.split('.')[1];
-        // Wait 200 ms for the file to be up on aws - loading the original file
+        if (fileExtension.toLowerCase() === 'jpeg') {
+          fileExtension = 'jpg';
+        }
+        // Wait 800 ms for the file to be up on aws - loading the original file
         setTimeout(function () {
           if (file.type.match('image')){
             $('#preview').empty().append($('<img>', { src: 'https://s3.amazonaws.com/media.futureboard.olin.build/original/' + fileName + '.' + fileExtension.toLowerCase() }));
@@ -36,7 +39,7 @@ function uploadFile(file, signedRequest, url){
           } else {
             alert('Bad filetype');
           }
-        }, 200);
+        }, 800);
         $('.dz-message').hide();
         $('#submit-button').attr('disabled', false);
       }
