@@ -152,6 +152,7 @@ Once you've setup your own version of the app, run `sudo -E nodejs server.js` to
 
 ## API
 ~Strikethrough~ indicates functionality not implemented yet
+Note: Flagged bobs are never returned, except on `/bobs/flagged`
 
 ### /api/
 
@@ -163,20 +164,32 @@ Once you've setup your own version of the app, run `sudo -E nodejs server.js` to
 ### /api/bobs
 | HTTP Method | Action |
 | ------------- | ------------- |
-| GET | retrieve a list of bobs |
+| GET | retrieve a list of all bobs |
 | POST | create a new bob object |
 
 ### /api/bobs/active
 | HTTP Method | Action |
 | ------------- | ------------- |
-| GET | retrieve a list of active bobs (Date.now() is between date.start and date.end) |
+| GET | retrieve a list of active bobs (The definition of active is still extremely fluid) |
 
-### /api/bobs/bobid
+### /api/bobs/[bobId]
 | HTTP Method | Action |
 | ------------- | ------------- |
-| GET | retrieve bob object with id bobid |
+| GET | retrieve bob object with id bobId |
 | PUT | update the bob object |
-| DELETE | delete the bob object |
+| DELETE | delete the bob object (Requires auth) |
+
+### /api/bobs/[bobId]/votes
+| HTTP Method | Action |
+| ------------- | ------------- |
+| GET | retrieve number of votes bob with bobId has |
+| POST | add one upvote to the bob |
+
+### /api/bobs/[bobId]/flags
+| HTTP Method | Action |
+| ------------- | ------------- |
+| GET | retrieve flag value of bob |
+| POST | flag a bob |
 
 ### /api/flavors
 | HTTP Method | Action |
@@ -189,6 +202,18 @@ Once you've setup your own version of the app, run `sudo -E nodejs server.js` to
 | ------------- | ------------- |
 | GET | retrieve a flavor object by name or id |
 | ~PUT~ | update the flavor object |
+
+### /api/tags
+| HTTP Method | Action |
+| ------------- | ------------- |
+| GET | retrieve all tags |
+| ~POST~ | create a new tag |
+
+### /api/tags/[tagID]
+| HTTP Method | Action |
+| ------------- | ------------- |
+| GET | retrieve a tag by name or id |
+| ~PUT~ | update the tag |
 
 
 ## Sockets
