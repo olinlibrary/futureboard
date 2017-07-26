@@ -216,6 +216,7 @@ $(function(){
       var activeBobID = $("#slideshow").find(".active").attr("id");
       $.post('/api/bobs/' + activeBobID + "/flags");
     });
+    $.event.special.swipe.horizontalDistanceThreshold = (screen.availWidth) / 80;
     $('#slideshow').on("swipeleft", function(){
       $('#slideshow').stop();
       resetInterval(carouselControl("left"));
