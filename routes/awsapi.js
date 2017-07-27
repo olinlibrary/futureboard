@@ -117,11 +117,18 @@ module.exports = function (io, db) {
             var SNSmessage = JSON.parse(message.Message);
             SNSmessage.Records.forEach((record) => {
               if (record.s3.object.key.indexOf('/') == -1) {
+
+                db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
+                .then(function (bobData) {
+                  io.emit('add_element', bobData);
+                });
+
                 // DEMO
                 // db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
                 // .then(function (bobData) {
                 //   io.emit('add_element', bobData);
                 // });
+
               }
             });
           }
