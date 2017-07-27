@@ -18,6 +18,11 @@ dump/
 *.key
 *.pem
 
+# media
+*.avi
+*.mp4
+*.jpg
+*.png
 
 # Logs
 logs

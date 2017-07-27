@@ -3,14 +3,15 @@ const request = require('request');
 
 // Define and compile Bob Schema
 const bobSchema = mongoose.Schema({
-  data:       {},
-  startDate:  { type: Date, default: Date.now() },
-  endDate:    { type: Date, default: Date.now() + 604800 }, // One week from now
-  flavor:     String,
-  tags:       [],
-  votes:      { type: Number, default: 1 },
-  flag:       { type: Number, default: 0 }, // 0: OK, 1: Flagged, 2: Mod OK, 3: Mod Remove
-  mediaReady: { type: Boolean, default: true }
+  data:        {},
+  startDate:   { type: Date, default: Date.now() },
+  endDate:     { type: Date, default: Date.now() + 604800 }, // One week from now
+  description: String,
+  flavor:      String,
+  tags:        [],
+  votes:       { type: Number, default: 1 },
+  flag:        { type: Number, default: 0 }, // 0: OK, 1: Flagged, 2: Mod OK, 3: Mod Remove
+  mediaReady:  Boolean
 });
 
 const BobModel = mongoose.model('Bob', bobSchema);
@@ -32,12 +33,13 @@ function saveBob(bobData) {
   }
 
   const newBob = new BobModel({
-    data:       bobData.data,
-    startDate:  bobData.startDate,
-    endDate:    bobData.endDate,
-    flavor:     bobData.flavor,
-    tags:       bobData.tags,
-    mediaReady: mediaStatus
+    data:        bobData.data,
+    startDate:   bobData.startDate,
+    endDate:     bobData.endDate,
+    description: bobData.description,
+    flavor:      bobData.flavor,
+    tags:        bobData.tags,
+    mediaReady:  mediaStatus
   });
 
   return newBob.save(function (err) {
@@ -85,7 +87,8 @@ function getActiveBobs(filter, maxBobs = 20) {
   // Get first maxBobs bobs that aren't flagged. Can flesh out with fancier algorithms in the future
   let query = BobModel.find(filter).lean();
   query.and({flag: [0, 2]});  // If not flagged
-  query.and({mediaReady: true}); // Only bobs with media ready
+  // DEMO: remove check for mediaReady
+  // query.and({mediaReady: true}); // Only bobs with media ready
   query.sort('-startDate');   // Sort newest to oldest
   query.limit(maxBobs);       // First n bobs
   return query;
@@ -155,7 +158,7 @@ function flagBob(bobId) {
   @param {Boolean} [status=true] - status of media to set
 */
 function setMediaStatus(mediaURL, status = true) {
-  return BobModel.findOneAndUpdate({ data: { Link: mediaURL }}, { mediaReady: true }).lean();
+  return BobModel.findOneAndUpdate({ data: { Link: mediaURL }}, { mediaReady: status }).lean();
 }
 
 

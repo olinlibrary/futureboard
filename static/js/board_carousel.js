@@ -76,7 +76,6 @@ function createBoardElement(bob) {
       console.log("Unhandled type" + bob);
       $html = null;
   }
-
   var description = bob.description || bob.data.Description;
   if (description !== undefined) {
     $html.append($('<div>', {class: "description"}).append(
@@ -215,6 +214,9 @@ $(function(){
     $(".flag").on("click", function(){
       var activeBobID = $("#slideshow").find(".active").attr("id");
       $.post('/api/bobs/' + activeBobID + "/flags");
+    });
+    $( window ).on( "swipe", function( event ) {
+      $.event.special.swipe.horizontalDistanceThreshold = (screen.availWidth) / 80;
     });
     $('#slideshow').on("swipeleft", function(){
       $('#slideshow').stop();
