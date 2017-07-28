@@ -88,13 +88,28 @@ Once you've made the changes you'd like to make, ensure that they are committed 
 
 After all of that, go ahead and open a new pull request onto the upstream version of dev! This pull request should have a title describing the changes at a very high level and a description that gets into more details. These details should include what changes have been made and why. Then request that a contributor on the main repo review your code. Once suggestions have been made, make necessary edits and confirm once again that everything looks good. If yes, your reviewer can go ahead and merge it in!
 
-### To do
-* Integrate with A.B.E. to get event data
-* Commenting on content
+### To Do
+#### Top Priorities
+* Server-side resizing images and videos, EXIF-orientation fix, creating thumnails of originals
+* Edit Bob page
+* Unit Testing, Test-driven development
+* Replace Materialize carousel - seek alternatives or make your own for better performance & extendability
+* Authentication
 * Rooms for different content on different screens and/or privacy associated with posts
-* Scaling
+* Administration Page / "Who is moderating?"
+* Logistics, Setup procedures
+* Open a feedback channel / Encourage new pull requests!
+
+#### And MORE!
+* Integrate with A.B.E. to get event data (add socket emit or push notifications for new events)
+* Commenting/Threading/Replying on contents
+* Smoother Touch Swipe
 * Physical interactions with board (buttons or otherwise)
 * Create better way to sync `flavors`
+* Support more views (bobbles, pinterest kinda UI)
+* Cleanup-tweak-UI
+* Favicon
+* Better autoscroll / display of events
 
 ## Operating
 First start the mongodb server:
