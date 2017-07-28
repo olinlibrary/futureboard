@@ -93,7 +93,6 @@ After all of that, go ahead and open a new pull request onto the upstream versio
 * Server-side resizing images and videos, EXIF-orientation fix, creating thumnails of originals
 * Edit Bob page
 * Unit Testing, Test-driven development
-* Replace Materialize carousel - seek alternatives or make your own for better performance & extendability
 * Authentication
 * Rooms for different content on different screens and/or privacy associated with posts
 * Administration Page / "Who is moderating?"
@@ -106,10 +105,10 @@ After all of that, go ahead and open a new pull request onto the upstream versio
 * Smoother Touch Swipe
 * Physical interactions with board (buttons or otherwise)
 * Create better way to sync `flavors`
-* Support more views (bobbles, pinterest kinda UI)
-* Cleanup-tweak-UI
+* Support more views & clean up css(bobbles, pinterest kinda UI)
 * Favicon
 * Better autoscroll / display of events
+* Replace Materialize carousel - seek alternatives or make your own for better performance & extendability
 
 ## Operating
 First start the mongodb server:
