@@ -14,7 +14,8 @@ var router = express.Router();
   set envirnoment variables: ACCESS_KEY_ID, SECRET_ACCESS_KEY
 */
 
-const S3_BUCKET         = "upload.media.futureboard.olin.build";
+// DEMO upload.media.futureboard.olin.build
+const S3_BUCKET         = "media.futureboard.olin.build";
 const ACCESS_KEY_ID     = process.env.ACCESS_KEY_ID;
 const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY;
 
@@ -57,10 +58,13 @@ module.exports = function (io, db) {
 
     if (mediaType === 'image'){
       uploadFileName = 'img-' + new_uuid + '.' + inputFileExtension;
-      outputFileName = 'img-' + new_uuid + '.jpg';
+      outputFileName = uploadFileName;
+      // DEMO
+      // outputFileName = 'img-' + new_uuid + '.jpg';
     } else if (mediaType === 'video') {
       uploadFileName = 'vid-' + new_uuid + '.' + inputFileExtension;
-      outputFileName = 'vid-' + new_uuid + '.mp4';
+      outputFileName = uploadFileName;
+      // outputFileName = 'vid-' + new_uuid + '.mp4';
     } else {
       res.status(415).send('unsuported media type');
       return;
@@ -113,10 +117,11 @@ module.exports = function (io, db) {
             var SNSmessage = JSON.parse(message.Message);
             SNSmessage.Records.forEach((record) => {
               if (record.s3.object.key.indexOf('/') == -1) {
-                db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
-                .then(function (bobData) {
-                  io.emit('add_element', bobData);
-                });
+                // DEMO
+                // db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
+                // .then(function (bobData) {
+                //   io.emit('add_element', bobData);
+                // });
               }
             });
           }
