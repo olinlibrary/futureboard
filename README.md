@@ -252,10 +252,14 @@ Note: Flagged bobs are never returned, except on `/bobs/flagged`
 | ~PUT~ | update the tag |
 
 
-## Sockets
+## Socket.io
 | Socket Name | Input | Method |
 | ---  | --- | --- |
 | 'add_element' | bob object | Create a new bob |
 | 'update_element' | bob object | Update the bob with the same bobid |
 | 'upvote' | { id: bobid, votes: num_votes } | Set bob with id bobid to num_votes |
 | 'delete' | bobid | remove bob immediately |
+
+
+## Notes on AWS:
+We tried using AWS to handle media storage and transcoding, but in the future I would warn against this. We had set up two buckets - an upload bucket and a media bucket. Lambda functions were supposed to resize and transcode images and video into the media bucket, and then move the original files into a 'original/' folder in the media bucket. AWS is a big challenge, and we could not demo with this functionality because we ran into an error when adding triggers to the video transcoding lambda. Right now we use the source media on futureboard, which does not work well on mobile and low power computers (like rasp pi). Google cloud allows transparent image resizing with url parameters ([docs](https://cloud.google.com/appengine/docs/standard/php/refdocs/classes/google.appengine.api.cloud_storage.CloudStorageTools#method_getImageServingUrl)). Alternatively, you can spin up a worker service on heroku to do all image and video resizing.
