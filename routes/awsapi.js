@@ -15,7 +15,8 @@ var router = express.Router();
 */
 
 // DEMO upload.media.futureboard.olin.build
-const S3_BUCKET         = "media.futureboard.olin.build";
+// const S3_BUCKET         = "media.futureboard.olin.build";
+const S3_BUCKET         = "upload.media.futureboard.olin.build"; // resized bucket
 const ACCESS_KEY_ID     = process.env.ACCESS_KEY_ID;
 const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY;
 
@@ -84,7 +85,7 @@ module.exports = function (io, db) {
       }
       const returnData = {
         signedRequest: data,
-        // The location of the future media, to be used for previering and submitting a bob
+        // The location of the future media, to be used for previewing and submitting a bob
         url: 'http://media.futureboard.olin.build/' + outputFileName
       };
       res.write(JSON.stringify(returnData));
@@ -95,7 +96,6 @@ module.exports = function (io, db) {
   function POSTS3Sign(req, res) {
     res.send("success");
   }
-
   function POSTSNSNotify (req, res) {
     // Recieve all data
     var chunks = [];
@@ -118,10 +118,10 @@ module.exports = function (io, db) {
             SNSmessage.Records.forEach((record) => {
               if (record.s3.object.key.indexOf('/') == -1) {
                 // DEMO
-                // db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
-                // .then(function (bobData) {
-                //   io.emit('add_element', bobData);
-                // });
+                db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
+                .then(function (bobData) {
+                  io.emit('add_element', bobData);
+                });
               }
             });
           }
