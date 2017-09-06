@@ -98,7 +98,7 @@ function scrollEvents($collectionSelection, scrollToBottom = true) {
 $(function(){
 
   // parse events from abe JSON URL
-  $.get('https://abe.olin.build', populateEvents);
+  $.get('https://abe.olin.build/events', populateEvents);
 
   // Initializes auto scroll for events
   var $eventsToday = $('.today .autoscrolling > .collection')
