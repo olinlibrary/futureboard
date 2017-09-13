@@ -42,7 +42,7 @@ function createEventObject(eventData) {
     id: eventData.id,
     class: "collection-item"
   })
-    .append($('<span>', { class: 'title', text: eventData.title.substring(0, 30) }))
+    .append($('<span>', { class: 'title', text: eventData.title.substring(0, 40) + "..." }))
     .append($('<p>', { class: 'location', text: location }))
     .append($('<p>', { class: 'date', text: Date.parse(eventData.start).toString("hh:mm tt") + " - " + Date.parse(eventData.end).toString("hh:mm tt") }))
     .append(converter.makeHtml(eventData.description))
@@ -66,7 +66,7 @@ function createFeaturedEventObject(eventData) {
     id: eventData.id,
     class: "collection-item"
   })
-    .append($('<span>', { class: 'title', text: eventData.title.substring(0, 30) }))
+    .append($('<span>', { class: 'title', text: eventData.title.substring(0, 40) + "..." }))
     .append($('<p>', { class: 'location', text: location }))
     .append($('<p>', { class: 'date', text: Date.parse(eventData.start).toString("hh:mm tt, ddd, MMMM dd ") + " - " + Date.parse(eventData.end).toString("hh:mm tt, ddd, MMMM dd") }))
     .append(converter.makeHtml(eventData.description))
