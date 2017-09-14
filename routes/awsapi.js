@@ -59,13 +59,13 @@ module.exports = function (io, db) {
 
     if (mediaType === 'image'){
       uploadFileName = 'img-' + new_uuid + '.' + inputFileExtension;
-      outputFileName = uploadFileName;
+      // outputFileName = uploadFileName;
       // DEMO
-      // outputFileName = 'img-' + new_uuid + '.jpg';
+      outputFileName = 'img-' + new_uuid + '.jpg';
     } else if (mediaType === 'video') {
       uploadFileName = 'vid-' + new_uuid + '.' + inputFileExtension;
-      outputFileName = uploadFileName;
-      // outputFileName = 'vid-' + new_uuid + '.mp4';
+      // outputFileName = uploadFileName;
+      outputFileName = 'vid-' + new_uuid + '.mp4';
     } else {
       res.status(415).send('unsuported media type');
       return;
