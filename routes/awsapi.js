@@ -101,6 +101,10 @@ module.exports = function (io, db) {
     req.on('end', function () {
         try {
           var message = JSON.parse(chunks.join(''));
+          if(process.env.DEBUG_SNS){
+            console.log("x-amz-sns-message-type: ", req.headers['x-amz-sns-message-type']);
+            console.log("message", message);
+          }
           // If it is a subscription confirmation, get the page
           if (req.headers['x-amz-sns-message-type'] === 'SubscriptionConfirmation') {
             console.log("SNS subscription URL:", message.SubscribeURL);
