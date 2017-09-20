@@ -5,22 +5,20 @@ const path       = require('path');
 const bodyParser = require('body-parser');
 const db         = require('./models/wrapper.js');
 const enforce    = require('express-sslify');
-const http       = require('http');
+const http       = require('http').Server(app);
 
 // Start the server
-let SERVER;
 if(process.env.NODE_ENV === 'production'){
   app.use(enforce.HTTPS({ trustProtoHeader: true }));
 }
 
-SERVER = http;
 port = process.env.PORT | 8080;
-http.createServer(app).listen(port, function() {
+http.listen(port, function() {
   console.log("FORWARDboard running over http on port", port);
 });
 
 
-const io = require('socket.io')(SERVER);
+const io = require('socket.io')(http);
 app.set('socketio', io);
 
 
