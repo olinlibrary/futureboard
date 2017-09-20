@@ -119,7 +119,7 @@ function scrollEvents($collectionSelection, scrollToBottom = true) {
 $(function(){
 
   // parse events from abe JSON URL
-  $.get('https://abe.olin.build/events', populateEvents);
+  $.get('https://abe.olin.build/events/', populateEvents);
 
   // Initializes auto scroll for events
   var $eventsToday = $('.today .autoscrolling > .collection')
@@ -127,7 +127,7 @@ $(function(){
   var eventsTodayScroll = scrollEvents($eventsToday, true);
   var eventsFeaturedScroll = scrollEvents($eventsFeatured, true);
 
-  // clears the interval on scroll event, resets timer 10 seconds later
+  // clears the interval on scroll event,resets timer 10 seconds later
   $eventsToday.on("click", function(){
     clearInterval(eventsTodayScroll);
     $eventsToday.stop(); // stops the animation
