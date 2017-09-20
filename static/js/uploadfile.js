@@ -17,23 +17,19 @@ function uploadFile(file, signedRequest, url){
   }
   xhr.upload.onloadstart = function (e) {
       $progressBar.value = 0;
-  }
+      $('.dz-message').html("Uploading...");
+      $('#dropzone-input').animate({"height": "10vh"}, 500);
+  };
   xhr.upload.onloadend = function (e) {
       $progressBar.value = e.loaded;
-  }
+  };
   xhr.onreadystatechange = () => {
     if (xhr.readyState === 4){
       if (xhr.status === 200){
         SUBMIT_URL = url;
-        // DEMO
-        if (file.type.match('image')){
-        $('#preview').empty().append($('<img>', { src: url }));
-        } else if (file.type.match('video')) {
-          $('#preview').empty().append($('<video>', { src: url, autoplay: true, loop: true, muted: true, poster:"/static/images/test-pump.gif" }));
-        } else {
-          alert('Bad filetype');
-        }
-        $('.dz-message').hide();
+        $('.dz-message').html("Complete!");
+        $('#dropzone-input').animate({"height": "10vh"}, 500);
+
         $('#submit-button').attr('disabled', false);
       }
       else{
@@ -105,7 +101,7 @@ function submitBob() {
     };
 
     $.post('/api/bobs', data, function(res) {
-        alert('Bob saved!');
+        alert('Media saved!');
   			// Redirect to FUTUREboard
   			window.location = '/';
   		});
@@ -120,7 +116,7 @@ function submitBob() {
 */
 window.onload = function () {
   $('#submit-button').on("click", submitBob);
-}
+};
 
 /*
  Dropzone config
