@@ -1,6 +1,8 @@
 const express = require('express');
 var router = express.Router();
 
+adminPassword = process.env.ADMIN_PASSWORD;
+
 module.exports = function (api, rootDir) {
   router.route('/').get(function(req, res) {
     res.sendFile(rootDir + '/templates/landing.html');
@@ -32,7 +34,7 @@ module.exports = function (api, rootDir) {
     res.sendFile(rootDir + '/templates/uploadfile.html');
   });
 
-  router.route('/admin').get(function(req, res) {
+  router.route('/admin').get(ensureAuthenticated, function(req, res) {
     res.sendFile(rootDir + '/templates/admin.html');
   });
 
@@ -57,4 +59,12 @@ module.exports = function (api, rootDir) {
     });
 
   return router;
+};
+
+function ensureAuthenticated(req, res, next) {
+  if (req.headers.auth === adminPassword | req.query.auth === adminPassword){
+    next();
+  } else {
+    res.status(401).send("User not authenticated");
+  }
 }
