@@ -61,8 +61,10 @@ module.exports = function(io, db) {
   * Checks for authentication.
   * Currently only checks for req.headers.auth, in the future it will use a more robust authentication method
   */
+
+  adminPassword = process.env.ADMIN_PASSWORD;
   function ensureAuthenticated(req, res, next) {
-    if (req.headers.auth === 'hunter2'){
+    if (req.headers.auth === adminPassword | req.query.auth === adminPassword){
       next();
     } else {
       res.status(401).send("User not authenticated");
