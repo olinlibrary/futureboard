@@ -107,7 +107,7 @@ function deleteBob(bobid) {
     $.ajax({
 			url: '/api/bobs/' + bobid,
 			type: 'DELETE',
-			headers: { auth: 'hunter2' },
+			headers: { auth: location.search.split('auth=')[1] },
 			success: function(res) {
         $('[bobid="' + bobid + '"]').remove();
 				alert(res);
@@ -123,7 +123,7 @@ function deleteBob(bobid) {
 $.get('/api/bobs', popluateTable);
 $.ajax({
     url: '/api/bobs/flagged',
-    headers: {'auth': 'hunter2'},
+    headers: {'auth': location.search.split('auth=')[1] },
     success: popluateFlaggedTable
   });
 
