@@ -12,7 +12,7 @@ if(process.env.NODE_ENV === 'production'){
   app.use(enforce.HTTPS({ trustProtoHeader: true }));
 }
 
-port = process.env.PORT | 8080;
+port = process.env.PORT || 8080;
 http.listen(port, function() {
   console.log("FORWARDboard running over http on port", port);
 });
