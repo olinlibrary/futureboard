@@ -55,7 +55,7 @@ function createEventObject(eventData) {
   })
     .append($('<span>', { class: 'title', text: title}))
     .append($('<p>', { class: 'location', text: location }))
-    .append($('<p>', { class: 'rawDate', text: Date.parse(eventData.start).addHours(-4).toString("yyyyMMddHHmmss"), style: 'display:none'}))
+    .append($('<p>', { class: 'rawDate', text: Date.parse(eventData.start).addHours(-4).toString("yyyyMMddHHmmss"), style: 'display:none'})) // addHours(-4) to adjust timezone(UTC) to Eastern Time
     .append($('<p>', { class: 'date', text: Date.parse(eventData.start).addHours(-4).toString("hh:mm tt") + " - " + Date.parse(eventData.end).addHours(-4).toString("hh:mm tt") })) // addHours(-4) to adjust timezone(UTC) to Eastern Time
     .append(converter.makeHtml(eventData.description))
     .append($('<span/>', {class: "clear"}));
@@ -87,7 +87,7 @@ function createFeaturedEventObject(eventData) {
     .append($('<span>', { class: 'title', text: title}))
     .append($('<p>', { class: 'location', text: location }))
     .append($('<p>', { class: 'rawDate', text: Date.parse(eventData.start).addHours(-4).toString("yyyyMMddHHmmss"), style: 'display:none'})) // addHours(-4) to adjust timezone(UTC) to Eastern Time
-    .append($('<p>', { class: 'date', text: Date.parse(eventData.start).addHours(-4).toString("hh:mm tt, ddd, MMMM dd ") + " - " + Date.parse(eventData.end).addHours(-4).toString("hh:mm tt, ddd, MMMM dd") }))
+    .append($('<p>', { class: 'date', text: Date.parse(eventData.start).addHours(-4).toString("hh:mm tt, ddd, MMMM dd ") + " - " + Date.parse(eventData.end).addHours(-4).toString("hh:mm tt, ddd, MMMM dd") })) // addHours(-4) to adjust timezone(UTC) to Eastern Time
     .append(converter.makeHtml(eventData.description))
     .append($('<span/>', {class: "clear"}));
 
