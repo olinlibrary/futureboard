@@ -43,7 +43,7 @@ function createEventObject(eventData) {
   else {
     var location = "";
   }
-  if(eventData.title.length > 35){
+  if(eventData.title.length > 40){
     var title = eventData.title.substring(0, 40) + "...";
   }
   else {
@@ -74,7 +74,7 @@ function createFeaturedEventObject(eventData) {
   else {
     var location = "";
   }
-  if(eventData.title.length > 35){
+  if(eventData.title.length > 40){
     var title = eventData.title.substring(0, 40) + "...";
   }
   else{
