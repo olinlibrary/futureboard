@@ -87,8 +87,7 @@ function getActiveBobs(filter, maxBobs = 20) {
   // Get first maxBobs bobs that aren't flagged. Can flesh out with fancier algorithms in the future
   let query = BobModel.find(filter).lean();
   query.and({flag: [0, 2]});  // If not flagged
-  // DEMO: remove check for mediaReady
-  // query.and({mediaReady: true}); // Only bobs with media ready
+  query.and({mediaReady: true}); // Only bobs with media ready
   query.sort('-startDate');   // Sort newest to oldest
   query.limit(maxBobs);       // First n bobs
   return query;
