@@ -1,4 +1,3 @@
-
 /**
   * Populates events element by creating and appending even items from ABE
   * @param {Object[]} eventsData - list of JSON events data
@@ -24,6 +23,12 @@ function populateEvents(eventsData) {
       }
     }
   }
+  $('#eventsToday > li').sortElements(function(a, b){
+    return $(a).find('.rawDate').text() > $(b).find('.rawDate').text() ? 1 : -1;
+  });
+  $('#featuredEvents > li').sortElements(function(a, b){
+    return $(a).find('.rawDate').text() > $(b).find('.rawDate').text() ? 1 : -1;
+  });
 }
 
 /**
@@ -38,13 +43,20 @@ function createEventObject(eventData) {
   else {
     var location = "";
   }
+  if(eventData.title.length > 35){
+    var title = eventData.title.substring(0, 40) + "...";
+  }
+  else {
+    title = eventData.title;
+  }
   var $html = $('<li>', {
     id: eventData.id,
     class: "collection-item"
   })
-    .append($('<span>', { class: 'title', text: eventData.title.substring(0, 40) + "..." }))
+    .append($('<span>', { class: 'title', text: title}))
     .append($('<p>', { class: 'location', text: location }))
-    .append($('<p>', { class: 'date', text: Date.parse(eventData.start).toString("hh:mm tt") + " - " + Date.parse(eventData.end).toString("hh:mm tt") }))
+    .append($('<p>', { class: 'rawDate', text: Date.parse(eventData.start).addHours(-4).toString("yyyyMMddHHmmss"), style: 'display:none'}))
+    .append($('<p>', { class: 'date', text: Date.parse(eventData.start).addHours(-4).toString("hh:mm tt") + " - " + Date.parse(eventData.end).addHours(-4).toString("hh:mm tt") }))
     .append(converter.makeHtml(eventData.description))
     .append($('<span/>', {class: "clear"}));
   return $html;
@@ -62,15 +74,24 @@ function createFeaturedEventObject(eventData) {
   else {
     var location = "";
   }
+  if(eventData.title.length > 35){
+    var title = eventData.title.substring(0, 40) + "...";
+  }
+  else{
+    title = eventData.title;
+  }
   var $html = $('<li>', {
     id: eventData.id,
     class: "collection-item"
   })
-    .append($('<span>', { class: 'title', text: eventData.title.substring(0, 40) + "..." }))
+    .append($('<span>', { class: 'title', text: title}))
     .append($('<p>', { class: 'location', text: location }))
-    .append($('<p>', { class: 'date', text: Date.parse(eventData.start).toString("hh:mm tt, ddd, MMMM dd ") + " - " + Date.parse(eventData.end).toString("hh:mm tt, ddd, MMMM dd") }))
+    .append($('<p>', { class: 'rawDate', text: Date.parse(eventData.start).addHours(-4).toString("yyyyMMddHHmmss"), style: 'display:none'}))
+    .append($('<p>', { class: 'date', text: Date.parse(eventData.start).addHours(-4).toString("hh:mm tt, ddd, MMMM dd ") + " - " + Date.parse(eventData.end).addHours(-4).toString("hh:mm tt, ddd, MMMM dd") }))
     .append(converter.makeHtml(eventData.description))
     .append($('<span/>', {class: "clear"}));
+
+
   return $html;
 }
 
