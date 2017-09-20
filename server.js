@@ -4,36 +4,21 @@ const app        = express();
 const path       = require('path');
 const bodyParser = require('body-parser');
 const db         = require('./models/wrapper.js');
+const enforce    = require('express-sslify');
+const http       = require('http');
 
 // Start the server
 let SERVER;
-// If running in Heroku
-if (process.env.PORT) {
-  const http = require('http').Server(app);
-  SERVER = http;
-  http.listen(process.env.PORT, function() {
-  	console.log("FORWARDboard running over http on port", process.env.PORT);
-  });
-} else {
-  const httpredirect = require('./routes/httpredirect');
-  const tls = require("tls");
-  const fs = require('fs');
-
-  var httpsOptions = {
-    key:  fs.readFileSync('server.key'),
-    cert: fs.readFileSync('cert.pem')
-  };
-  const https = require('https').Server(httpsOptions, app);
-  SERVER = https;
-
-  https.listen(443, function() {
-  	console.log("FORWARDboard running over https on port", 443);
-  });
-
-  httpredirect.listen(80, function() {
-    console.log("httpredirect running on port", 80);
-  });
+if(process.env.NODE_ENV === 'production'){
+  app.use(enforce.HTTPS({ trustProtoHeader: true }));
 }
+
+SERVER = http;
+port = process.env.PORT | 8080;
+http.createServer(app).listen(port, function() {
+  console.log("FORWARDboard running over http on port", port);
+});
+
 
 const io = require('socket.io')(SERVER);
 app.set('socketio', io);
