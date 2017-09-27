@@ -62,7 +62,7 @@ module.exports = function (io, db) {
       uploadFileName = 'vid-' + new_uuid + '.' + inputFileExtension;
       outputFileName = 'vid-' + new_uuid + '.mp4';
     } else {
-      res.status(415).send('unsuported media type');
+      res.status(415).send('unsupported media type');
       return;
     }
     const s3Params = {
@@ -112,23 +112,25 @@ module.exports = function (io, db) {
               if (err){ console.log(err); }
             });
           // Else set the bob media status to true
-        } else if (req.headers['x-amz-sns-message-type'] === 'Notification') {
-            var SNSmessage = JSON.parse(message.Message);
-            SNSmessage.Records.forEach((record) => {
-              if(process.env.DEBUG_SNS){
-                console.log(record.s3);
-              }
-              if (record.s3.object.key.indexOf('/') == -1) {
-                db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
-                .then(function (bobData) {
-                  if(process.env.DEBUG_SNS){
-                    console.log("Set this bob to mediaready:", bobData);
-                  }
-                  io.emit('add_element', bobData);
-                });
-              }
-            });
-          }
+          } else if (req.headers['x-amz-sns-message-type'] === 'Notification') {
+              var SNSmessage = JSON.parse(message.Message);
+              SNSmessage.Records.forEach((record) => {
+                if(process.env.DEBUG_SNS){
+                  console.log(record.s3);
+                }
+                if (record.s3.object.key.indexOf('/') == -1) {
+                  console.log(db.Bob);
+                  console.log('http://media.futureboard.olin.build/' + record.s3.object.key)
+                  db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
+                  .then(function (bobData) {
+                    if(process.env.DEBUG_SNS){
+                      console.log("Set this bob to mediaready:", bobData);
+                    }
+                    io.emit('add_element', bobData);
+                  });
+                }
+              });
+            }
         } catch (e) {
           // Errors caused by bad json
           console.log(e);

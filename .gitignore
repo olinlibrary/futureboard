@@ -6,7 +6,7 @@ bobs.json
 flavors.json
 tags.json
 dump/
-
+local_server.sh
 
 # media
 *.avi
