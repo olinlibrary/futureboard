@@ -62,7 +62,7 @@ module.exports = function (io, db) {
       uploadFileName = 'vid-' + new_uuid + '.' + inputFileExtension;
       outputFileName = 'vid-' + new_uuid + '.mp4';
     } else {
-      res.status(415).send('unsuported media type');
+      res.status(415).send('unsupported media type');
       return;
     }
     const s3Params = {
