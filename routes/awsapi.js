@@ -134,11 +134,7 @@ module.exports = function (io, db) {
           } else {
             if(process.env.DEBUG_SNS){
               console.log("Not a SubscriptionConfirmation nor Notification");
-<<<<<<< HEAD
               console.log(req);
-=======
-              console.log(req.headers);
->>>>>>> 7623844f73053aaed86e4e5038a301b53acaf7d7
             }
           }
         } catch (e) {
