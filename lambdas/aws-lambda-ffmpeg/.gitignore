@@ -1,0 +1,10 @@
+dist/
+build/
+.idea/
+node_modules/
+config/
+event/
+dist.zip
+keyfile.json
+npm-debug.log
+.nvmrc

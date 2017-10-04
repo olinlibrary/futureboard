@@ -1,0 +1,17 @@
+{
+  "bucket": "media.futureboard.olin.build",
+  "backup": {
+    "directory": "original/",
+    "acl": "public-read",
+    "move": true
+  },
+  "resizes": [
+    {
+      "size": 1000,
+      "acl": "public-read",
+      "format": "jpg",
+      "quality": 85,
+      "orientation": true
+    }
+  ]
+}
