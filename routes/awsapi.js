@@ -114,6 +114,9 @@ module.exports = function (io, db) {
           // Else set the bob media status to true
         } else if (req.headers['x-amz-sns-message-type'] === 'Notification') {
             var SNSmessage = JSON.parse(message.Message);
+            if(process.env.DEBUG_SNS){
+              console.log(SNSmessage);
+            }
             SNSmessage.Records.forEach((record) => {
               if(process.env.DEBUG_SNS){
                 console.log(record.s3);
@@ -128,6 +131,11 @@ module.exports = function (io, db) {
                 });
               }
             });
+          } else {
+            if(process.env.DEBUG_SNS){
+              console.log("Not a SubscriptionConfirmation nor Notification");
+              console.log(req);
+            }
           }
         } catch (e) {
           // Errors caused by bad json
