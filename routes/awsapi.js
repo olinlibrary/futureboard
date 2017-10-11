@@ -125,6 +125,7 @@ module.exports = function (io, db) {
               .then(function (bobData) {
                 if(process.env.DEBUG_SNS){
                   console.log("Set this bob to mediaready:", bobData);
+                  console.log(record.s3.object.key);
                 }
                 io.emit('add_element', bobData);
               });
