@@ -156,7 +156,8 @@ function flagBob(bobId) {
   @param {String} mediaURL - URL that is ready
   @param {Boolean} [status=true] - status of media to set
 */
-function setMediaStatus(mediaURL, status = true) {
+function setMediaStatus(mediaURL, status=true) {
+  console.log(mediaURL);
   return BobModel.findOneAndUpdate({ data: { Link: mediaURL }}, { mediaReady: status }).lean();
 }
 
