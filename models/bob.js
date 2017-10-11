@@ -55,6 +55,8 @@ function saveBob(bobData) {
 function checkMediaStatus(url) {
   console.log("checking media status");
   request.head(url, function (err, res, body) {
+    console.log ("url : " + url);
+    console.log ("res : " + res);
     if (err){ console.log(err); }
     if (res.statusCode === 200) {
       setMediaStatus(url, true);
