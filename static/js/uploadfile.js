@@ -80,6 +80,7 @@ function initUpload(file){
 
   // Resize images here
   getSignedRequest(file);
+  submitBob();
 }
 
 /*
@@ -115,7 +116,7 @@ function submitBob() {
  Bind listeners when the page loads.
 */
 window.onload = function () {
-  $('#submit-button').on("click", submitBob);
+  // $('#submit-button').on("click", submitBob);
 };
 
 /*
