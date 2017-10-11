@@ -30,7 +30,10 @@ function uploadFile(file, signedRequest, url){
         $('.dz-message').html("Complete!");
         $('#dropzone-input').animate({"height": "10vh"}, 500);
         $('#submit-button').attr('disabled', false);
-        submitBob();
+        let tempData = {
+          data: { 'Link': SUBMIT_URL },
+        };
+        $.post('/api/bobs', tempData);
       }
       else{
         alert('Could not upload file.');
@@ -101,7 +104,9 @@ function submitBob() {
     };
 
     $.post('/api/bobs', data, function(res) {
-
+        alert('Media saved!');
+  			// Redirect to FUTUREboard
+  			window.location = '/';
   		});
     } else {
       alert("No file selected!");
@@ -113,11 +118,7 @@ function submitBob() {
  Bind listeners when the page loads.
 */
 window.onload = function () {
-  $('#submit-button').on("click", function(){
-    alert('Media saved!');
-    // Redirect to FUTUREboard
-    window.location = '/';
-  };
+  $('#submit-button').on("click", submitBob);
 };
 
 /*
