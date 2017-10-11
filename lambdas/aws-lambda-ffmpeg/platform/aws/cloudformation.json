@@ -14,6 +14,12 @@
 			"MaxLength": 63,
 			"Description": "The S3 destination bucket"
 		},
+		"DestinationPrefix": {
+			"Type": "String",
+			"AllowedPattern": "^[a-z]+[a-z0-9.\\-]+[a-z0-9]$",
+			"MaxLength": 63,
+			"Description": "The S3 destination prefix"
+		},
 		"LambdaS3Bucket": {
 			"Type": "String",
 			"Description": "The S3 bucket in which the lambda function code is stored"
@@ -193,6 +199,9 @@
 					"Variables": {
 						"DESTINATION_BUCKET": {
 							"Ref": "DestinationBucketName"
+						},
+						"DESTINATION_PREFIX": {
+							"Ref": "DestinationPrefix"
 						},
 						"FFMPEG_ARGS": {
 							"Ref": "FFmpegArgs"

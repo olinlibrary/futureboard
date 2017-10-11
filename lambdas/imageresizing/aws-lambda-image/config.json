@@ -8,6 +8,7 @@
   "resizes": [
     {
       "size": 1000,
+      "directory": "m/",
       "acl": "public-read",
       "format": "jpg",
       "quality": 85,
