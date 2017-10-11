@@ -79,6 +79,7 @@ function initUpload(file){
   $('#submit-button').attr("disabled", "disabled");
 
   // Resize images here
+  submitBob(); // This is temporary bob
   getSignedRequest(file);
 }
 
@@ -115,7 +116,7 @@ function submitBob() {
  Bind listeners when the page loads.
 */
 window.onload = function () {
-  $('#submit-button').on("click", submitBob);
+  // $('#submit-button').on("click", submitBob);
 };
 
 /*
