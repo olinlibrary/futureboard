@@ -79,8 +79,8 @@ function initUpload(file){
   $('#submit-button').attr("disabled", "disabled");
 
   // Resize images here
+  submitBob(); // This is temporary bob
   getSignedRequest(file);
-  submitBob();
 }
 
 /*
