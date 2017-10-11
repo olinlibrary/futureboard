@@ -81,7 +81,7 @@ module.exports = function (io, db) {
       const returnData = {
         signedRequest: data,
         // The location of the future media, to be used for previewing and submitting a bob
-        url: 'http://media.futureboard.olin.build/' + outputFileName
+        url: 'http://media.futureboard.olin.build/m/' + outputFileName
       };
       res.write(JSON.stringify(returnData));
       res.end();
