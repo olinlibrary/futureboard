@@ -1,0 +1,39 @@
+{
+  "bucket": "your-destination-bucket",
+  "reduce": {
+      "directory": "./reduced",
+      "prefix": "reduced-",
+      "quality": 90,
+      "acl": "public-read"
+  },
+  "resizes": [
+    {
+      "size": 300,
+      "directory": "./resized/small",
+      "prefix": "resized-"
+    },
+    {
+      "size": 450,
+      "directory": "./resized/medium",
+      "suffix": "_medium"
+    },
+    {
+      "size": "600x600^",
+      "gravity": "Center",
+      "crop": "600x600",
+      "directory": "./resized/cropped-to-square",
+      "orientation": true
+    },
+    {
+      "size": 600,
+      "directory": "./resized/600-jpeg",
+      "format": "jpg",
+      "background": "white"
+    },
+    {
+      "size": 900,
+      "directory": "./resized/large",
+      "quality": 90
+    }
+  ]
+}

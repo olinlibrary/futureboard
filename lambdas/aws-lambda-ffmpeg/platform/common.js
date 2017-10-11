@@ -29,6 +29,7 @@ if (!existsSync(outputDir))
 
 const {
 	DESTINATION_BUCKET,
+	DESTINATION_PREFIX,
 	FFMPEG_ARGS,
 	USE_GZIP,
 	MIME_TYPES,
@@ -47,7 +48,7 @@ const videoMaxDuration = +VIDEO_MAX_DURATION;
  */
 function downloadFile({bucket, key}) {
 	return new Promise((resolve, reject) => {
-		log(`Starting download: ${bucket} / ${key}`);
+		log(`Starting download: ${bucket} / ${key} ${DESTINATION_PREFIX}`);
 
 		downloadFunc(bucket, key)
 			.on('end', () => {
@@ -199,13 +200,13 @@ async function uploadFile(keyPrefix, filename) {
 
 	await uploadFunc(
 		DESTINATION_BUCKET,
-		`${keyPrefix}.${extension}`,
+		`${DESTINATION_PREFIX}${keyPrefix}.${extension}`,
 		fileStream,
 		useGzip ? 'gzip' : null,
 		mimeType
 	);
 
-	log(`${mimeType} ${filename} complete.`);
+	log(`${mimeType} ${filename} complete. ${DESTINATION_PREFIX}${keyPrefix}.${extension}`);
 
 	await Promise.all(
 		rmFiles.map(removeFile)

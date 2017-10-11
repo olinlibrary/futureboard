@@ -3,7 +3,7 @@ const event = require('../event/aws.json');
 
 /**
  * The Context
- * 
+ *
  * @type {{getRemainingTimeInMillis: context.getRemainingTimeInMillis, callbackWaitsForEmptyEventLoop: boolean, functionName: string, functionVersion: string, invokedFunctionArn: string, memoryLimitInMB: number, awsRequestId: string, logGroupName: string, logStreamName: string, identity: {}}}
  */
 const context = {
@@ -81,7 +81,8 @@ const context = {
 	 *
 	 * @type {string}
 	 */
-	logGroupName: '',
+	logGroupName: '',hod to check the remaining time during your function execution and take appropriate
+
 
 	/**
 	 * The name of the CloudWatch log group where you can find logs written by your Lambda function. The log stream may
@@ -90,14 +91,14 @@ const context = {
 	 * The value is null if your Lambda function is unable to create a log stream, which can happen if the execution
 	 * role that grants necessary permissions to the Lambda function does not include permissions for the CloudWatch
 	 * actions.
-	 * 
+	 *
 	 * @type {string}
 	 */
 	logStreamName: '',
 
 	/**
 	 * Information about the Amazon Cognito identity provider when invoked through the AWS Mobile SDK. It can be null.
-	 * 
+	 *
 	 * @type {Object}
 	 */
 	identity: {

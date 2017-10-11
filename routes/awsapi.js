@@ -103,7 +103,7 @@ module.exports = function (io, db) {
           var message = JSON.parse(chunks.join(''));
           if(process.env.DEBUG_SNS){
             console.log("x-amz-sns-message-type: ", req.headers['x-amz-sns-message-type']);
-            console.log("message", message);
+            // console.log("message", message);
           }
           // If it is a subscription confirmation, get the page
           if (req.headers['x-amz-sns-message-type'] === 'SubscriptionConfirmation') {
@@ -115,21 +115,19 @@ module.exports = function (io, db) {
         } else if (req.headers['x-amz-sns-message-type'] === 'Notification') {
             var SNSmessage = JSON.parse(message.Message);
             if(process.env.DEBUG_SNS){
-              console.log(SNSmessage);
+              console.log("notification", SNSmessage);
             }
             SNSmessage.Records.forEach((record) => {
               if(process.env.DEBUG_SNS){
-                console.log(record.s3);
+                console.log("s3 record", record.s3);
               }
-              if (record.s3.object.key.indexOf('/') == -1) {
-                db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
-                .then(function (bobData) {
-                  if(process.env.DEBUG_SNS){
-                    console.log("Set this bob to mediaready:", bobData);
-                  }
-                  io.emit('add_element', bobData);
-                });
-              }
+              db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
+              .then(function (bobData) {
+                if(process.env.DEBUG_SNS){
+                  console.log("Set this bob to mediaready:", bobData);
+                }
+                io.emit('add_element', bobData);
+              });
             });
           } else {
             if(process.env.DEBUG_SNS){
