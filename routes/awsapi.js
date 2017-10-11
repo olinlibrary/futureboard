@@ -121,15 +121,13 @@ module.exports = function (io, db) {
               if(process.env.DEBUG_SNS){
                 console.log("s3 record", record.s3);
               }
-              if (record.s3.object.key.indexOf('/') == -1) {
-                db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
-                .then(function (bobData) {
-                  if(process.env.DEBUG_SNS){
-                    console.log("Set this bob to mediaready:", bobData);
-                  }
-                  io.emit('add_element', bobData);
-                });
-              }
+              db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
+              .then(function (bobData) {
+                if(process.env.DEBUG_SNS){
+                  console.log("Set this bob to mediaready:", bobData);
+                }
+                io.emit('add_element', bobData);
+              });
             });
           } else {
             if(process.env.DEBUG_SNS){
