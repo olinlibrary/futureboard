@@ -43,7 +43,8 @@ function saveBob(bobData) {
   });
 
   return newBob.save(function (err) {
-
+    console.log("bob saved")
+    console.log(newBob)
     if (err) console.log("Bob save error:", err);
   }).then(checkMediaStatus(bobData.data.Link));
 }
