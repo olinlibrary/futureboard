@@ -81,7 +81,7 @@ module.exports = function (io, db) {
       const returnData = {
         signedRequest: data,
         // The location of the future media, to be used for previewing and submitting a bob
-        url: 'http://media.futureboard.olin.build/' + outputFileName
+        url: 'http://media.futureboard.olin.build/m/' + outputFileName
       };
       res.write(JSON.stringify(returnData));
       res.end();
@@ -122,7 +122,7 @@ module.exports = function (io, db) {
                 console.log(record.s3);
               }
               if (record.s3.object.key.indexOf('/') == -1) {
-                db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
+                db.Bob.setMediaStatus('http://media.futureboard.olin.build/m/' + record.s3.object.key, true)
                 .then(function (bobData) {
                   if(process.env.DEBUG_SNS){
                     console.log("Set this bob to mediaready:", bobData);
