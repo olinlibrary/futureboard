@@ -122,7 +122,7 @@ module.exports = function (io, db) {
                 console.log(record.s3);
               }
               if (record.s3.object.key.indexOf('/') == -1) {
-                db.Bob.setMediaStatus('http://media.futureboard.olin.build/m/' + record.s3.object.key, true)
+                db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
                 .then(function (bobData) {
                   if(process.env.DEBUG_SNS){
                     console.log("Set this bob to mediaready:", bobData);
