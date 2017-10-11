@@ -34,6 +34,7 @@ function uploadFile(file, signedRequest, url){
           data: { 'Link': SUBMIT_URL },
         };
         $.post('/api/bobs', tempData);
+        console.log("temporary bob-created")
       }
       else{
         alert('Could not upload file.');
