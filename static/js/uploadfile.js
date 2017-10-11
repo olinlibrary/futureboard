@@ -29,8 +29,11 @@ function uploadFile(file, signedRequest, url){
         SUBMIT_URL = url;
         $('.dz-message').html("Complete!");
         $('#dropzone-input').animate({"height": "10vh"}, 500);
-
         $('#submit-button').attr('disabled', false);
+        let tempData = {
+          data: { 'Link': SUBMIT_URL },
+        };
+        $.post('/api/bobs', tempData);
       }
       else{
         alert('Could not upload file.');
