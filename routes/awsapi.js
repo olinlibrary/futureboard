@@ -14,8 +14,6 @@ var router = express.Router();
   set envirnoment variables: ACCESS_KEY_ID, SECRET_ACCESS_KEY
 */
 
-// DEMO upload.media.futureboard.olin.build
-// const S3_BUCKET         = "media.futureboard.olin.build";
 const S3_BUCKET         = "upload.media.futureboard.olin.build"; // resized bucket
 const ACCESS_KEY_ID     = process.env.ACCESS_KEY_ID;
 const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY;
@@ -59,15 +57,12 @@ module.exports = function (io, db) {
 
     if (mediaType === 'image'){
       uploadFileName = 'img-' + new_uuid + '.' + inputFileExtension;
-      // outputFileName = uploadFileName;
-      // DEMO
       outputFileName = 'img-' + new_uuid + '.jpg';
     } else if (mediaType === 'video') {
       uploadFileName = 'vid-' + new_uuid + '.' + inputFileExtension;
-      // outputFileName = uploadFileName;
       outputFileName = 'vid-' + new_uuid + '.mp4';
     } else {
-      res.status(415).send('unsuported media type');
+      res.status(415).send('unsupported media type');
       return;
     }
     const s3Params = {
@@ -86,7 +81,7 @@ module.exports = function (io, db) {
       const returnData = {
         signedRequest: data,
         // The location of the future media, to be used for previewing and submitting a bob
-        url: 'http://media.futureboard.olin.build/' + outputFileName
+        url: 'http://media.futureboard.olin.build/m/' + outputFileName
       };
       res.write(JSON.stringify(returnData));
       res.end();
@@ -106,6 +101,10 @@ module.exports = function (io, db) {
     req.on('end', function () {
         try {
           var message = JSON.parse(chunks.join(''));
+          if(process.env.DEBUG_SNS){
+            console.log("x-amz-sns-message-type: ", req.headers['x-amz-sns-message-type']);
+            console.log("message", message);
+          }
           // If it is a subscription confirmation, get the page
           if (req.headers['x-amz-sns-message-type'] === 'SubscriptionConfirmation') {
             console.log("SNS subscription URL:", message.SubscribeURL);
@@ -115,15 +114,28 @@ module.exports = function (io, db) {
           // Else set the bob media status to true
         } else if (req.headers['x-amz-sns-message-type'] === 'Notification') {
             var SNSmessage = JSON.parse(message.Message);
+            if(process.env.DEBUG_SNS){
+              console.log(SNSmessage);
+            }
             SNSmessage.Records.forEach((record) => {
+              if(process.env.DEBUG_SNS){
+                console.log(record.s3);
+              }
               if (record.s3.object.key.indexOf('/') == -1) {
-                // DEMO
                 db.Bob.setMediaStatus('http://media.futureboard.olin.build/' + record.s3.object.key, true)
                 .then(function (bobData) {
+                  if(process.env.DEBUG_SNS){
+                    console.log("Set this bob to mediaready:", bobData);
+                  }
                   io.emit('add_element', bobData);
                 });
               }
             });
+          } else {
+            if(process.env.DEBUG_SNS){
+              console.log("Not a SubscriptionConfirmation nor Notification");
+              console.log(req);
+            }
           }
         } catch (e) {
           // Errors caused by bad json
