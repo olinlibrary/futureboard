@@ -158,8 +158,10 @@ function flagBob(bobId) {
   @param {Boolean} [status=true] - status of media to set
 */
 function setMediaStatus(mediaURL, status=true) {
-  console.log(mediaURL);
-  return BobModel.findOneAndUpdate({ data: { Link: mediaURL }}, { mediaReady: status }).lean();
+  console.log("looking for bob with..:" + mediaURL);
+  data = BobModel.findOneAndUpdate({ data : { Link: mediaURL }}, { mediaReady: status }).lean();
+  console.log("Setting : " + data);
+  return data;
 }
 
 
