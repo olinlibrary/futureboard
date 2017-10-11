@@ -29,8 +29,8 @@ function uploadFile(file, signedRequest, url){
         SUBMIT_URL = url;
         $('.dz-message').html("Complete!");
         $('#dropzone-input').animate({"height": "10vh"}, 500);
-
         $('#submit-button').attr('disabled', false);
+        submitBob();
       }
       else{
         alert('Could not upload file.');
@@ -79,7 +79,6 @@ function initUpload(file){
   $('#submit-button').attr("disabled", "disabled");
 
   // Resize images here
-  submitBob(); // This is temporary bob
   getSignedRequest(file);
 }
 
@@ -102,9 +101,7 @@ function submitBob() {
     };
 
     $.post('/api/bobs', data, function(res) {
-        alert('Media saved!');
-  			// Redirect to FUTUREboard
-  			window.location = '/';
+
   		});
     } else {
       alert("No file selected!");
@@ -117,6 +114,9 @@ function submitBob() {
 */
 window.onload = function () {
   // $('#submit-button').on("click", submitBob);
+  alert('Media saved!');
+  // Redirect to FUTUREboard
+  window.location = '/';
 };
 
 /*
