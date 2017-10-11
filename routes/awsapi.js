@@ -115,7 +115,7 @@ module.exports = function (io, db) {
         } else if (req.headers['x-amz-sns-message-type'] === 'Notification') {
             var SNSmessage = JSON.parse(message.Message);
             if(process.env.DEBUG_SNS){
-              console.log("notification", sSNSmessage);
+              console.log("notification", SNSmessage);
             }
             SNSmessage.Records.forEach((record) => {
               if(process.env.DEBUG_SNS){
