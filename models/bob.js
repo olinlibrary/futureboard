@@ -43,9 +43,9 @@ function saveBob(bobData) {
   });
 
   return newBob.save(function (err) {
-    checkMediaStatus(bobData.data.Link);
+
     if (err) console.log("Bob save error:", err);
-  });
+  }).then(checkMediaStatus(bobData.data.Link));
 }
 
 /**
