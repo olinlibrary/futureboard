@@ -111,6 +111,7 @@ module.exports = function(io, db) {
     Promise.all([db.Bob.saveBob(bob)])
       .then(function success(bobData) {
       // Send to all boards if the media is ready
+        console.log(bobData);
         if (bobData.mediaReady){
           io.emit('add_element', bobData);
         }
