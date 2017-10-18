@@ -158,9 +158,9 @@ function flagBob(bobId) {
 */
 function setMediaStatus(mediaURL, status=true) {
   console.log("looking for bob with..:" + mediaURL);
-  data = BobModel.findOneAndUpdate({ data : { Link: mediaURL }}, { mediaReady: status }).lean();
-  console.log("Setting bob with : " + data[0].data.Link + "to mediaReady" + data[0].data.mediaReady)
-  return data;
+  bob = BobModel.findOneAndUpdate({ data : { Link: mediaURL }}, { mediaReady: status }).lean();
+  console.log(bob.data)
+  return bob;
 }
 
 
