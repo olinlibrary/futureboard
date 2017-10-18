@@ -25,6 +25,7 @@ const BobModel = mongoose.model('Bob', bobSchema);
 */
 function saveBob(bobData) {
   let mediaStatus = "";
+  let newBob;
   if (bobData.data.Link) {
     mediaStatus = false;
   } else {
@@ -49,14 +50,12 @@ function saveBob(bobData) {
       flavor:      bobData.flavor,
       tags:        bobData.tags,
       mediaReady:  mediaStatus
+    }).save(function (err) {
+      console.log(err)
     })
-    console.log(newBob);
+    console.log("returning newBob");
+    return newBob
   });
-
-  console.log(newBob);
-  return newBob.save(function (err) {
-    console.log(err)
-  })
 }
 
 // /**
