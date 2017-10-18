@@ -51,10 +51,11 @@ function saveBob(bobData) {
       tags:        bobData.tags,
       mediaReady:  mediaStatus
     }).save(function (err) {
-      console.log(err)
+      console.log("saving bob")
+    }.then(function(){
+      console.log("returning newBob");
+      return newBob
     })
-    console.log("returning newBob");
-    return newBob
   });
 }
 
