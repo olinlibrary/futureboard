@@ -42,14 +42,11 @@ function saveBob(bobData) {
     mediaReady:  mediaStatus
   });
 
-  return checkMediaStatus(bobData.data.Link).then(function(err){
-    newBob.save();
-    if (err) console.log("Bob save error:", err);
+  checkMediaStatus(bobData.data.Link);
+
+  return newBob.save(function (err) {
+    // checkMediaStatus(bobData.data.Link);
   });
-  //
-  // return newBob.save(function (err) {
-  //   checkMediaStatus(bobData.data.Link);
-  // });
 }
 
 /**
