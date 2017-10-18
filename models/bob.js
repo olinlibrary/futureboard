@@ -41,7 +41,7 @@ function saveBob(bobData) {
     } else {
       mediaStatus = false
     }
-    const newBob = new BobModel({
+    newBob = new BobModel({
       data:        bobData.data,
       startDate:   bobData.startDate,
       endDate:     bobData.endDate,
@@ -51,10 +51,12 @@ function saveBob(bobData) {
       mediaReady:  mediaStatus
     })
     console.log(newBob);
-    return newBob.save(function (err) {
-      console.log(err)
-    });
   });
+
+  console.log(newBob);
+  return newBob.save(function (err) {
+    console.log(err)
+  })
 }
 
 // /**
