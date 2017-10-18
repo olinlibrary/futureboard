@@ -42,7 +42,7 @@ function saveBob(bobData) {
     mediaReady:  mediaStatus
   });
 
-  return checkMediaSatus(bobData.data.Link).then(function(err){
+  return checkMediaStatus(bobData.data.Link).then(function(err){
     newBob.save();
     if (err) console.log("Bob save error:", err);
   });
