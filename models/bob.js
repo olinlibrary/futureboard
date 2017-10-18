@@ -54,8 +54,8 @@ function saveBob(bobData) {
       mediaReady:  mediaStatus
     });
     newBob.save().then(function(){
-      console.log("returning newBob");
-      return newBob
+      console.log("returning" + newBob);
+      return resolve(newBob)
     }, function(err){
       console.log(err);
     })
