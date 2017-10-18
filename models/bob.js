@@ -32,8 +32,10 @@ function saveBob(bobData) {
     mediaStatus = true;
   }
 
+  console.log(bobData.data.Link);
   mediaStatus = checkMediaStatus(bobData.data.Link);
   console.log("Media is.." + mediaStatus);
+
   const newBob = new BobModel({
     data:        bobData.data,
     startDate:   bobData.startDate,
