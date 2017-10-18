@@ -53,7 +53,7 @@ function saveBob(bobData) {
       tags:        bobData.tags,
       mediaReady:  mediaStatus
     });
-    newbob.save().then(function(){
+    newBob.save().then(function(){
       console.log("returning newBob");
       return newBob
     }, function(err){
