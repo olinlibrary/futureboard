@@ -33,7 +33,15 @@ function saveBob(bobData) {
   }
 
   console.log(bobData.data.Link);
-  mediaStatus = checkMediaStatus(bobData.data.Link);
+
+ request.head(bobData.data.Link, function (err, res, body) {
+    if (err){ console.log(err); }
+    if (res.statusCode === 200) {
+      mediaStatus = true
+    } else {
+      mediaStatus = false
+    }
+  });
   console.log("Media is.." + mediaStatus);
 
   const newBob = new BobModel({
@@ -51,20 +59,20 @@ function saveBob(bobData) {
   });
 }
 
-/**
- * Updates the status of a mediaReady
- * @param {String} url
- */
-function checkMediaStatus(url) {
-  request.head(url, function (err, res, body) {
-    if (err){ console.log(err); }
-    if (res.statusCode === 200) {
-      return true
-    } else {
-      return false
-    }
-  });
-}
+// /**
+//  * Updates the status of a mediaReady
+//  * @param {String} url
+//  */
+// function checkMediaStatus(url) {
+//   request.head(url, function (err, res, body) {
+//     if (err){ console.log(err); }
+//     if (res.statusCode === 200) {
+//       return true
+//     } else {
+//       return false
+//     }
+//   });
+// }
 
 /**
   Gets all bobs
