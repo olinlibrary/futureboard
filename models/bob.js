@@ -32,6 +32,8 @@ function saveBob(bobData) {
     mediaStatus = true;
   }
 
+  mediaStatus = checkMediaStatus(bobData.data.Link);
+  console.log("Media is.." + mediaStatus);
   const newBob = new BobModel({
     data:        bobData.data,
     startDate:   bobData.startDate,
@@ -42,10 +44,8 @@ function saveBob(bobData) {
     mediaReady:  mediaStatus
   });
 
-  checkMediaStatus(bobData.data.Link);
-
   return newBob.save(function (err) {
-    // checkMediaStatus(bobData.data.Link);
+    console.log(err)
   });
 }
 
@@ -57,12 +57,13 @@ function checkMediaStatus(url) {
   request.head(url, function (err, res, body) {
     if (err){ console.log(err); }
     if (res.statusCode === 200) {
-      setMediaStatus(url, true);
+      return true
     } else {
-      setMediaStatus(url, false);
+      return false
     }
   });
 }
+
 /**
   Gets all bobs
   @param {Object[]} [filter] - Optional mongoose filter
