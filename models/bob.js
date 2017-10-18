@@ -32,27 +32,24 @@ function saveBob(bobData) {
     mediaStatus = true;
   }
 
-  console.log(bobData.data.Link);
-
  request.head(bobData.data.Link, function (err, res, body) {
     if (err){ console.log(err); }
-    console.log(res)
+    console.log(res.statusCode)
     if (res.statusCode === 200) {
       mediaStatus = true
     } else {
       mediaStatus = false
     }
-  });
-  console.log("Media is.." + mediaStatus);
-
-  const newBob = new BobModel({
-    data:        bobData.data,
-    startDate:   bobData.startDate,
-    endDate:     bobData.endDate,
-    description: bobData.description,
-    flavor:      bobData.flavor,
-    tags:        bobData.tags,
-    mediaReady:  mediaStatus
+    const newBob = new BobModel({
+      data:        bobData.data,
+      startDate:   bobData.startDate,
+      endDate:     bobData.endDate,
+      description: bobData.description,
+      flavor:      bobData.flavor,
+      tags:        bobData.tags,
+      mediaReady:  mediaStatus
+    })
+    console.log(newBob);
   });
 
   return newBob.save(function (err) {
