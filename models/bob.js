@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const request = require('request');
+require('mongoose').Promise = global.Promise
+
 
 // Define and compile Bob Schema
 const bobSchema = mongoose.Schema({
@@ -50,13 +52,12 @@ function saveBob(bobData) {
       flavor:      bobData.flavor,
       tags:        bobData.tags,
       mediaReady:  mediaStatus
-    }).save(function (err) {
-      console.log("saving bob")
-    }).then(function(){
+    });
+    newbob.save().then(function(){
       console.log("returning newBob");
       return newBob
-    }).otherwise(function(err){
-      console.log(err)
+    }, function(err){
+      console.log(err);
     })
   });
 }
