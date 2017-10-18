@@ -25,12 +25,14 @@ const BobModel = mongoose.model('Bob', bobSchema);
 */
 function saveBob(bobData) {
   let mediaStatus = "";
+  let newBob;
   if (bobData.data.Link) {
     mediaStatus = false;
   } else {
     console.log("Warning: Saving bob without Link");
     mediaStatus = true;
   }
+
 
  request.head(bobData.data.Link, function (err, res, body) {
     if (err){ console.log(err); }
@@ -40,7 +42,7 @@ function saveBob(bobData) {
     } else {
       mediaStatus = false
     }
-    const newBob = new BobModel({
+    newBob = new BobModel({
       data:        bobData.data,
       startDate:   bobData.startDate,
       endDate:     bobData.endDate,
@@ -51,7 +53,6 @@ function saveBob(bobData) {
     })
     console.log(newBob);
   });
-
   return newBob.save(function (err) {
     console.log(err)
   });
