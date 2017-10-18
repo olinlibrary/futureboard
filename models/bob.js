@@ -36,6 +36,7 @@ function saveBob(bobData) {
 
  request.head(bobData.data.Link, function (err, res, body) {
     if (err){ console.log(err); }
+    console.log(res)
     if (res.statusCode === 200) {
       mediaStatus = true
     } else {
