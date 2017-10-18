@@ -52,9 +52,11 @@ function saveBob(bobData) {
       mediaReady:  mediaStatus
     }).save(function (err) {
       console.log("saving bob")
-    }.then(function(){
+    }).then(function(){
       console.log("returning newBob");
       return newBob
+    }).otherwise(function(err){
+      console.log(err)
     })
   });
 }
