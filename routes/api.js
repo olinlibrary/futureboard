@@ -107,7 +107,6 @@ module.exports = function(io, db) {
       tags:        req.body.tags
     };
 
-    var saveBobPromise = new Promise
     // Save bob in db
     Promise.all([db.Bob.saveBob(bob)])
       .then((newBob) => {
