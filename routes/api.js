@@ -107,13 +107,14 @@ module.exports = function(io, db) {
       tags:        req.body.tags
     };
 
+    var saveBobPromise = new Promise
     // Save bob in db
     Promise.all([db.Bob.saveBob(bob)])
-      .then(function success(bobData) {
+      .then((newBob) => {
       // Send to all boards if the media is ready
-        console.log(bobData);
-        if (bobData.mediaReady){
-          io.emit('add_element', bobData);
+        console.log(newBob);
+        if (newBob.mediaReady){
+          io.emit('add_element', newBob);
         }
         res.send("success");
       }, function error(err) {
