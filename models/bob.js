@@ -55,7 +55,7 @@ function saveBob(bobData) {
     });
     newBob.save().then(function(){
       console.log("returning" + newBob);
-      return new Promise((resolve, reject)=>{
+      var p = new Promise(function(resolve, reject){
         resolve(newBob);
       })
     }, function(err){
