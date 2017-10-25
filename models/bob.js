@@ -180,5 +180,6 @@ Bob.deleteBob      = deleteBob;
 Bob.upvoteBob      = upvoteBob;
 Bob.flagBob        = flagBob;
 Bob.setMediaStatus = setMediaStatus;
+Bob.checkMediaStatus = checkMediaStatus;
 
 module.exports     = Bob;
