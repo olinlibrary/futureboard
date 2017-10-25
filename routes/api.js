@@ -108,15 +108,17 @@ module.exports = function(io, db) {
     };
 
     // Save bob in db
-    db.Bob.saveBob(bob).then(function success(bobData) {
+    let newBob = await Promise.all([db.Bob.saveBob(bob)])
+      .then((newBob) => {
       // Send to all boards if the media is ready
-      if (bobData.mediaReady){
-        io.emit('add_element', bobData);
-      }
-      res.send("success");
-    }, function error(err) {
-      res.status(500).send(err);
-    });
+        console.log(newBob);
+        if (newBob.mediaReady){
+          io.emit('add_element', newBob);
+        }
+        res.send("success");
+      }, function error(err) {
+        res.status(500).send(err);
+      });
   }
 
   // Sends back one bob by id

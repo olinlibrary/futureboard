@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const request = require('request');
+require('mongoose').Promise = global.Promise
+
 
 // Define and compile Bob Schema
 const bobSchema = mongoose.Schema({
@@ -25,6 +27,7 @@ const BobModel = mongoose.model('Bob', bobSchema);
 */
 function saveBob(bobData) {
   let mediaStatus = "";
+  let newBob;
   if (bobData.data.Link) {
     mediaStatus = false;
   } else {
@@ -32,36 +35,47 @@ function saveBob(bobData) {
     mediaStatus = true;
   }
 
-  const newBob = new BobModel({
-    data:        bobData.data,
-    startDate:   bobData.startDate,
-    endDate:     bobData.endDate,
-    description: bobData.description,
-    flavor:      bobData.flavor,
-    tags:        bobData.tags,
-    mediaReady:  mediaStatus
-  });
 
-  return newBob.save(function (err) {
-    checkMediaStatus(bobData.data.Link);
-    if (err) console.log("Bob save error:", err);
-  });
-}
-
-/**
- * Updates the status of a mediaReady
- * @param {String} url
- */
-function checkMediaStatus(url) {
-  request.head(url, function (err, res, body) {
+ request.head(bobData.data.Link, function (err, res, body) {
     if (err){ console.log(err); }
+    console.log(res.statusCode)
     if (res.statusCode === 200) {
-      setMediaStatus(url, true);
+      mediaStatus = true
     } else {
-      setMediaStatus(url, false);
+      mediaStatus = false
+    }
+    newBob = new BobModel({
+      data:        bobData.data,
+      startDate:   bobData.startDate,
+      endDate:     bobData.endDate,
+      description: bobData.description,
+      flavor:      bobData.flavor,
+      tags:        bobData.tags,
+      mediaReady:  mediaStatus
+    });
+    newBob.save().then(async function(){
+      console.log("returning" + newBob);
+      console.log("async executed")
+      return newBob
     }
   });
 }
+
+// /**
+//  * Updates the status of a mediaReady
+//  * @param {String} url
+//  */
+// function checkMediaStatus(url) {
+//   request.head(url, function (err, res, body) {
+//     if (err){ console.log(err); }
+//     if (res.statusCode === 200) {
+//       return true
+//     } else {
+//       return false
+//     }
+//   });
+// }
+
 /**
   Gets all bobs
   @param {Object[]} [filter] - Optional mongoose filter
@@ -158,9 +172,9 @@ function flagBob(bobId) {
 */
 function setMediaStatus(mediaURL, status=true) {
   console.log("looking for bob with..:" + mediaURL);
-  data = BobModel.findOneAndUpdate({ data : { Link: mediaURL }}, { mediaReady: status }).lean();
-  console.log("Setting : " + data);
-  return data;
+  bob = BobModel.findOneAndUpdate({ data : { Link: mediaURL }}, { mediaReady: status }).lean();
+  console.log(bob.data)
+  return bob;
 }
 
 
