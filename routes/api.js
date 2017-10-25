@@ -125,14 +125,17 @@ module.exports = function(io, db) {
         }
       };
     };
+
+    var savedBobData;
     when(function(done){
       console.log("iniit savebob")
-      db.Bob.saveBob(bob)
+      savedBobData = db.Bob.saveBob(bob)
+      console.log(savedBobData)
       setTimeout(done, 1000); // forced one second delay after saving bob
     }).then(function(){
       console.log("bob saved.. now starting api side mediastatus check", bob.data.Link)
       when(function(done){
-        db.Bob.checkMediaStatus(bob.data.Link);
+        let status = db.Bob.checkMediaStatus(bob.data.Link);
         setTimeout(done, 1000);
       }).then(function(){
         console.log("media status updated, now emitting bob")
