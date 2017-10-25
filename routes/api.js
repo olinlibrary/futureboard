@@ -115,6 +115,7 @@ module.exports = function(io, db) {
       if (bobData.mediaReady){
         io.emit('add_element', bobData);
       }
+      console.log("emitting bob")
       io.emit('add_element', bobData);
       res.send("success");
     }, function error(err) {
