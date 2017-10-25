@@ -135,6 +135,7 @@ module.exports = function(io, db) {
     }).thenn(function(){
       console.log("bob saved.. now starting api side mediastatus check", bob.data.Link)
       db.Bob.checkMediaStatus(bob.data.Link)
+      console.log(savedBobData)
       io.emit('add_element', savedBobData);
     });
       res.send("success");
