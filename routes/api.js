@@ -110,6 +110,8 @@ module.exports = function(io, db) {
     // Save bob in db
     db.Bob.saveBob(bob).then(function success(bobData) {
       // Send to all boards if the media is ready
+      console.log("api side mediastatus check")
+      checkMediaStatus(bobData.data.Link);
       if (bobData.mediaReady){
         io.emit('add_element', bobData);
       }
