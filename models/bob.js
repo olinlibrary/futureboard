@@ -59,8 +59,10 @@ function checkMediaStatus(url) {
     console.log("statusCode", res.statusCode)
     if (res.statusCode === 200) {
       setMediaStatus(url, true);
+      return true
     } else {
       setMediaStatus(url, false);
+      return false
     }
   });
 }
@@ -160,9 +162,9 @@ function flagBob(bobId) {
 */
 function setMediaStatus(mediaURL, status=true) {
   console.log("looking for bob with..:" + mediaURL);
-  data = BobModel.findOneAndUpdate({ data : { Link: mediaURL }}, { mediaReady: status }).lean();
-  console.log("Setting : " + data);
-  return data;
+  bobData = BobModel.findOneAndUpdate({ data : { Link: mediaURL }}, { mediaReady: status }).lean();
+  console.log("Setting : " + bobData.data);
+  return bobData;
 }
 
 
