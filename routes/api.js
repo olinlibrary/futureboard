@@ -126,7 +126,7 @@ module.exports = function(io, db) {
       };
     };
     when(function(done){
-      db.Bob.saveBob(bob)
+      return db.Bob.saveBob(bob)
       done();
     }).then(function(bobData){
       console.log("api side mediastatus check", bob.data.Link)
