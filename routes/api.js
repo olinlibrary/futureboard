@@ -111,7 +111,7 @@ module.exports = function(io, db) {
     var when = function() {
     var args = arguments;  // the functions to execute first
       return {
-        then: function(done) {
+        thenn: function(done) {
           var counter = 0;
           for(var i = 0; i < args.length; i++) {
             // call each function with a function to call on done
@@ -129,17 +129,13 @@ module.exports = function(io, db) {
     var savedBobData;
     when(function(done){
       console.log("iniit savebob")
-      savedBobData = db.Bob.saveBob(bob)
+      savedBobData = db.Bob.saveBob(bob).then(db.Bob.checkMediaStatus(bob.data.Link));
       console.log(savedBobData)
       setTimeout(done, 1000); // forced one second delay after saving bob
-    }).then(function(){
+    }).thenn(function(){
       console.log("bob saved.. now starting api side mediastatus check", bob.data.Link)
-      when(function(done){
-        let status = db.Bob.checkMediaStatus(bob.data.Link);
-        setTimeout(done, 1000);
-      }).then(function(){
-        console.log("media status updated, now emitting bob")
-        io.emit('add_element', bob.data);
+      console.log(savedBobdata)
+      io.emit('add_element', savedBobData);
       })
       res.send("success");
     });
