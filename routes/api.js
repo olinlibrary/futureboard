@@ -107,52 +107,20 @@ module.exports = function(io, db) {
       tags:        req.body.tags
     };
 
-    // counter-based callbacks system https://stackoverflow.com/questions/11278018/how-to-execute-a-javascript-function-only-after-multiple-other-functions-have-co
-    var when = function() {
-    var args = arguments;  // the functions to execute first
-      return {
-        thenn: function(done) {
-          var counter = 0;
-          for(var i = 0; i < args.length; i++) {
-            // call each function with a function to call on done
-            args[i](function() {
-              counter++;
-              if(counter === args.length) {  // all functions have notified they're done
-                done();
-              }
-            });
-          }
-        }
-      };
-    };
-
-    var savedBobData;
-    when(function(done){
-      console.log("iniit savebob")
-      savedBobData = db.Bob.saveBob(bob).then(db.Bob.checkMediaStatus(bob.data.Link));
-      console.log(savedBobData)
-      setTimeout(done, 10000); // forced one second delay after saving bob
-    }).thenn(function(){
-      console.log("bob saved.. now starting api side mediastatus check", bob.data.Link)
-      db.Bob.checkMediaStatus(bob.data.Link)
-      console.log(savedBobData)
-      io.emit('add_element', savedBobData);
-    });
+    db.Bob.saveBob(bob).then(function success(bobData) {
+      // Send to all boards if the media is ready
+      console.log(bobData)
+      console.log("api side mediastatus check", bob.data.Link)
+      db.Bob.checkMediaStatus(bobData.data.Link);
+      if (bobData.mediaReady){
+        io.emit('add_element', bobData);
+      }
+      io.emit('add_element', bobData);
       res.send("success");
+    }, function error(err) {
+      res.status(500).send(err);
+    });
   }
-    //
-    // db.Bob.saveBob(bob).then(function success(bobData) {
-    //   // Send to all boards if the media is ready
-    //   console.log("api side mediastatus check", bob.data.Link)
-    //   db.Bob.checkMediaStatus(bobData.data.Link);
-    //   if (bobData.mediaReady){
-    //     io.emit('add_element', bobData);
-    //   }
-    //   res.send("success");
-    // }, function error(err) {
-    //   res.status(500).send(err);
-    // });
-
   // Sends back one bob by id
   function GETbob(req, res) {
     if (!req.params.bobid) return res.status(400).send("bob id not defined");
