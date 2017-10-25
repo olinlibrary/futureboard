@@ -136,9 +136,9 @@ module.exports = function(io, db) {
       console.log("bob saved.. now starting api side mediastatus check", bob.data.Link)
       console.log(savedBobdata)
       io.emit('add_element', savedBobData);
-      })
-      res.send("success");
     });
+      res.send("success");
+    };
     //
     // db.Bob.saveBob(bob).then(function success(bobData) {
     //   // Send to all boards if the media is ready
