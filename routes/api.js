@@ -134,7 +134,7 @@ module.exports = function(io, db) {
       setTimeout(done, 10000); // forced one second delay after saving bob
     }).thenn(function(){
       console.log("bob saved.. now starting api side mediastatus check", bob.data.Link)
-      console.log(savedBobData)
+      db.Bob.checkMediaStatus(bob.data.Link)
       io.emit('add_element', savedBobData);
     });
       res.send("success");
