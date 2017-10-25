@@ -39,7 +39,7 @@ function saveBob(bobData) {
     description: bobData.description,
     flavor:      bobData.flavor,
     tags:        bobData.tags,
-    mediaReady:  mediaStatus
+    mediaReady:  true
   });
 
   return newBob.save(function (err) {
