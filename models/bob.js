@@ -53,14 +53,11 @@ function saveBob(bobData) {
       tags:        bobData.tags,
       mediaReady:  mediaStatus
     });
-    newBob.save().then(function(){
+    newBob.save().then(async function(){
       console.log("returning" + newBob);
-      return new Promise(function(resolve, reject){
-        resolve(newBob);
-      })
-    }, function(err){
-      console.log(err);
-    })
+      console.log("async executed")
+      return newBob
+    }
   });
 }
 

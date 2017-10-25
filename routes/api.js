@@ -108,7 +108,7 @@ module.exports = function(io, db) {
     };
 
     // Save bob in db
-    let foo = await Promise.all([db.Bob.saveBob(bob)])
+    let newBob = await Promise.all([db.Bob.saveBob(bob)])
       .then((newBob) => {
       // Send to all boards if the media is ready
         console.log(newBob);
