@@ -126,16 +126,17 @@ module.exports = function(io, db) {
       };
     };
     when(function(done){
+      console.log("iniit savebob")
       db.Bob.saveBob(bob)
-      setTimeout(done, 5000);
+      setTimeout(done, 1000); // forced one second delay after saving bob
     }).then(function(){
-      console.log("api side mediastatus check", bob.data.Link)
-      var ready = db.Bob.checkMediaStatus(bob.data.Link);
-      console.log(ready)
-      if (ready){
-        console.log("Im readyyyy");
-        // io.emit('add_element', bobData);
-      }
+      console.log("bob saved.. now starting api side mediastatus check", bob.data.Link)
+      when(function(done){
+        db.Bob.checkMediaStatus(bob.data.Link);
+      }).then(function(){
+        console.log("media status updated, now emitting bob")
+        io.emit('add_element', bob.data);
+      })
       res.send("success");
     });
     //
