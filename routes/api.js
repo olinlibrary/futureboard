@@ -131,7 +131,7 @@ module.exports = function(io, db) {
       console.log("iniit savebob")
       savedBobData = db.Bob.saveBob(bob).then(db.Bob.checkMediaStatus(bob.data.Link));
       console.log(savedBobData)
-      setTimeout(done, 1000); // forced one second delay after saving bob
+      setTimeout(done, 10000); // forced one second delay after saving bob
     }).thenn(function(){
       console.log("bob saved.. now starting api side mediastatus check", bob.data.Link)
       console.log(savedBobData)
