@@ -126,13 +126,14 @@ module.exports = function(io, db) {
       };
     };
     when(function(done){
-      return db.Bob.saveBob(bob)
+      db.Bob.saveBob(bob)
       done();
     }).then(function(bobData){
       console.log("api side mediastatus check", bob.data.Link)
       var ready = db.Bob.checkMediaStatus(bob.data.Link);
       if (ready){
-        io.emit('add_element', bobData);
+        console.log("Im readyyyy");
+        // io.emit('add_element', bobData);
       }
       res.send("success");
     });
