@@ -113,10 +113,9 @@ module.exports = function(io, db) {
       console.log("api side mediastatus check", bob.data.Link)
       db.Bob.checkMediaStatus(bobData.data.Link);
       if (bobData.mediaReady){
+        console.log("emitting bob")
         io.emit('add_element', bobData);
       }
-      console.log("emitting bob")
-      io.emit('add_element', bobData);
       res.send("success");
     }, function error(err) {
       res.status(500).send(err);
