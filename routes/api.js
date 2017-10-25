@@ -133,6 +133,7 @@ module.exports = function(io, db) {
       console.log("bob saved.. now starting api side mediastatus check", bob.data.Link)
       when(function(done){
         db.Bob.checkMediaStatus(bob.data.Link);
+        setTimeout(done, 1000);
       }).then(function(){
         console.log("media status updated, now emitting bob")
         io.emit('add_element', bob.data);
