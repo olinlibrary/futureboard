@@ -127,8 +127,8 @@ module.exports = function(io, db) {
     };
     when(function(done){
       db.Bob.saveBob(bob)
-      done();
-    }).then(function(bobData){
+      setTimeout(done, 5000);
+    }).then(function(){
       console.log("api side mediastatus check", bob.data.Link)
       var ready = db.Bob.checkMediaStatus(bob.data.Link);
       if (ready){
