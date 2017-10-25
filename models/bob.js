@@ -43,6 +43,7 @@ function saveBob(bobData) {
   });
 
   return newBob.save(function (err) {
+    console.log("saveBob mediastatus check")
     checkMediaStatus(bobData.data.Link);
     if (err) console.log("Bob save error:", err);
   });
@@ -55,6 +56,7 @@ function saveBob(bobData) {
 function checkMediaStatus(url) {
   request.head(url, function (err, res, body) {
     if (err){ console.log(err); }
+    console.log("statusCode", res.statusCode)
     if (res.statusCode === 200) {
       setMediaStatus(url, true);
     } else {
