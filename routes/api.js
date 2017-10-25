@@ -138,7 +138,7 @@ module.exports = function(io, db) {
       io.emit('add_element', savedBobData);
     });
       res.send("success");
-    };
+  }
     //
     // db.Bob.saveBob(bob).then(function success(bobData) {
     //   // Send to all boards if the media is ready
@@ -151,7 +151,6 @@ module.exports = function(io, db) {
     // }, function error(err) {
     //   res.status(500).send(err);
     // });
-  }
 
   // Sends back one bob by id
   function GETbob(req, res) {
