@@ -107,19 +107,47 @@ module.exports = function(io, db) {
       tags:        req.body.tags
     };
 
-    // Save bob in db
-    db.Bob.saveBob(bob).then(function success(bobData) {
-      // Send to all boards if the media is ready
-      console.log(db.Bob.getOneBob({ data : { Link: bob.data.Link }}))
+    // counter-based callbacks system https://stackoverflow.com/questions/11278018/how-to-execute-a-javascript-function-only-after-multiple-other-functions-have-co
+    var when = function() {
+    var args = arguments;  // the functions to execute first
+      return {
+        then: function(done) {
+          var counter = 0;
+          for(var i = 0; i < args.length; i++) {
+            // call each function with a function to call on done
+            args[i](function() {
+              counter++;
+              if(counter === args.length) {  // all functions have notified they're done
+                done();
+              }
+            });
+          }
+        }
+      };
+    };
+    when(function(done){
+      db.Bob.saveBob(bob)
+      done();
+    }).then(function(bobData){
       console.log("api side mediastatus check", bob.data.Link)
-      db.Bob.checkMediaStatus(bobData.data.Link);
-      if (bobData.mediaReady){
+      var ready = db.Bob.checkMediaStatus(bob.data.Link);
+      if (ready){
         io.emit('add_element', bobData);
       }
       res.send("success");
-    }, function error(err) {
-      res.status(500).send(err);
     });
+    //
+    // db.Bob.saveBob(bob).then(function success(bobData) {
+    //   // Send to all boards if the media is ready
+    //   console.log("api side mediastatus check", bob.data.Link)
+    //   db.Bob.checkMediaStatus(bobData.data.Link);
+    //   if (bobData.mediaReady){
+    //     io.emit('add_element', bobData);
+    //   }
+    //   res.send("success");
+    // }, function error(err) {
+    //   res.status(500).send(err);
+    // });
   }
 
   // Sends back one bob by id

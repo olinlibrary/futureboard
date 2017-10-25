@@ -59,8 +59,10 @@ function checkMediaStatus(url) {
     console.log("statusCode", res.statusCode)
     if (res.statusCode === 200) {
       setMediaStatus(url, true);
+      return true
     } else {
       setMediaStatus(url, false);
+      return false
     }
   });
 }
