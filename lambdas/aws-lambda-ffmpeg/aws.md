@@ -19,17 +19,18 @@ gulp aws:default`
 
 
 
-
--c:a copy -vf scale='min(320\,iw):-2' -movflags +faststart -metadata description=futureboardmedia out.mp4 -vf thumbnail -vf scale='min(320\,iw):-2' -vframes 1 out.png
-
--t 10 -c:a copy -vf scale='min(1360\,iw):-2' -movflags +faststart -metadata description=futureboardmedia out.mp4
-
 Settings in AWS:
 ```
-FFMPEG_ARGS: -t 15 -c:a copy -vf scale='min(1360\,iw):-2' -movflags +faststart -metadata description=futureboardmedia out.mp4
+FFMPEG_ARGS: -t 15 -r 30000/1001 -an -crf 23 -vf scale='-1:min(720\,ih)' -movflags +faststart -metadata description=futureboard out.mp4
 DESTINATION_BUCKET: media.futureboard.olin.build
 VIDEO_MAX_DURATION: 600
 USE_GZIP: false
 DESTINATION_PREFIX: m/
 MIME_TYPES: {"png":"image/png","mp4":"video/mp4","avi":"video/avi"}
 ```
+
+## [FFmpeg settings](http://ffmpeg.org/ffmpeg.html#Video-Options):
+
+-t cutoff duration
+-c:a codec:audio copy
+-vf filtergraph - use supplied filtergraph on the stream s
