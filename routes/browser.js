@@ -5,29 +5,25 @@ adminPassword = process.env.ADMIN_PASSWORD;
 
 module.exports = function (api, rootDir) {
   router.route('/').get(function(req, res) {
-    res.sendFile(rootDir + '/templates/landing.html');
+    res.sendFile(rootDir + '/templates/uploadfile.html');
   });
 
-  router.route('/views').get(function(req, res) {
+  router.route('/views').get(ensureAuthenticated, function(req, res) {
     res.sendFile(rootDir + '/templates/views.html');
   });
 
-  router.route('/views/board').get(function(req, res) {
+  router.route('/views/board').get(ensureAuthenticated, function(req, res) {
     res.sendFile(rootDir + '/templates/board.html');
   });
 
   // Stream only View
-  router.route('/views/stream').get(function(req, res) {
+  router.route('/views/stream').get(ensureAuthenticated, function(req, res) {
     res.sendFile(rootDir + '/templates/stream.html');
   });
 
   // Events only View
-  router.route('/views/events').get(function(req, res) {
+  router.route('/views/events').get(ensureAuthenticated, function(req, res) {
     res.sendFile(rootDir + '/templates/events.html');
-  });
-
-  router.route('/new').get(function(req, res) {
-    res.sendFile(rootDir + '/templates/controller.html');
   });
 
   router.route('/upload').get(function (req, res) {
