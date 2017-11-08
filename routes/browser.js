@@ -5,7 +5,7 @@ adminPassword = process.env.ADMIN_PASSWORD;
 
 module.exports = function (api, rootDir) {
   router.route('/').get(function(req, res) {
-    res.sendFile(rootDir + '/templates/landing.html');
+    res.sendFile(rootDir + '/templates/uploadfile.html');
   });
 
   router.route('/views').get(ensureAuthenticated, function(req, res) {
@@ -24,10 +24,6 @@ module.exports = function (api, rootDir) {
   // Events only View
   router.route('/views/events').get(ensureAuthenticated, function(req, res) {
     res.sendFile(rootDir + '/templates/events.html');
-  });
-
-  router.route('/new').get(function(req, res) {
-    res.sendFile(rootDir + '/templates/controller.html');
   });
 
   router.route('/upload').get(function (req, res) {
