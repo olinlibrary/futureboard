@@ -1,5 +1,6 @@
 // external dependencies
 const express    = require('express');
+const favicon    = require('serve-favicon');
 const app        = express();
 const path       = require('path');
 const bodyParser = require('body-parser');
@@ -31,7 +32,9 @@ app.use(bodyParser.urlencoded({
 
 
 // Serve all files from static
+app.use(favicon(__dirname + '/static/images/favicon11.png'));
 app.use('/static', express.static(path.join(__dirname, '/static')));
+
 
 // Handle api traffic
 const api = require('./routes/api')(io, db);
