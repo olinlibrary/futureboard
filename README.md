@@ -1,4 +1,3 @@
-
 ### Table of Contents
 * [Current Status](#status)
   * [License](#license)
@@ -7,7 +6,7 @@
 * [Make Your Own](#make-your-own)
   * [Setup](#setup)
   * [Development](#development)
-  * [Database backup & sync](#database backup & sync)
+  * [Database backup & sync](#database-backup-&-sync)
 * [Contributing](#contributing)
   * [To-do and Bugs](#to-do)
 * [Operating](#operating)
@@ -15,17 +14,41 @@
 * [API](#api)
 
 ## Status
-FUTUREboard is currently a slideshow of Images, GIFs, Videos and Texts supplemented by information about events happening on campus.
+FUTUREboard is a digital signage platform for sharing of media including Images, GIFs, Videos, supplemented by information about events happening on campus.
 
 ### License
 This project is licensed under the MIT License, a ["short and simple permissive license with conditions only requiring preservation of copyright and license notices."](https://github.com/olinlibrary/futureboard/blob/master/LICENSE)
 
-### Future Work
+
+### To Do
+#### Top Priorities
+- [ ] Create Easy Means of Setting up Local Environment for frontend
+- [ ] Setup Dev branch for continuous integration
+- [x] Server-side resizing images and videos, EXIF-orientation fix, creating thumnails of originals
+- [ ] Edit Bob page
+- [ ] Unit Testing, Test-driven development
+- [x] Authentication
+- [ ] Rooms for different content on different screens and/or privacy associated with posts
+- [x] Administration Page / "Who is moderating?"
+- [ ] Logistics, Setup procedures
+- [ ] Open a feedback channel / Encourage new pull requests!
+
+#### And MORE!
+- [ ] Integrate with A.B.E. to get event data (add socket emit or push notifications for new events)
+- [ ] Commenting/Threading/Replying on contents
+- [ ] Smoother Touch Swipe
+- [ ] Support more views & clean up css(bobbles, pinterest kinda UI)
+- [x] Favicon
+- [ ] Better autoscroll / display of events
+- [ ] Replace Materialize carousel - seek alternatives or make your own for better performance & extendability
+
+#### Possible Extensions
 * Commenting/Threading on content
 * Rooms for different content on different screens and/or privacy associated with posts
 * Scaling
 * Physical interactions with board (buttons or otherwise)
 * Get push notifications (socket) from ABE (talk to the ABE team)
+
 
 ### Credits
 This project is a product of Software of Summer 2017! Thank you to Jeff and Oliver for ongoing mentorship and to the fellow students for feedback and support. Also a big thanks to the participants of the first ever Library Potluck who interacted with the board and gave feedback.
@@ -64,7 +87,7 @@ A tricky part about working with external services on your local server is that 
 
 As far as database administration, a pro of using mLab is having an interface for sifting through db records and doing general management rather than through the command line. Currently our app has a db admin interface so this functionality is less necessary.
 
-### Database backup & sync
+### Database
 It is very likely that your local server will be running with a local mongoDB.
 To export the online mLab databse, simply navigage to /scripts, then run the bash script [importDB.sh](./scripts/importDB.sh) with three input arguments listed below.
 ```
@@ -90,27 +113,6 @@ Once you've made the changes you'd like to make, ensure that they are committed 
 
 After all of that, go ahead and open a new pull request onto the upstream version of dev! This pull request should have a title describing the changes at a very high level and a description that gets into more details. These details should include what changes have been made and why. Then request that a contributor on the main repo review your code. Once suggestions have been made, make necessary edits and confirm once again that everything looks good. If yes, your reviewer can go ahead and merge it in!
 
-### To Do
-#### Top Priorities
-* Server-side resizing images and videos, EXIF-orientation fix, creating thumnails of originals
-* Edit Bob page
-* Unit Testing, Test-driven development
-* Authentication
-* Rooms for different content on different screens and/or privacy associated with posts
-* Administration Page / "Who is moderating?"
-* Logistics, Setup procedures
-* Open a feedback channel / Encourage new pull requests!
-
-#### And MORE!
-* Integrate with A.B.E. to get event data (add socket emit or push notifications for new events)
-* Commenting/Threading/Replying on contents
-* Smoother Touch Swipe
-* Physical interactions with board (buttons or otherwise)
-* Create better way to sync `flavors`
-* Support more views & clean up css(bobbles, pinterest kinda UI)
-* Favicon
-* Better autoscroll / display of events
-* Replace Materialize carousel - seek alternatives or make your own for better performance & extendability
 
 ## Operating
 First start the mongodb server:
@@ -122,6 +124,10 @@ SECRET_ACCESS_KEY`
 
 Once you've setup your own version of the app, run `sudo -E nodejs server.js` to get it running.
 
+
+## For Frontend, templates, css:
+
+To test each component of the template, I recommend that 
 
 ## Directory Structure
 ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Backend`
