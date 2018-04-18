@@ -63,6 +63,14 @@ export MONGODB_URI="<Get this from mLab instance>";
 
 Optionally set the `ADMIN_PASSWORD` to something. If you do not set it, then there will be no auth on the admin page.
 
+By default, the app uses the staging instance of ABE. In the future, this will
+only be accessible with authentication, or from within the Olin LAN. To use a
+local ABE instance:
+
+1. Follow the instructions [here](https://github.com/olinlibrary/ABE#readme) to
+   run the local ABE server.
+2. Set the `ABE_API_URI` environment variable to `http://localhost:3000`.
+
 Once you've set these environment variables, you should be able to run the app locally by executing `sudo -E npm start` (which runs `node server.js` as specified in `package.json`) from the root of the repo directory. The `-E` flag allows us to use the above environment variables when running with sudo permissions. This will serve the app at [http://localhost:80](http://localhost).
 
 NOTE: You'll need to [add these as environment variables to your Heroku instance](https://devcenter.heroku.com/articles/heroku-local#set-up-your-local-environment-variables) as well. Depending on your setup, you may want to have a separate database for local vs. production, but for just getting the app running it's not a crime to use the same.
@@ -124,7 +132,7 @@ Set environment variables for AWS:
 `ACCESS_KEY_ID
 SECRET_ACCESS_KEY`
 
-Once you've setup your own version of the app, run `sudo -E nodejs server.js` to get it running.
+Once you've setup your own version of the app, run `sudo -E **nodejs server.**js` to get it running.
 
 
 ## For Frontend, templates, css:

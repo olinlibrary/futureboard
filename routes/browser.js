@@ -2,6 +2,8 @@ const express = require('express');
 var router = express.Router();
 
 const adminPassword = process.env.ADMIN_PASSWORD;
+const ABE_API_URI = (process.env.ABE_API_URI || 'https://abe-api-dev.herokuapp.com/')
+  .replace(/\/$/, '');
 
 module.exports = function (api, rootDir) {
   router.route('/').get(function(req, res) {
@@ -56,6 +58,12 @@ module.exports = function (api, rootDir) {
       } else {
         res.status(404).send("bob id must be 24 characters long");
       }
+    });
+
+  router.route('/config.js')
+    .get(function(req, res) {
+      res.type('application/javascript')
+        .send("const ABE_API_URI = " + JSON.stringify(ABE_API_URI) + ";");
     });
 
   return router;
