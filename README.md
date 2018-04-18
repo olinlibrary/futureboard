@@ -109,6 +109,8 @@ mongorestore --drop -d $3 mLabDump/heroku_w45g6cd6;
 ## Contributing
 To contribute, fork this repo and clone it to your local development environment. When making edits, make sure to base off of the `dev` branch by first running `git checkout dev` and ensuring that it's up to date with this repo `git pull upstream dev`. Once you're up to date, create a new branch off `dev` with `git checkout -b <branch_name>` and make any edits you'd like to make.
 
+Run `npm run lint` to verify your code formatting.
+
 Once you've made the changes you'd like to make, ensure that they are committed to your new branch before switching back to dev to make sure it's fully up to date (another `git checkout dev` and `git pull upstream dev`). Once this is done, switch back to your branch (`git checkout <branch_name>`) and rebase onto dev with `git rebase -i dev`. This will ensure that any changes that have been made to `dev` are accounted for in your branch, thus avoiding any merge conflicts when we try to pull those changes into the main repo. To learn more about rebasing, look [here](https://help.github.com/articles/about-git-rebase/). If you've pushed your branch up to your version of the repo before rebasing, you will need to force push your rebased changes to your branch to ensure that the correct history is included for merging.
 
 After all of that, go ahead and open a new pull request onto the upstream version of dev! This pull request should have a title describing the changes at a very high level and a description that gets into more details. These details should include what changes have been made and why. Then request that a contributor on the main repo review your code. Once suggestions have been made, make necessary edits and confirm once again that everything looks good. If yes, your reviewer can go ahead and merge it in!
@@ -127,7 +129,7 @@ Once you've setup your own version of the app, run `sudo -E nodejs server.js` to
 
 ## For Frontend, templates, css:
 
-To test each component of the template, I recommend that 
+To test each component of the template, I recommend that
 
 ## Directory Structure
 ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `Backend`
