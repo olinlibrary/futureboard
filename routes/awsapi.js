@@ -11,7 +11,7 @@ var router = express.Router();
 
 
 /*
-  set envirnoment variables: ACCESS_KEY_ID, SECRET_ACCESS_KEY
+  set environment variables: ACCESS_KEY_ID, SECRET_ACCESS_KEY
 */
 
 const S3_BUCKET         = "upload.media.futureboard.olin.build"; // resized bucket
@@ -19,7 +19,7 @@ const ACCESS_KEY_ID     = process.env.ACCESS_KEY_ID;
 const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY;
 
 if (ACCESS_KEY_ID == null || SECRET_ACCESS_KEY == null){
-  console.log("ERROR: s3 envirnoment variables not set!");
+  console.log("ERROR: s3 environment variables not set!");
 }
 
 aws.config.update({
