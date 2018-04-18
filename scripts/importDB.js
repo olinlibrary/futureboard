@@ -12,7 +12,7 @@ const collectionName = process.argv[2];
 db.on('open', function () {
 
   fs.readFile(collectionName + '.json', 'utf8', (err, data) => {
-    objects = JSON.parse(data);
+    const objects = JSON.parse(data);
     console.log('importing', objects.length, collectionName, 'from', collectionName + '.json');
 
 

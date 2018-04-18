@@ -24,13 +24,14 @@ const BobModel = mongoose.model('Bob', bobSchema);
   @param {Object[]} bobData
 */
 function saveBob(bobData) {
-  let mediaStatus = "";
-  if (bobData.data.Link) {
-    mediaStatus = false;
-  } else {
-    console.log("Warning: Saving bob without Link");
-    mediaStatus = true;
-  }
+  // TODO: use mediaStatus, or remove this code
+  // let mediaStatus = "";
+  // if (bobData.data.Link) {
+  //   mediaStatus = false;
+  // } else {
+  //   console.log("Warning: Saving bob without Link");
+  //   mediaStatus = true;
+  // }
 
   const newBob = new BobModel({
     data:        bobData.data,
@@ -53,7 +54,7 @@ function saveBob(bobData) {
  * @param {String} url
  */
 function checkMediaStatus(url) {
-  request.head(url, function (err, res, body) {
+  request.head(url, function (err, res, _body) {
     if (err){ console.log(err); }
     if (res.statusCode === 200) {
       setMediaStatus(url, true);
@@ -158,7 +159,7 @@ function flagBob(bobId) {
 */
 function setMediaStatus(mediaURL, status=true) {
   console.log("looking for bob with..:" + mediaURL);
-  data = BobModel.findOneAndUpdate({ data : { Link: mediaURL }}, { mediaReady: status }).lean();
+  const data = BobModel.findOneAndUpdate({ data : { Link: mediaURL }}, { mediaReady: status }).lean();
   console.log("Setting : " + data);
   return data;
 }

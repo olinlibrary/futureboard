@@ -1,12 +1,10 @@
-// External dependencies
-const path = require('path');
 const re = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g
 
 module.exports = function(io, db) {
 
 	var twilio = {};
 
-	twilio.POSTtext = function(req, res, next) {
+	twilio.POSTtext = function(req, res, _next) {
 		var startDate = new Date();
 		var endDate = new Date().setDate(startDate.getDate() + 7);
 

@@ -46,6 +46,8 @@ module.exports = function (api, rootDir) {
       if (req.params.bobid.length === 24){
         db.Bob.getOneBob({ _id: db.ObjectId(req.params.bobid)}).then(function success(data) {
           if (data){
+            // FIXME: this is probably an error. Fix it after adding a test.
+            // eslint-disable-next-line no-undef
             res.sendFile(path.join(rootDir, '/templates/editbob.html'));
           } else {
             res.status(404).send("bob not found");
