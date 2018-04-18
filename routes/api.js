@@ -62,7 +62,7 @@ module.exports = function(io, db) {
   * Currently only checks for req.headers.auth, in the future it will use a more robust authentication method
   */
 
-  adminPassword = process.env.ADMIN_PASSWORD;
+  const adminPassword = process.env.ADMIN_PASSWORD;
   function ensureAuthenticated(req, res, next) {
     if (req.headers.auth === adminPassword | req.query.auth === adminPassword){
       next();
@@ -93,7 +93,7 @@ module.exports = function(io, db) {
     });
   }
 
-  function POSTcreateNewBob(req, res, next) {
+  function POSTcreateNewBob(req, res, _next) {
     if (!req.body.endDate){
       req.body.endDate = Date.now() + 2 * 60 * 60 * 12; // Default to two days
     }

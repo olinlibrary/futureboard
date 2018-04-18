@@ -108,7 +108,7 @@ module.exports = function (io, db) {
           // If it is a subscription confirmation, get the page
           if (req.headers['x-amz-sns-message-type'] === 'SubscriptionConfirmation') {
             console.log("SNS subscription URL:", message.SubscribeURL);
-            request(message.SubscribeURL, function (err, res, body) {
+            request(message.SubscribeURL, function (err, _res, _body) {
               if (err){ console.log(err); }
             });
           // Else set the bob media status to true
