@@ -128,6 +128,7 @@ module.exports = function (io, db) {
                   console.log(record.s3.object.key);
                 }
                 io.emit('add_element', bobData);
+                console.log("emitted", bobData);
               });
             });
           } else {
