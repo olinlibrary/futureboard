@@ -1,6 +1,6 @@
-module.exports = function(io, db) {
+module.exports = function(io, _db) {
 
-	io.on('connection', function(socket) {
+	io.on('connection', function(_socket) {
 		console.log("socket connected");
 	});
 };

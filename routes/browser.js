@@ -1,7 +1,9 @@
 const express = require('express');
 var router = express.Router();
 
-adminPassword = process.env.ADMIN_PASSWORD;
+const adminPassword = process.env.ADMIN_PASSWORD;
+const ABE_API_URI = (process.env.ABE_API_URI || 'https://abe-api-dev.herokuapp.com/')
+  .replace(/\/$/, '');
 
 module.exports = function (api, rootDir) {
   router.route('/').get(function(req, res) {
@@ -44,6 +46,8 @@ module.exports = function (api, rootDir) {
       if (req.params.bobid.length === 24){
         db.Bob.getOneBob({ _id: db.ObjectId(req.params.bobid)}).then(function success(data) {
           if (data){
+            // FIXME: this is probably an error. Fix it after adding a test.
+            // eslint-disable-next-line no-undef
             res.sendFile(path.join(rootDir, '/templates/editbob.html'));
           } else {
             res.status(404).send("bob not found");
@@ -54,6 +58,12 @@ module.exports = function (api, rootDir) {
       } else {
         res.status(404).send("bob id must be 24 characters long");
       }
+    });
+
+  router.route('/config.js')
+    .get(function(req, res) {
+      res.type('application/javascript')
+        .send("const ABE_API_URI = " + JSON.stringify(ABE_API_URI) + ";");
     });
 
   return router;
