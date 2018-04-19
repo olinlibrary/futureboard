@@ -9,12 +9,7 @@ extends:
 
 # see https://eslint.org/docs/user-guide/configuring#specifying-globals
 globals:
-  # $: false
-  # moment: false # TODO: use `import` to import this, and remove this exception
-  # global: false
-  # module: false
   db: false
-  process: false # for webpack process.env variables
 
 rules:
   no-console: warn
