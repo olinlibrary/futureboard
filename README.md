@@ -1,26 +1,40 @@
-### Table of Contents
+# FUTUREboard
 
-* [Current Status](#status)
-  * [License](#license)
-  * [Future Work](#future-work)
-  * [Credits](#credits)
-* [Make Your Own](#make-your-own)
-  * [Setup](#setup)
-  * [Development](#development)
-  * [Database backup & sync](#database-backup-&-sync)
-* [Contributing](#contributing)
-  * [To-do and Bugs](#to-do)
-* [Operating](#operating)
-* [Directory Structure](#directory-structure)
-* [API](#api)
+FUTUREboard is a digital signage platform for sharing of media – including
+images, GIFs, and videos — supplemented by information about events happening on
+campus.
+
+## Table of Contents
+
+- [Status](#status)
+  - [To Do](#to-do)
+    - [Top Priorities](#top-priorities)
+    - [And MORE!](#and-more)
+    - [Possible Extensions](#possible-extensions)
+- [Make Your Own](#make-your-own)
+  - [Setup](#setup)
+  - [Development](#development)
+  - [Database](#database)
+- [Contributing](#contributing)
+- [Operating](#operating)
+- [Directory Structure](#directory-structure)
+- [API](#api)
+  - [/api/](#api)
+  - [/api/bobs](#apibobs)
+  - [/api/bobs/active](#apibobsactive)
+  - [/api/bobs/[bobId]](#apibobsbobid)
+  - [/api/bobs/[bobId]/votes](#apibobsbobidvotes)
+  - [/api/bobs/[bobId]/flags](#apibobsbobidflags)
+  - [/api/flavors](#apiflavors)
+  - [/api/flavors/[flavorID : flavorName]](#apiflavorsflavorid-flavorname)
+  - [/api/tags](#apitags)
+  - [/api/tags/[tagID]](#apitagstagid)
+  - [Socket.io](#socketio)
+- [Notes on AWS](#notes-on-aws)
+  - [Credits](#credits)
+- [License](#license)
 
 ## Status
-
-FUTUREboard is a digital signage platform for sharing of media — including images, GIFs, and videos — supplemented by information about events happening on campus.
-
-### License
-
-This project is licensed under the MIT License, a ["short and simple permissive license with conditions only requiring preservation of copyright and license notices."](https://github.com/olinlibrary/futureboard/blob/master/LICENSE)
 
 ### To Do
 
@@ -55,10 +69,6 @@ This project is licensed under the MIT License, a ["short and simple permissive 
 * Physical interactions with board (buttons or otherwise)
 * Get push notifications (socket) from ABE (talk to the ABE team)
 
-### Credits
-
-This project is a product of Software of Summer 2017! Thank you to Jeff and Oliver for ongoing mentorship and to the fellow students for feedback and support. Also a big thanks to the participants of the first ever Library Potluck who interacted with the board and gave feedback.
-
 ## Make Your Own
 
 ### Setup
@@ -79,20 +89,23 @@ local ABE instance:
    run the local ABE server.
 2. Set the `ABE_API_URI` environment variable to `http://localhost:3000`.
 
-Once you've set these environment variables, you should be able to run the app locally by executing `sudo -E npm start` (which runs `node server.js` as specified in `package.json`) from the root of the repo directory. The `-E` flag allows us to use the above environment variables when running with sudo permissions. This will serve the app at [http://localhost:80](http://localhost).
+Once you've set these environment variables, you should be able to run the app
+locally by executing `npm start` from the root of the repo directory. (This runs
+`node server.js`, as specified in `package.json`). This will serve the app at
+<http://localhost:8080>.
 
 NOTE: You'll need to [add these as environment variables to your Heroku instance](https://devcenter.heroku.com/articles/heroku-local#set-up-your-local-environment-variables) as well. Depending on your setup, you may want to have a separate database for local vs. production, but for just getting the app running it's not a crime to use the same.
 
-Setting up AWS: We use s3 to store media, and have lambda functions to resize images and transcode video.
+Setting up AWS: We use AWS S3 to store media, and have AWS Lambda functions to resize images and transcode video.
 
 We used [aws-lambda-ffmpeg](https://github.com/binoculars/aws-lambda-ffmpeg) and [aws-lambda-image](https://github.com/ysugimoto/aws-lambda-image) for resizing the media. Install aws-lambda-ffmpeg first, because its installer fails if you try to use existing buckets. You can also install it with temporary buckets and then change the settings in the aws console. Create two buckets, an 'upload' bucket and a 'media' bucket. Users will upload to the 'upload' bucket, triggering a lambda function to process the file and save it to your 'media' bucket. Currently, images are prepended with 'img-' and video is with 'vid-' to differentiate lambda triggers. Create AWS keys for your app and set the following environment variables:
 
 ```shell
-export `ACCESS_KEY_ID=your access_key_id'
-export 'SECRET_ACCESS_KEY=your secret_access_key'
+export ACCESS_KEY_ID=your access_key_id
+export SECRET_ACCESS_KEY=your secret_access_key
 ```
 
-Finally set up the 'media' bucket to publish to an SNS topic on ObjectCreate, and create an HTTPS subscription to `<url>/aws/MediaStatusSNS`. You will have to confirm this once you spin up the heroku instance.
+Finally set up the 'media' bucket to publish to an SNS topic on ObjectCreate, and create an HTTPS subscription to *url*`/aws/MediaStatusSNS`. You will have to confirm this once you spin up the heroku instance.
 
 Now that you've got these variables set, you need to get the [Heroku toolbelt](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up) set up. Once logged in through the command line interface, run `heroku git:remote -a <YOUR PROJECT NAME>`. Now when you've committed changes to Github, you can [push to Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs#push-local-changes) by running `git push heroku master`. If everything was done correctly, your app should deploy and you can access it at `<YOUR PROJECT NAME>.herokuapp.com`.
 
@@ -104,8 +117,9 @@ As far as database administration, a pro of using mLab is having an interface fo
 
 ### Database
 
-It is very likely that your local server will be running with a local mongoDB.
-To export the online mLab database, simply navigate to `/scripts`, then run the bash script [importDB.sh](./scripts/importDB.sh) with three input arguments listed below.
+It is very likely that your local server will be running with a local MongoDB.
+
+To export the online mLab database: navigate to `/scripts`; then run the bash script [importDB.sh](./scripts/importDB.sh) with three input arguments listed below.
 
 ```shell
 # To Run:
@@ -135,16 +149,17 @@ After all of that, go ahead and open a new pull request onto the upstream versio
 ## Operating
 
 First start the mongodb server:
-`sudo service mongod start` or `mongod` (To restart, `sudo service mongod restart`)
+`sudo service mongod start` or `mongod`.
+(To restart, `sudo service mongod restart`.)
 
 Set environment variables for AWS:
-`ACCESS_KEY_ID SECRET_ACCESS_KEY`
 
-Once you've setup your own version of the app, run `sudo -E **nodejs server.**js` to get it running.
+```shell
+export ACCESS_KEY_ID=
+export SECRET_ACCESS_KEY=
+```
 
-## For Frontend, templates, css:
-
-To test each component of the template, I recommend that
+Once you've set up your own version of the app, run `npm start` to get it running.
 
 ## Directory Structure
 
@@ -225,8 +240,9 @@ To test each component of the template, I recommend that
 
 ## API
 
-~Strikethrough~ indicates functionality not implemented yet
-Note: Flagged bobs are never returned, except on `/bobs/flagged`
+~Strikethrough~ indicates unimplemented functionality.
+
+Note: Flagged bobs are never returned, except on `/bobs/flagged`.
 
 ### /api/
 
@@ -297,7 +313,7 @@ Note: Flagged bobs are never returned, except on `/bobs/flagged`
 | GET         | retrieve a tag by name or id |
 | ~PUT~       | update the tag               |
 
-## Socket.io
+### Socket.io
 
 | Socket Name      | Input                             | Method                               |
 |------------------|-----------------------------------|--------------------------------------|
@@ -306,6 +322,14 @@ Note: Flagged bobs are never returned, except on `/bobs/flagged`
 | 'upvote'         | `{ id: bobid, votes: num_votes }` | Set bob with id `bobid` to num_votes |
 | 'delete'         | bob id                            | remove bob immediately               |
 
-## Notes on AWS:
+## Notes on AWS
 
 We tried using AWS to handle media storage and transcoding, but in the future I would warn against this. We had set up two buckets - an upload bucket and a media bucket. Lambda functions were supposed to resize and transcode images and video into the media bucket, and then move the original files into a 'original/' folder in the media bucket. AWS is a big challenge, and we could not demo with this functionality because we ran into an error when adding triggers to the video transcoding lambda. Right now we use the source media on FUTUREboard, which does not work well on mobile and low power computers (like rasp pi). Google cloud allows transparent image resizing with url parameters ([docs](https://cloud.google.com/appengine/docs/standard/php/refdocs/classes/google.appengine.api.cloud_storage.CloudStorageTools#method_getImageServingUrl)). Alternatively, you can spin up a worker service on heroku to do all image and video resizing.
+
+### Credits
+
+This project is a product of Software of Summer 2017! Thank you to Jeff and Oliver for ongoing mentorship and to the fellow students for feedback and support. Also a big thanks to the participants of the first ever Library Potluck who interacted with the board and gave feedback.
+
+## License
+
+This project is licensed under the MIT License, a ["short and simple permissive license with conditions only requiring preservation of copyright and license notices."](https://github.com/olinlibrary/futureboard/blob/master/LICENSE)
