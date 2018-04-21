@@ -2,5 +2,7 @@ language: node_js
 node_js:
   - "9.3"
 
+cache: yarn
+
 script:
-    - npm run lint
+    - yarn lint
