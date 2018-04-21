@@ -222,10 +222,10 @@ module.exports = function(io, db) {
   // Get all flavors
   function GETflavors(req, res) {
     db.Flavors.getFlavors().then(function success(data) {
-	    res.send(data);
-	  }, function error(err) {
-	    res.status(500).send(err);
-	  });
+        res.send(data);
+      }, function error(err) {
+        res.status(500).send(err);
+      });
   }
 
   // Get one flavor by name or id
@@ -236,32 +236,32 @@ module.exports = function(io, db) {
         db.Flavors.getFlavor({ _id: db.ObjectId(req.params.flavorname) }).then(function success(data) {
           res.send(data);
         }, function error(err) {
-    	    res.status(500).send(err);
+            res.status(500).send(err);
         });
       } else {
         res.send(data);
       }
-	  }, function error(err) {
-	    res.status(500).send(err);
-	  });
+      }, function error(err) {
+        res.status(500).send(err);
+      });
   }
 
   // Get all tags
   function GETtags(req, res) {
-	  db.Tag.getTags().then(function success(data) {
-	    res.send(data);
-	  }, function error(err) {
-	    res.status(500).send(err);
-	  });
-	}
+      db.Tag.getTags().then(function success(data) {
+        res.send(data);
+      }, function error(err) {
+        res.status(500).send(err);
+      });
+    }
 
   // Get a single tag by id
   function GETtag(req, res) {
-	  db.Tag.getTag({ _id: db.ObjectId(req.params.tagid) }).then(function success(data) {
-	    res.send(data);
-	  }, function error(err) {
-	    res.status(500).send(err);
-	  });
+      db.Tag.getTag({ _id: db.ObjectId(req.params.tagid) }).then(function success(data) {
+        res.send(data);
+      }, function error(err) {
+        res.status(500).send(err);
+      });
   }
 
   router.GETallBobs = GETallBobs;

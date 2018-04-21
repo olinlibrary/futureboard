@@ -1,0 +1,10 @@
+{
+  "default": true,
+
+  "line-length": { "line_length": 1000 },
+  "no-trailing-punctuation": false,
+  "ul-style": false, // * instead of -
+
+  // FIXME: remove the instance of this
+  "no-empty-links": false
+}
