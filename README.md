@@ -1,5 +1,7 @@
 # FUTUREboard
 
+[![Build Status](https://travis-ci.org/olinlibrary/futureboard.svg?branch=dev)](https://travis-ci.org/olinlibrary/futureboard?branch=dev)
+
 FUTUREboard is a digital signage platform for sharing of media – including
 images, GIFs, and videos — supplemented by information about events happening on
 campus.
