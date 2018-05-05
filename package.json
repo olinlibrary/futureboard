@@ -20,7 +20,7 @@
         "markdownlint-cli": "^0.8.1"
     },
     "scripts": {
-        "lint": "eslint --cache *.js lambda models routes scripts && markdownlint README.md",
+        "lint": "eslint --cache *.js lambda models routes scripts static && markdownlint README.md",
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node server.js"
     },
