@@ -30,7 +30,7 @@ function populateEvents(eventsData) {
     return $(a).find('.rawDate').text() > $(b).find('.rawDate').text() ? 1 : -1;
   });
 }
-
+o
 /**
   * Creates html element for an event parsed from ABE.com
   * @param {Object} eventData - A single JSON instance of ABE event

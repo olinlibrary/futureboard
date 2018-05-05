@@ -35,7 +35,6 @@ function update(){
   var dayOfWeek = days[date.getDay()];
   var month = months[date.getMonth()];
   var day = date.getDate();
-  var year = date.getFullYear();
 
   var dateString = dayOfWeek + ', ' + month + ' ' + day;
 

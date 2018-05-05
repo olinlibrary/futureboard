@@ -238,7 +238,7 @@ function carouselControl(direction){
   } else if (direction == "right") {
     $('#slideshow').carousel('next', 1); // Move next n times.
   }
-};
+}
 
 /**
  * Resets time interval for the main carousel
@@ -251,7 +251,7 @@ function resetInterval() {
   carouselInterval = setInterval(function() {
     $('#slideshow').carousel('next');
   }, 12000);
-};
+}
 
 /**
  * Listens on jQuery events for keyboard controls
