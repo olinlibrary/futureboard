@@ -3,26 +3,26 @@
   * @param {Object[]} eventsData - list of JSON events data
 */
 function populateEvents(eventsData) {
-  let $eventsToday = $('#eventsToday');
-  let $featuredEvents = $('#featuredEvents');
-  let $addedFeaturedEventsTitles = [];
-  for (var i = 0; i < eventsData.length ; i++) {
-    let featured = (($.inArray("featured", eventsData[i].labels)) >= 0);
-    let eventStart = Date.parse(eventsData[i].start).toString("YYMMdd");
-    let today = Date.today().toString("YYMMdd");
+  const $eventsToday = $('#eventsToday');
+  const $featuredEvents = $('#featuredEvents');
+  const $addedFeaturedEventsTitles = [];
+  eventsData.forEach((event) => {
+    const featured = (($.inArray("featured", event.labels)) >= 0);
+    const eventStart = Date.parse(event.start).toString("YYMMdd");
+    const today = Date.today().toString("YYMMdd");
     if (today === eventStart){
-      let $newEvent = createEventObject(eventsData[i]);
+      let $newEvent = createEventObject(event);
       $eventsToday.append($newEvent);
     }
-    if (featured && (Date.today().compareTo(Date.parse(eventsData[i].start)) == -1)){
+    if (featured && (Date.today().compareTo(Date.parse(event.start)) == -1)){
       // checks for recurring events, adds only the first instance of recurring events
-      if ($.inArray(eventsData[i].title, $addedFeaturedEventsTitles) < 0){
-        let $newEvent = createFeaturedEventObject(eventsData[i]);
+      if ($.inArray(event.title, $addedFeaturedEventsTitles) < 0){
+        const $newEvent = createFeaturedEventObject(event);
         $featuredEvents.append($newEvent);
-        $addedFeaturedEventsTitles.push(eventsData[i].title);
+        $addedFeaturedEventsTitles.push(event.title);
       }
     }
-  }
+  });
   $('#eventsToday > li').sortElements(function(a, b){
     return $(a).find('.rawDate').text() > $(b).find('.rawDate').text() ? 1 : -1;
   });
@@ -45,14 +45,16 @@ function createEventObject(eventData) {
   if(title.length > 40){
     title = eventData.title.substring(0, 40) + "…";
   }
-  var $html = $('<li>', {
+  // addHours(-4) to adjust timezone(UTC) to Eastern Time:
+  const endHours = Date.parse(eventData.end.replace(/\.\d+$/, '')).addHours(-4).toString("hh:mm tt");
+  const $html = $('<li>', {
     id: eventData.id,
     class: "collection-item"
   })
     .append($('<span>', { class: 'title', text: title}))
     .append($('<p>', { class: 'location', text: location }))
     .append($('<p>', { class: 'rawDate', text: Date.parse(eventData.start).addHours(-4).toString("yyyyMMddHHmmss"), style: 'display:none'})) // addHours(-4) to adjust timezone(UTC) to Eastern Time
-    .append($('<p>', { class: 'date', text: Date.parse(eventData.start).addHours(-4).toString("hh:mm tt") + " - " + Date.parse(eventData.end).addHours(-4).toString("hh:mm tt") })) // addHours(-4) to adjust timezone(UTC) to Eastern Time
+    .append($('<p>', { class: 'date', text: Date.parse(eventData.start).addHours(-4).toString("hh:mm tt") + " - " + endHours }))
     .append(converter.makeHtml(eventData.description))
     .append($('<span/>', {class: "clear"}));
   return $html;
@@ -72,6 +74,8 @@ function createFeaturedEventObject(eventData) {
   if(title.length > 40){
     title = eventData.title.substring(0, 40) + "…";
   }
+  // addHours(-4) to adjust timezone(UTC) to Eastern Time:
+  const endHours = Date.parse(eventData.end.replace(/\.\d+$/, '')).addHours(-4).toString("hh:mm tt, dddd, MMM dd ");
   var $html = $('<li>', {
     id: eventData.id,
     class: "collection-item"
@@ -79,7 +83,7 @@ function createFeaturedEventObject(eventData) {
     .append($('<span>', { class: 'title', text: title}))
     .append($('<p>', { class: 'location', text: location }))
     .append($('<p>', { class: 'rawDate', text: Date.parse(eventData.start).addHours(-4).toString("yyyyMMddHHmmss"), style: 'display:none'})) // addHours(-4) to adjust timezone(UTC) to Eastern Time
-    .append($('<p>', { class: 'date', text: Date.parse(eventData.start).addHours(-4).toString("hh:mm tt") + " - " + Date.parse(eventData.end).addHours(-4).toString("hh:mm tt, dddd, MMM dd ") })) // addHours(-4) to adjust timezone(UTC) to Eastern Time
+    .append($('<p>', { class: 'date', text: Date.parse(eventData.start).addHours(-4).toString("hh:mm tt") + " - " + endHours }))
     .append(converter.makeHtml(eventData.description))
     .append($('<span/>', {class: "clear"}));
 
