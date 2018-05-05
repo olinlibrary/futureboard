@@ -30,24 +30,20 @@ function populateEvents(eventsData) {
     return $(a).find('.rawDate').text() > $(b).find('.rawDate').text() ? 1 : -1;
   });
 }
-o
+
 /**
   * Creates html element for an event parsed from ABE.com
   * @param {Object} eventData - A single JSON instance of ABE event
 */
 function createEventObject(eventData) {
   var converter = new showdown.Converter(); // markdown converter
+  let location = "";
   if(eventData.location != null){
-    var location = "@ " + eventData.location.substring(0, 30);
+    location = "@ " + eventData.location.substring(0, 30);
   }
-  else {
-    var location = "";
-  }
-  if(eventData.title.length > 40){
-    var title = eventData.title.substring(0, 40) + "...";
-  }
-  else {
-    title = eventData.title;
+  let title = eventData.title;
+  if(title.length > 40){
+    title = eventData.title.substring(0, 40) + "…";
   }
   var $html = $('<li>', {
     id: eventData.id,
@@ -68,17 +64,13 @@ function createEventObject(eventData) {
 */
 function createFeaturedEventObject(eventData) {
   var converter = new showdown.Converter(); // markdown converter
+  let location = "";
   if(eventData.location != null){
-    var location = "@ " + eventData.location.substring(0, 30);
+    location = "@ " + eventData.location.substring(0, 30);
   }
-  else {
-    var location = "";
-  }
-  if(eventData.title.length > 40){
-    var title = eventData.title.substring(0, 40) + "...";
-  }
-  else{
-    title = eventData.title;
+  let title = eventData.title;
+  if(title.length > 40){
+    title = eventData.title.substring(0, 40) + "…";
   }
   var $html = $('<li>', {
     id: eventData.id,
