@@ -14,8 +14,13 @@ if(process.env.NODE_ENV === 'production'){
 }
 
 const port = process.env.PORT || 8080;
-http.listen(port, function() {
-  console.log("FORWARDboard running over http on port", port);
+const server = http.listen(port, function() {
+  let host = server.address().address;
+  // replace IPv6 wildcard by a recognizable URL, that can be used in a browser
+  // address bar
+  host = host.replace(/^::$/, '0.0.0.0');
+  // Printed thus, some terminals display a clickable link
+  console.log('FORWARDboard is running at http://%s:%s/', host, server.address().port);
 });
 
 

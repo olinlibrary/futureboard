@@ -7,24 +7,44 @@ parserOptions:
 extends:
   - eslint:recommended
 
-# see https://eslint.org/docs/user-guide/configuring#specifying-globals
-globals:
-  db: false
-
 rules:
   no-console: warn
   no-unused-vars: [error, { argsIgnorePattern: "^_" }]
-  no-useless-escape: warn # TODO: remove (so this is an error)
+  no-useless-escape: warn  # TODO: remove (so this is an error)
 
-# Server-side:
 overrides:
-  files: [ "*.js", "models/*.js", "routes/*.js", "scripts/*.js" ]
-  env:
-    browser: false
-    node: true
-  globals:
-    Promise: false
-    module: false
-    require: false
-  rules:
-    no-console: off
+  # Client:
+  - files: [ "routes/*.js", "static/**/*.js" ]
+    globals:
+      $: false
+      ABE_API_URI: false
+      SUBMIT_URL: true
+      db: false
+      showdown: false
+      # defined and used in admin.js:
+      tableColumns: true
+      # defined in server.js:
+      io: true
+      # defined and used in board_carousel:
+      $activeItem: true
+      $carousel: true
+      carouselSelector: true
+      # defined in vendor files:
+      Cookies: false
+      Dropzone: false
+    rules:
+      # FIXME: remove these exceptions, to turn them back into errors
+      no-undef: warn
+      no-unused-vars: warn
+      no-redeclare: warn
+  # Server:
+  - files: [ "server.js", "models/*.js", "routes/*.js", "scripts/*.js" ]
+    env:
+      browser: false
+      node: true
+    globals:
+      Promise: false
+      module: false
+      require: false
+    rules:
+      no-console: off
