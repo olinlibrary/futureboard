@@ -54,7 +54,7 @@ function createBoardElement(bob) {
 
     case 'Video':
       $html.addClass('video-bobble ').attr("id", bob._id)
-        .append(($('<video loop muted poster>', {css:{'background-color':'black'}}).attr("preload", "none").attr("poster", '/static/images/test-pump.gif'))
+        .append(($('<video loop muted poster>', {css:{'background':'black'}}).attr("preload", "none").attr("poster", '/static/images/test-pump.gif'))
         .append($('<source>', {src:bob.data.Link})));
       break;
 
