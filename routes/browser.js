@@ -27,7 +27,7 @@ module.exports = function (api, rootDir) {
   router.route('/views/events').get(ensureAuthenticated, function(req, res) {
     res.sendFile(rootDir + '/templates/events.html');
   });
-  router.route('/views/basic').get(ensureAuthenticated, function(req, res) {
+  router.route('/views/expo').get(ensureAuthenticated, function(req, res) {
     res.sendFile(rootDir + '/templates/stream-basic.html');
   });
   router.route('/upload').get(function (req, res) {

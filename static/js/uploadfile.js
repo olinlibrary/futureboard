@@ -102,9 +102,9 @@ function submitBob() {
 
     $.post('/api/bobs', data, function(res) {
         alert('Media saved!');
-  			// Redirect to FUTUREboard
-  			window.location = '/';
-  		});
+        // Redirect to FUTUREboard
+        window.location = '/';
+      });
     } else {
       alert("No file selected!");
     }
